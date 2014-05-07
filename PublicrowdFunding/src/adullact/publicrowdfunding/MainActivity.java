@@ -19,7 +19,7 @@ public class MainActivity extends TabActivity {
         tabHost = getTabHost();
         
         Intent intent = new Intent(this, TabProjets.class);
-        intent.putExtra("valeur", "Coucou tout le monde");
+        intent.putExtra("valeur", "Liste des projets");
         tabSpec = tabHost.newTabSpec("liste projets").setIndicator("Projets").setContent(intent);
         tabHost.addTab(tabSpec);
         
