@@ -23,11 +23,12 @@ public class MainActivity extends TabActivity {
         tabSpec = tabHost.newTabSpec("liste projets").setIndicator("Projets").setContent(intent);
         tabHost.addTab(tabSpec);
         
+        /*
         intent = new Intent(this, TabContributions.class);
         intent.putExtra("valeur", "Fianancement auquels je participe");
         tabSpec = tabHost.newTabSpec("projets financés").setIndicator("Mes contributions").setContent(intent);
         tabHost.addTab(tabSpec);
-        
+        */
         intent = new Intent(this, TabFavoris.class);
         intent.putExtra("valeur", "Ici les favoris");
         tabSpec = tabHost.newTabSpec("mes favoris").setIndicator("Favoris").setContent(intent);

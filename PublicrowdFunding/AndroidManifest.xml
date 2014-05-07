@@ -15,6 +15,10 @@
         android:theme="@style/AppTheme" >
         
          <activity
+            android:name="adullact.publicrowdfunding.TabsFragment"
+            android:label="@string/app_name" ></activity>
+        
+         <activity
             android:name="adullact.publicrowdfunding.TabFavoris"
             android:label="@string/app_name" ></activity>
          
