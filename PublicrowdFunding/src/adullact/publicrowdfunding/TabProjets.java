@@ -1,19 +1,19 @@
-package adullact.publicrowfunding;
+package adullact.publicrowdfunding;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-public class TabFavoris extends Activity {
+public class TabProjets extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.tab);
 
-		// On rÃ©cupÃ¨re notre intent et la valeur nommÃ©e valeur
+		// On récupère notre intent et la valeur nommée valeur
 		String valeur = getIntent().getStringExtra("valeur");
 
-		// On affiche cette chaÃ®ne dans le textview
+		// On affiche cette chaîne dans le textview
 		TextView textView = (TextView) findViewById(R.id.monTextView);
 		textView.setText(valeur);
 	}
