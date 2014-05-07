@@ -1,20 +1,32 @@
 package adullact.publicrowdfunding;
 
+import java.util.HashMap;
+
+import adullact.publicrowdfunding.requester.ServerEmulator;
+import adullact.publicrowdfunding.shared.Project;
 import android.app.Activity;
 import android.os.Bundle;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class TabProjets extends Activity {
+
+	private ListView listeProjets;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.tab);
 
-		// On récupère notre intent et la valeur nommée valeur
+		// On rï¿½cupï¿½re notre intent et la valeur nommï¿½e valeur
 		String valeur = getIntent().getStringExtra("valeur");
 
-		// On affiche cette chaîne dans le textview
-		TextView textView = (TextView) findViewById(R.id.monTextView);
-		textView.setText(valeur);
+		listeProjets = (ListView) findViewById(R.id.liste);
+		// RÃ©cupÃ©ration des projets ??
+
+		ServerEmulator serveur = ServerEmulator.instance();
+		HashMap<String, Project> projets = serveur.getAllProjets();
+
+		
 	}
 }

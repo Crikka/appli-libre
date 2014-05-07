@@ -1,5 +1,8 @@
 package adullact.publicrowdfunding;
 
+import adullact.publicrowdfunding.request.AuthentificationRequest;
+import adullact.publicrowdfunding.requester.AuthentificationRequester;
+import adullact.publicrowdfunding.shared.User;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,6 +37,15 @@ public class ConnexionActivity extends Activity {
 						+ password);
 
 				// A toi de faire la connexion ??
+				// Comment je fait pour le requester car je ne sais pas si c'est
+				// admin ou non. L'authentification doit être transparente.
+			
+				User utilisateur = new User(login);
+			
+				// Da fuck
+				AuthentificationRequester authentificationRequester = new AuthentificationRequester();
+				authentificationRequester.post(new AuthentificationRequest(utilisateur)).request();
+				
 			}
 		});
 

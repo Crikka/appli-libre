@@ -65,4 +65,9 @@ public class ServerEmulator {
 	public boolean projectExist(String name) {
 		return projectsBase.containsKey(name);
 	}
+	
+	public HashMap<String, Project> getAllProjets(){
+		return this.projectsBase;
+	}
+	
 }

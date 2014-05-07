@@ -10,11 +10,11 @@ public class TabFavoris extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.tab);
 
-		// On récupère notre intent et la valeur nommée valeur
+		// On rï¿½cupï¿½re notre intent et la valeur nommï¿½e valeur
 		String valeur = getIntent().getStringExtra("valeur");
 
-		// On affiche cette chaîne dans le textview
-		TextView textView = (TextView) findViewById(R.id.monTextView);
-		textView.setText(valeur);
+		// On affiche cette chaï¿½ne dans le textview
+	//	TextView textView = (TextView) findViewById(R.id.monTextView);
+	//	textView.setText(valeur);
 	}
 }
