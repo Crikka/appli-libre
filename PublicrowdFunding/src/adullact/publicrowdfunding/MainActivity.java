@@ -47,11 +47,20 @@ public class MainActivity extends TabActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+
+		Intent in = null;
 		switch (item.getItemId()) {
+
 		case R.id.mon_compte:
-			Intent in = new Intent(getBaseContext(), ConnexionActivity.class);
+			in = new Intent(getBaseContext(), ConnexionActivity.class);
 			startActivity(in);
 			return true;
+
+		case R.id.add_project:
+			in = new Intent(getBaseContext(), SoumettreProjetActivity.class);
+			startActivity(in);
+			return true;
+
 		}
 		return false;
 	}

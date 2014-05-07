@@ -34,12 +34,19 @@ public class ConnexionActivity extends Activity {
 			public void onClick(View v) {
 
 				String login = m_login.getText().toString();
-				String password = m_password.getText().toString();
-			
-				if(login == "" || password == ""){
+				//String password = m_password.getText().toString();
+				
+				if(m_login.length() == 0){
+					Toast.makeText(getApplicationContext(),
+							"Vous avez oublié le login",
+							Toast.LENGTH_SHORT).show();
+					
+				}
+				
+				if(m_password.length() == 0){
 					
 					Toast.makeText(getApplicationContext(),
-							"Merci de renseigner les champs",
+							"Vous avez oublié le mot de passe",
 							Toast.LENGTH_SHORT).show();
 					return;
 				}

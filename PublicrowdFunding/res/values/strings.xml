@@ -15,5 +15,6 @@
     <string name="nombre_participants">0 contributeurs</string>
     <string name="project_end_date">Date de fin</string>
     <string name="till_day">Inf jours restants</string>
+    <string name="add_project">Soumettre un projet</string>
 
 </resources>

@@ -36,6 +36,7 @@ public class InscriptionActivity extends Activity {
 		m_button.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 
+				
 				if (m_login.length() == 0) {
 					Toast.makeText(getApplicationContext(),
 							"Vous avez oublié le pseudo", Toast.LENGTH_SHORT)
