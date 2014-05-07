@@ -32,5 +32,8 @@ public class MainActivity extends TabActivity {
         intent.putExtra("valeur", "Ici les favoris");
         tabSpec = tabHost.newTabSpec("mes favoris").setIndicator("Favoris").setContent(intent);
         tabHost.addTab(tabSpec);
+        
+        Communicator communicator = new Communicator();
+        System.out.println(communicator.authentificateUser("Nelaupe", "Lucas"));
     }
 }
