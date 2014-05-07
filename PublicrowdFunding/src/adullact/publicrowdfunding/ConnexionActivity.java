@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 public class ConnexionActivity extends Activity {
 
@@ -35,9 +36,15 @@ public class ConnexionActivity extends Activity {
 
 				String login = m_login.getText().toString();
 				String password = m_password.getText().toString();
-
-				System.out.println("Connexion avec : " + login + " : "
-						+ password);
+			
+				if(login == "" || password == ""){
+					
+					Toast.makeText(getApplicationContext(),
+							"Merci de renseigner les champs",
+							Toast.LENGTH_SHORT).show();
+					return;
+				}
+				
 
 				// A toi de faire la connexion ??
 				// Comment je fait pour le requester car je ne sais pas si c'est
@@ -56,7 +63,10 @@ public class ConnexionActivity extends Activity {
 		m_buttonInscription.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				
+				String login = m_login.getText().toString();
+				
 				Intent in = new Intent(getBaseContext(), InscriptionActivity.class);
+				in.putExtra("login", login);
 				startActivity(in);
 				
 			}
