@@ -14,18 +14,21 @@ import android.widget.ImageButton;
 
 public class ConnexionActivity extends Activity {
 
-	private Button m_buttonValider;
 	private EditText m_login;
 	private EditText m_password;
+	private Button m_buttonValider;
+	private Button m_buttonInscription;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.connexion);
 
-		m_buttonValider = (Button) findViewById(R.id.valider_connexion);
 		m_login = (EditText) findViewById(R.id.login_connexion);
 		m_password = (EditText) findViewById(R.id.password_connexion);
+
+		m_buttonValider = (Button) findViewById(R.id.valider_connexion);
+		m_buttonInscription = (Button) findViewById(R.id.inscription_button);
 
 		m_buttonValider.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -39,15 +42,24 @@ public class ConnexionActivity extends Activity {
 				// A toi de faire la connexion ??
 				// Comment je fait pour le requester car je ne sais pas si c'est
 				// admin ou non. L'authentification doit être transparente.
-			
+
 				User utilisateur = new User(login);
-			
+
 				// Da fuck
 				AuthentificationRequester authentificationRequester = new AuthentificationRequester();
-				authentificationRequester.post(new AuthentificationRequest(utilisateur)).request();
-				
+				authentificationRequester.post(
+						new AuthentificationRequest(utilisateur)).request();
+
 			}
 		});
 
+		m_buttonInscription.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				
+				Intent in = new Intent(getBaseContext(), InscriptionActivity.class);
+				startActivity(in);
+				
+			}
+		});
 	}
 }

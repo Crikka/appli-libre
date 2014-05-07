@@ -6,12 +6,13 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:padding="6dip" >
 
         <ImageView
             android:id="@+id/imageView1"
             android:layout_width="fill_parent"
-            android:layout_height="152dp"
+            android:layout_height="100dp"
             android:gravity="center"
             android:src="@drawable/key" />
 
@@ -46,7 +47,6 @@
             android:gravity="center"
             android:inputType="textPassword" >
 
-            <requestFocus />
         </EditText>
 
         <Button
@@ -54,7 +54,14 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="connexion" />
+            android:text="Connexion" />
+        
+          <Button
+            android:id="@+id/inscription_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Inscription" />
     </LinearLayout>
 
 </ScrollView>
