@@ -1,0 +1,41 @@
+package adullact.publicrowdfunding;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.speech.RecognizerIntent;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+
+public class ConnexionActivity extends Activity {
+
+	private Button m_buttonValider;
+	private EditText m_login;
+	private EditText m_password;
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.connexion);
+
+		m_buttonValider = (Button) findViewById(R.id.valider_connexion);
+		m_login = (EditText) findViewById(R.id.login_connexion);
+		m_password = (EditText) findViewById(R.id.password_connexion);
+
+		m_buttonValider.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+
+				String login = m_login.getText().toString();
+				String password = m_password.getText().toString();
+
+				System.out.println("Connexion avec : " + login + " : "
+						+ password);
+
+				// A toi de faire la connexion ??
+			}
+		});
+
+	}
+}

@@ -3,6 +3,9 @@ package adullact.publicrowdfunding;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
@@ -37,4 +40,24 @@ public class MainActivity extends TabActivity {
         Communicator communicator = new Communicator();
         System.out.println(communicator.authentificateUser("Nelaupe", "Lucas"));
     }
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    // Inflate the menu items for use in the action bar
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.main, menu);
+	    return super.onCreateOptionsMenu(menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.Raz:
+			Intent in = new Intent(getBaseContext(), ConnexionActivity.class);
+			startActivity(in);
+			return true;
+		}
+		return false;
+	}
+
 }
