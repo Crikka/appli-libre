@@ -43,10 +43,11 @@ public class MainActivity extends TabActivity {
 	    return super.onCreateOptionsMenu(menu);
 	}
 	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.Raz:
+		case R.id.mon_compte:
 			Intent in = new Intent(getBaseContext(), ConnexionActivity.class);
 			startActivity(in);
 			return true;
