@@ -54,7 +54,7 @@
                 android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/description_projet_liste"
+                android:id="@+id/temps_restant_projet_liste"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"

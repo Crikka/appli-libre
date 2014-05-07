@@ -3,6 +3,7 @@ package adullact.publicrowdfunding;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
+import java.util.Vector;
 
 import adullact.publicrowdfunding.requester.ServerEmulator;
 import adullact.publicrowdfunding.shared.Project;
@@ -13,6 +14,7 @@ import android.speech.RecognizerIntent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -29,49 +31,38 @@ public class TabProjets extends Activity {
 
 		ServerEmulator serveur = ServerEmulator.instance();
 		HashMap<String, Project> projets = serveur.getAllProjets();
-
-		// Création de la ArrayList qui nous permettra de remplire la listView
-		ArrayList<HashMap<String, String>> listItem = new ArrayList<HashMap<String, String>>();
+		
+		Vector<Project> tabProj = new Vector<Project>();
 
 		for (Entry<String, Project> entry : projets.entrySet()) {
-			String titre = entry.getKey();
 			Project projet = entry.getValue();
 
-			// On déclare la HashMap qui contiendra les informations pour un
-			// item
-			HashMap<String, String> map;
-			map = new HashMap<String, String>();
-			map.put("titre", titre);
-			map.put("description", projet.name());
-			listItem.add(map);
+			tabProj.add(projet);
 		}
 
-		SimpleAdapter mSchedule = new SimpleAdapter(this.getBaseContext(),
-				listItem, R.layout.projet_list, new String[] { "titre",
-						"description" }, new int[] { R.id.titre_projet_liste,
-						R.id.description_projet_liste });
+		ArrayAdapter<Project> adapter = new CustomAdapter(
+				this.getBaseContext(),
+				R.layout.projet_list,
+				tabProj);
 
-		// On attribut à notre listView l'adapter que l'on vient de créer
-		listeProjets.setAdapter(mSchedule);
+		listeProjets.setAdapter(adapter);
 
-		
-		
-		//Enfin on met un écouteur d'évènement sur notre listView
+
 		listeProjets.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				
-				HashMap<String, String> map = (HashMap<String, String>) listeProjets.getItemAtPosition(position);
-				Intent in = new Intent(getBaseContext(), DetailProjetActivity.class);
-				in.putExtra("key",map.get("titre"));
-				startActivity(in);
-				
-			}
-         });
-		
-		
-	}
 
+				Project projet = (Project) listeProjets
+						.getItemAtPosition(position);
+				Intent in = new Intent(getBaseContext(),
+						DetailProjetActivity.class);
+				in.putExtra("key", projet.name());
+				startActivity(in);
+
+			}
+		});
+
+	}
 }
