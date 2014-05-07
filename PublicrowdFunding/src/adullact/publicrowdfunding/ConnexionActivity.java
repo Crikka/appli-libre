@@ -6,11 +6,9 @@ import adullact.publicrowdfunding.shared.User;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.speech.RecognizerIntent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 public class ConnexionActivity extends Activity {
@@ -32,6 +30,7 @@ public class ConnexionActivity extends Activity {
 		m_buttonInscription = (Button) findViewById(R.id.inscription_button);
 
 		m_buttonValider.setOnClickListener(new View.OnClickListener() {
+			@Override
 			public void onClick(View v) {
 
 				String login = m_login.getText().toString();
@@ -61,6 +60,7 @@ public class ConnexionActivity extends Activity {
 		});
 
 		m_buttonInscription.setOnClickListener(new View.OnClickListener() {
+			@Override
 			public void onClick(View v) {
 				
 				String login = m_login.getText().toString();

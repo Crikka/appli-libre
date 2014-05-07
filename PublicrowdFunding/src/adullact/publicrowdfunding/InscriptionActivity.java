@@ -71,10 +71,12 @@ public class InscriptionActivity extends Activity {
 					return;
 				}
 
+				/*
+				 * Voila les éléments à stoquer
 				String login = m_login.getText().toString();
 				String password = m_password1.getText().toString();
 				String email = m_email.getText().toString();
-
+				 */
 				Toast.makeText(getApplicationContext(), "Inscription validé !",
 						Toast.LENGTH_SHORT).show();
 			}

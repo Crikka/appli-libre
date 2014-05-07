@@ -9,7 +9,7 @@
         android:id="@+id/titre_projet_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nom du projet"
+        android:text="@string/project_name"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <RatingBar

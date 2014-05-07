@@ -13,6 +13,7 @@
             android:id="@+id/imageView1"
             android:layout_width="fill_parent"
             android:layout_height="100dp"
+            android:contentDescription="@string/image_cadenas"
             android:gravity="center"
             android:padding="10dp"
             android:src="@drawable/key" />
@@ -22,7 +23,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Nom d&apos;utilisateur"
+            android:text="@string/login"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText
@@ -30,14 +31,15 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:gravity="center" />
+            android:gravity="center"
+            android:inputType="text" />
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Mot de passe"
+            android:text="@string/password"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText
@@ -54,14 +56,14 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Connexion" />
+            android:text="@string/connexion" />
 
         <Button
             android:id="@+id/inscription_button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Creer un compte" />
+            android:text="@string/creer_un_compte" />
     </LinearLayout>
 
 </ScrollView>

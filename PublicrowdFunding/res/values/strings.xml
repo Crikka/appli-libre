@@ -2,7 +2,18 @@
 <resources>
 
     <string name="app_name">PublicrowdFunding</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="login">Nom d\'utilisateur</string>
+    <string name="password">Mot de passe</string>
+    <string name="creer_un_compte">Creer un compte</string>
+    <string name="connexion">Connexion</string>
+    <string name="image_cadenas">Clef secure</string>
+    <string name="email">Adresse Email</string>
+    <string name="go_inscription">Créer mon compte</string>
+    <string name="project_name">Nom du projet</string>
+    <string name="description_image_project">Illustration du projet</string>
+    <string name="project_description">Description du projet</string>
+    <string name="nombre_participants">0 contributeurs</string>
+    <string name="project_end_date">Date de fin</string>
+    <string name="till_day">Inf jours restants</string>
 
 </resources>
