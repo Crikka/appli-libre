@@ -1,65 +1,36 @@
 package adullact.publicrowfunding;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
+import android.app.TabActivity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
+import android.widget.TabHost;
+import android.widget.TabHost.TabSpec;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends TabActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+	private TabHost tabHost;
+	private TabSpec tabSpec;
+
+	@Override
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
-        }
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
         
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+        tabHost = getTabHost();
+        
+        Intent intent = new Intent(this, TabProjets.class);
+        intent.putExtra("valeur", "Coucou tout le monde");
+        tabSpec = tabHost.newTabSpec("liste projets").setIndicator("Projets").setContent(intent);
+        tabHost.addTab(tabSpec);
+        
+        intent = new Intent(this, TabContributions.class);
+        intent.putExtra("valeur", "Fianancement auquels je participe");
+        tabSpec = tabHost.newTabSpec("projets financés").setIndicator("Mes contributions").setContent(intent);
+        tabHost.addTab(tabSpec);
+        
+        intent = new Intent(this, TabFavoris.class);
+        intent.putExtra("valeur", "Ici les favoris");
+        tabSpec = tabHost.newTabSpec("mes favoris").setIndicator("Favoris").setContent(intent);
+        tabHost.addTab(tabSpec);
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
-        }
-    }
-
 }
