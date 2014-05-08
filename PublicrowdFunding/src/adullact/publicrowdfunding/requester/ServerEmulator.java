@@ -38,12 +38,12 @@ public class ServerEmulator {
 		/* ---------- */
 		
 		/* Projects base */
-		projectsBase.put("Ecole publique", new Project("Construction d'une école primaire"));
-		projectsBase.put("Parking sous terrain", new Project("Parking au centre de Montpellier"));
-		projectsBase.put("Lave vaisselle", new Project("Lave vaisselle pour le restaurent universitaire de Montpellier"));
-		projectsBase.put("Renovation Faculté", new Project("Rénovation de la fac des sciences"));
-		projectsBase.put("Nouveaux lampadaires", new Project("Achat de nouveaux lampadaires basse consommation"));
-		projectsBase.put("De la modestie pour fred", new Project("Ca ne lui ferait pas de mal"));
+		projectsBase.put("Ecole publique", new Project("Ecole publique","Construction d'une école primaire"));
+		projectsBase.put("Parking sous terrain", new Project("Parking sous terrain","Parking au centre de Montpellier"));
+		projectsBase.put("Lave vaisselle", new Project("Lave vaisselle","Lave vaisselle pour le restaurent universitaire de Montpellier"));
+		projectsBase.put("Renovation Faculté", new Project("Renovation Faculté","Rénovation de la fac des sciences"));
+		projectsBase.put("Nouveaux lampadaires", new Project("Nouveaux lampadaires","Achat de nouveaux lampadaires basse consommation"));
+		projectsBase.put("De la modestie pour fred", new Project("De la modestie pour fred","Ca ne lui ferait pas de mal"));
 		/* ------------- */
 	}
 	

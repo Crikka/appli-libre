@@ -66,7 +66,7 @@ public class DetailProjetActivity extends Activity {
 		m_progression.setProgress(35);
 		m_progression.setMaxArgent(100);
 
-		m_titre.setText(projet.name());
+		m_titre.setText(projet.getName());
 
 		m_notation
 				.setOnRatingBarChangeListener(new OnRatingBarChangeListener() {

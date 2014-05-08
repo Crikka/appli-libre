@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class CustomAdapter extends ArrayAdapter<Project> {
@@ -66,8 +65,8 @@ public class CustomAdapter extends ArrayAdapter<Project> {
 		}
 		
 		Project projet = data.elementAt(position);
-		holder.titre_projet_liste.setText(projet.name());
-		holder.description_projet_liste.setText(projet.name());
+		holder.titre_projet_liste.setText(projet.getName());
+		holder.description_projet_liste.setText(projet.getDescription());
 		holder.nb_participation_projet_liste.setText("10 participants");
 		holder.temps_restant_projet_liste.setText("24 jours restants");
 		int progression = (int) ( 1 + Math.random()*(holder.avancement_projet_liste.getMax()+1) + 1);

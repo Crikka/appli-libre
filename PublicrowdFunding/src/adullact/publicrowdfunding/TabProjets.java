@@ -55,7 +55,7 @@ public class TabProjets extends Activity {
 						.getItemAtPosition(position);
 				Intent in = new Intent(getBaseContext(),
 						DetailProjetActivity.class);
-				in.putExtra("key", projet.name());
+				in.putExtra("key", projet.getName());
 				startActivity(in);
 
 			}
