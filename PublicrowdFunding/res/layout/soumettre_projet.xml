@@ -1,74 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
-    <LinearLayout
-        android:id="@+id/project_add_layout"
+    <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="5dp" >
+        android:layout_weight="1" >
 
-        <Button
-            android:id="@+id/soumettre_photo"
-            android:layout_width="150dp"
-            android:layout_height="100dp"
-            android:text="ajouter une photo" />
-
-        <TextView
-            android:id="@+id/textView1"
+        <LinearLayout
+            android:id="@+id/project_add_layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/project_name"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:orientation="vertical"
+            android:padding="5dp" >
 
-        <EditText
-            android:id="@+id/soumettre_titre"
-            android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/project_name"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <EditText
+                android:id="@+id/soumettre_titre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="text" >
+
+                <requestFocus />
+            </EditText>
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/project_description"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <EditText
+                android:id="@+id/soumettre_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textMultiLine" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/project_end_date"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <DatePicker
+                android:id="@+id/soumettre_date_fin"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center" />
+
+            <Button
+                android:id="@+id/soumettre_valider"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/valider" />
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/buttonBar"
+        style="@android:style/ButtonBar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:gravity="center"
+        android:padding="0dp" >
+
+        <ImageButton
+            android:id="@+id/soumettre_photo_camera"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="text" >
+            android:background="@null"
+            android:contentDescription="@string/description_image_button"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:src="@android:drawable/ic_menu_camera" />
 
-            <requestFocus />
-        </EditText>
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="fill_parent"
+        <ImageButton
+            android:id="@+id/soumettre_photo_gallery"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/project_description"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:background="@null"
+            android:contentDescription="@string/description_image_button"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:src="@android:drawable/ic_menu_gallery" />
 
-        <EditText
-            android:id="@+id/soumettre_description"
-            android:layout_width="match_parent"
+        <ImageButton
+            android:id="@+id/soumettre_localisation"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textMultiLine" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/project_end_date"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <DatePicker
-            android:id="@+id/soumettre_date_fin"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center" />
-
-        <Button
-            android:id="@+id/soumettre_valider"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="valider" />
+            android:background="@null"
+            android:contentDescription="@string/description_image_button"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:src="@android:drawable/ic_menu_myplaces" />
     </LinearLayout>
 
-</ScrollView>
+</LinearLayout>

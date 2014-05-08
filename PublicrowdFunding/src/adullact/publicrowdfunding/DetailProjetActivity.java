@@ -5,7 +5,11 @@ import java.util.HashMap;
 import adullact.publicrowdfunding.requester.ServerEmulator;
 import adullact.publicrowdfunding.shared.Project;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.RatingBar;
 import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.TextView;
@@ -13,7 +17,13 @@ import android.widget.Toast;
 
 public class DetailProjetActivity extends Activity {
 
-	private RatingBar notation;
+	private TextView m_titre;
+	private TextView m_description;
+	private TextView m_nombre_participants;
+	private TextView m_date_de_fin;
+	private TextView m_utilisateur_soumission;
+	private RatingBar m_notation;
+	private CustomProgressBar m_progression;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -27,21 +37,52 @@ public class DetailProjetActivity extends Activity {
 		HashMap<String, Project> projets = serveur.getAllProjets();
 		Project projet = projets.get(titre);
 
-		notation = (RatingBar) findViewById(R.id.rating_bar_projet_detail);
-		TextView txvTitre = (TextView) findViewById(R.id.titre_projet_detail);
+		m_titre = (TextView) findViewById(R.id.titre_projet_detail);
+		m_description = (TextView) findViewById(R.id.detail_projet_detail);
+		m_nombre_participants = (TextView) findViewById(R.id.nombre_participants_detail);
+		m_date_de_fin = (TextView) findViewById(R.id.nombre_jour_restant_detail);
+		m_utilisateur_soumission = (TextView) findViewById(R.id.utilisateur_soumission);
+		m_notation = (RatingBar) findViewById(R.id.rating_bar_projet_detail);
+		m_progression = (CustomProgressBar) findViewById(R.id.avancement_projet_liste);
 
-		txvTitre.setText(projet.name());
+		m_progression.setArgent(400);
+		m_progression.setMaxArgent(1000);
 
-		notation.setOnRatingBarChangeListener(new OnRatingBarChangeListener() {
+		m_titre.setText(projet.name());
+		
+		m_notation
+				.setOnRatingBarChangeListener(new OnRatingBarChangeListener() {
 
-			@Override
-			public void onRatingChanged(RatingBar ratingBar, float rating,
-					boolean fromUser) {
-				Toast.makeText(getApplicationContext(),
-						"Notation de : " + rating, Toast.LENGTH_SHORT).show();
-			}
+					@Override
+					public void onRatingChanged(RatingBar ratingBar,
+							float rating, boolean fromUser) {
+						Toast.makeText(getApplicationContext(),
+								"Notation de : " + rating, Toast.LENGTH_SHORT)
+								.show();
+					}
 
-		});
+				});
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu items for use in the action bar
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.detail_projet, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		switch (item.getItemId()) {
+
+		case R.id.add_favorite:
+			Toast.makeText(getBaseContext(), "Projet ajouté aux favoris", Toast.LENGTH_SHORT).show();
+			return true;
+
+		}
+		return false;
 	}
 
 }

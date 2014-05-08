@@ -16,5 +16,8 @@
     <string name="project_end_date">Date de fin</string>
     <string name="till_day">Inf jours restants</string>
     <string name="add_project">Soumettre un projet</string>
+    <string name="projet_soumission">Projet proposé par lucas</string>
+     <string name="description_image_button">Bouton image</string>
+    <string name="valider">Valider</string>
 
 </resources>
