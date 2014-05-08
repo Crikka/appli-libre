@@ -46,7 +46,7 @@ public class MainActivity extends TabActivity {
 		System.out.println(" et je suis admin : " + (userNormal instanceof Administrator));
 
 
-	}
+	} 
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

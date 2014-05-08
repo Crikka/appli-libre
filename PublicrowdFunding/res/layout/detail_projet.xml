@@ -64,20 +64,19 @@
 
     <adullact.publicrowdfunding.CustomProgressBar
         android:id="@+id/avancement_projet_liste"
-        style="?android:attr/progressBarStyleHorizontal"
+        style="@android:style/Widget.ProgressBar.Horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:max="100"
-        android:maxHeight="10dp"
-        android:minHeight="10dp"
-        android:progress="0" />
+        android:progress="0"
+        android:progressDrawable="@drawable/progressbar" />
 
     <TextView
         android:id="@+id/utilisateur_soumission"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/projet_soumission"
-        android:textSize="12sp"/>
+        android:textSize="12sp" />
 
     <RatingBar
         android:id="@+id/rating_bar_projet_detail"

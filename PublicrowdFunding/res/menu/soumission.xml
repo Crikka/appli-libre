@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-
+  
     <item
-        android:id="@+id/add_favorite"
-        android:icon="@drawable/ic_menu_star"
+        android:id="@+id/soumettre"
+        android:icon="@android:drawable/ic_menu_send"
         android:showAsAction="always"
-        android:title="ajouter aux favoris"/>
+        android:title="@string/connexion"/>
 
 </menu>

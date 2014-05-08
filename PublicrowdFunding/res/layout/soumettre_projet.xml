@@ -62,54 +62,45 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center" />
-
-            <Button
-                android:id="@+id/soumettre_valider"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/valider" />
         </LinearLayout>
     </ScrollView>
 
     <LinearLayout
         android:id="@+id/buttonBar"
-        style="@android:style/ButtonBar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0"
+        android:background="@color/bleu"
         android:gravity="center"
-        android:padding="0dp" >
+        android:padding="0dp"
+        android:weightSum="3" >
 
         <ImageButton
             android:id="@+id/soumettre_photo_camera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:background="@null"
             android:contentDescription="@string/description_image_button"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
             android:src="@android:drawable/ic_menu_camera" />
 
         <ImageButton
             android:id="@+id/soumettre_photo_gallery"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:background="@null"
             android:contentDescription="@string/description_image_button"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
             android:src="@android:drawable/ic_menu_gallery" />
 
         <ImageButton
             android:id="@+id/soumettre_localisation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:background="@null"
             android:contentDescription="@string/description_image_button"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:src="@android:drawable/ic_menu_myplaces" />
+            android:src="@android:drawable/ic_menu_mylocation" />
     </LinearLayout>
 
 </LinearLayout>

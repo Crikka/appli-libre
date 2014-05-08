@@ -11,6 +11,9 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -30,7 +33,6 @@ public class SoumettreProjetActivity extends Activity {
 	private ImageButton m_bouttonPhoto;
 	private ImageButton m_bouttonGallery;
 	private ImageButton m_localisation;
-	private Button m_bouttonValider;
 	private ImageView photo;
 
 	private static final int SELECT_PHOTO = 100;
@@ -58,7 +60,6 @@ public class SoumettreProjetActivity extends Activity {
 		m_dateFin = (DatePicker) findViewById(R.id.soumettre_date_fin);
 		m_bouttonPhoto = (ImageButton) findViewById(R.id.soumettre_photo_camera);
 		m_bouttonGallery = (ImageButton) findViewById(R.id.soumettre_photo_gallery);
-		m_bouttonValider = (Button) findViewById(R.id.soumettre_valider);
 		m_localisation = (ImageButton) findViewById(R.id.soumettre_localisation);
 
 		m_bouttonPhoto.setOnClickListener(new View.OnClickListener() {
@@ -135,4 +136,31 @@ public class SoumettreProjetActivity extends Activity {
 		}
 
 	}
+	
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu items for use in the action bar
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.soumission, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		switch (item.getItemId()) {
+
+		case R.id.soumettre:
+			Toast.makeText(getApplicationContext(), "Projet soumis en attente de validation", Toast.LENGTH_SHORT).show();
+			return true;
+
+		}
+		return false;
+	}
+	
+	
+	
+	
+	
 }

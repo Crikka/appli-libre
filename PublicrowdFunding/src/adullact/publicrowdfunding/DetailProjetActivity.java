@@ -6,6 +6,10 @@ import adullact.publicrowdfunding.requester.ServerEmulator;
 import adullact.publicrowdfunding.shared.Project;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,6 +28,8 @@ public class DetailProjetActivity extends Activity {
 	private TextView m_utilisateur_soumission;
 	private RatingBar m_notation;
 	private CustomProgressBar m_progression;
+	private Drawable m_favorite;
+	private boolean m_Is_favorite;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -44,12 +50,23 @@ public class DetailProjetActivity extends Activity {
 		m_utilisateur_soumission = (TextView) findViewById(R.id.utilisateur_soumission);
 		m_notation = (RatingBar) findViewById(R.id.rating_bar_projet_detail);
 		m_progression = (CustomProgressBar) findViewById(R.id.avancement_projet_liste);
+		MenuItem test = (MenuItem) findViewById(R.id.add_favorite);
+
+		m_Is_favorite = false;
+
+		if (test != null) {
+			Drawable icon = test.getIcon();
+			System.out.println(icon.toString());
+		} else {
+			System.out.println("test is null");
+
+		}
 
 		m_progression.setArgent(400);
 		m_progression.setMaxArgent(1000);
 
 		m_titre.setText(projet.name());
-		
+
 		m_notation
 				.setOnRatingBarChangeListener(new OnRatingBarChangeListener() {
 
@@ -63,12 +80,13 @@ public class DetailProjetActivity extends Activity {
 
 				});
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu items for use in the action bar
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.detail_projet, menu);
+		m_favorite = menu.getItem(0).getIcon();
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -78,7 +96,23 @@ public class DetailProjetActivity extends Activity {
 		switch (item.getItemId()) {
 
 		case R.id.add_favorite:
-			Toast.makeText(getBaseContext(), "Projet ajouté aux favoris", Toast.LENGTH_SHORT).show();
+			
+			PorterDuffColorFilter filter = null;
+			if (m_Is_favorite) {
+				Toast.makeText(getBaseContext(), "Projet retiré des favoris",
+						Toast.LENGTH_SHORT).show();
+				filter = new PorterDuffColorFilter(Color.TRANSPARENT,
+						PorterDuff.Mode.SRC_ATOP);
+			} else {
+				Toast.makeText(getBaseContext(), "Projet ajouté aux favoris",
+						Toast.LENGTH_SHORT).show();
+
+				filter = new PorterDuffColorFilter(Color.parseColor("#ffffff00"),
+						PorterDuff.Mode.SRC_ATOP);
+
+			}
+			m_Is_favorite = !m_Is_favorite;
+			m_favorite.setColorFilter(filter);
 			return true;
 
 		}
