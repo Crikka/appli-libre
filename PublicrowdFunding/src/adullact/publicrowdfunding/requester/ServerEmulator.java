@@ -5,6 +5,7 @@ import java.util.HashMap;
 import adullact.publicrowdfunding.shared.Administrator;
 import adullact.publicrowdfunding.shared.Project;
 import adullact.publicrowdfunding.shared.User;
+import android.util.Pair;
 
 
 /**
@@ -17,11 +18,11 @@ public class ServerEmulator {
 	public static ServerEmulator instance() { if(m_instance == null) {m_instance = new ServerEmulator();} return m_instance; }
 	/* --------- */
 	
-	private HashMap<String, User> usersBase; // name of user use as key
+	private HashMap<Pair<String, String>, User> usersBase; // name of user use as key
 	private HashMap<String, Project> projectsBase; // name of project use as key
 	
 	private ServerEmulator() {
-		this.usersBase = new HashMap<String, User>();
+		this.usersBase = new HashMap<Pair<String, String>, User>();
 		this.projectsBase = new HashMap<String, Project>();
 		initialize();
 	}
@@ -31,9 +32,9 @@ public class ServerEmulator {
 	 */
 	private void initialize() {
 		/* Users base */
-		usersBase.put("Gate", new Administrator("Gate", "Bill"));
-		usersBase.put("Nelaupe", new Administrator("Nelaupe", "Lucas"));
-		usersBase.put("Ferrand", new User("Ferrand", "Anthony"));
+		usersBase.put(new Pair<String, String>("MisterGate", "azE45WIN"), new Administrator("MisterGate", "Gate", "Bill"));
+		usersBase.put(new Pair<String, String>("XFactor", "mushroom34"), new Administrator("XFactor", "Nelaupe", "Lucas"));
+		usersBase.put(new Pair<String, String>("Miaou", "abjectDominera"), new User("Miaou", "Ferrand", "Anthony"));
 		/* ---------- */
 		
 		/* Projects base */
@@ -42,24 +43,15 @@ public class ServerEmulator {
 		/* ------------- */
 	}
 	
-	public boolean userExist(String name) {
-		return usersBase.containsKey(name);
-	}
-	
-	public boolean isAdministrator(String name) {
-		boolean res = userExist(name);
-		if(res){
-			res = usersBase.get(name) instanceof Administrator; // In database, we will have a boolean in user table.
-		}
-		return res;
-	}
-	
-	public boolean authentificateUser(String name, String firstName) {
-		User user = usersBase.get(name);
-		if(user == null){
-			return false;
-		}
-		return ((user.name() == name) && (user.firstName() == firstName));
+	/**
+	 * @param username
+	 * @param password
+	 * @return User if he exists, else return null.
+	 */
+	public User authentificateUser(String username, String password) {
+		Pair<String, String> clef = new Pair<String, String>(username, password);
+		
+		return usersBase.get(clef);
 	}
 	
 	public boolean projectExist(String name) {

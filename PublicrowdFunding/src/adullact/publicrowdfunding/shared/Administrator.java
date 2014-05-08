@@ -2,8 +2,8 @@ package adullact.publicrowdfunding.shared;
 
 public class Administrator extends User {
 
-	public Administrator(String name, String firstName) {
-		super(name, firstName);
+	public Administrator(String pseudo, String name, String firstName) {
+		super(pseudo, name, firstName);
 	}
 	
 }

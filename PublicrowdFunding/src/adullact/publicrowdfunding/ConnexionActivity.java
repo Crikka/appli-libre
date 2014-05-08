@@ -52,16 +52,10 @@ public class ConnexionActivity extends Activity {
 				}
 				
 
-				// A toi de faire la connexion ??
-				// Comment je fait pour le requester car je ne sais pas si c'est
-				// admin ou non. L'authentification doit être transparente.
-
-				User utilisateur = new User(login);
-
-				// Da fuck
-				AuthentificationRequester authentificationRequester = new AuthentificationRequester();
-				authentificationRequester.post(
-						new AuthentificationRequest(utilisateur)).request();
+				Communicator communicator = new Communicator();
+				
+				User utilisateur = communicator.authentificateUser(m_login.getText().toString(), m_password.getText().toString()); // Utilise seulement la classe communicator pour te simplifier la vie :-)
+				// Tu peux downcast avec utilisateur.toAdmin()
 
 			}
 		});

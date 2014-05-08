@@ -1,5 +1,7 @@
 package adullact.publicrowdfunding;
 
+import adullact.publicrowdfunding.shared.Administrator;
+import adullact.publicrowdfunding.shared.User;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,7 +36,16 @@ public class MainActivity extends TabActivity {
 		tabHost.addTab(tabSpec);
 
 		Communicator communicator = new Communicator();
-		System.out.println(communicator.authentificateUser("Nelaupe", "Lucas"));
+		User userAdmin = communicator.authentificateUser("MisterGate", "azE45WIN");
+		User userNormal = communicator.authentificateUser("Miaou", "abjectDominera");
+		
+		System.out.print("Je suis "+userAdmin.pseudo()+" "+userAdmin.name()+" "+ userAdmin.firstName());
+		System.out.println(" et je suis admin : " + (userAdmin instanceof Administrator));
+		
+		System.out.print("Je suis "+userNormal.pseudo()+" "+userNormal.name()+" "+ userNormal.firstName());
+		System.out.println(" et je suis admin : " + (userNormal instanceof Administrator));
+
+
 	}
 
 	@Override
