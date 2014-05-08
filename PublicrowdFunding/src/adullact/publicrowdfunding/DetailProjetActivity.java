@@ -61,9 +61,10 @@ public class DetailProjetActivity extends Activity {
 			System.out.println("test is null");
 
 		}
-
-		m_progression.setArgent(400);
-		m_progression.setMaxArgent(1000);
+		
+		m_progression.setArgent(40);
+		m_progression.setProgress(35);
+		m_progression.setMaxArgent(100);
 
 		m_titre.setText(projet.name());
 

@@ -38,8 +38,12 @@ public class ServerEmulator {
 		/* ---------- */
 		
 		/* Projects base */
-		projectsBase.put("La tour Eiffel", new Project("La tour Eiffel"));
-		projectsBase.put("Arc de triomphe", new Project("Arc de triomphe"));
+		projectsBase.put("Ecole publique", new Project("Construction d'une école primaire"));
+		projectsBase.put("Parking sous terrain", new Project("Parking au centre de Montpellier"));
+		projectsBase.put("Lave vaisselle", new Project("Lave vaisselle pour le restaurent universitaire de Montpellier"));
+		projectsBase.put("Renovation Faculté", new Project("Rénovation de la fac des sciences"));
+		projectsBase.put("Nouveaux lampadaires", new Project("Achat de nouveaux lampadaires basse consommation"));
+		projectsBase.put("De la modestie pour fred", new Project("Ca ne lui ferait pas de mal"));
 		/* ------------- */
 	}
 	
