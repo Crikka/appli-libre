@@ -40,7 +40,7 @@ public class ConnexionActivity extends Activity {
 					Toast.makeText(getApplicationContext(),
 							"Vous avez oublié le login",
 							Toast.LENGTH_SHORT).show();
-					
+					return;
 				}
 				
 				if(m_password.length() == 0){

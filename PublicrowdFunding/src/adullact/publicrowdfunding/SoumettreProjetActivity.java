@@ -3,14 +3,17 @@ package adullact.publicrowdfunding;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -33,10 +36,10 @@ public class SoumettreProjetActivity extends Activity {
 	private ImageButton m_bouttonPhoto;
 	private ImageButton m_bouttonGallery;
 	private ImageButton m_localisation;
-	private ImageView photo;
+	private ImageView m_illustration;
 
-	private static final int SELECT_PHOTO = 100;
-	private static final int CAMERA_PIC_REQUEST = 0;
+	private static final int PICK_FROM_CAMERA = 1;
+	private static final int PICK_FROM_GALLERY = 2;
 
 	// Et la on arrive à des trucs bien sale.
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -61,32 +64,72 @@ public class SoumettreProjetActivity extends Activity {
 		m_bouttonPhoto = (ImageButton) findViewById(R.id.soumettre_photo_camera);
 		m_bouttonGallery = (ImageButton) findViewById(R.id.soumettre_photo_gallery);
 		m_localisation = (ImageButton) findViewById(R.id.soumettre_localisation);
+		m_illustration = (ImageView) findViewById(R.id.projet_illustration);
 
 		m_bouttonPhoto.setOnClickListener(new View.OnClickListener() {
-			@Override
+
 			public void onClick(View v) {
 
-				Intent intent = new Intent(
-						android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-				startActivityForResult(intent, 0);
+				Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+				intent.putExtra(MediaStore.EXTRA_OUTPUT,
+						MediaStore.Images.Media.EXTERNAL_CONTENT_URI.toString());
+
+				intent.putExtra("crop", "true");
+				intent.putExtra("aspectX", 0);
+				intent.putExtra("aspectY", 0);
+				intent.putExtra("outputX", 200);
+				intent.putExtra("outputY", 150);
+
+				try {
+
+					intent.putExtra("return-data", true);
+					startActivityForResult(intent, PICK_FROM_CAMERA);
+
+				} catch (ActivityNotFoundException e) {
+					Toast.makeText(getApplicationContext(),
+							"Une erreur s'est produite", Toast.LENGTH_SHORT)
+							.show();
+				}
 			}
 		});
 
 		m_bouttonGallery.setOnClickListener(new View.OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent();
 
-				Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-				photoPickerIntent.setType("image/*");
-				startActivityForResult(photoPickerIntent, SELECT_PHOTO);
+				intent.setType("image/*");
+				intent.setAction(Intent.ACTION_GET_CONTENT);
+
+				intent.putExtra("crop", "true");
+				intent.putExtra("aspectX", 0);
+				intent.putExtra("aspectY", 0);
+				intent.putExtra("outputX", 200);
+				intent.putExtra("outputY", 150);
+
+				try {
+
+					intent.putExtra("return-data", true);
+					startActivityForResult(Intent.createChooser(intent,
+							"Complete action using"), PICK_FROM_GALLERY);
+
+				} catch (ActivityNotFoundException e) {
+					Toast.makeText(getApplicationContext(),
+							"Une erreur s'est produite", Toast.LENGTH_SHORT)
+							.show();
+				}
 			}
 		});
 
 		m_localisation.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent in = new Intent(getBaseContext(), CustomMapsActivity.class);
-				in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); 
+				Intent in = new Intent(getBaseContext(),
+						CustomMapsActivity.class);
+				in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				startActivity(in);
 			}
 		});
@@ -95,48 +138,26 @@ public class SoumettreProjetActivity extends Activity {
 
 	}
 
-	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stub
-		super.onActivityResult(requestCode, resultCode, data);
 
-		System.out.println(requestCode);
+		if (requestCode == PICK_FROM_CAMERA) {
+			Bundle extras = data.getExtras();
+			if (extras != null) {
+				Bitmap photo = extras.getParcelable("data");
+				m_illustration.setImageBitmap(photo);
 
-		switch (requestCode) {
-		case SELECT_PHOTO:
-			if (resultCode == RESULT_OK) {
-				Uri selectedImage = data.getData();
-				InputStream imageStream = null;
-				try {
-					imageStream = getContentResolver().openInputStream(
-							selectedImage);
-					Bitmap yourSelectedImage = BitmapFactory
-							.decodeStream(imageStream);
-
-					photo = new ImageView(this);
-					photo.setImageBitmap(yourSelectedImage);
-
-					layout.addView(photo, 0);
-
-				} catch (FileNotFoundException e) {
-					Toast.makeText(getApplicationContext(), "Erreur",
-							Toast.LENGTH_LONG).show();
-				}
-
-			}
-		case CAMERA_PIC_REQUEST:
-			if (resultCode == RESULT_OK) {
-				Bitmap bit = (Bitmap) data.getExtras().get("data");
-
-				photo = new ImageView(this);
-				photo.setImageBitmap(bit);
-
-				layout.addView(photo, 0);
 			}
 		}
 
+		if (requestCode == PICK_FROM_GALLERY) {
+			Bundle extras2 = data.getExtras();
+			if (extras2 != null) {
+				Bitmap photo = extras2.getParcelable("data");
+				m_illustration.setImageBitmap(photo);
+
+			}
+		}
 	}
-	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -152,15 +173,13 @@ public class SoumettreProjetActivity extends Activity {
 		switch (item.getItemId()) {
 
 		case R.id.soumettre:
-			Toast.makeText(getApplicationContext(), "Projet soumis en attente de validation", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(),
+					"Projet soumis en attente de validation",
+					Toast.LENGTH_SHORT).show();
 			return true;
 
 		}
 		return false;
 	}
-	
-	
-	
-	
-	
+
 }
