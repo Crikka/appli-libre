@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <item
+    <!-- item
         android:id="@+id/mon_compte"
         android:icon="@android:drawable/ic_menu_login"
         android:showAsAction="always"
-        android:title="@string/connexion"/>
+        android:title="@string/connexion"/ -->
     <item
         android:id="@+id/add_project"
         android:icon="@android:drawable/ic_menu_add"
