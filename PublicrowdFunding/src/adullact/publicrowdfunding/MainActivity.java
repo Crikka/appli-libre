@@ -51,12 +51,11 @@ public class MainActivity extends TabActivity {
 		Intent in = null;
 		switch (item.getItemId()) {
 
-		/*
 		case R.id.mon_compte:
 			in = new Intent(getBaseContext(), ConnexionActivity.class);
 			startActivity(in);
 			return true;
-*/
+
 		case R.id.add_project:
 			in = new Intent(getBaseContext(), SoumettreProjetActivity.class);
 			startActivity(in);

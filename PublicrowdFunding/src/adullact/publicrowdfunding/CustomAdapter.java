@@ -30,7 +30,7 @@ public class CustomAdapter extends ArrayAdapter<Project> {
 		public TextView description_projet_liste;
 		public TextView nb_participation_projet_liste;
 		public TextView temps_restant_projet_liste;
-		public ProgressBar avancement_projet_liste;
+		public CustomProgressBar avancement_projet_liste;
 
 	}
 
@@ -56,7 +56,7 @@ public class CustomAdapter extends ArrayAdapter<Project> {
 					.findViewById(R.id.nb_participation_projet_liste);
 			holder.temps_restant_projet_liste = (TextView) v
 					.findViewById(R.id.temps_restant_projet_liste);
-			holder.avancement_projet_liste = (ProgressBar) v
+			holder.avancement_projet_liste = (CustomProgressBar) v
 					.findViewById(R.id.avancement_projet_liste);
 			
 
@@ -71,6 +71,8 @@ public class CustomAdapter extends ArrayAdapter<Project> {
 		holder.nb_participation_projet_liste.setText("10 participants");
 		holder.temps_restant_projet_liste.setText("24 jours restants");
 		int progression = (int) ( 1 + Math.random()*(holder.avancement_projet_liste.getMax()+1) + 1);
+		holder.avancement_projet_liste.setMaxArgent(100);
+		holder.avancement_projet_liste.setArgent(progression);
 		holder.avancement_projet_liste.setProgress(progression);
 		
 		return v;

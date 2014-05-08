@@ -47,7 +47,6 @@ public class SoumettreProjetActivity extends Activity {
 		m_bouttonPhoto = (Button) findViewById(R.id.soumettre_photo);
 		m_bouttonValider = (Button) findViewById(R.id.soumettre_valider);
 
-
 		m_bouttonPhoto.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -70,7 +69,8 @@ public class SoumettreProjetActivity extends Activity {
 
 		photo = new ImageView(this);
 		photo.setImageBitmap(bit);
-		layout.removeView(m_bouttonPhoto);;
+		layout.removeView(m_bouttonPhoto);
+		;
 		layout.addView(photo, 0);
 
 	}
