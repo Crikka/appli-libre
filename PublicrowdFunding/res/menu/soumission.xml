@@ -5,6 +5,6 @@
         android:id="@+id/soumettre"
         android:icon="@android:drawable/ic_menu_send"
         android:showAsAction="always"
-        android:title="@string/connexion"/>
+        android:title="@string/valider"/>
 
 </menu>

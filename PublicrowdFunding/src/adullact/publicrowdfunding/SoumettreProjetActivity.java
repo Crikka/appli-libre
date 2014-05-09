@@ -2,6 +2,7 @@ package adullact.publicrowdfunding;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -14,6 +15,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.speech.RecognizerIntent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -40,6 +43,7 @@ public class SoumettreProjetActivity extends Activity {
 
 	private static final int PICK_FROM_CAMERA = 1;
 	private static final int PICK_FROM_GALLERY = 2;
+	private static final int PICK_MAPS = 3;
 
 	// Et la on arrive à des trucs bien sale.
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -129,8 +133,7 @@ public class SoumettreProjetActivity extends Activity {
 			public void onClick(View v) {
 				Intent in = new Intent(getBaseContext(),
 						CustomMapsActivity.class);
-				in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				startActivity(in);
+				startActivityForResult(in, 3);
 			}
 		});
 
@@ -140,22 +143,39 @@ public class SoumettreProjetActivity extends Activity {
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-		if (requestCode == PICK_FROM_CAMERA) {
+		if(resultCode  != Activity.RESULT_OK){
+			return;
+		}
+		
+		switch (requestCode) {
+
+		case PICK_FROM_CAMERA:
 			Bundle extras = data.getExtras();
 			if (extras != null) {
 				Bitmap photo = extras.getParcelable("data");
 				m_illustration.setImageBitmap(photo);
 
 			}
-		}
+			break;
 
-		if (requestCode == PICK_FROM_GALLERY) {
+		case PICK_FROM_GALLERY:
 			Bundle extras2 = data.getExtras();
 			if (extras2 != null) {
 				Bitmap photo = extras2.getParcelable("data");
 				m_illustration.setImageBitmap(photo);
 
 			}
+			break;
+
+		case PICK_MAPS:
+			Bundle extras3 = data.getExtras();
+			if (extras3 != null) {
+
+				Toast.makeText(getApplicationContext(),
+						""+extras3.getString("markeur"), Toast.LENGTH_SHORT)
+						.show();
+			}
+			break;
 		}
 	}
 
@@ -180,6 +200,6 @@ public class SoumettreProjetActivity extends Activity {
 
 		}
 		return false;
-	}
 
+	}
 }
