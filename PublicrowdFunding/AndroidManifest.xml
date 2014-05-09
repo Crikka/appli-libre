@@ -37,6 +37,10 @@
             android:value="" />
 
         <activity
+            android:name="adullact.publicrowdfunding.TabAllProjectsMaps"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
             android:name="adullact.publicrowdfunding.CustomMapsActivity"
             android:label="@string/app_name" >
         </activity>

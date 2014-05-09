@@ -2,6 +2,11 @@ package adullact.publicrowdfunding;
 
 import java.util.HashMap;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 import adullact.publicrowdfunding.requester.ServerEmulator;
 import adullact.publicrowdfunding.shared.Project;
 import android.app.Activity;
@@ -11,15 +16,18 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class DetailProjetActivity extends Activity {
+public class DetailProjetActivity extends FragmentActivity {
 
 	private TextView m_titre;
 	private TextView m_description;
@@ -30,6 +38,7 @@ public class DetailProjetActivity extends Activity {
 	private CustomProgressBar m_progression;
 	private Drawable m_favorite;
 	private boolean m_Is_favorite;
+	private GoogleMap map;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -50,18 +59,36 @@ public class DetailProjetActivity extends Activity {
 		m_utilisateur_soumission = (TextView) findViewById(R.id.utilisateur_soumission);
 		m_notation = (RatingBar) findViewById(R.id.rating_bar_projet_detail);
 		m_progression = (CustomProgressBar) findViewById(R.id.avancement_projet_liste);
-		MenuItem test = (MenuItem) findViewById(R.id.add_favorite);
+		MenuItem favorisItem = (MenuItem) findViewById(R.id.add_favorite);
+		GraphiqueView graph = (GraphiqueView) findViewById(R.id.graphique);
+		
+		DisplayMetrics metrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
+	
+		android.view.ViewGroup.LayoutParams params = graph.getLayoutParams();
+		params.height = metrics.widthPixels;
+		graph.setLayoutParams(params);
+		
 		m_Is_favorite = false;
 
-		if (test != null) {
-			Drawable icon = test.getIcon();
+		if (map == null) {
+			map = ((SupportMapFragment) getSupportFragmentManager()
+					.findFragmentById(R.id.map_frag)).getMap();
+
+		}
+		LatLng position = new LatLng(0, 0);
+		map.addMarker(new MarkerOptions().position(position).title(
+				"Titre du projet"));
+
+		if (favorisItem != null) {
+			Drawable icon = favorisItem.getIcon();
 			System.out.println(icon.toString());
 		} else {
 			System.out.println("test is null");
 
 		}
-		
+
 		m_progression.setArgent(40);
 		m_progression.setProgress(35);
 		m_progression.setMaxArgent(100);
@@ -97,7 +124,7 @@ public class DetailProjetActivity extends Activity {
 		switch (item.getItemId()) {
 
 		case R.id.add_favorite:
-			
+
 			PorterDuffColorFilter filter = null;
 			if (m_Is_favorite) {
 				Toast.makeText(getBaseContext(), "Projet retiré des favoris",
@@ -108,8 +135,8 @@ public class DetailProjetActivity extends Activity {
 				Toast.makeText(getBaseContext(), "Projet ajouté aux favoris",
 						Toast.LENGTH_SHORT).show();
 
-				filter = new PorterDuffColorFilter(Color.parseColor("#ffffff00"),
-						PorterDuff.Mode.SRC_ATOP);
+				filter = new PorterDuffColorFilter(
+						Color.parseColor("#ffffff00"), PorterDuff.Mode.SRC_ATOP);
 
 			}
 			m_Is_favorite = !m_Is_favorite;

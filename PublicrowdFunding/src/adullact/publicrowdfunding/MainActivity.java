@@ -24,17 +24,19 @@ public class MainActivity extends TabActivity {
 		tabHost = getTabHost();
 
 		Intent intent = new Intent(this, TabProjets.class);
-		intent.putExtra("valeur", "Liste des projets");
 		tabSpec = tabHost.newTabSpec("liste projets").setIndicator("Projets")
 				.setContent(intent);
 		tabHost.addTab(tabSpec);
 
 		intent = new Intent(this, TabFavoris.class);
-		intent.putExtra("valeur", "Ici les favoris");
 		tabSpec = tabHost.newTabSpec("mes favoris").setIndicator("Favoris")
 				.setContent(intent);
 		tabHost.addTab(tabSpec);
 
+		intent = new Intent(this, TabAllProjectsMaps.class);
+		tabSpec = tabHost.newTabSpec("Maps des projets").setIndicator("Carte des projets")
+				.setContent(intent);
+		tabHost.addTab(tabSpec);
 		
 		Communicator communicator = new Communicator();
 		User userAdmin = communicator.authentificateUser("MisterGate", "azE45WIN");
