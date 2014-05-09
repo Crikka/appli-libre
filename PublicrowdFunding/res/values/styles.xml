@@ -3,8 +3,6 @@
     <color name="bleu">#90083BA6</color>
     <color name="monJaune">#ffff00A6</color>
 
-
-
     <!--
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.

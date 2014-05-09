@@ -35,6 +35,7 @@ public class MainActivity extends TabActivity {
 				.setContent(intent);
 		tabHost.addTab(tabSpec);
 
+		
 		Communicator communicator = new Communicator();
 		User userAdmin = communicator.authentificateUser("MisterGate", "azE45WIN");
 		User userNormal = communicator.authentificateUser("Miaou", "abjectDominera");
