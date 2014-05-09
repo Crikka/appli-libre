@@ -15,7 +15,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class CustomMapsActivity extends FragmentActivity implements
+public class AddLocationProject extends FragmentActivity implements
 		OnMapClickListener {
 	private GoogleMap map;
 	private Marker marker;

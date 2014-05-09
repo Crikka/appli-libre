@@ -2,9 +2,11 @@ package adullact.publicrowdfunding;
 
 import java.util.HashMap;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import adullact.publicrowdfunding.requester.ServerEmulator;
@@ -77,9 +79,11 @@ public class DetailProjetActivity extends FragmentActivity {
 					.findFragmentById(R.id.map_frag)).getMap();
 
 		}
-		LatLng position = new LatLng(0, 0);
+		LatLng position = new LatLng(43, 3);
 		map.addMarker(new MarkerOptions().position(position).title(
 				"Titre du projet"));
+
+		 map.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 4));
 
 		if (favorisItem != null) {
 			Drawable icon = favorisItem.getIcon();

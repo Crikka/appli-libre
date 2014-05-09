@@ -13,12 +13,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
-public class TabProjets extends Activity {
+public class TabProjets extends DownBarMenu {
 
 	private ListView listeProjets;
 
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -60,6 +62,9 @@ public class TabProjets extends Activity {
 
 			}
 		});
+		
+		addDownBarMenu();
+		
 
 	}
 }

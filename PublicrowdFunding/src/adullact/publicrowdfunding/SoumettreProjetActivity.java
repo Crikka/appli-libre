@@ -136,7 +136,7 @@ public class SoumettreProjetActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent in = new Intent(getBaseContext(),
-						CustomMapsActivity.class);
+						AddLocationProject.class);
 				if (position != null) {
 					in.putExtra("latitude", position.latitude);
 					in.putExtra("longitude", position.longitude);
