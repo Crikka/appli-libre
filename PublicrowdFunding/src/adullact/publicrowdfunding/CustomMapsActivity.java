@@ -25,7 +25,18 @@ public class CustomMapsActivity extends FragmentActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.maps);
 		InitialiseMap();
-		marker = null;
+
+		Intent data = getIntent();
+		data.getExtras();
+		Bundle extras3 = data.getExtras();
+		if (extras3 != null) {
+			LatLng position = new LatLng(extras3.getDouble("latitude"),
+					extras3.getDouble("longitude"));
+			marker = map.addMarker(new MarkerOptions().position(position)
+					.title("Votre projet"));
+		} else {
+			marker = null;
+		}
 	}
 
 	private void InitialiseMap() {
@@ -37,21 +48,25 @@ public class CustomMapsActivity extends FragmentActivity implements
 			if (map != null) {
 
 			}
+
 			map.setOnMapClickListener(this);
 			map.setMyLocationEnabled(true);
+
 		}
 	}
 
 	@Override
 	public void onMapClick(LatLng arg0) {
 		Toast.makeText(getApplicationContext(),
-				"Emplacement de votre projet ajouté",
-				Toast.LENGTH_SHORT).show();
-		if(marker == null){
-			 marker = map.addMarker( new MarkerOptions().position(arg0).title("Votre projet"));
-		}else{
-			marker.remove(); 
-			marker = map.addMarker( new MarkerOptions().position(arg0).title("Votre projet"));
+				"Emplacement de votre projet ajouté", Toast.LENGTH_SHORT)
+				.show();
+		if (marker == null) {
+			marker = map.addMarker(new MarkerOptions().position(arg0).title(
+					"Votre projet"));
+		} else {
+			marker.remove();
+			marker = map.addMarker(new MarkerOptions().position(arg0).title(
+					"Votre projet"));
 		}
 	}
 
@@ -69,7 +84,8 @@ public class CustomMapsActivity extends FragmentActivity implements
 		switch (item.getItemId()) {
 		case R.id.soumettre:
 			Intent returnIntent = new Intent();
-			returnIntent.putExtra("markeur", marker.getPosition().toString());
+			returnIntent.putExtra("latitude", marker.getPosition().latitude);
+			returnIntent.putExtra("longitude", marker.getPosition().longitude);
 			setResult(RESULT_OK, returnIntent);
 			finish();
 

@@ -4,6 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -40,6 +42,8 @@ public class SoumettreProjetActivity extends Activity {
 	private ImageButton m_bouttonGallery;
 	private ImageButton m_localisation;
 	private ImageView m_illustration;
+
+	private LatLng position;
 
 	private static final int PICK_FROM_CAMERA = 1;
 	private static final int PICK_FROM_GALLERY = 2;
@@ -133,6 +137,11 @@ public class SoumettreProjetActivity extends Activity {
 			public void onClick(View v) {
 				Intent in = new Intent(getBaseContext(),
 						CustomMapsActivity.class);
+				if (position != null) {
+					in.putExtra("latitude", position.latitude);
+					in.putExtra("longitude", position.longitude);
+				}
+
 				startActivityForResult(in, 3);
 			}
 		});
@@ -143,10 +152,10 @@ public class SoumettreProjetActivity extends Activity {
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-		if(resultCode  != Activity.RESULT_OK){
+		if (resultCode != Activity.RESULT_OK) {
 			return;
 		}
-		
+
 		switch (requestCode) {
 
 		case PICK_FROM_CAMERA:
@@ -171,9 +180,10 @@ public class SoumettreProjetActivity extends Activity {
 			Bundle extras3 = data.getExtras();
 			if (extras3 != null) {
 
+				position = new LatLng(extras3.getDouble("latitude"),
+						extras3.getDouble("longitude"));
 				Toast.makeText(getApplicationContext(),
-						""+extras3.getString("markeur"), Toast.LENGTH_SHORT)
-						.show();
+						"Position du projet ajouté", Toast.LENGTH_SHORT).show();
 			}
 			break;
 		}
