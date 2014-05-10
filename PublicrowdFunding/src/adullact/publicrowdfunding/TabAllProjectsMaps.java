@@ -20,9 +20,9 @@ public class TabAllProjectsMaps extends FragmentActivity {
 					.findFragmentById(R.id.map_frag)).getMap();
 
 		}
-			LatLng position = new LatLng(0,0);
-			map.addMarker(new MarkerOptions().position(position)
-					.title("Titre du projet"));
+		LatLng position = new LatLng(0, 0);
+		map.addMarker(new MarkerOptions().position(position).title(
+				"Titre du projet"));
 	}
 
 }

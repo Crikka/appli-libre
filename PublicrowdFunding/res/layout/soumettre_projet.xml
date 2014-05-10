@@ -10,14 +10,14 @@
         android:layout_weight="1" >
 
         <LinearLayout
-            android:id="@+id/project_add_layout"
+            android:id="@+id/layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="5dp" >
 
             <ImageView
-                android:id="@+id/projet_illustration"
+                android:id="@+id/illustration"
                 android:layout_width="fill_parent"
                 android:layout_height="150dp"
                 android:contentDescription="@string/image_cadenas"
@@ -34,13 +34,11 @@
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <EditText
-                android:id="@+id/soumettre_titre"
+                android:id="@+id/titre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="text" >
-
-                <requestFocus />
             </EditText>
 
             <TextView
@@ -52,11 +50,47 @@
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <EditText
-                android:id="@+id/soumettre_description"
+                android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textMultiLine" />
+
+            <TextView
+                android:id="@+id/afficher_montant"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Somme à récolter"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <SeekBar
+                android:id="@+id/seek_bar_somme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2" >
+
+                <CheckBox
+                    android:id="@+id/is_Defined_On_Seek_Bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Définir manuellement" />
+
+                <EditText
+                    android:id="@+id/edit_text_somme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="number" >
+                </EditText>
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/textView4"
@@ -67,7 +101,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <DatePicker
-                android:id="@+id/soumettre_date_fin"
+                android:id="@+id/date_de_fin"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center" />
@@ -85,7 +119,7 @@
         android:weightSum="3" >
 
         <ImageButton
-            android:id="@+id/soumettre_photo_camera"
+            android:id="@+id/button_photo_camera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -94,7 +128,7 @@
             android:src="@android:drawable/ic_menu_camera" />
 
         <ImageButton
-            android:id="@+id/soumettre_photo_gallery"
+            android:id="@+id/button_photo_gallery"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -103,7 +137,7 @@
             android:src="@android:drawable/ic_menu_gallery" />
 
         <ImageButton
-            android:id="@+id/soumettre_localisation"
+            android:id="@+id/button_localisation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

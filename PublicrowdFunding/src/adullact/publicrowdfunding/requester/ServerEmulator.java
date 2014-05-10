@@ -35,6 +35,8 @@ public class ServerEmulator {
 		usersBase.put(new Pair<String, String>("MisterGate", "azE45WIN"), new Administrator("MisterGate", "Gate", "Bill"));
 		usersBase.put(new Pair<String, String>("XFactor", "mushroom34"), new Administrator("XFactor", "Nelaupe", "Lucas"));
 		usersBase.put(new Pair<String, String>("Miaou", "abjectDominera"), new User("Miaou", "Ferrand", "Anthony"));
+		usersBase.put(new Pair<String, String>("lucas", "lucas"), new User("Miaou", "Nelaupe", "Lucas"));
+		usersBase.put(new Pair<String, String>("admin", "admin"), new Administrator("admin", "Ad", "Min"));
 		/* ---------- */
 		
 		/* Projects base */

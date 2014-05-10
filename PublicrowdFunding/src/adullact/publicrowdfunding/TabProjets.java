@@ -6,21 +6,18 @@ import java.util.Vector;
 
 import adullact.publicrowdfunding.requester.ServerEmulator;
 import adullact.publicrowdfunding.shared.Project;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.ListView;
 
 public class TabProjets extends DownBarMenu {
 
 	private ListView listeProjets;
 
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -30,7 +27,7 @@ public class TabProjets extends DownBarMenu {
 
 		ServerEmulator serveur = ServerEmulator.instance();
 		HashMap<String, Project> projets = serveur.getAllProjets();
-		
+
 		Vector<Project> tabProj = new Vector<Project>();
 
 		for (Entry<String, Project> entry : projets.entrySet()) {
@@ -40,12 +37,9 @@ public class TabProjets extends DownBarMenu {
 		}
 
 		ArrayAdapter<Project> adapter = new CustomAdapter(
-				this.getBaseContext(),
-				R.layout.projet_list,
-				tabProj);
+				this.getBaseContext(), R.layout.projet_list, tabProj);
 
 		listeProjets.setAdapter(adapter);
-
 
 		listeProjets.setOnItemClickListener(new OnItemClickListener() {
 
@@ -62,9 +56,8 @@ public class TabProjets extends DownBarMenu {
 
 			}
 		});
-		
+
 		addDownBarMenu();
-		
 
 	}
 }

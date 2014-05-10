@@ -1,7 +1,5 @@
 package adullact.publicrowdfunding;
 
-import adullact.publicrowdfunding.request.AuthentificationRequest;
-import adullact.publicrowdfunding.requester.AuthentificationRequester;
 import adullact.publicrowdfunding.shared.User;
 import android.app.Activity;
 import android.content.Intent;
@@ -33,29 +31,47 @@ public class ConnexionActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 
-				String login = m_login.getText().toString();
-				//String password = m_password.getText().toString();
-				
-				if(m_login.length() == 0){
+				if (m_login.length() == 0) {
 					Toast.makeText(getApplicationContext(),
-							"Vous avez oublié le login",
-							Toast.LENGTH_SHORT).show();
+							"Vous avez oublié le login", Toast.LENGTH_SHORT)
+							.show();
 					return;
 				}
-				
-				if(m_password.length() == 0){
-					
+
+				if (m_password.length() == 0) {
+
 					Toast.makeText(getApplicationContext(),
 							"Vous avez oublié le mot de passe",
 							Toast.LENGTH_SHORT).show();
 					return;
 				}
-				
+
+				String login = m_login.getText().toString();
+				String password = m_password.getText().toString();
 
 				Communicator communicator = new Communicator();
+
+				User utilisateur = communicator.authentificateUser(login,
+						password);
 				
-				User utilisateur = communicator.authentificateUser(m_login.getText().toString(), m_password.getText().toString()); // Utilise seulement la classe communicator pour te simplifier la vie :-)
+				if (utilisateur == null) {
+					Toast.makeText(getApplicationContext(),
+							"Login ou mot de passe incorect", Toast.LENGTH_LONG)
+							.show();
+
+				} else {
+					Toast.makeText(getApplicationContext(),
+							"Vous êtes conencté !", Toast.LENGTH_LONG).show();
+
+				}
+
+				// Utilise seulement la classe communicator pour te simplifier
+				// la vie :-)
+				// --> D'accord, ca fonctionne tout seul, c'est magique
 				// Tu peux downcast avec utilisateur.toAdmin()
+				// --> Ah oui, admin est un sous type d'utilisateur, alors que d'un point de vue 
+				// --> phylosophique est plutôt l'inverse
+				
 
 			}
 		});
@@ -63,13 +79,14 @@ public class ConnexionActivity extends Activity {
 		m_buttonInscription.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				
+
 				String login = m_login.getText().toString();
-				
-				Intent in = new Intent(getBaseContext(), InscriptionActivity.class);
+
+				Intent in = new Intent(getBaseContext(),
+						InscriptionActivity.class);
 				in.putExtra("login", login);
 				startActivity(in);
-				
+
 			}
 		});
 	}

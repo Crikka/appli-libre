@@ -1,6 +1,5 @@
 package adullact.publicrowdfunding;
 
-import android.app.Activity;
 import android.os.Bundle;
 
 public class TabFavoris extends DownBarMenu {
@@ -9,8 +8,7 @@ public class TabFavoris extends DownBarMenu {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.tab);
 
-		
 		addDownBarMenu();
-		
+
 	}
 }
