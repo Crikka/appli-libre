@@ -14,8 +14,7 @@ import adullact.publicrowdfunding.shared.Share;
  */
 public class Communicator {
 	
-	public void authentificateUser(String username, String password) 
-			throws UserNotFoundException {
+	public static void authentificateUser(String username, String password) throws UserNotFoundException {
 		AuthentificationRequest authentificationRequest = new AuthentificationRequest(username, password);
 		AuthentificationReply reply;
 		try {
@@ -37,5 +36,9 @@ public class Communicator {
 		else {
 			throw new UserNotFoundException(username, password);
 		}
+	}
+	
+	public static void addProject(String name, String description, String requestedFunding) {
+		
 	}
 }

@@ -2,6 +2,7 @@ package adullact.publicrowdfunding;
 
 import adullact.publicrowdfunding.exceptions.UserNotFoundException;
 import adullact.publicrowdfunding.shared.Administrator;
+import adullact.publicrowdfunding.shared.Project;
 import adullact.publicrowdfunding.shared.Share;
 import android.app.TabActivity;
 import android.content.Intent;
@@ -41,9 +42,8 @@ public class MainActivity extends TabActivity {
 				.setContent(intent);
 		tabHost.addTab(tabSpec);
 		
-		Communicator communicator = new Communicator();
 		try {
-			communicator.authentificateUser("MisterGate", "azE45WIN");
+			Communicator.authentificateUser("MisterGate", "azE45WIN");
 		} catch (UserNotFoundException exception) {
 			System.out.println("Impossible de trouver " + exception.pseudo() + " avec le mot de passe : " + exception.password());
 		}
@@ -51,7 +51,7 @@ public class MainActivity extends TabActivity {
 		System.out.println(" et je suis admin : " + (Share.user instanceof Administrator));
 		
 		try {
-			communicator.authentificateUser("Miaou", "abjectDominera");
+			Communicator.authentificateUser("Miaou", "abjectDominera");
 		} catch (UserNotFoundException exception) {
 			System.out.println("Impossible de trouver " + exception.pseudo() + " avec le mot de passe : " + exception.password());
 		}
@@ -59,11 +59,15 @@ public class MainActivity extends TabActivity {
 		System.out.println(" et je suis admin : " + (Share.user instanceof Administrator));
 		
 		try {
-			communicator.authentificateUser("MiaouBis", "abjectDominera");
+			Communicator.authentificateUser("MiaouBis", "abjectDominera");
 		} catch (UserNotFoundException exception) {
 			System.out.println("Impossible de trouver " + exception.pseudo() + " avec le mot de passe : " + exception.password());
 		}
 
+		Project p = new Project("Parking sous terrain","Parking au centre de Montpellier", "50000");
+		p.finance("5000");
+		System.out.println(p.percentOfAchievement());
+		System.out.println(p.id());
 
 	} 
 

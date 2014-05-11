@@ -50,10 +50,8 @@ public class ConnexionActivity extends Activity {
 				String login = m_login.getText().toString();
 				String password = m_password.getText().toString();
 
-				Communicator communicator = new Communicator();
-
 				try {
-					communicator.authentificateUser(login, password);
+					Communicator.authentificateUser(login, password);
 				}
 				catch(UserNotFoundException exception) {
 					// TODO

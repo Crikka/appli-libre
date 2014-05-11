@@ -1,5 +1,7 @@
 package adullact.publicrowdfunding.shared;
 
+import java.util.ArrayList;
+
 /**
  * TODO
  * 
@@ -11,18 +13,19 @@ public class User {
 	private String m_name;
 	private String m_firstName;
 	private boolean m_authentified;
+	private ArrayList<Project> m_supportedProjects;
+	private ArrayList<Project> m_financedProjects;
 	
 	public User() {
+		this.m_pseudo = null;
+		this.m_name = null;
+		this.m_firstName = null;
 		this.m_authentified = false;
+		this.m_supportedProjects = new ArrayList<Project>();
+		this.m_financedProjects = new ArrayList<Project>();
 	}
 
-	public User(String pseudo, String name, String firstName) {
-		this.m_pseudo = pseudo;
-		this.m_name = name;
-		this.m_firstName = firstName;
-		this.m_authentified = false;
-	}
-
+	/* Getter */
 	public String name() {
 		return m_name;
 	}
@@ -34,6 +37,16 @@ public class User {
 	public String pseudo() {
 		return m_pseudo;
 	}
+	
+	public ArrayList<Project> supportedProjects() {
+		return m_supportedProjects;
+	}
+	
+	public ArrayList<Project> financedProjects() {
+		return m_financedProjects;
+	}
+	/* ------ */
+	
 
 	public boolean isAuthentified() {
 		return m_authentified;

@@ -32,20 +32,31 @@ public class ServerEmulator {
 	 */
 	private void initialize() {
 		/* Users base */
-		usersBase.put(new Pair<String, String>("MisterGate", "azE45WIN"), new Administrator("MisterGate", "Gate", "Bill"));
-		usersBase.put(new Pair<String, String>("XFactor", "mushroom34"), new Administrator("XFactor", "Nelaupe", "Lucas"));
-		usersBase.put(new Pair<String, String>("Miaou", "abjectDominera"), new User("Miaou", "Ferrand", "Anthony"));
-		usersBase.put(new Pair<String, String>("lucas", "lucas"), new User("Miaou", "Nelaupe", "Lucas"));
-		usersBase.put(new Pair<String, String>("admin", "admin"), new Administrator("admin", "Ad", "Min"));
+		Administrator billGate = new Administrator();
+		billGate.defineFields("MisterGate", "Gate", "Bill");
+		Administrator lucasX = new Administrator();
+		lucasX.defineFields("XFactor", "Nelaupe", "Lucas");
+		User anthony = new User();
+		anthony.defineFields("Miaou", "Ferrand", "Anthony");
+		User lucas = new User();
+		lucas.defineFields("Miaou", "Nelaupe", "Lucas");
+		Administrator admin = new Administrator();
+		admin.defineFields("admin", "Ad", "Min");
+		
+		usersBase.put(new Pair<String, String>("MisterGate", "azE45WIN"), billGate);
+		usersBase.put(new Pair<String, String>("XFactor", "mushroom34"), lucasX);
+		usersBase.put(new Pair<String, String>("Miaou", "abjectDominera"), anthony);
+		usersBase.put(new Pair<String, String>("lucas", "lucas"), lucas);
+		usersBase.put(new Pair<String, String>("admin", "admin"), admin);
 		/* ---------- */
 		
 		/* Projects base */
-		projectsBase.put("Ecole publique", new Project("Ecole publique","Construction d'une école primaire"));
-		projectsBase.put("Parking sous terrain", new Project("Parking sous terrain","Parking au centre de Montpellier"));
-		projectsBase.put("Lave vaisselle", new Project("Lave vaisselle","Lave vaisselle pour le restaurent universitaire de Montpellier"));
-		projectsBase.put("Renovation Faculté", new Project("Renovation Faculté","Rénovation de la fac des sciences"));
-		projectsBase.put("Nouveaux lampadaires", new Project("Nouveaux lampadaires","Achat de nouveaux lampadaires basse consommation"));
-		projectsBase.put("De la modestie pour fred", new Project("De la modestie pour fred","Ca ne lui ferait pas de mal"));
+		projectsBase.put("Ecole publique", new Project("Ecole publique","Construction d'une école primaire", "25000"));
+		projectsBase.put("Parking sous terrain", new Project("Parking sous terrain","Parking au centre de Montpellier", "50000"));
+		projectsBase.put("Lave vaisselle", new Project("Lave vaisselle","Lave vaisselle pour le restaurent universitaire de Montpellier", "100"));
+		projectsBase.put("Renovation Faculté", new Project("Renovation Faculté","Rénovation de la fac des sciences", "165000"));
+		projectsBase.put("Nouveaux lampadaires", new Project("Nouveaux lampadaires","Achat de nouveaux lampadaires basse consommation", "5000"));
+		projectsBase.put("De la modestie pour fred", new Project("De la modestie pour fred","Ca ne lui ferait pas de mal", "0.10"));
 		/* ------------- */
 	}
 	
