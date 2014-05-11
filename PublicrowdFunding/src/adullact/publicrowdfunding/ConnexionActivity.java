@@ -1,6 +1,7 @@
 package adullact.publicrowdfunding;
 
-import adullact.publicrowdfunding.shared.User;
+import adullact.publicrowdfunding.exceptions.UserNotFoundException;
+import adullact.publicrowdfunding.shared.Share;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -51,10 +52,14 @@ public class ConnexionActivity extends Activity {
 
 				Communicator communicator = new Communicator();
 
-				User utilisateur = communicator.authentificateUser(login,
-						password);
+				try {
+					communicator.authentificateUser(login, password);
+				}
+				catch(UserNotFoundException exception) {
+					// TODO
+				}
 				
-				if (utilisateur == null) {
+				if (Share.user == null) {
 					Toast.makeText(getApplicationContext(),
 							"Login ou mot de passe incorect", Toast.LENGTH_LONG)
 							.show();

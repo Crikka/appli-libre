@@ -1,4 +1,4 @@
-package adullact.publicrowdfunding.requester;
+package adullact.publicrowdfunding.server;
 
 /**
  * @author Ferrand

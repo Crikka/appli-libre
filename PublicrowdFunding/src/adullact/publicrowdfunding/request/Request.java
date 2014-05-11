@@ -1,6 +1,8 @@
 package adullact.publicrowdfunding.request;
 
-import adullact.publicrowdfunding.shared.User;
+import adullact.publicrowdfunding.exceptions.AdministratorRequiredException;
+import adullact.publicrowdfunding.exceptions.AuthentificationRequiredException;
+import adullact.publicrowdfunding.reply.Reply;
 
 /**
  * 
@@ -8,14 +10,12 @@ import adullact.publicrowdfunding.shared.User;
  * 
  * @param <TUser>
  */
-public abstract class Request<TUser extends User> {
-	private TUser m_user;
+public abstract class Request {
 	
-	public Request(TUser user){
-		this.m_user = user;
+	public Request(){
 	}
+		
+	protected abstract void verifyUserType() throws AuthentificationRequiredException, AdministratorRequiredException;
+	public abstract Reply<? extends Request> execute() throws AuthentificationRequiredException, AdministratorRequiredException;
 	
-	public TUser user(){
-		return m_user;
-	}
 }

@@ -1,4 +1,4 @@
-package adullact.publicrowdfunding.requester;
+package adullact.publicrowdfunding.server;
 
 import java.util.HashMap;
 

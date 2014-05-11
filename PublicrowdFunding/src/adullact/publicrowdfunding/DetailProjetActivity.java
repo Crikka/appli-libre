@@ -9,7 +9,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import adullact.publicrowdfunding.requester.ServerEmulator;
+import adullact.publicrowdfunding.server.ServerEmulator;
 import adullact.publicrowdfunding.shared.Project;
 import android.app.Activity;
 import android.content.Intent;

@@ -1,7 +1,8 @@
 package adullact.publicrowdfunding;
 
+import adullact.publicrowdfunding.exceptions.UserNotFoundException;
 import adullact.publicrowdfunding.shared.Administrator;
-import adullact.publicrowdfunding.shared.User;
+import adullact.publicrowdfunding.shared.Share;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -41,15 +42,27 @@ public class MainActivity extends TabActivity {
 		tabHost.addTab(tabSpec);
 		
 		Communicator communicator = new Communicator();
-		User userAdmin = communicator.authentificateUser("MisterGate", "azE45WIN");
-		User userNormal = communicator.authentificateUser("Miaou", "abjectDominera");
+		try {
+			communicator.authentificateUser("MisterGate", "azE45WIN");
+		} catch (UserNotFoundException exception) {
+			System.out.println("Impossible de trouver " + exception.pseudo() + " avec le mot de passe : " + exception.password());
+		}
+		System.out.print("Je suis "+ Share.user.pseudo()+" "+ Share.user.name()+" "+ Share.user.firstName());
+		System.out.println(" et je suis admin : " + (Share.user instanceof Administrator));
 		
+		try {
+			communicator.authentificateUser("Miaou", "abjectDominera");
+		} catch (UserNotFoundException exception) {
+			System.out.println("Impossible de trouver " + exception.pseudo() + " avec le mot de passe : " + exception.password());
+		}
+		System.out.print("Je suis "+ Share.user.pseudo()+" "+ Share.user.name()+" "+ Share.user.firstName());
+		System.out.println(" et je suis admin : " + (Share.user instanceof Administrator));
 		
-		System.out.print("Je suis "+userAdmin.pseudo()+" "+userAdmin.name()+" "+ userAdmin.firstName());
-		System.out.println(" et je suis admin : " + (userAdmin instanceof Administrator));
-		
-		System.out.print("Je suis "+userNormal.pseudo()+" "+userNormal.name()+" "+ userNormal.firstName());
-		System.out.println(" et je suis admin : " + (userNormal instanceof Administrator));
+		try {
+			communicator.authentificateUser("MiaouBis", "abjectDominera");
+		} catch (UserNotFoundException exception) {
+			System.out.println("Impossible de trouver " + exception.pseudo() + " avec le mot de passe : " + exception.password());
+		}
 
 
 	} 

@@ -1,10 +1,12 @@
 package adullact.publicrowdfunding;
 
+import adullact.publicrowdfunding.exceptions.AdministratorRequiredException;
+import adullact.publicrowdfunding.exceptions.AuthentificationRequiredException;
+import adullact.publicrowdfunding.exceptions.UserNotFoundException;
 import adullact.publicrowdfunding.reply.AuthentificationReply;
 import adullact.publicrowdfunding.request.AuthentificationRequest;
-import adullact.publicrowdfunding.requester.AuthentificationRequester;
 import adullact.publicrowdfunding.shared.Administrator;
-import adullact.publicrowdfunding.shared.User;
+import adullact.publicrowdfunding.shared.Share;
 
 /**
  * @author Ferrand
@@ -12,22 +14,28 @@ import adullact.publicrowdfunding.shared.User;
  */
 public class Communicator {
 	
-	public User authentificateUser(String username, String password){
-		User user;
-		AuthentificationRequester authentificationRequester = new AuthentificationRequester(username, password);
-		AuthentificationReply reply = authentificationRequester.post(new AuthentificationRequest(null));
+	public void authentificateUser(String username, String password) 
+			throws UserNotFoundException {
+		AuthentificationRequest authentificationRequest = new AuthentificationRequest(username, password);
+		AuthentificationReply reply;
+		try {
+			reply = authentificationRequest.execute();
+		}
+		catch(AuthentificationRequiredException exception) {
+			reply = new AuthentificationReply(authentificationRequest); // reply is failing
+		}
+		catch(AdministratorRequiredException exception) {
+			reply = new AuthentificationReply(authentificationRequest); // reply is failing
+		}
 		if(reply.ok()) {
 			if(reply.isAdmin()) {
-				user = new Administrator(reply.pseudo(), reply.name(), reply.firstName());
+				Share.user = new Administrator();
 			}
-			else{
-				user = new User(reply.pseudo(), reply.name(), reply.firstName());
-			}
-			user.authentificate();
-			return user;
+			Share.user.defineFields(reply.pseudo(), reply.name(), reply.firstName());
+			Share.user.authentificate();
 		}
 		else {
-			return null;
+			throw new UserNotFoundException(username, password);
 		}
 	}
 }

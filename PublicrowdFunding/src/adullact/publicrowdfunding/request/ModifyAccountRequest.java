@@ -1,15 +1,18 @@
 package adullact.publicrowdfunding.request;
 
+import adullact.publicrowdfunding.exceptions.AdministratorRequiredException;
+import adullact.publicrowdfunding.exceptions.AuthentificationRequiredException;
+import adullact.publicrowdfunding.reply.Reply;
 import adullact.publicrowdfunding.shared.User;
 
-public class ModifyAccountRequest extends Request<User> {
+public class ModifyAccountRequest extends AuthentificatedRequest {
 	private String m_newName;
 	private String m_newFirstName;
 
-	public ModifyAccountRequest(User user) {
-		super(user);
-		this.m_newName = user.name();
-		this.m_newFirstName = user.firstName();
+	public ModifyAccountRequest() {
+		super();
+		this.m_newName = null;
+		this.m_newFirstName = null;
 	}
 	
 	public void modifyName(String newName) {
@@ -26,6 +29,12 @@ public class ModifyAccountRequest extends Request<User> {
 	
 	public String newName() {
 		return m_newName;
+	}
+
+	@Override
+	public Reply<? extends Request> execute() throws AuthentificationRequiredException, AdministratorRequiredException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

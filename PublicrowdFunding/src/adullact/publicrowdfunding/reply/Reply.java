@@ -6,7 +6,7 @@ import adullact.publicrowdfunding.request.Request;
  * @author Ferrand
  * @param <TRequest>
  */
-public class Reply<TRequest extends Request<?>> {
+public class Reply<TRequest extends Request> {
 	private TRequest m_request;
 	private boolean m_ok;
 	
