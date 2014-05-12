@@ -10,9 +10,9 @@ import android.widget.Toast;
 
 public class infoAppDialog extends AlertDialog {
 
-	protected infoAppDialog(Context context) {
+	public infoAppDialog(Context context) {
 		super(context);
-		// TODO Auto-generated constructor stub
+
 		this.setTitle("A propos");
 		String versionName = getVersionName(context);
 		this.setMessage(Html.fromHtml("Version : <b>" + versionName + "</b>"));

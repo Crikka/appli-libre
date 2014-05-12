@@ -2,6 +2,7 @@ package adullact.publicrowdfunding;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -16,13 +17,18 @@ public class TabAllProjectsMaps extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.maps);
 		if (map == null) {
+			try{
 			map = ((SupportMapFragment) getSupportFragmentManager()
 					.findFragmentById(R.id.map_frag)).getMap();
+			LatLng position = new LatLng(0, 0);
+			map.addMarker(new MarkerOptions().position(position).title(
+					"Titre du projet"));
+			}catch(NullPointerException e){
+			Toast.makeText(getApplication(), "Impossible de lancer google Map", Toast.LENGTH_SHORT).show();
+			} 
 
 		}
-		LatLng position = new LatLng(0, 0);
-		map.addMarker(new MarkerOptions().position(position).title(
-				"Titre du projet"));
+		
 	}
 
 }

@@ -63,27 +63,31 @@ public class DetailProjetActivity extends FragmentActivity {
 		m_progression = (CustomProgressBar) findViewById(R.id.avancement_projet_liste);
 		MenuItem favorisItem = (MenuItem) findViewById(R.id.add_favorite);
 		GraphiqueView graph = (GraphiqueView) findViewById(R.id.graphique);
-		
+
 		DisplayMetrics metrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
-	
 		android.view.ViewGroup.LayoutParams params = graph.getLayoutParams();
 		params.height = metrics.widthPixels;
 		graph.setLayoutParams(params);
-		
+
 		m_Is_favorite = false;
 
 		if (map == null) {
-			map = ((SupportMapFragment) getSupportFragmentManager()
-					.findFragmentById(R.id.map_frag)).getMap();
+			try {
+				map = ((SupportMapFragment) getSupportFragmentManager()
+						.findFragmentById(R.id.map_frag)).getMap();
+				LatLng position = new LatLng(43, 3);
+				map.addMarker(new MarkerOptions().position(position).title(
+						"Titre du projet"));
 
+				map.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 4));
+			} catch (NullPointerException e) {
+				Toast.makeText(getApplication(),
+						"Impossible de lancer google Map", Toast.LENGTH_SHORT)
+						.show();
+			}
 		}
-		LatLng position = new LatLng(43, 3);
-		map.addMarker(new MarkerOptions().position(position).title(
-				"Titre du projet"));
-
-		 map.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 4));
 
 		if (favorisItem != null) {
 			Drawable icon = favorisItem.getIcon();

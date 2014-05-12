@@ -17,8 +17,8 @@ public class DownBarMenu extends Activity {
 			public void onClick(View v) {
 
 				/*
-				 * infoAppDialog alertDialogBuilder = new
-				 * infoAppDialog(DownBarMenu.this); alertDialogBuilder.show();
+				 * infoAppDialog alertDialogBuilder = new infoAppDialog(
+				 * DownBarMenu.this); alertDialogBuilder.show();
 				 */
 
 				Intent in = new Intent(getBaseContext(),

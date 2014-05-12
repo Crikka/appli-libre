@@ -52,29 +52,14 @@ public class ConnexionActivity extends Activity {
 
 				try {
 					Communicator.authentificateUser(login, password);
-				}
-				catch(UserNotFoundException exception) {
-					// TODO
-				}
-				
-				if (Share.user == null) {
+					Toast.makeText(getApplicationContext(),
+							"Vous êtes connecté !", Toast.LENGTH_LONG).show();
+					finish();
+				} catch (UserNotFoundException exception) {
 					Toast.makeText(getApplicationContext(),
 							"Login ou mot de passe incorect", Toast.LENGTH_LONG)
 							.show();
-
-				} else {
-					Toast.makeText(getApplicationContext(),
-							"Vous êtes conencté !", Toast.LENGTH_LONG).show();
-
 				}
-
-				// Utilise seulement la classe communicator pour te simplifier
-				// la vie :-)
-				// --> D'accord, ca fonctionne tout seul, c'est magique
-				// Tu peux downcast avec utilisateur.toAdmin()
-				// --> Ah oui, admin est un sous type d'utilisateur, alors que d'un point de vue 
-				// --> phylosophique est plutôt l'inverse
-				
 
 			}
 		});

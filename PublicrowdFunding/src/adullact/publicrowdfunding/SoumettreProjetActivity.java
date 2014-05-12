@@ -1,30 +1,20 @@
 package adullact.publicrowdfunding;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.util.ArrayList;
-
-import com.google.android.gms.maps.model.LatLng;
-
-import android.annotation.SuppressLint;
+import adullact.publicrowdfunding.exceptions.AuthentificationRequiredException;
+import adullact.publicrowdfunding.shared.Share;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.speech.RecognizerIntent;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -36,6 +26,8 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.maps.model.LatLng;
 
 public class SoumettreProjetActivity extends Activity {
 
@@ -83,11 +75,11 @@ public class SoumettreProjetActivity extends Activity {
 		m_bouttonGallery = (ImageButton) findViewById(R.id.button_photo_gallery);
 		m_localisation = (ImageButton) findViewById(R.id.button_localisation);
 		m_illustration = (ImageView) findViewById(R.id.illustration);
-		m_bar_somme = (SeekBar)  findViewById(R.id.seek_bar_somme);
-		m_edit_text_somme = (EditText)  findViewById(R.id.edit_text_somme);
-		  m_is_Not_Defined_On_Seek_Bar = (CheckBox)  findViewById(R.id.is_Defined_On_Seek_Bar);
-		  m_afficher_montant = (TextView) findViewById(R.id.afficher_montant);
-		
+		m_bar_somme = (SeekBar) findViewById(R.id.seek_bar_somme);
+		m_edit_text_somme = (EditText) findViewById(R.id.edit_text_somme);
+		m_is_Not_Defined_On_Seek_Bar = (CheckBox) findViewById(R.id.is_Defined_On_Seek_Bar);
+		m_afficher_montant = (TextView) findViewById(R.id.afficher_montant);
+
 		m_bouttonPhoto.setOnClickListener(new View.OnClickListener() {
 
 			public void onClick(View v) {
@@ -161,74 +153,83 @@ public class SoumettreProjetActivity extends Activity {
 		});
 
 		supprimerCalendarView();
-		
+
 		m_bar_somme.setMax(10000);
-		m_bar_somme.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
+		m_bar_somme
+				.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
-		    @Override
-		    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-		        progress = progress / 10;
-		        progress = progress * 10;
-		    	m_afficher_montant.setText("Somme à récolter : "+progress +" €");
-		    }
-
-			@Override
-			public void onStartTrackingTouch(SeekBar seekBar) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onStopTrackingTouch(SeekBar seekBar) {
-				// TODO Auto-generated method stub
-				
-			}
-
-		});
-		
-		m_is_Not_Defined_On_Seek_Bar.setOnCheckedChangeListener(new OnCheckedChangeListener(){
-
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView,
-					boolean isChecked) {
-				
-				if(isChecked){
-					m_bar_somme.setEnabled(false);
-					
-					String somme = "0";
-					if(m_edit_text_somme.getText().length() != 0){
-						somme = m_edit_text_somme.getText().toString();
+					@Override
+					public void onProgressChanged(SeekBar seekBar,
+							int progress, boolean fromUser) {
+						progress = progress / 10;
+						progress = progress * 10;
+						m_afficher_montant.setText("Somme à récolter : "
+								+ progress + " €");
 					}
-					m_afficher_montant.setText("Somme à récolter : "+somme +" €");
-					
-				}else{
-					m_afficher_montant.setText("Somme à récolter : "+m_bar_somme.getProgress() +" €");
-					m_bar_somme.setEnabled(true);
-				}
-				
-			}
-		
-		});
-		m_edit_text_somme.setOnKeyListener(new android.view.View.OnKeyListener() {
 
-			@Override
-			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				
-				if(m_is_Not_Defined_On_Seek_Bar.isChecked()){
-					
-					String somme = "0";
-					if(m_edit_text_somme.getText().length() != 0){
-						somme = m_edit_text_somme.getText().toString();
+					@Override
+					public void onStartTrackingTouch(SeekBar seekBar) {
+						// TODO Auto-generated method stub
+
 					}
-					m_afficher_montant.setText("Somme à récolter : "+somme +" €");
-					
-				}else{
-					m_afficher_montant.setText("Somme à récolter : "+m_bar_somme.getProgress() +" €");
-				}
-				return true;
-			}
-		});
-		
+
+					@Override
+					public void onStopTrackingTouch(SeekBar seekBar) {
+						// TODO Auto-generated method stub
+
+					}
+
+				});
+
+		m_is_Not_Defined_On_Seek_Bar
+				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+					@Override
+					public void onCheckedChanged(CompoundButton buttonView,
+							boolean isChecked) {
+
+						if (isChecked) {
+							m_bar_somme.setEnabled(false);
+
+							String somme = "0";
+							if (m_edit_text_somme.getText().length() != 0) {
+								somme = m_edit_text_somme.getText().toString();
+							}
+							m_afficher_montant.setText("Somme à récolter : "
+									+ somme + " €");
+
+						} else {
+							m_afficher_montant.setText("Somme à récolter : "
+									+ m_bar_somme.getProgress() + " €");
+							m_bar_somme.setEnabled(true);
+						}
+
+					}
+
+				});
+		m_edit_text_somme
+				.setOnKeyListener(new android.view.View.OnKeyListener() {
+
+					@Override
+					public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+						if (m_is_Not_Defined_On_Seek_Bar.isChecked()) {
+
+							String somme = "0";
+							if (m_edit_text_somme.getText().length() != 0) {
+								somme = m_edit_text_somme.getText().toString();
+							}
+							m_afficher_montant.setText("Somme à récolter : "
+									+ somme + " €");
+
+						} else {
+							m_afficher_montant.setText("Somme à récolter : "
+									+ m_bar_somme.getProgress() + " €");
+						}
+						return true;
+					}
+				});
+
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -284,6 +285,19 @@ public class SoumettreProjetActivity extends Activity {
 		switch (item.getItemId()) {
 
 		case R.id.soumettre:
+/*
+			try {
+				//Communicator.addProject(name, description, requestedFunding);
+				if(Share.user.isAdmin()){
+					Toast.makeText(getApplicationContext(), "Connexion required", Toast.LENGTH_SHORT).show();	
+				}else{
+					
+				}
+				// Soumettre dans la base de donnée
+			} catch (AuthentificationRequiredException e) {
+				Toast.makeText(getApplicationContext(), "Connexion required", Toast.LENGTH_SHORT).show();
+			}
+*/
 			Toast.makeText(getApplicationContext(),
 					"Projet soumis en attente de validation",
 					Toast.LENGTH_SHORT).show();
