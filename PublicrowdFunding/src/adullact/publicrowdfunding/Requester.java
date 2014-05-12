@@ -2,11 +2,9 @@ package adullact.publicrowdfunding;
 
 import java.util.Date;
 
-import adullact.publicrowdfunding.exceptions.AdministratorRequiredException;
-import adullact.publicrowdfunding.exceptions.AuthentificationRequiredException;
-import adullact.publicrowdfunding.exceptions.UserNotFoundException;
-import adullact.publicrowdfunding.reply.AuthentificationReply;
-import adullact.publicrowdfunding.request.AuthentificationRequest;
+import adullact.publicrowdfunding.model.event.AuthentificationEvent;
+import adullact.publicrowdfunding.model.reply.AuthentificationReply;
+import adullact.publicrowdfunding.model.request.AuthentificationRequest;
 import adullact.publicrowdfunding.shared.Administrator;
 import adullact.publicrowdfunding.shared.Share;
 
@@ -16,27 +14,26 @@ import adullact.publicrowdfunding.shared.Share;
  */
 public class Requester {
 	
-	public static void authentificateUser(String username, String password) throws UserNotFoundException {
-		AuthentificationRequest authentificationRequest = new AuthentificationRequest(username, password);
-		AuthentificationReply reply;
-		try {
-			reply = authentificationRequest.execute();
-		}
-		catch(AuthentificationRequiredException exception) {
-			reply = new AuthentificationReply(); // reply is failing
-		}
-		catch(AdministratorRequiredException exception) {
-			reply = new AuthentificationReply(); // reply is failing
-		}
+	public static void authentificateUser(String pseudo, String password, AuthentificationEvent authentificationEvent) {
+		AuthentificationRequest authentificationRequest = new AuthentificationRequest(pseudo, password);
+		authentificationEvent.defineContextRequest(authentificationRequest);
+		AuthentificationReply reply = authentificationRequest.execute();
 		if(reply.ok()) {
 			if(reply.isAdmin()) {
 				Share.user = new Administrator();
+				Share.user.defineFields(pseudo, password, reply.name(), reply.firstName());
+				Share.user.authentificate();
+				authentificationEvent.onAuthentificate();
+				authentificationEvent.ifUserIsAdministrator();
 			}
-			Share.user.defineFields(reply.pseudo(), reply.name(), reply.firstName());
-			Share.user.authentificate();
+			else {
+				Share.user.defineFields(pseudo, password, reply.name(), reply.firstName());
+				Share.user.authentificate();
+				authentificationEvent.onAuthentificate();
+			}
 		}
 		else {
-			throw new UserNotFoundException(username, password);
+			authentificationEvent.errorUserNotExists(pseudo, password);
 		}
 	}
 	

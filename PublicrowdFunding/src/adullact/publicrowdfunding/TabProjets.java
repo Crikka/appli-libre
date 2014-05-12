@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Vector;
 
-import adullact.publicrowdfunding.server.ServerEmulator;
+import adullact.publicrowdfunding.model.server.ServerEmulator;
 import adullact.publicrowdfunding.shared.Project;
 import android.content.Intent;
 import android.os.Bundle;

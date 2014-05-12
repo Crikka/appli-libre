@@ -1,4 +1,4 @@
-package adullact.publicrowdfunding.reply;
+package adullact.publicrowdfunding.model.reply;
 
 /**
  * @author Ferrand

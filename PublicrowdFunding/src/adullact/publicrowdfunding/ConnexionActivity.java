@@ -1,6 +1,7 @@
 package adullact.publicrowdfunding;
 
-import adullact.publicrowdfunding.exceptions.UserNotFoundException;
+import adullact.publicrowdfunding.model.event.AuthentificationEvent;
+import adullact.publicrowdfunding.shared.Administrator;
 import adullact.publicrowdfunding.shared.Share;
 import android.app.Activity;
 import android.content.Intent;
@@ -50,17 +51,26 @@ public class ConnexionActivity extends Activity {
 				String login = m_login.getText().toString();
 				String password = m_password.getText().toString();
 
-				try {
-					Requester.authentificateUser(login, password);
-					Toast.makeText(getApplicationContext(),
-							"Vous êtes connecté !", Toast.LENGTH_LONG).show();
-					finish();
-				} catch (UserNotFoundException exception) {
-					Toast.makeText(getApplicationContext(),
-							"Login ou mot de passe incorect", Toast.LENGTH_LONG)
-							.show();
-				}
+				Requester.authentificateUser(login, password, new AuthentificationEvent() {
 
+					@Override
+					public void ifUserIsAdministrator() {
+						// TODO
+					}
+
+					@Override
+					public void onAuthentificate() {
+						Toast.makeText(getApplicationContext(),
+								"Vous êtes connecté !", Toast.LENGTH_LONG).show();
+						finish();
+					}
+
+					@Override
+					public void errorUserNotExists(String pseudo, String password) {
+						Toast.makeText(getApplicationContext(),
+								"Login ou mot de passe incorect", Toast.LENGTH_LONG).show();
+						}
+				});
 			}
 		});
 

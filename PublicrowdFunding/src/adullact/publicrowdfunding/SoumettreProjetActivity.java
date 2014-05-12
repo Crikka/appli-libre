@@ -1,6 +1,5 @@
 package adullact.publicrowdfunding;
 
-import adullact.publicrowdfunding.exceptions.AuthentificationRequiredException;
 import adullact.publicrowdfunding.shared.Share;
 import android.annotation.TargetApi;
 import android.app.Activity;

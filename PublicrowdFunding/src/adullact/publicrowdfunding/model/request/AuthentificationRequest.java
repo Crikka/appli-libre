@@ -1,10 +1,7 @@
-package adullact.publicrowdfunding.request;
+package adullact.publicrowdfunding.model.request;
 
-import adullact.publicrowdfunding.exceptions.AdministratorRequiredException;
-import adullact.publicrowdfunding.exceptions.AuthentificationRequiredException;
-import adullact.publicrowdfunding.reply.AuthentificationReply;
-import adullact.publicrowdfunding.reply.Reply;
-import adullact.publicrowdfunding.server.ServerEmulator;
+import adullact.publicrowdfunding.model.reply.AuthentificationReply;
+import adullact.publicrowdfunding.model.server.ServerEmulator;
 import adullact.publicrowdfunding.shared.Administrator;
 import adullact.publicrowdfunding.shared.User;
 
@@ -12,7 +9,7 @@ import adullact.publicrowdfunding.shared.User;
  * @author Ferrand
  * @brief Use this request when a user needs to be authenticate.
  */
-public class AuthentificationRequest extends AnonymousRequest {
+public class AuthentificationRequest extends Request {
 	private String m_username;
 	private String m_password;
 
@@ -23,8 +20,7 @@ public class AuthentificationRequest extends AnonymousRequest {
 	}
 	
 	@Override
-	public AuthentificationReply execute() throws AuthentificationRequiredException, AdministratorRequiredException {
-		verifyUserType();
+	public AuthentificationReply execute() {
 		
 		ServerEmulator serverEmulator = ServerEmulator.instance();
 		AuthentificationReply res;

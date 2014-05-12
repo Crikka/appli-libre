@@ -1,6 +1,4 @@
-package adullact.publicrowdfunding.reply;
-
-import adullact.publicrowdfunding.request.AuthentificationRequest;
+package adullact.publicrowdfunding.model.reply;
 
 public class AuthentificationReply extends Reply {
 	private boolean m_admin; // La réponse comprend le fait que l'utilisateur est un admin ou non.

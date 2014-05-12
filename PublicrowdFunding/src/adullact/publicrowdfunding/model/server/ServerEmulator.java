@@ -1,4 +1,4 @@
-package adullact.publicrowdfunding.server;
+package adullact.publicrowdfunding.model.server;
 
 import java.util.HashMap;
 
@@ -33,15 +33,15 @@ public class ServerEmulator {
 	private void initialize() {
 		/* Users base */
 		Administrator billGate = new Administrator();
-		billGate.defineFields("MisterGate", "Gate", "Bill");
+		billGate.defineFields("MisterGate", "azE45WIN", "Gate", "Bill");
 		Administrator lucasX = new Administrator();
-		lucasX.defineFields("XFactor", "Nelaupe", "Lucas");
+		lucasX.defineFields("XFactor", "mushroom34", "Nelaupe", "Lucas");
 		User anthony = new User();
-		anthony.defineFields("Miaou", "Ferrand", "Anthony");
+		anthony.defineFields("Miaou", "abjectDominera", "Ferrand", "Anthony");
 		User lucas = new User();
-		lucas.defineFields("Miaou", "Nelaupe", "Lucas");
+		lucas.defineFields("Miaou", "lucas", "Nelaupe", "Lucas");
 		Administrator admin = new Administrator();
-		admin.defineFields("admin", "Ad", "Min");
+		admin.defineFields("admin", "admin", "Ad", "Min");
 		
 		usersBase.put(new Pair<String, String>("MisterGate", "azE45WIN"), billGate);
 		usersBase.put(new Pair<String, String>("XFactor", "mushroom34"), lucasX);
@@ -57,6 +57,11 @@ public class ServerEmulator {
 		projectsBase.put("Renovation Faculté", new Project("Renovation Faculté","Rénovation de la fac des sciences", "165000"));
 		projectsBase.put("Lampadaires écolo", new Project("Lampadaires écolo","Achat de lampadaires basse consommation", "5000"));
 		/* ------------- */
+	}
+	
+	public void replaceUser(String oldPseudo, String oldPassword, User user) {
+		usersBase.remove(new Pair<String, String>(oldPseudo, oldPassword));
+		usersBase.put(new Pair<String, String>(user.pseudo(), user.password()), user);
 	}
 	
 	/**

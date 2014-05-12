@@ -1,4 +1,4 @@
-package adullact.publicrowdfunding.server;
+package adullact.publicrowdfunding.model.server;
 
 /**
  * @author Ferrand

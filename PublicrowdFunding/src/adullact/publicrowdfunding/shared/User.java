@@ -10,6 +10,7 @@ import java.util.ArrayList;
  */
 public class User {
 	private String m_pseudo;
+	private String m_password;
 	private String m_name;
 	private String m_firstName;
 	private boolean m_authentified;
@@ -18,6 +19,7 @@ public class User {
 	
 	public User() {
 		this.m_pseudo = null;
+		this.m_password = null;
 		this.m_name = null;
 		this.m_firstName = null;
 		this.m_authentified = false;
@@ -28,6 +30,10 @@ public class User {
 	/* Getter */
 	public String name() {
 		return m_name;
+	}
+	
+	public String password() {
+		return m_password;
 	}
 
 	public String firstName() {
@@ -62,8 +68,9 @@ public class User {
 	 * @param firstName
 	 * @brief setter for all fiels.
 	 */
-	public void defineFields(String pseudo, String name, String firstName) {
+	public void defineFields(String pseudo, String password, String name, String firstName) {
 		this.m_pseudo = pseudo;
+		this.m_password = password;
 		this.m_name = name;
 		this.m_firstName = firstName;
 	}
