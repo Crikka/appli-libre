@@ -20,7 +20,19 @@ public class TabAllProjectsMaps extends FragmentActivity {
 			try{
 			map = ((SupportMapFragment) getSupportFragmentManager()
 					.findFragmentById(R.id.map_frag)).getMap();
-			LatLng position = new LatLng(0, 0);
+			LatLng position = new LatLng(43.6, 2.7);
+			map.addMarker(new MarkerOptions().position(position).title(
+					"Titre du projet"));
+			position = new LatLng(46.9, 0);
+			map.addMarker(new MarkerOptions().position(position).title(
+					"Titre du projet"));
+			position = new LatLng(47, 4.5);
+			map.addMarker(new MarkerOptions().position(position).title(
+					"Titre du projet"));
+			position = new LatLng(48, 1.5);
+			map.addMarker(new MarkerOptions().position(position).title(
+					"Titre du projet"));
+			position = new LatLng(44, 4.5);
 			map.addMarker(new MarkerOptions().position(position).title(
 					"Titre du projet"));
 			}catch(NullPointerException e){

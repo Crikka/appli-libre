@@ -53,10 +53,9 @@ public class ServerEmulator {
 		/* Projects base */
 		projectsBase.put("Ecole publique", new Project("Ecole publique","Construction d'une école primaire", "25000"));
 		projectsBase.put("Parking sous terrain", new Project("Parking sous terrain","Parking au centre de Montpellier", "50000"));
-		projectsBase.put("Lave vaisselle", new Project("Lave vaisselle","Lave vaisselle pour le restaurent universitaire de Montpellier", "100"));
+		projectsBase.put("Lave vaisselle", new Project("Lave vaisselle","Lave vaisselle pour le restaurant universitaire de Montpellier", "100"));
 		projectsBase.put("Renovation Faculté", new Project("Renovation Faculté","Rénovation de la fac des sciences", "165000"));
-		projectsBase.put("Nouveaux lampadaires", new Project("Nouveaux lampadaires","Achat de nouveaux lampadaires basse consommation", "5000"));
-		projectsBase.put("De la modestie pour fred", new Project("De la modestie pour fred","Ca ne lui ferait pas de mal", "0.10"));
+		projectsBase.put("Lampadaires écolo", new Project("Lampadaires écolo","Achat de lampadaires basse consommation", "5000"));
 		/* ------------- */
 	}
 	

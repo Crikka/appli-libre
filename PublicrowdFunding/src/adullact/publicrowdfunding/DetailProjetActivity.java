@@ -53,6 +53,11 @@ public class DetailProjetActivity extends FragmentActivity {
 		ServerEmulator serveur = ServerEmulator.instance();
 		HashMap<String, Project> projets = serveur.getAllProjets();
 		Project projet = projets.get(titre);
+		System.out.println("titre: titre");
+		if(projet == null){
+			Toast.makeText(getApplicationContext(), "Un erreur s'est produite", Toast.LENGTH_SHORT).show();
+			finish();
+		}
 
 		m_titre = (TextView) findViewById(R.id.titre_projet_detail);
 		m_description = (TextView) findViewById(R.id.detail_projet_detail);
@@ -72,37 +77,34 @@ public class DetailProjetActivity extends FragmentActivity {
 		graph.setLayoutParams(params);
 
 		m_Is_favorite = false;
+		System.out.println("lancement de google map");
+		try {
+			map = ((SupportMapFragment) getSupportFragmentManager()
+					.findFragmentById(R.id.map_frag)).getMap();
+			LatLng position = new LatLng(43, 3);
+			map.addMarker(new MarkerOptions().position(position).title(
+					"Titre du projet"));
 
-		if (map == null) {
-			try {
-				map = ((SupportMapFragment) getSupportFragmentManager()
-						.findFragmentById(R.id.map_frag)).getMap();
-				LatLng position = new LatLng(43, 3);
-				map.addMarker(new MarkerOptions().position(position).title(
-						"Titre du projet"));
-
-				map.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 4));
-			} catch (NullPointerException e) {
-				Toast.makeText(getApplication(),
-						"Impossible de lancer google Map", Toast.LENGTH_SHORT)
-						.show();
-			}
-		}
-
-		if (favorisItem != null) {
-			Drawable icon = favorisItem.getIcon();
-			System.out.println(icon.toString());
-		} else {
-			System.out.println("test is null");
+			map.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 4));
+		} catch (NullPointerException e) {
+			Toast.makeText(getApplication(), "Impossible de lancer google Map",
+					Toast.LENGTH_SHORT).show();
 
 		}
 
-		m_progression.setArgent(40);
-		m_progression.setProgress(35);
-		m_progression.setMaxArgent(100);
+		if (m_progression == null) {
+			System.out.println("c'est nul");
+		}
 
-		m_titre.setText(projet.getName());
+		System.out.println("Progression");
+		m_progression.setArgent(1000);
+		m_progression.setProgress(20);
+		m_progression.setMaxArgent(5000);
 
+			m_titre.setText(projet.getName());
+		m_description.setText(projet.getDescription());
+		
+		System.out.println("Notation");
 		m_notation
 				.setOnRatingBarChangeListener(new OnRatingBarChangeListener() {
 
