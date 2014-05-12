@@ -32,7 +32,7 @@ public class ModifyAccountRequest extends AuthentificatedRequest {
 	}
 
 	@Override
-	public Reply<? extends Request> execute() throws AuthentificationRequiredException, AdministratorRequiredException {
+	public Reply execute() throws AuthentificationRequiredException, AdministratorRequiredException {
 		// TODO Auto-generated method stub
 		return null;
 	}

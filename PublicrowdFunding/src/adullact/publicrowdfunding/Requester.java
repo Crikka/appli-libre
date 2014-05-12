@@ -1,5 +1,7 @@
 package adullact.publicrowdfunding;
 
+import java.util.Date;
+
 import adullact.publicrowdfunding.exceptions.AdministratorRequiredException;
 import adullact.publicrowdfunding.exceptions.AuthentificationRequiredException;
 import adullact.publicrowdfunding.exceptions.UserNotFoundException;
@@ -12,7 +14,7 @@ import adullact.publicrowdfunding.shared.Share;
  * @author Ferrand
  * @brief Use this class like an interface between server and application.
  */
-public class Communicator {
+public class Requester {
 	
 	public static void authentificateUser(String username, String password) throws UserNotFoundException {
 		AuthentificationRequest authentificationRequest = new AuthentificationRequest(username, password);
@@ -21,10 +23,10 @@ public class Communicator {
 			reply = authentificationRequest.execute();
 		}
 		catch(AuthentificationRequiredException exception) {
-			reply = new AuthentificationReply(authentificationRequest); // reply is failing
+			reply = new AuthentificationReply(); // reply is failing
 		}
 		catch(AdministratorRequiredException exception) {
-			reply = new AuthentificationReply(authentificationRequest); // reply is failing
+			reply = new AuthentificationReply(); // reply is failing
 		}
 		if(reply.ok()) {
 			if(reply.isAdmin()) {
@@ -38,7 +40,7 @@ public class Communicator {
 		}
 	}
 	
-	public static void addProject(String name, String description, String requestedFunding) {
+	public static void addProject(String name, String description, String requestedFunding, Date beginOfProject, Date endOfProject) {
 		
 	}
 }

@@ -51,7 +51,7 @@ public class ConnexionActivity extends Activity {
 				String password = m_password.getText().toString();
 
 				try {
-					Communicator.authentificateUser(login, password);
+					Requester.authentificateUser(login, password);
 					Toast.makeText(getApplicationContext(),
 							"Vous êtes connecté !", Toast.LENGTH_LONG).show();
 					finish();

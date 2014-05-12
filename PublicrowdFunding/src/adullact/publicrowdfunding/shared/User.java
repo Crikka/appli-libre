@@ -73,11 +73,15 @@ public class User {
 	 * @brief downcast le type si on le peut, sinon renvoie null.
 	 */
 	public Administrator toAdmin() {
-		if(this instanceof Administrator){
+		if(isAdmin()){
 			return (Administrator) this;
 		}
 		else {
 			return null;
 		}
+	}
+	
+	public boolean isAdmin() {
+		return (this instanceof Administrator);
 	}
 }

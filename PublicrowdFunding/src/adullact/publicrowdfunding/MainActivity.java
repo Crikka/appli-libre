@@ -43,7 +43,7 @@ public class MainActivity extends TabActivity {
 		tabHost.addTab(tabSpec);
 		
 		try {
-			Communicator.authentificateUser("MisterGate", "azE45WIN");
+			Requester.authentificateUser("MisterGate", "azE45WIN");
 		} catch (UserNotFoundException exception) {
 			System.out.println("Impossible de trouver " + exception.pseudo() + " avec le mot de passe : " + exception.password());
 		}
@@ -51,7 +51,7 @@ public class MainActivity extends TabActivity {
 		System.out.println(" et je suis admin : " + (Share.user instanceof Administrator));
 		
 		try {
-			Communicator.authentificateUser("Miaou", "abjectDominera");
+			Requester.authentificateUser("Miaou", "abjectDominera");
 		} catch (UserNotFoundException exception) {
 			System.out.println("Impossible de trouver " + exception.pseudo() + " avec le mot de passe : " + exception.password());
 		}
@@ -59,7 +59,7 @@ public class MainActivity extends TabActivity {
 		System.out.println(" et je suis admin : " + (Share.user instanceof Administrator));
 		
 		try {
-			Communicator.authentificateUser("MiaouBis", "abjectDominera");
+			Requester.authentificateUser("MiaouBis", "abjectDominera");
 		} catch (UserNotFoundException exception) {
 			System.out.println("Impossible de trouver " + exception.pseudo() + " avec le mot de passe : " + exception.password());
 		}
@@ -68,7 +68,6 @@ public class MainActivity extends TabActivity {
 		p.finance("5000");
 		System.out.println(p.percentOfAchievement());
 		System.out.println(p.id());
-
 	} 
 
 }

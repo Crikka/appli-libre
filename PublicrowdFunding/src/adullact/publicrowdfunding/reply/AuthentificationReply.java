@@ -2,7 +2,7 @@ package adullact.publicrowdfunding.reply;
 
 import adullact.publicrowdfunding.request.AuthentificationRequest;
 
-public class AuthentificationReply extends Reply<AuthentificationRequest> {
+public class AuthentificationReply extends Reply {
 	private boolean m_admin; // La réponse comprend le fait que l'utilisateur est un admin ou non.
 	private String m_pseudo;
 	private String m_name;
@@ -12,13 +12,13 @@ public class AuthentificationReply extends Reply<AuthentificationRequest> {
 	 * @param request
 	 * @brief for fail reply
 	 */
-	public AuthentificationReply(AuthentificationRequest request) {
-		super(request, false);
+	public AuthentificationReply() {
+		super(false);
 		this.m_admin = false;
 	}
 	
-	public AuthentificationReply(AuthentificationRequest request, String pseudo, String name, String firstName) {
-		super(request);
+	public AuthentificationReply(String pseudo, String name, String firstName) {
+		super();
 		this.m_admin = false;
 		this.m_pseudo = pseudo;
 		this.m_name = name;

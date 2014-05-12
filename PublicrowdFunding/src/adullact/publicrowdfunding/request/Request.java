@@ -16,6 +16,6 @@ public abstract class Request {
 	}
 		
 	protected abstract void verifyUserType() throws AuthentificationRequiredException, AdministratorRequiredException;
-	public abstract Reply<? extends Request> execute() throws AuthentificationRequiredException, AdministratorRequiredException;
+	public abstract Reply execute() throws Exception;
 	
 }

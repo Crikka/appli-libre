@@ -30,10 +30,10 @@ public class AuthentificationRequest extends AnonymousRequest {
 		AuthentificationReply res;
 		User serverUser = serverEmulator.authentificateUser(m_username, m_password);
 		if(serverUser == null){
-			res = new AuthentificationReply(this); // fail
+			res = new AuthentificationReply(); // fail
 		}
 		else{
-			res = new AuthentificationReply(this, serverUser.pseudo(), serverUser.name(), serverUser.firstName());
+			res = new AuthentificationReply(serverUser.pseudo(), serverUser.name(), serverUser.firstName());
 			if(serverUser instanceof Administrator){
 				res.setAdmin();
 			}
