@@ -1,5 +1,7 @@
 package adullact.publicrowdfunding;
 
+import java.util.Date;
+
 import adullact.publicrowdfunding.model.event.AuthentificationEvent;
 import adullact.publicrowdfunding.shared.Administrator;
 import adullact.publicrowdfunding.shared.Project;
@@ -96,7 +98,7 @@ public class MainActivity extends TabActivity {
 			}
 		});
 
-		Project p = new Project("Parking sous terrain","Parking au centre de Montpellier", "50000");
+		Project p = new Project("Parking sous terrain","Parking au centre de Montpellier", "50000", new Date(), new Date(114, 5, 10), new Date(114, 8, 10));
 		p.finance("5000");
 		System.out.println(p.percentOfAchievement());
 		System.out.println(p.id());

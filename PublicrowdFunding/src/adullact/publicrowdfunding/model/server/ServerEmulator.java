@@ -1,5 +1,6 @@
 package adullact.publicrowdfunding.model.server;
 
+import java.util.Date;
 import java.util.HashMap;
 
 import adullact.publicrowdfunding.shared.Administrator;
@@ -51,11 +52,11 @@ public class ServerEmulator {
 		/* ---------- */
 		
 		/* Projects base */
-		projectsBase.put("Ecole publique", new Project("Ecole publique","Construction d'une école primaire", "25000"));
-		projectsBase.put("Parking sous terrain", new Project("Parking sous terrain","Parking au centre de Montpellier", "50000"));
-		projectsBase.put("Lave vaisselle", new Project("Lave vaisselle","Lave vaisselle pour le restaurant universitaire de Montpellier", "100"));
-		projectsBase.put("Renovation Faculté", new Project("Renovation Faculté","Rénovation de la fac des sciences", "165000"));
-		projectsBase.put("Lampadaires écolo", new Project("Lampadaires écolo","Achat de lampadaires basse consommation", "5000"));
+		projectsBase.put("Ecole publique", new Project("Ecole publique","Construction d'une école primaire", "25000", new Date(), new Date(114, 5, 10), new Date(114, 7, 10)));
+		projectsBase.put("Parking sous terrain", new Project("Parking sous terrain","Parking au centre de Montpellier", "50000", new Date(), new Date(114, 5, 10), new Date(114, 7, 10)));
+		projectsBase.put("Lave vaisselle", new Project("Lave vaisselle","Lave vaisselle pour le restaurant universitaire de Montpellier", "100", new Date(), new Date(114, 5, 10), new Date(114, 7, 10)));
+		projectsBase.put("Renovation Faculté", new Project("Renovation Faculté","Rénovation de la fac des sciences", "165000", new Date(), new Date(114, 5, 10), new Date(114, 7, 10)));
+		projectsBase.put("Lampadaires écolo", new Project("Lampadaires écolo","Achat de lampadaires basse consommation", "5000", new Date(), new Date(114, 5, 10), new Date(114, 7, 10)));
 		/* ------------- */
 	}
 	
