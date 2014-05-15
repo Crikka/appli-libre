@@ -4,12 +4,13 @@ import java.util.Date;
 
 import adullact.publicrowdfunding.model.event.AuthentificationEvent;
 import adullact.publicrowdfunding.model.event.CreateProjectEvent;
-import adullact.publicrowdfunding.model.reply.AuthentificationReply;
-import adullact.publicrowdfunding.model.reply.CreateProjectReply;
+import adullact.publicrowdfunding.model.event.ModifyAccountEvent;
+import adullact.publicrowdfunding.model.event.ValidateProjectEvent;
 import adullact.publicrowdfunding.model.request.AuthentificationRequest;
 import adullact.publicrowdfunding.model.request.CreateProjectRequest;
-import adullact.publicrowdfunding.shared.Administrator;
-import adullact.publicrowdfunding.shared.Share;
+import adullact.publicrowdfunding.model.request.ModifyAccountRequest;
+import adullact.publicrowdfunding.model.request.ValidateProjectRequest;
+import adullact.publicrowdfunding.shared.Project;
 
 /**
  * @author Ferrand
@@ -20,40 +21,27 @@ public class Requester {
 	public static void authentificateUser(String pseudo, String password, AuthentificationEvent authentificationEvent) {
 		AuthentificationRequest authentificationRequest = new AuthentificationRequest(pseudo, password);
 		authentificationEvent.defineContextRequest(authentificationRequest);
-		AuthentificationReply reply = authentificationRequest.execute();
-		if(reply.ok()) {
-			if(reply.isAdmin()) {
-				Share.user = new Administrator();
-				Share.user.defineFields(reply.pseudo(), password, reply.name(), reply.firstName());
-				Share.user.authentificate();
-				authentificationEvent.onAuthentificate();
-				authentificationEvent.ifUserIsAdministrator();
-			}
-			else {
-				Share.user.defineFields(reply.pseudo(), password, reply.name(), reply.firstName());
-				Share.user.authentificate();
-				authentificationEvent.onAuthentificate();
-			}
-		}
-		else {
-			authentificationEvent.errorUserNotExists(pseudo, password);
-		}
+		authentificationRequest.execute(authentificationEvent);
+	}
+	
+	/**
+	 * @brief Set argument to null if you want to keep old value.
+	 */
+	public static void modifyAccount(String newPseudo, String newPassword, String newName, String newFirstName, ModifyAccountEvent modifyAccountEvent) {
+		ModifyAccountRequest modifyAccountRequest = new ModifyAccountRequest(newPseudo, newPassword, newName, newFirstName);
+		modifyAccountEvent.defineContextRequest(modifyAccountRequest);
+		modifyAccountRequest.execute(modifyAccountEvent);
 	}
 	
 	public static void createProject(String name, String description, String requestedFunding, Date beginOfProject, Date endOfProject, CreateProjectEvent createProjectEvent){
 		CreateProjectRequest createProjectRequest = new CreateProjectRequest(name, description, requestedFunding, beginOfProject, endOfProject);
 		createProjectEvent.defineContextRequest(createProjectRequest);
-		CreateProjectReply reply = createProjectRequest.execute();
-		if(reply.ok()) {
-			createProjectEvent.onProjectAdded(createProjectRequest.project());
-			if(Share.user.isAdmin()) {
-				createProjectEvent.ifUserIsAdministrator();;
-			}
-		}
-		else {
-			if(reply.isAuthentificationFailing()) {
-				createProjectEvent.errorAuthentificationRequired();
-			}
-		}
+		createProjectRequest.execute(createProjectEvent);
+	}
+	
+	public static void validateProject(Project project, ValidateProjectEvent validateProjectEvent) {
+		ValidateProjectRequest validateProjectRequest = new ValidateProjectRequest(project);
+		validateProjectEvent.defineContextRequest(validateProjectRequest);
+		validateProjectRequest.execute(validateProjectEvent);
 	}
 }

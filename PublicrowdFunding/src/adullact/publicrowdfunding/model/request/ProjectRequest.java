@@ -2,10 +2,10 @@ package adullact.publicrowdfunding.model.request;
 
 import java.util.Date;
 
-import adullact.publicrowdfunding.model.reply.Reply;
+import adullact.publicrowdfunding.model.event.ProjectEvent;
 import adullact.publicrowdfunding.shared.Project;
 
-public abstract class ProjectRequest extends Request {
+public abstract class ProjectRequest<TRequest extends ProjectRequest<TRequest, TEvent>, TEvent extends ProjectEvent<TEvent, TRequest>> extends Request<TRequest, TEvent> {
 	private Project m_project;
 
 	public ProjectRequest(String name, String description, String requestedFunding, Date beginDate, Date endDate) {
@@ -15,11 +15,15 @@ public abstract class ProjectRequest extends Request {
 		
 	}
 	
+	public ProjectRequest(Project project) {
+		super();
+		
+		this.m_project = project;
+		
+	}
+	
 	public Project project() {
 		return m_project;
 	}
-	
-	@Override
-	public abstract Reply execute();
 
 }

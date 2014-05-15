@@ -8,7 +8,7 @@ import adullact.publicrowdfunding.model.request.Request;
  * @param <TRequest>
  * @Brief Event is a abstract functions handle to requester.
  */
-public abstract class Event<TRequest extends Request> {
+public abstract class Event<TEvent extends Event<TEvent, TRequest>, TRequest extends Request<TRequest, TEvent>> {
 	private TRequest m_request;
 	
 	public Event() {

@@ -57,6 +57,12 @@ public class ServerEmulator {
 		Project laveVaisselle = new Project("Lave vaisselle","Lave vaisselle pour le restaurant universitaire de Montpellier", "100", new Date(), new Date(114, 5, 10), new Date(114, 7, 10));
 		Project renovation = new Project("Renovation Faculté","Rénovation de la fac des sciences", "165000", new Date(), new Date(114, 5, 10), new Date(114, 7, 10));
 		Project lampadaire = new Project("Lampadaires écolo","Achat de lampadaires basse consommation", "5000", new Date(), new Date(114, 5, 10), new Date(114, 7, 10));
+		
+		ecole.validate();
+		parking.validate();
+		laveVaisselle.validate();
+		renovation.validate();
+		lampadaire.validate();
 
 		projectsBase.put(ecole.id(), ecole);
 		projectsBase.put(parking.id(), parking);

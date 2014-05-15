@@ -17,6 +17,7 @@ public class Project {
 	private DateTime m_creationDate;
 	private Interval m_fundingInterval;
 	private ArrayList<FundingTimePeriod> m_fundingTimePeriods;
+	private boolean m_validate;
 
 	public Project(String name, String description, String requestedFunding, Date creationDate, Date beginDate, Date endDate) {
 		this.m_id = UUID.randomUUID();
@@ -27,6 +28,7 @@ public class Project {
 		this.m_creationDate = new DateTime(creationDate.getTime());
 		this.m_fundingInterval = new Interval(new DateTime(beginDate.getTime()), new DateTime(endDate.getTime()));
 		this.m_fundingTimePeriods = new ArrayList<FundingTimePeriod>();
+		this.m_validate = false;
 		
 		// Now, we calculate 10 periods for graphics
 		int numberOfPeriod = 10;
@@ -52,6 +54,14 @@ public class Project {
 
 	public String getDescription(){
 		return m_description;
+	}
+	
+	public boolean isValidate() {
+		return m_validate;
+	}
+	
+	public void validate() {
+		m_validate = true;
 	}
 
 	/**

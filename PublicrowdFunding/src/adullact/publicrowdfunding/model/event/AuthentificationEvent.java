@@ -4,7 +4,7 @@ import adullact.publicrowdfunding.model.request.AuthentificationRequest;
 import adullact.publicrowdfunding.shared.Share;
 import adullact.publicrowdfunding.shared.User;
 
-public abstract class AuthentificationEvent extends Event<AuthentificationRequest> implements AdministratorFavour {
+public abstract class AuthentificationEvent extends Event<AuthentificationEvent, AuthentificationRequest> implements AdministratorFavour {
 	
 	/* Callback functions */
 	public abstract void errorUserNotExists(String pseudo, String password);
