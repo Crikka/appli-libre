@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.UUID;
 
 import org.joda.time.DateTime;
-import org.joda.time.Duration;
 import org.joda.time.Interval;
 
 public class Project {
@@ -33,13 +32,12 @@ public class Project {
 		int numberOfPeriod = 10;
 		DateTime startDateTime = m_fundingInterval.getStart();
 		DateTime endDateTime = m_fundingInterval.getEnd();
-		int numberOfDayBetweenStartAndEnd = (int) m_fundingInterval.toDuration().getStandardDays();
-		int dayByPeriod = numberOfDayBetweenStartAndEnd/numberOfPeriod;
+		long numberOfDayBetweenStartAndEnd = m_fundingInterval.toDuration().getStandardDays();
+		long dayByPeriod = numberOfDayBetweenStartAndEnd/numberOfPeriod;
 		
-		System.out.println("Creation de tranche de " + dayByPeriod + " jour");
 		for(int i = 0; i < (numberOfPeriod-1); i++){
-			m_fundingTimePeriods.add(new FundingTimePeriod(new Interval(startDateTime, startDateTime.plusDays(dayByPeriod))));
-			startDateTime = startDateTime.plusDays(dayByPeriod);
+			m_fundingTimePeriods.add(new FundingTimePeriod(new Interval(startDateTime, startDateTime.plusDays((int) dayByPeriod))));
+			startDateTime = startDateTime.plusDays((int) dayByPeriod);
 		}
 		m_fundingTimePeriods.add(new FundingTimePeriod(new Interval(startDateTime, endDateTime)));
 	}

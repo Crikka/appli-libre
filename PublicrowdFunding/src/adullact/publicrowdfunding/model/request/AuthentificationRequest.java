@@ -23,19 +23,19 @@ public class AuthentificationRequest extends Request {
 	public AuthentificationReply execute() {
 		
 		ServerEmulator serverEmulator = ServerEmulator.instance();
-		AuthentificationReply res;
+		AuthentificationReply reply = new AuthentificationReply();
 		User serverUser = serverEmulator.authentificateUser(m_username, m_password);
 		if(serverUser == null){
-			res = new AuthentificationReply(); // fail
+			reply.declareFailed();
 		}
 		else{
-			res = new AuthentificationReply(serverUser.pseudo(), serverUser.name(), serverUser.firstName());
+			reply.declareSucceed(serverUser.pseudo(), serverUser.name(), serverUser.firstName());
 			if(serverUser instanceof Administrator){
-				res.setAdmin();
+				reply.declareAdministrator();
 			}
 		}
 		
-		return res;
+		return reply;
 	}
 
 }

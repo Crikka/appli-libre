@@ -3,7 +3,7 @@ package adullact.publicrowdfunding.model.reply;
 /**
  * @author Ferrand
  */
-public class Reply {
+public abstract class Reply {
 	private boolean m_ok;
 	
 	/**
@@ -11,11 +11,15 @@ public class Reply {
 	 * @brief Constructor with true for ok
 	 */
 	public Reply(){
-		this.m_ok = true;
+		m_ok = true;
 	}
 	
-	public Reply(boolean ok){
-		this.m_ok = ok;
+	public void declareSucceed(){
+		m_ok = true;
+	}
+	
+	public void declareFailed(){
+		m_ok = false;
 	}
 	
 	public boolean ok() {

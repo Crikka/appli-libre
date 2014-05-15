@@ -11,23 +11,23 @@ public class AuthentificationReply extends Reply {
 	 * @brief for fail reply
 	 */
 	public AuthentificationReply() {
-		super(false);
+		super();
+		
 		this.m_admin = false;
 	}
 	
-	public AuthentificationReply(String pseudo, String name, String firstName) {
-		super();
-		this.m_admin = false;
-		this.m_pseudo = pseudo;
-		this.m_name = name;
-		this.m_firstName = firstName;
+	public void declareSucceed(String pseudo, String name, String firstName) {
+		super.declareSucceed();
+		m_pseudo = pseudo;
+		m_name = name;
+		m_firstName = firstName;
 	}
 	
 	public boolean isAdmin() {
 		return m_admin;
 	}
 	
-	public void setAdmin() {
+	public void declareAdministrator() {
 		m_admin = true;
 	}
 	
@@ -42,6 +42,5 @@ public class AuthentificationReply extends Reply {
 	public String firstName() {
 		return m_firstName;
 	}
-
 
 }
