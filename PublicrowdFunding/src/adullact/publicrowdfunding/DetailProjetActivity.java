@@ -2,17 +2,8 @@ package adullact.publicrowdfunding;
 
 import java.util.HashMap;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-
 import adullact.publicrowdfunding.model.server.ServerEmulator;
 import adullact.publicrowdfunding.shared.Project;
-import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
@@ -23,19 +14,24 @@ import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 public class DetailProjetActivity extends FragmentActivity {
 
 	private TextView m_titre;
 	private TextView m_description;
-	private TextView m_nombre_participants;
-	private TextView m_date_de_fin;
-	private TextView m_utilisateur_soumission;
+//	private TextView m_nombre_participants;
+//	private TextView m_date_de_fin;
+//	private TextView m_utilisateur_soumission;
 	private RatingBar m_notation;
 	private CustomProgressBar m_progression;
 	private Drawable m_favorite;
@@ -61,12 +57,12 @@ public class DetailProjetActivity extends FragmentActivity {
 
 		m_titre = (TextView) findViewById(R.id.titre_projet_detail);
 		m_description = (TextView) findViewById(R.id.detail_projet_detail);
-		m_nombre_participants = (TextView) findViewById(R.id.nombre_participants_detail);
-		m_date_de_fin = (TextView) findViewById(R.id.nombre_jour_restant_detail);
-		m_utilisateur_soumission = (TextView) findViewById(R.id.utilisateur_soumission);
+		//m_nombre_participants = (TextView) findViewById(R.id.nombre_participants_detail);
+		//m_date_de_fin = (TextView) findViewById(R.id.nombre_jour_restant_detail);
+		//m_utilisateur_soumission = (TextView) findViewById(R.id.utilisateur_soumission);
 		m_notation = (RatingBar) findViewById(R.id.rating_bar_projet_detail);
 		m_progression = (CustomProgressBar) findViewById(R.id.avancement_projet_liste);
-		MenuItem favorisItem = (MenuItem) findViewById(R.id.add_favorite);
+		//MenuItem favorisItem = (MenuItem) findViewById(R.id.add_favorite);
 		GraphiqueView graph = (GraphiqueView) findViewById(R.id.graphique);
 
 		DisplayMetrics metrics = new DisplayMetrics();
