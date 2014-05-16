@@ -9,4 +9,11 @@ public abstract class CreateProjectEvent extends ProjectEvent<CreateProjectEvent
 	public abstract void onProjectAdded(Project project);
 	/* ----------------- */
 	
+	@Override
+	protected void retry() {
+		if(!request().isDone()) {
+			request().execute(this);
+		}
+	}
+	
 }

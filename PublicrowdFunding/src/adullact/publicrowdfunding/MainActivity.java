@@ -48,7 +48,7 @@ public class MainActivity extends TabActivity {
 		
 		/* MEA TESTA */
 		adullact.publicrowdfunding.model.server.ExampleAndTest exampleAndTest = new ExampleAndTest();
-		exampleAndTest.authenticationAdmin();
+		//exampleAndTest.authenticationAdmin();
 		exampleAndTest.createProject();
 		/* --------- */
 

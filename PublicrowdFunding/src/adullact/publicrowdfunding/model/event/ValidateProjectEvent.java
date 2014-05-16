@@ -9,4 +9,11 @@ public abstract class ValidateProjectEvent  extends ProjectEvent<ValidateProject
 	public abstract void onValidateProject(Project project);
 	/* ----------------- */
 	
+	@Override
+	protected void retry() {
+		if(!request().isDone()) {
+			request().execute(this);
+		}
+	}
+	
 }

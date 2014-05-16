@@ -14,6 +14,7 @@ public class ValidateProjectRequest extends ProjectRequest<ValidateProjectReques
 	public void execute(ValidateProjectEvent event) {
 		if(Share.user.isAdmin()) {
 			project().validate();
+			done();
 			event.onValidateProject(project());
 		}
 		else {

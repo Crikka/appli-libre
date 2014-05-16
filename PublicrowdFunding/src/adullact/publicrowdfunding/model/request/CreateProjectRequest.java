@@ -18,6 +18,7 @@ public class CreateProjectRequest extends ProjectRequest<CreateProjectRequest, C
 		ServerEmulator serverEmulator = ServerEmulator.instance();
 		if(Share.user.isAuthentified()) {
 			serverEmulator.addProject(project());
+			done();
 			event.onProjectAdded(project());
 			if(Share.user.isAdmin()) {
 				event.ifUserIsAdministrator();

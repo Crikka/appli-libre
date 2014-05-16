@@ -8,5 +8,12 @@ public abstract class ModifyAccountEvent extends Event<ModifyAccountEvent, Modif
 	public abstract void onModifyAccount();
 	/* ----------------- */
 	
+	@Override
+	protected void retry() {
+		if(!request().isDone()) {
+			request().execute(this);
+		}
+	}
+	
 }
 	

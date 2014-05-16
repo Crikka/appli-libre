@@ -19,6 +19,8 @@ public abstract class Event<TEvent extends Event<TEvent, TRequest>, TRequest ext
 		m_request = request;
 	}
 	
+	protected abstract void retry();
+	
 	public TRequest request() {
 		return m_request;
 	}

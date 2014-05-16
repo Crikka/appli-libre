@@ -76,6 +76,8 @@ public class ExampleAndTest {
 			@Override
 			public void errorAuthentificationRequired() {
 				System.out.println("L'utilisateur n'est pas connecte");
+				authentificationNormalUser();
+				retry();
 			}
 			
 			@Override

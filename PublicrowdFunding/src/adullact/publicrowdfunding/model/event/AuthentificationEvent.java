@@ -11,6 +11,13 @@ public abstract class AuthentificationEvent extends Event<AuthentificationEvent,
 	public abstract void onAuthentificate();
 	/* ----------------- */
 	
+	@Override
+	protected void retry() {
+		if(!request().isDone()) {
+			request().execute(this);
+		}
+	}
+	
 	public User user() {
 		return Share.user;
 	}

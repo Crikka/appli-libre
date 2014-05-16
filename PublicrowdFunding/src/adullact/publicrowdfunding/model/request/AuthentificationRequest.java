@@ -32,11 +32,13 @@ public class AuthentificationRequest extends Request<AuthentificationRequest, Au
 			if(serverUser instanceof Administrator){
 				Share.user = new Administrator();
 				authentificateAndInitializeUser(serverUser);
+				done();
 				event.onAuthentificate();
 				event.ifUserIsAdministrator();
 			}
 			else {
 				authentificateAndInitializeUser(serverUser);
+				done();
 				event.onAuthentificate();
 			}
 		}

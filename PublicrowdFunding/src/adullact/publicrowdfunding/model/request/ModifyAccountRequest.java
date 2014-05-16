@@ -33,6 +33,7 @@ public class ModifyAccountRequest extends Request<ModifyAccountRequest, ModifyAc
 											m_newFirstName == null ? Share.user.firstName() : m_newFirstName);
 
 			serverEmulator.replaceUser(oldPseudo, oldPassword, Share.user);
+			done();
 			event.onModifyAccount();
 		}
 		else {
