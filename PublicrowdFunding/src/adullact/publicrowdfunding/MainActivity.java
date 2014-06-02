@@ -5,6 +5,7 @@ import java.util.Date;
 import adullact.publicrowdfunding.model.event.AuthentificationEvent;
 import adullact.publicrowdfunding.model.event.CreateProjectEvent;
 import adullact.publicrowdfunding.model.server.ExampleAndTest;
+import adullact.publicrowdfunding.model.server.ServerInfo;
 import adullact.publicrowdfunding.shared.Administrator;
 import adullact.publicrowdfunding.shared.Project;
 import adullact.publicrowdfunding.shared.Share;
@@ -50,6 +51,8 @@ public class MainActivity extends TabActivity {
 		adullact.publicrowdfunding.model.server.ExampleAndTest exampleAndTest = new ExampleAndTest();
 		//exampleAndTest.authenticationAdmin();
 		exampleAndTest.createProject();
+		
+		ServerInfo.instance().tryConnection();
 		/* --------- */
 
 	} 
