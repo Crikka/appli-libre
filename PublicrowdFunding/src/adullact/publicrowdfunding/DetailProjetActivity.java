@@ -14,6 +14,8 @@ import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.TextView;
@@ -29,9 +31,10 @@ public class DetailProjetActivity extends FragmentActivity {
 
 	private TextView m_titre;
 	private TextView m_description;
-//	private TextView m_nombre_participants;
-//	private TextView m_date_de_fin;
-//	private TextView m_utilisateur_soumission;
+	// private TextView m_nombre_participants;
+	// private TextView m_date_de_fin;
+	// private TextView m_utilisateur_soumission;
+	private Button m_payer;
 	private RatingBar m_notation;
 	private CustomProgressBar m_progression;
 	private Drawable m_favorite;
@@ -50,19 +53,24 @@ public class DetailProjetActivity extends FragmentActivity {
 		HashMap<String, Project> projets = serveur.getAllProjets();
 		Project projet = projets.get(titre);
 		System.out.println("titre: titre");
-		if(projet == null){
-			Toast.makeText(getApplicationContext(), "Un erreur s'est produite", Toast.LENGTH_SHORT).show();
+		if (projet == null) {
+			Toast.makeText(getApplicationContext(), "Un erreur s'est produite",
+					Toast.LENGTH_SHORT).show();
 			finish();
 		}
 
 		m_titre = (TextView) findViewById(R.id.titre_projet_detail);
 		m_description = (TextView) findViewById(R.id.detail_projet_detail);
-		//m_nombre_participants = (TextView) findViewById(R.id.nombre_participants_detail);
-		//m_date_de_fin = (TextView) findViewById(R.id.nombre_jour_restant_detail);
-		//m_utilisateur_soumission = (TextView) findViewById(R.id.utilisateur_soumission);
+		m_payer = (Button) findViewById(R.id.payer);
+		// m_nombre_participants = (TextView)
+		// findViewById(R.id.nombre_participants_detail);
+		// m_date_de_fin = (TextView)
+		// findViewById(R.id.nombre_jour_restant_detail);
+		// m_utilisateur_soumission = (TextView)
+		// findViewById(R.id.utilisateur_soumission);
 		m_notation = (RatingBar) findViewById(R.id.rating_bar_projet_detail);
 		m_progression = (CustomProgressBar) findViewById(R.id.avancement_projet_liste);
-		//MenuItem favorisItem = (MenuItem) findViewById(R.id.add_favorite);
+		// MenuItem favorisItem = (MenuItem) findViewById(R.id.add_favorite);
 		GraphiqueView graph = (GraphiqueView) findViewById(R.id.graphique);
 
 		DisplayMetrics metrics = new DisplayMetrics();
@@ -97,9 +105,9 @@ public class DetailProjetActivity extends FragmentActivity {
 		m_progression.setProgress(20);
 		m_progression.setMaxArgent(5000);
 
-			m_titre.setText(projet.getName());
+		m_titre.setText(projet.getName());
 		m_description.setText(projet.getDescription());
-		
+
 		System.out.println("Notation");
 		m_notation
 				.setOnRatingBarChangeListener(new OnRatingBarChangeListener() {
@@ -113,6 +121,15 @@ public class DetailProjetActivity extends FragmentActivity {
 					}
 
 				});
+
+		m_payer.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+					
+				/* Paypal */
+				
+				
+			}
+		});
 	}
 
 	@Override

@@ -67,7 +67,7 @@
                     android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
-
+        
         <adullact.publicrowdfunding.CustomProgressBar
             android:id="@+id/avancement_projet_liste"
             style="@android:style/Widget.ProgressBar.Horizontal"
@@ -76,6 +76,12 @@
             android:max="100"
             android:progress="0"
             android:progressDrawable="@drawable/progressbar" />
+
+        <Button
+            android:id="@+id/payer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Payer Paypal" />
 
         <TextView
             android:id="@+id/utilisateur_soumission"

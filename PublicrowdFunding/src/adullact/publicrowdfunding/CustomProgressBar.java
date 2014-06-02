@@ -40,11 +40,11 @@ public class CustomProgressBar extends ProgressBar {
     @Override
     protected synchronized void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        textPaint.getTextBounds(text, 0, text.length(), bounds);
+       // textPaint.getTextBounds(text, 0, text.length(), bounds);
         textPaint.setTextSize(26);
         int x = getWidth() / 2 - bounds.centerX();
         int y = getHeight() / 2 - bounds.centerY();
-        canvas.drawText(text, x, y, textPaint);
+       // canvas.drawText(text, x, y, textPaint);
 
       
      
