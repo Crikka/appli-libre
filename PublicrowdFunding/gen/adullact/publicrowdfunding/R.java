@@ -1293,7 +1293,7 @@ containing a value of this type.
         public static final int action_mode_close_button=0x7f060027;
         public static final int activity_chooser_view_content=0x7f060028;
         public static final int add_favorite=0x7f060070;
-        public static final int afficher_montant=0x7f060060;
+        public static final int afficher_montant=0x7f060061;
         public static final int always=0x7f06000f;
         public static final int avancement_projet_liste=0x7f06004b;
         public static final int beginning=0x7f060014;
@@ -1311,8 +1311,8 @@ containing a value of this type.
         public static final int collapseActionView=0x7f060011;
         public static final int date_de_fin=0x7f060064;
         public static final int default_activity_button=0x7f06002b;
-        public static final int description=0x7f06005f;
-        public static final int description_projet_liste=0x7f060059;
+        public static final int description=0x7f060060;
+        public static final int description_projet_liste=0x7f06005a;
         public static final int detail_projet_detail=0x7f060048;
         public static final int dialog=0x7f060012;
         public static final int disableHome=0x7f06000c;
@@ -1328,7 +1328,7 @@ containing a value of this type.
         public static final int hybrid=0x7f060004;
         public static final int icon=0x7f06002d;
         public static final int ifRoom=0x7f06000e;
-        public static final int illustration=0x7f06005d;
+        public static final int illustration=0x7f06005e;
         public static final int image=0x7f06002a;
         public static final int imageView1=0x7f06003f;
         public static final int inscription_button=0x7f060045;
@@ -1337,7 +1337,7 @@ containing a value of this type.
         public static final int inscription_password1=0x7f060055;
         public static final int inscription_password2=0x7f060057;
         public static final int is_Defined_On_Seek_Bar=0x7f060062;
-        public static final int layout=0x7f06005c;
+        public static final int layout=0x7f06005d;
         public static final int linearLayoutDetail=0x7f060046;
         public static final int listMode=0x7f060005;
         public static final int list_item=0x7f06002c;
@@ -1345,7 +1345,7 @@ containing a value of this type.
         public static final int login_connexion=0x7f060041;
         public static final int map_frag=0x7f060050;
         public static final int middle=0x7f060015;
-        public static final int nb_participation_projet_liste=0x7f06005a;
+        public static final int nb_participation_projet_liste=0x7f06005b;
         public static final int never=0x7f06000d;
         public static final int nombre_jour_restant_detail=0x7f06004a;
         public static final int nombre_participants_detail=0x7f060049;
@@ -1368,7 +1368,7 @@ containing a value of this type.
         public static final int search_plate=0x7f060039;
         public static final int search_src_text=0x7f06003a;
         public static final int search_voice_btn=0x7f06003e;
-        public static final int seek_bar_somme=0x7f060061;
+        public static final int seek_bar_somme=0x7f060058;
         public static final int shortcut=0x7f060031;
         public static final int showCustom=0x7f06000b;
         public static final int showHome=0x7f060008;
@@ -1377,7 +1377,7 @@ containing a value of this type.
         public static final int split_action_bar=0x7f060021;
         public static final int submit_area=0x7f06003c;
         public static final int tabMode=0x7f060006;
-        public static final int temps_restant_projet_liste=0x7f06005b;
+        public static final int temps_restant_projet_liste=0x7f06005c;
         public static final int terrain=0x7f060003;
         public static final int textView1=0x7f060040;
         public static final int textView2=0x7f060042;
@@ -1385,9 +1385,9 @@ containing a value of this type.
         public static final int textView4=0x7f060054;
         public static final int textView5=0x7f060056;
         public static final int title=0x7f06002e;
-        public static final int titre=0x7f06005e;
+        public static final int titre=0x7f06005f;
         public static final int titre_projet_detail=0x7f060047;
-        public static final int titre_projet_liste=0x7f060058;
+        public static final int titre_projet_liste=0x7f060059;
         public static final int top_action_bar=0x7f060023;
         public static final int up=0x7f060024;
         public static final int useLogo=0x7f060007;
@@ -1451,10 +1451,11 @@ containing a value of this type.
         public static final int detail_projet=0x7f03001a;
         public static final int inscription=0x7f03001b;
         public static final int maps=0x7f03001c;
-        public static final int projet_list=0x7f03001d;
-        public static final int soumettre_projet=0x7f03001e;
-        public static final int support_simple_spinner_dropdown_item=0x7f03001f;
-        public static final int tab=0x7f030020;
+        public static final int participer=0x7f03001d;
+        public static final int projet_list=0x7f03001e;
+        public static final int soumettre_projet=0x7f03001f;
+        public static final int support_simple_spinner_dropdown_item=0x7f030020;
+        public static final int tab=0x7f030021;
     }
     public static final class menu {
         public static final int detail_projet=0x7f0c0000;

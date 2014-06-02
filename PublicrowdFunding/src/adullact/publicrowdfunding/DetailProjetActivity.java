@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import adullact.publicrowdfunding.model.server.ServerEmulator;
 import adullact.publicrowdfunding.shared.Project;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
@@ -31,9 +32,9 @@ public class DetailProjetActivity extends FragmentActivity {
 
 	private TextView m_titre;
 	private TextView m_description;
-	// private TextView m_nombre_participants;
-	// private TextView m_date_de_fin;
-	// private TextView m_utilisateur_soumission;
+	private TextView m_nombre_participants;
+	private TextView m_date_de_fin;
+	private TextView m_utilisateur_soumission;
 	private Button m_payer;
 	private RatingBar m_notation;
 	private CustomProgressBar m_progression;
@@ -45,34 +46,27 @@ public class DetailProjetActivity extends FragmentActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.detail_projet);
-
-		String titre = getIntent().getExtras().getString("key");
-		System.out.println(titre);
-
+		String id = getIntent().getExtras().getString("key");
 		ServerEmulator serveur = ServerEmulator.instance();
 		HashMap<String, Project> projets = serveur.getAllProjets();
-		Project projet = projets.get(titre);
-		System.out.println("titre: titre");
+
+		Project projet = projets.get(id);
+
 		if (projet == null) {
 			Toast.makeText(getApplicationContext(), "Un erreur s'est produite",
 					Toast.LENGTH_SHORT).show();
 			finish();
 		}
-
 		m_titre = (TextView) findViewById(R.id.titre_projet_detail);
 		m_description = (TextView) findViewById(R.id.detail_projet_detail);
 		m_payer = (Button) findViewById(R.id.payer);
-		// m_nombre_participants = (TextView)
-		// findViewById(R.id.nombre_participants_detail);
-		// m_date_de_fin = (TextView)
-		// findViewById(R.id.nombre_jour_restant_detail);
-		// m_utilisateur_soumission = (TextView)
-		// findViewById(R.id.utilisateur_soumission);
+		m_nombre_participants = (TextView) findViewById(R.id.nombre_participants_detail);
+		m_date_de_fin = (TextView) findViewById(R.id.nombre_jour_restant_detail);
+		m_utilisateur_soumission = (TextView) findViewById(R.id.utilisateur_soumission);
 		m_notation = (RatingBar) findViewById(R.id.rating_bar_projet_detail);
 		m_progression = (CustomProgressBar) findViewById(R.id.avancement_projet_liste);
 		// MenuItem favorisItem = (MenuItem) findViewById(R.id.add_favorite);
 		GraphiqueView graph = (GraphiqueView) findViewById(R.id.graphique);
-
 		DisplayMetrics metrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
@@ -124,12 +118,14 @@ public class DetailProjetActivity extends FragmentActivity {
 
 		m_payer.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-					
-				/* Paypal */
-				
-				
+
+				Intent in = new Intent(getBaseContext(),
+						ParticiperActivity.class);
+				startActivity(in);
+
 			}
 		});
+
 	}
 
 	@Override

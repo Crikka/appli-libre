@@ -51,7 +51,7 @@ public class TabProjets extends DownBarMenu {
 						.getItemAtPosition(position);
 				Intent in = new Intent(getBaseContext(),
 						DetailProjetActivity.class);
-				in.putExtra("key", projet.getName());
+				in.putExtra("key", projet.id());
 				startActivity(in);
 
 			}
