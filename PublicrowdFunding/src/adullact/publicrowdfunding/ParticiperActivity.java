@@ -24,7 +24,7 @@ import com.paypal.android.sdk.payments.PaymentConfirmation;
 
 public class ParticiperActivity extends Activity {
 
-	private SeekBar participation;
+	private int participation;
 	private Button participer;
 
 	private static final String TAG = "paymentExample";
@@ -52,6 +52,13 @@ public class ParticiperActivity extends Activity {
 
 		configurationPaypal();
 
+		participation = getIntent().getExtras().getInt("participation", 0);
+		if (participation == 0) {
+			Toast.makeText(getApplicationContext(),
+					"Une Erreur s'est produite", Toast.LENGTH_SHORT).show();
+			finish();
+		}
+
 		/* Paypal */
 
 		PayPalPayment thingToBuy = getSommeParticipations(PayPalPayment.PAYMENT_INTENT_SALE);
@@ -63,7 +70,7 @@ public class ParticiperActivity extends Activity {
 	}
 
 	private PayPalPayment getSommeParticipations(String paymentIntent) {
-		return new PayPalPayment(new BigDecimal("100"), "EUR",
+		return new PayPalPayment(new BigDecimal(participation), "EUR",
 				"Participer au projet", paymentIntent);
 	}
 
