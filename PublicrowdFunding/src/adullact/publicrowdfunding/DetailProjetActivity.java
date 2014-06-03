@@ -119,10 +119,13 @@ public class DetailProjetActivity extends FragmentActivity {
 		m_payer.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 
+				choisirMontantDialog alertDialogBuilder = new choisirMontantDialog(
+						 DetailProjetActivity.this); alertDialogBuilder.show();
+				/*
 				Intent in = new Intent(getBaseContext(),
 						ParticiperActivity.class);
 				startActivity(in);
-
+*/
 			}
 		});
 
