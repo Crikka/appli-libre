@@ -67,7 +67,7 @@
                     android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
-        
+
         <adullact.publicrowdfunding.CustomProgressBar
             android:id="@+id/avancement_projet_liste"
             style="@android:style/Widget.ProgressBar.Horizontal"
@@ -95,27 +95,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center" />
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Graphique de financement du projet"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <adullact.publicrowdfunding.GraphiqueView
-            android:id="@+id/graphique"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" />
-
-        <fragment
-            android:id="@+id/map_frag"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
-            android:layout_width="fill_parent"
-            android:layout_height="400dp"
-            android:layout_alignParentBottom="true" />
     </LinearLayout>
 
 </ScrollView>
