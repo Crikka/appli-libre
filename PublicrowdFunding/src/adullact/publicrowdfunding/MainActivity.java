@@ -1,24 +1,17 @@
 package adullact.publicrowdfunding;
 
-import com.google.android.gms.maps.SupportMapFragment;
-
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
 import android.app.Activity;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.View;
-import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
 public class MainActivity extends Activity implements TabListener {
 	
 	private RelativeLayout rl;
-	
-	
 	
 	TabProjets fram1;
 	TabFavoris fram2;

@@ -2,6 +2,7 @@
 
     <color name="bleu">#90083BA6</color>
     <color name="monJaune">#ffff00A6</color>
+    <color name="white">#ffffff</color>
 
     <!--
         Base application theme, dependent on API level. This theme is replaced

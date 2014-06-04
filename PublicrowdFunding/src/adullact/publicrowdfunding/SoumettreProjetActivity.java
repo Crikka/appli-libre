@@ -20,7 +20,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,8 +27,6 @@ import android.widget.Toast;
 import com.google.android.gms.maps.model.LatLng;
 
 public class SoumettreProjetActivity extends Activity {
-
-	private LinearLayout layout;
 
 	private EditText m_titre;
 	private EditText m_Description;
@@ -49,7 +46,6 @@ public class SoumettreProjetActivity extends Activity {
 	private static final int PICK_FROM_GALLERY = 2;
 	private static final int PICK_MAPS = 3;
 
-	// Et la on arrive à des trucs bien sale.
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	public void supprimerCalendarView() {
 		int currentapiVersion = android.os.Build.VERSION.SDK_INT;
@@ -63,8 +59,6 @@ public class SoumettreProjetActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.soumettre_projet);
-
-		layout = (LinearLayout) findViewById(R.id.layout);
 
 		m_titre = (EditText) findViewById(R.id.titre);
 		m_Description = (EditText) findViewById(R.id.description);
@@ -110,7 +104,7 @@ public class SoumettreProjetActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+			
 				Intent intent = new Intent();
 
 				intent.setType("image/*");
@@ -167,14 +161,14 @@ public class SoumettreProjetActivity extends Activity {
 
 					@Override
 					public void onStartTrackingTouch(SeekBar seekBar) {
-						// TODO Auto-generated method stub
+						
 
 					}
 
 					@Override
 					public void onStopTrackingTouch(SeekBar seekBar) {
-						// TODO Auto-generated method stub
-
+						
+						
 					}
 
 				});
@@ -283,21 +277,19 @@ public class SoumettreProjetActivity extends Activity {
 		switch (item.getItemId()) {
 
 		case R.id.soumettre:
-/*
-			try {
-				//Communicator.addProject(name, description, requestedFunding);
-				if(Share.user.isAdmin()){
-					Toast.makeText(getApplicationContext(), "Connexion required", Toast.LENGTH_SHORT).show();	
-				}else{
-					
-				}
-				// Soumettre dans la base de donnée
-			} catch (AuthentificationRequiredException e) {
-				Toast.makeText(getApplicationContext(), "Connexion required", Toast.LENGTH_SHORT).show();
-			}
-*/
+			/*
+			 * try { //Communicator.addProject(name, description,
+			 * requestedFunding); if(Share.user.isAdmin()){
+			 * Toast.makeText(getApplicationContext(), "Connexion required",
+			 * Toast.LENGTH_SHORT).show(); }else{
+			 * 
+			 * } // Soumettre dans la base de donnée } catch
+			 * (AuthentificationRequiredException e) {
+			 * Toast.makeText(getApplicationContext(), "Connexion required",
+			 * Toast.LENGTH_SHORT).show(); }
+			 */
 			Toast.makeText(getApplicationContext(),
-					"Projet soumis en attente de validation",
+					"Projet soumis titre : "+m_titre.getText().toString()+ " -> "+m_Description.getText().toString(),
 					Toast.LENGTH_SHORT).show();
 			return true;
 
