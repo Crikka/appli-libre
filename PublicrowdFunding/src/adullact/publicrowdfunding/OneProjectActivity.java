@@ -1,8 +1,6 @@
 package adullact.publicrowdfunding;
 
 
-import adullact.publicrowdfunding.model.server.ExampleAndTest;
-import adullact.publicrowdfunding.model.server.ServerInfo;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;

@@ -12,47 +12,61 @@ import android.support.v4.app.FragmentActivity;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class TabAllProjectsMaps extends FragmentActivity {
+import android.app.Activity;
+import android.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+public class TabAllProjectsMaps extends MapFragment {
 	private GoogleMap map;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.maps);
-		if (map == null) {
-			try {
-				map = ((SupportMapFragment) getSupportFragmentManager()
-						.findFragmentById(R.id.map_frag)).getMap();
-
-				ServerEmulator serveur = ServerEmulator.instance();
-				HashMap<String, Project> projets = serveur.getAllProjets();
-
-				Iterator<Map.Entry<String, Project>> it = projets.entrySet()
-						.iterator();
-
-				while (it.hasNext()) {
-					Entry<String, Project> entry = it.next();
-
-										
-					
-					map.addMarker(new MarkerOptions().position(entry.getValue().getPosition()).title(
-							entry.getValue().getName()));
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		
+	      View view = inflater.inflate(R.layout.maps, container, false);
+	      
+	      if (map == null) {
+				try {
 					
 					
+					Fragment test =	getFragmentManager().findFragmentById(R.id.map_frag);
+				 
+					map = this.getMap();
+
+					ServerEmulator serveur = ServerEmulator.instance();
+					HashMap<String, Project> projets = serveur.getAllProjets();
+
+					Iterator<Map.Entry<String, Project>> it = projets.entrySet()
+							.iterator();
+
+					while (it.hasNext()) {
+						Entry<String, Project> entry = it.next();
+
+											
+						
+						map.addMarker(new MarkerOptions().position(entry.getValue().getPosition()).title(
+								entry.getValue().getName()));
+						
+						
+					}
+
+
+				} catch (NullPointerException e) {
+					Toast.makeText(view.getContext().getApplicationContext(),
+							"Impossible de lancer google Map", Toast.LENGTH_SHORT)
+							.show();
 				}
 
-
-			} catch (NullPointerException e) {
-				Toast.makeText(getApplication(),
-						"Impossible de lancer google Map", Toast.LENGTH_SHORT)
-						.show();
 			}
+		return view;
 
-		}
-
+	      
 	}
 
 }

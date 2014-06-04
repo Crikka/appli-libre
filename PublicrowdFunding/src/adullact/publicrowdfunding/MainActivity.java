@@ -1,48 +1,109 @@
 package adullact.publicrowdfunding;
 
-import adullact.publicrowdfunding.model.server.ExampleAndTest;
-import adullact.publicrowdfunding.model.server.ServerInfo;
-import android.app.TabActivity;
-import android.content.Intent;
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
+import android.app.ActionBar.TabListener;
+import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.widget.TabHost;
-import android.widget.TabHost.TabSpec;
+import android.view.Menu;
+import android.widget.RelativeLayout;
 
-public class MainActivity extends TabActivity {
-
-	private TabHost tabHost;
-	private TabSpec tabSpec;
+public class MainActivity extends Activity implements TabListener {
+	RelativeLayout rl;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_action_bar_main);
+		try {
+			rl = (RelativeLayout) findViewById(R.id.mainLayout);
+			fragMentTra = getFragmentManager().beginTransaction();
+			ActionBar bar = getActionBar();
 
-		tabHost = getTabHost();
+			bar.addTab(bar.newTab().setText("Projets").setTabListener(this));
+			bar.addTab(bar.newTab().setText("Favoris").setTabListener(this));
+			bar.addTab(bar.newTab().setText("Localisation")
+					.setTabListener(this));
 
-		Intent intent = new Intent(this, TabProjets.class);
-		tabSpec = tabHost.newTabSpec("liste projets").setIndicator("Projets")
-				.setContent(intent);
-		tabHost.addTab(tabSpec);
+			bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM
+					| ActionBar.DISPLAY_USE_LOGO);
+			bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+			bar.setDisplayShowHomeEnabled(true);
+			bar.setDisplayShowTitleEnabled(true);
+			bar.show();
 
-		intent = new Intent(this, TabFavoris.class);
-		tabSpec = tabHost.newTabSpec("mes favoris").setIndicator("Favoris")
-				.setContent(intent);
-		tabHost.addTab(tabSpec);
-
-		intent = new Intent(this, TabAllProjectsMaps.class);
-		tabSpec = tabHost.newTabSpec("Maps des projets").setIndicator("Carte des projets")
-				.setContent(intent);
-		tabHost.addTab(tabSpec);
+		} catch (Exception e) {
+			e.getMessage();
+		}
 		
-		/* MEA TESTA */
-		adullact.publicrowdfunding.model.server.ExampleAndTest exampleAndTest = new ExampleAndTest();
-		//exampleAndTest.authenticationAdmin();
-		exampleAndTest.createProject();
-		
-		ServerInfo.instance().tryConnection();
-		/* --------- */
+	}
 
-	} 
+	TabProjets fram1;
+	TabFavoris fram2;
+	TabAllProjectsMaps fram3;
+
+	FragmentTransaction fragMentTra = null;
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.activity_action_bar_main, menu);
+		return true;
+	}
+
+	@Override
+	public void onTabReselected(Tab tab, FragmentTransaction ft) {
+	}
+
+	@Override
+	public void onTabSelected(Tab tab, FragmentTransaction ft) {
+
+		if (tab.getText().equals("Projets")) {
+			try {
+				rl.removeAllViews();
+			} catch (Exception e) {
+			}
+			fram1 = new TabProjets();
+			fragMentTra.addToBackStack(null);
+			fragMentTra = getFragmentManager().beginTransaction();
+			fragMentTra.add(rl.getId(), fram1);
+			fragMentTra.commit();
+		} else if (tab.getText().equals("Favoris")) {
+			try {
+				rl.removeAllViews();
+			} catch (Exception e) {
+			}
+			fram2 = new TabFavoris();
+			fragMentTra.addToBackStack(null);
+			fragMentTra = getFragmentManager().beginTransaction();
+			fragMentTra.add(rl.getId(), fram2);
+			fragMentTra.commit();
+		} else if (tab.getText().equals("Localisation")) {
+			try {
+				rl.removeAllViews();
+			} catch (Exception e) {
+			}
+			fram3 = new TabAllProjectsMaps();
+			fragMentTra.addToBackStack(null);
+			fragMentTra = getFragmentManager().beginTransaction();
+			fragMentTra.add(rl.getId(), fram3);
+			fragMentTra.commit();
+		}
+
+		/*
+		 * MEA TESTA adullact.publicrowdfunding.model.server.ExampleAndTest
+		 * exampleAndTest = new ExampleAndTest();
+		 * //exampleAndTest.authenticationAdmin();
+		 * exampleAndTest.createProject();
+		 * 
+		 * ServerInfo.instance().tryConnection();
+		 */
+
+	}
+
+	@Override
+	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+
+	}
 
 }
