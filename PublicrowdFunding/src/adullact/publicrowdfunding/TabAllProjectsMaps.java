@@ -62,6 +62,9 @@ public class TabAllProjectsMaps extends Fragment {
 				}
 
 			}
+	      
+	      
+	      
 		return view;
 
 	      

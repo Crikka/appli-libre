@@ -7,12 +7,24 @@ import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
 import android.app.Activity;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
 public class MainActivity extends Activity implements TabListener {
-	RelativeLayout rl;
+	
+	private RelativeLayout rl;
+	
+	
+	
+	TabProjets fram1;
+	TabFavoris fram2;
+	TabAllProjectsMaps fram3;
+
+	FragmentTransaction fragMentTra = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -38,14 +50,10 @@ public class MainActivity extends Activity implements TabListener {
 		} catch (Exception e) {
 			e.getMessage();
 		}
-		
-	}
+	}		
+	
 
-	TabProjets fram1;
-	TabFavoris fram2;
-	TabAllProjectsMaps fram3;
 
-	FragmentTransaction fragMentTra = null;
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -102,6 +110,8 @@ public class MainActivity extends Activity implements TabListener {
 		 * ServerInfo.instance().tryConnection();
 		 */
 
+		
+		
 	}
 
 	@Override

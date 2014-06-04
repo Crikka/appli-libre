@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageButton;
 
 public class DownBarMenu extends Activity {
+	
 	private ImageButton m_ajouter_projet;
 	private ImageButton m_mon_compte;
 	private ImageButton m_rechercher;
