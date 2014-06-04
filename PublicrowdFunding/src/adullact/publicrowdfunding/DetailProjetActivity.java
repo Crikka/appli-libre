@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import adullact.publicrowdfunding.model.server.ServerEmulator;
 import adullact.publicrowdfunding.shared.Project;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
@@ -40,6 +41,7 @@ public class DetailProjetActivity extends FragmentActivity {
 	private Drawable m_favorite;
 	private boolean m_Is_favorite;
 	private GoogleMap map;
+	private Project projet;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -48,8 +50,7 @@ public class DetailProjetActivity extends FragmentActivity {
 		String id = getIntent().getExtras().getString("key");
 		ServerEmulator serveur = ServerEmulator.instance();
 		HashMap<String, Project> projets = serveur.getAllProjets();
-
-		Project projet = projets.get(id);
+		projet = projets.get(id);
 
 		if (projet == null) {
 			Toast.makeText(getApplicationContext(), "Un erreur s'est produite",
@@ -78,11 +79,10 @@ public class DetailProjetActivity extends FragmentActivity {
 		try {
 			map = ((SupportMapFragment) getSupportFragmentManager()
 					.findFragmentById(R.id.map_frag)).getMap();
-			LatLng position = new LatLng(43, 3);
-			map.addMarker(new MarkerOptions().position(position).title(
+			map.addMarker(new MarkerOptions().position(projet.getPosition()).title(
 					projet.getName()));
 
-			map.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 4));
+			map.moveCamera(CameraUpdateFactory.newLatLngZoom(projet.getPosition(), 4));
 		} catch (NullPointerException e) {
 			Toast.makeText(getApplication(), "Impossible de lancer google Map",
 					Toast.LENGTH_SHORT).show();
@@ -132,7 +132,7 @@ public class DetailProjetActivity extends FragmentActivity {
 		// Inflate the menu items for use in the action bar
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.detail_projet, menu);
-		m_favorite = menu.getItem(0).getIcon();
+		m_favorite = menu.getItem(1).getIcon();
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -159,6 +159,16 @@ public class DetailProjetActivity extends FragmentActivity {
 			}
 			m_Is_favorite = !m_Is_favorite;
 			m_favorite.setColorFilter(filter);
+			return true;
+			
+		case R.id.Share:
+			Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+			emailIntent.setType("text/plain");
+			emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,
+					"Financement participatif");
+			emailIntent.putExtra(android.content.Intent.EXTRA_TEXT,
+					"J'aime le projet "+ projet.getName() +" venez le financer. (via PublicrowdFunding)");
+			startActivity(emailIntent);
 			return true;
 
 		}

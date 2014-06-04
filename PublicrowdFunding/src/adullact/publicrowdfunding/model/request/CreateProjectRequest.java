@@ -2,14 +2,16 @@ package adullact.publicrowdfunding.model.request;
 
 import java.util.Date;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import adullact.publicrowdfunding.model.event.CreateProjectEvent;
 import adullact.publicrowdfunding.model.server.ServerEmulator;
 import adullact.publicrowdfunding.shared.Share;
 
 public class CreateProjectRequest extends ProjectRequest<CreateProjectRequest, CreateProjectEvent> {
 
-	public CreateProjectRequest(String name, String description, String requestedFunding, Date beginDate, Date endDate) {
-		super(name, description, requestedFunding, beginDate, endDate);		
+	public CreateProjectRequest(String name, String description, String requestedFunding, Date beginDate, Date endDate, LatLng position) {
+		super(name, description, requestedFunding, beginDate, endDate, position);		
 	}
 
 	@Override

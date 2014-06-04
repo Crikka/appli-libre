@@ -2,6 +2,8 @@ package adullact.publicrowdfunding.model.server;
 
 import java.util.Date;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import adullact.publicrowdfunding.Requester;
 import adullact.publicrowdfunding.model.event.AuthentificationEvent;
 import adullact.publicrowdfunding.model.event.CreateProjectEvent;
@@ -99,7 +101,7 @@ public class ExampleAndTest {
 					}
 				});
 			}
-		});
+		}, new LatLng(50,6));
 	}
 	/* --------------- */
 }

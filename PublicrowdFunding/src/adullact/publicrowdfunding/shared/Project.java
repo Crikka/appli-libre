@@ -8,6 +8,8 @@ import java.util.UUID;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
+import com.google.android.gms.maps.model.LatLng;
+
 public class Project {
 	private UUID m_id;
 	private String m_name;
@@ -16,10 +18,11 @@ public class Project {
 	private BigDecimal m_currentFunding;
 	private DateTime m_creationDate;
 	private Interval m_fundingInterval;
+	private LatLng m_position;
 	private ArrayList<FundingTimePeriod> m_fundingTimePeriods;
 	private boolean m_validate;
 
-	public Project(String name, String description, String requestedFunding, Date creationDate, Date beginDate, Date endDate) {
+	public Project(String name, String description, String requestedFunding, Date creationDate, Date beginDate, Date endDate, LatLng position) {
 		this.m_id = UUID.randomUUID();
 		this.m_name = name;
 		this.m_description = description;
@@ -28,6 +31,7 @@ public class Project {
 		this.m_creationDate = new DateTime(creationDate.getTime());
 		this.m_fundingInterval = new Interval(new DateTime(beginDate.getTime()), new DateTime(endDate.getTime()));
 		this.m_fundingTimePeriods = new ArrayList<FundingTimePeriod>();
+		this.m_position = position;
 		this.m_validate = false;
 		
 		// Now, we calculate 10 periods for graphics
@@ -62,6 +66,10 @@ public class Project {
 	
 	public void validate() {
 		m_validate = true;
+	}
+	
+	public LatLng getPosition(){
+		return m_position;
 	}
 
 	/**

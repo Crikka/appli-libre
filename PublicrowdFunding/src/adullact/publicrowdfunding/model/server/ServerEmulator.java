@@ -3,11 +3,12 @@ package adullact.publicrowdfunding.model.server;
 import java.util.Date;
 import java.util.HashMap;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import adullact.publicrowdfunding.shared.Administrator;
 import adullact.publicrowdfunding.shared.Project;
 import adullact.publicrowdfunding.shared.User;
 import android.util.Pair;
-
 
 /**
  * @author Ferrand
@@ -16,10 +17,18 @@ import android.util.Pair;
 public class ServerEmulator {
 	/* Singleton */
 	private static ServerEmulator m_instance = null;
-	public static ServerEmulator instance() { if(m_instance == null) {m_instance = new ServerEmulator();} return m_instance; }
+
+	public static ServerEmulator instance() {
+		if (m_instance == null) {
+			m_instance = new ServerEmulator();
+		}
+		return m_instance;
+	}
+
 	/* --------- */
 
-	private HashMap<Pair<String, String>, User> usersBase; // name of user use as key
+	private HashMap<Pair<String, String>, User> usersBase; // name of user use
+															// as key
 	private HashMap<String, Project> projectsBase; // name of project use as key
 
 	private ServerEmulator() {
@@ -52,11 +61,11 @@ public class ServerEmulator {
 		/* ---------- */
 
 		/* Projects base */
-		Project ecole = new Project("Ecole publique","Construction d'une école primaire", "25000", new Date(), new Date(114, 5, 10), new Date(114, 7, 10));
-		Project parking = new Project("Parking sous terrain","Parking au centre de Montpellier", "50000", new Date(), new Date(114, 5, 10), new Date(114, 7, 10));
-		Project laveVaisselle = new Project("Lave vaisselle","Lave vaisselle pour le restaurant universitaire de Montpellier", "100", new Date(), new Date(114, 5, 10), new Date(114, 7, 10));
-		Project renovation = new Project("Renovation Faculté","Rénovation de la fac des sciences", "165000", new Date(), new Date(114, 5, 10), new Date(114, 7, 10));
-		Project lampadaire = new Project("Lampadaires écolo","Achat de lampadaires basse consommation", "5000", new Date(), new Date(114, 5, 10), new Date(114, 7, 10));
+		Project ecole = new Project("Ecole publique","Construction d'une école primaire", "25000", new Date(), new Date(114, 5, 10), new Date(114, 7, 10), new LatLng(43.6, 2.7));
+		Project parking = new Project("Parking sous terrain","Parking au centre de Montpellier", "50000", new Date(), new Date(114, 5, 10), new Date(114, 7, 10), new LatLng(46.9, 0));
+		Project laveVaisselle = new Project("Lave vaisselle","Lave vaisselle pour le restaurant universitaire de Montpellier", "100", new Date(), new Date(114, 5, 10), new Date(114, 7, 10),new LatLng(47, 4.5));
+		Project renovation = new Project("Renovation Faculté","Rénovation de la fac des sciences", "165000", new Date(), new Date(114, 5, 10), new Date(114, 7, 10),new LatLng(48, 1.5));
+		Project lampadaire = new Project("Lampadaires écolo","Achat de lampadaires basse consommation", "5000", new Date(), new Date(114, 5, 10), new Date(114, 7, 10),new LatLng(44, 4.5));
 		
 		ecole.validate();
 		parking.validate();
@@ -74,7 +83,8 @@ public class ServerEmulator {
 
 	public void replaceUser(String oldPseudo, String oldPassword, User user) {
 		usersBase.remove(new Pair<String, String>(oldPseudo, oldPassword));
-		usersBase.put(new Pair<String, String>(user.pseudo(), user.password()), user);
+		usersBase.put(new Pair<String, String>(user.pseudo(), user.password()),
+				user);
 	}
 
 	/**
@@ -92,13 +102,13 @@ public class ServerEmulator {
 		return projectsBase.containsKey(project.id());
 	}
 
-	public void addProject(Project project){
-		if(!projectExist(project)){
+	public void addProject(Project project) {
+		if (!projectExist(project)) {
 			projectsBase.put(project.id(), project);
 		}
 	}
 
-	public HashMap<String, Project> getAllProjets(){
+	public HashMap<String, Project> getAllProjets() {
 		return this.projectsBase;
 	}
 

@@ -2,6 +2,8 @@ package adullact.publicrowdfunding;
 
 import java.util.Date;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import adullact.publicrowdfunding.model.event.AuthentificationEvent;
 import adullact.publicrowdfunding.model.event.CreateProjectEvent;
 import adullact.publicrowdfunding.model.event.ModifyAccountEvent;
@@ -33,8 +35,8 @@ public class Requester {
 		modifyAccountRequest.execute(modifyAccountEvent);
 	}
 	
-	public static void createProject(String name, String description, String requestedFunding, Date beginOfProject, Date endOfProject, CreateProjectEvent createProjectEvent){
-		CreateProjectRequest createProjectRequest = new CreateProjectRequest(name, description, requestedFunding, beginOfProject, endOfProject);
+	public static void createProject(String name, String description, String requestedFunding, Date beginOfProject, Date endOfProject, CreateProjectEvent createProjectEvent, LatLng position){
+		CreateProjectRequest createProjectRequest = new CreateProjectRequest(name, description, requestedFunding, beginOfProject, endOfProject, position);
 		createProjectEvent.defineContextRequest(createProjectRequest);
 		createProjectRequest.execute(createProjectEvent);
 	}
