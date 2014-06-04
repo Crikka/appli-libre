@@ -22,7 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class TabAllProjectsMaps extends MapFragment {
+public class TabAllProjectsMaps extends Fragment {
 	private GoogleMap map;
 
 	@Override
@@ -33,11 +33,9 @@ public class TabAllProjectsMaps extends MapFragment {
 	      
 	      if (map == null) {
 				try {
-					
-					
-					Fragment test =	getFragmentManager().findFragmentById(R.id.map_frag);
-				 
-					map = this.getMap();
+					//SupportMapFragment test =	(SupportMapFragment) getFragmentManager().findFragmentById(R.id.map_frag);
+
+				//	map = test.getMap();
 
 					ServerEmulator serveur = ServerEmulator.instance();
 					HashMap<String, Project> projets = serveur.getAllProjets();

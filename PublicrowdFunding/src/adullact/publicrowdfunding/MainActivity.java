@@ -1,5 +1,7 @@
 package adullact.publicrowdfunding;
 
+import com.google.android.gms.maps.SupportMapFragment;
+
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
@@ -83,6 +85,7 @@ public class MainActivity extends Activity implements TabListener {
 				rl.removeAllViews();
 			} catch (Exception e) {
 			}
+			
 			fram3 = new TabAllProjectsMaps();
 			fragMentTra.addToBackStack(null);
 			fragMentTra = getFragmentManager().beginTransaction();
