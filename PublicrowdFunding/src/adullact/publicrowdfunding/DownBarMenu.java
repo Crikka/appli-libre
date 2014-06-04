@@ -8,6 +8,7 @@ import android.widget.ImageButton;
 public class DownBarMenu extends Activity {
 	private ImageButton m_ajouter_projet;
 	private ImageButton m_mon_compte;
+	private ImageButton m_rechercher;
 
 	public void addDownBarMenu() {
 
@@ -15,11 +16,6 @@ public class DownBarMenu extends Activity {
 		m_ajouter_projet.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-
-				/*
-				 * infoAppDialog alertDialogBuilder = new infoAppDialog(
-				 * DownBarMenu.this); alertDialogBuilder.show();
-				 */
 
 				Intent in = new Intent(getBaseContext(),
 						SoumettreProjetActivity.class);
@@ -35,6 +31,17 @@ public class DownBarMenu extends Activity {
 				Intent in = new Intent(getBaseContext(),
 						ConnexionActivity.class);
 				startActivity(in);
+			}
+		});
+
+		m_rechercher = (ImageButton) findViewById(R.id.button_search);
+		m_rechercher.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				SearchDialog alertDialogBuilder = new SearchDialog(
+						DownBarMenu.this);
+				alertDialogBuilder.show();
+
 			}
 		});
 	}

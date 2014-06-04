@@ -1,7 +1,5 @@
 package adullact.publicrowdfunding;
 
-import com.paypal.android.sdk.payments.PaymentActivity;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;

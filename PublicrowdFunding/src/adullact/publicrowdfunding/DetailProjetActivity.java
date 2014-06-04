@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import adullact.publicrowdfunding.model.server.ServerEmulator;
 import adullact.publicrowdfunding.shared.Project;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
@@ -81,7 +80,7 @@ public class DetailProjetActivity extends FragmentActivity {
 					.findFragmentById(R.id.map_frag)).getMap();
 			LatLng position = new LatLng(43, 3);
 			map.addMarker(new MarkerOptions().position(position).title(
-					"Titre du projet"));
+					projet.getName()));
 
 			map.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 4));
 		} catch (NullPointerException e) {
@@ -101,7 +100,7 @@ public class DetailProjetActivity extends FragmentActivity {
 
 		m_titre.setText(projet.getName());
 		m_description.setText(projet.getDescription());
-
+		
 		System.out.println("Notation");
 		m_notation
 				.setOnRatingBarChangeListener(new OnRatingBarChangeListener() {
@@ -120,12 +119,9 @@ public class DetailProjetActivity extends FragmentActivity {
 			public void onClick(View v) {
 
 				choisirMontantDialog alertDialogBuilder = new choisirMontantDialog(
-						 DetailProjetActivity.this); alertDialogBuilder.show();
-				/*
-				Intent in = new Intent(getBaseContext(),
-						ParticiperActivity.class);
-				startActivity(in);
-*/
+						DetailProjetActivity.this);
+				alertDialogBuilder.show();
+
 			}
 		});
 

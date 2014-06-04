@@ -10,8 +10,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.paypal.android.sdk.payments.PayPalAuthorization;
@@ -25,7 +23,6 @@ import com.paypal.android.sdk.payments.PaymentConfirmation;
 public class ParticiperActivity extends Activity {
 
 	private int participation;
-	private Button participer;
 
 	private static final String TAG = "paymentExample";
 
@@ -114,15 +111,18 @@ public class ParticiperActivity extends Activity {
 						Toast.makeText(getApplicationContext(),
 								"Une erreur s'est produite", Toast.LENGTH_SHORT)
 								.show();
+						finish();
 					}
 				}
 			} else if (resultCode == Activity.RESULT_CANCELED) {
 				Toast.makeText(getApplicationContext(),
 						"Vous avez annulé le payement", Toast.LENGTH_SHORT)
 						.show();
+				finish();
 			} else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
 				Toast.makeText(getApplicationContext(),
 						"Une erreur s'est produite", Toast.LENGTH_SHORT).show();
+				finish();
 			}
 
 		} else if (requestCode == REQUEST_CODE_FUTURE_PAYMENT) {
@@ -152,9 +152,11 @@ public class ParticiperActivity extends Activity {
 				Toast.makeText(getApplicationContext(),
 						"Vous avez annulé le payement", Toast.LENGTH_SHORT)
 						.show();
+				finish();
 			} else if (resultCode == PayPalFuturePaymentActivity.RESULT_EXTRAS_INVALID) {
 				Toast.makeText(getApplicationContext(),
 						"Une erreur s'est produite", Toast.LENGTH_SHORT).show();
+				finish();
 			}
 		}
 	}

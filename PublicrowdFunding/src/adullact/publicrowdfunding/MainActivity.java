@@ -1,22 +1,10 @@
 package adullact.publicrowdfunding;
 
-import java.util.Date;
-
-import adullact.publicrowdfunding.model.event.AuthentificationEvent;
-import adullact.publicrowdfunding.model.event.CreateProjectEvent;
 import adullact.publicrowdfunding.model.server.ExampleAndTest;
 import adullact.publicrowdfunding.model.server.ServerInfo;
-import adullact.publicrowdfunding.shared.Administrator;
-import adullact.publicrowdfunding.shared.Project;
-import adullact.publicrowdfunding.shared.Share;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageButton;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
