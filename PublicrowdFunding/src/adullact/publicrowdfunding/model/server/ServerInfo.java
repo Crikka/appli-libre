@@ -1,29 +1,26 @@
 package adullact.publicrowdfunding.model.server;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
+import retrofit.ErrorHandler;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+import retrofit.http.GET;
+import retrofit.http.Path;
+import rx.Observable;
+import rx.Observable.OnSubscribe;
+import rx.Subscriber;
+import rx.Subscription;
+import rx.schedulers.Schedulers;
+import adullact.publicrowdfunding.shared.User;
+import android.app.Service;
 import android.os.AsyncTask;
-import android.support.v4.app.TaskStackBuilder;
 
 /**
  * @author Ferrand
@@ -33,43 +30,51 @@ public class ServerInfo {
 	/* Singleton */
 	private static ServerInfo m_instance = null;
 	public static ServerInfo instance() { if(m_instance == null) {m_instance = new ServerInfo();} return m_instance; }
+	private ServerInfo(){
+		class MyErrorHandler implements ErrorHandler {
+			@Override public Throwable handleError(RetrofitError cause) {
+				Response r = cause.getResponse();
+				System.out.println(cause.getMessage());
+				if (r != null && r.getStatus() == 401) {
+					//return new UnauthorizedException(cause);
+				}
+				return cause;
+			}
+		}
+		RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint("http://10.0.2.2/PublicrowFunding/PublicrowFunding/index.php").setErrorHandler(new MyErrorHandler()).build();
+		m_service = restAdapter.create(ServerService.class);
+	}
 	/* --------- */
 
-	public static String SERVER_URL = "http://www.google.fr"; 
-	// http://127.0.0.0/PublicrowFunding/PublicrowFunding/index.php
-	// http://www.google.fr
-	public static String PORT = "2525";
-	public static AsyncTask<String, String, String> TASK = new AsyncTask<String, String, String>() {
-		
-		@Override
-		protected String doInBackground(String... params) {
-		     try
-		        {
-		            HttpClient httpclient = new DefaultHttpClient();
-		            HttpGet method = new HttpGet(params[0]);
-		            HttpResponse response = httpclient.execute(method);
-		            HttpEntity entity = response.getEntity();
-		            if(entity != null){
-		            	System.out.println(EntityUtils.toString(entity));
-		                return EntityUtils.toString(entity);
-		            }
-		            else{
-		                return "No string.";
-		            }
-		         }
-		         catch(Exception e){
-		             return "Network problem";
-		         }
+	/* Communication interface */
+	private final ServerService m_service;
+	private class ServerUser {
+		public String name;
+	}
+	private interface ServerService {
+		@GET("/users/{username}")
+		User connect(@Path("username") String username);
+		@GET("/")
+		ServerUser test();
+	}
+	/* ----------------------- */
 
-		}
-	};
+	public void connectry(){
+		Observable<ServerUser> observable = Observable.create(new OnSubscribe<ServerUser>() {
 
-
-	private ServerInfo() {}
-
-	public boolean tryConnection() {
-		TASK.execute(SERVER_URL);
-
-		return true;
+			@Override
+			public void call(Subscriber<? super ServerUser> subscriber) {
+				try {
+					ServerUser user = m_service.test();
+					System.out.println(user.name);
+					subscriber.onNext(user);
+					subscriber.onCompleted();
+				} catch (Exception exception) {
+					subscriber.onError(exception);
+				}
+			}
+			
+		}).subscribeOn(Schedulers.io());
+		observable.subscribe();
 	}
 }

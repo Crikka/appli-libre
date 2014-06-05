@@ -1,5 +1,7 @@
 package adullact.publicrowdfunding;
 
+import adullact.publicrowdfunding.model.server.ExampleAndTest;
+import adullact.publicrowdfunding.model.server.ServerInfo;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
@@ -94,14 +96,12 @@ public class MainActivity extends Activity implements TabListener {
 			fragMentTra.commit();
 		}
 
-		/*
-		 * MEA TESTA adullact.publicrowdfunding.model.server.ExampleAndTest
-		 * exampleAndTest = new ExampleAndTest();
-		 * //exampleAndTest.authenticationAdmin();
-		 * exampleAndTest.createProject();
-		 * 
-		 * ServerInfo.instance().tryConnection();
-		 */
+		
+		 // MEA TESTA adullact.publicrowdfunding.model.server.ExampleAndTest
+		 //ExampleAndTest exampleAndTest = new ExampleAndTest();
+		 //exampleAndTest.authenticationAdmin();
+		 //exampleAndTest.createProject();
+		//ServerInfo.instance().connectry();
 
 		
 		
