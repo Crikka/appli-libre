@@ -101,8 +101,7 @@ public class MainActivity extends Activity implements TabListener {
 		 //ExampleAndTest exampleAndTest = new ExampleAndTest();
 		 //exampleAndTest.authenticationAdmin();
 		 //exampleAndTest.createProject();
-		//ServerInfo.instance().connectry();
-
+		 //ServerInfo.instance().connect("pierre", "123456");
 		
 		
 	}
