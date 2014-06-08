@@ -1,11 +1,14 @@
 package adullact.publicrowdfunding.model.server;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -32,6 +35,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
 import retrofit.ErrorHandler;
+import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -47,6 +51,7 @@ import rx.schedulers.Schedulers;
 import adullact.publicrowdfunding.shared.User;
 import android.app.Service;
 import android.os.AsyncTask;
+import android.util.Base64;
 
 /**
  * @author Ferrand
@@ -57,74 +62,47 @@ public class ServerInfo {
 	private static ServerInfo m_instance = null;
 	public static ServerInfo instance() { if(m_instance == null) {m_instance = new ServerInfo();} return m_instance; }
 	private ServerInfo(){
+		RestAdapter restAdapter = new RestAdapter.Builder()
+		.setRequestInterceptor(new AuthentificationRequestInterceptor("pierre", "123456"))
+		.setEndpoint("http://10.0.2.2/PublicrowFunding/PublicrowFunding")
+		.build();
+
+		m_service = restAdapter.create(ServerService.class);
+
 	}
+
+	protected class AuthentificationRequestInterceptor implements RequestInterceptor {
+
+		private String username;
+		private String password;
+
+		public AuthentificationRequestInterceptor(String username, String password) {
+			this.username = username;
+			this.password = password;
+		}
+
+		@Override
+		public void intercept(RequestFacade requestFacade) {
+			final String userAndPassword = username + ":" + password;
+			final String encodedUserAndPassword = "Basic " + Base64.encodeToString(userAndPassword.getBytes(), 0);
+			requestFacade.addHeader("Authorization", encodedUserAndPassword);
+		}
+
+	}
+
+
+	/* Communication interface */
+	private final ServerService m_service;
+	private class ServerUser {
+		public String name;
+		public String password;
+	}
+	private interface ServerService {
+		@GET("/")
+		ServerUser connect();
+	}
+	/* 
 	/* --------- */
-
-	/* Method performer */
-	private void performGet(Map<String, String> bodyRequest) {  
-		HttpURLConnection httpConnection = null;
-		try {
-			
-			httpConnection = (HttpURLConnection) new URL("http://10.0.2.2/PublicrowFunding/PublicrowFunding/rest/users/userAPI.php").openConnection();
-			httpConnection.setRequestMethod("GET");
-			httpConnection.setDoInput(true); 
-			httpConnection.setDoOutput(true); 
-			httpConnection.setUseCaches(false); 
-			httpConnection.addRequestProperty("Accept-Charset", "UTF-8");
-			httpConnection.addRequestProperty("Content-Type", "application/json");
-			httpConnection.connect();
-
-			DataOutputStream dos = new DataOutputStream (httpConnection.getOutputStream()); 
-
-			String message = "{";
-			for (Map.Entry<String, String> entry : bodyRequest.entrySet())
-			{
-				message += "\""+entry.getKey()+"\":\""+entry.getValue()+"\",";
-			}
-			message = (message.substring(0, message.length()-1)+"}");
-			byte[] message_utf8 = new String(message.getBytes(), "UTF-8").getBytes();
-			dos.write(message_utf8);
-			dos.flush(); 
-			dos.close();
-
-			String inputLine="";   //Stores the line of text returned by the server
-
-
-			inputLine = streamToString(httpConnection.getInputStream());
-
-			System.out.println("je vois : " + inputLine);
-
-			/*InputStream response = httpConnection.getInputStream();
-
-			BufferedReader reader = new BufferedReader(new InputStreamReader(response, "UTF-8"));
-			for (String line; (line = reader.readLine()) != null;) {
-				//System.out.println(line);
-				// ... System.out.println(line) ?
-			}*/
-
-		} // end of "try"
-
-		catch (MalformedURLException mue) { 
-		} 
-		catch (IOException ioe) { 
-		}
-		finally {
-			httpConnection.disconnect();
-		}
-
-	}  // end of postNewItem() method 
-	/* ---------------- */
-	
-	private String streamToString(InputStream is) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-        String line;
-        while ((line = rd.readLine()) != null) {
-            sb.append(line);
-        }
-        return sb.toString();
-    }
-
 
 	public void connect(final String username, final String password){
 		Observable<User> observable = Observable.create(new OnSubscribe<User>() {
@@ -133,12 +111,11 @@ public class ServerInfo {
 			public void call(Subscriber<? super User> subscriber) {
 				try {
 
-					Map<String, String> bodyRequest = new TreeMap<String, String>();
-
-					bodyRequest.put("username", username);
-					bodyRequest.put("password", password);
-
-					performGet(bodyRequest);
+					System.out.println("je passe là");
+					ServerUser user = m_service.connect();
+					System.out.println(user.name);
+					System.out.println(user.password);
+					System.out.println("je passe ici");
 
 					/*	JSONObject jsonReceived = new JSONObject(EntityUtils.toString(entity));
 						if(jsonReceived.length() == 0) {
@@ -167,5 +144,15 @@ public class ServerInfo {
 
 		}).subscribeOn(Schedulers.io());
 		observable.subscribe();
+	}
+
+	private String streamToString(InputStream is) throws IOException {
+		StringBuilder sb = new StringBuilder();
+		BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+		String line;
+		while ((line = rd.readLine()) != null) {
+			sb.append(line);
+		}
+		return sb.toString();
 	}
 }
