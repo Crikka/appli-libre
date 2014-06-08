@@ -1,17 +1,21 @@
 package adullact.publicrowdfunding.model.request;
 
+import adullact.publicrowdfunding.model.errorHandle.ModifyAccountErrorHandler;
 import adullact.publicrowdfunding.model.event.ModifyAccountEvent;
 import adullact.publicrowdfunding.model.server.ServerEmulator;
 import adullact.publicrowdfunding.shared.Share;
 
-public class ModifyAccountRequest extends Request<ModifyAccountRequest, ModifyAccountEvent> {
+public class ModifyAccountRequest extends AuthentificatedRequest<ModifyAccountRequest, ModifyAccountEvent, ModifyAccountErrorHandler> {
 	private String m_newPseudo;
 	private String m_newPassword;
 	private String m_newName;
 	private String m_newFirstName;
 
-	public ModifyAccountRequest(String newPseudo, String newPassword, String newName, String newFirstName) {
-		super();
+	public ModifyAccountRequest(String newPseudo, String newPassword, String newName, String newFirstName, ModifyAccountEvent event) {
+		super(event, new ModifyAccountErrorHandler());
+		errorHandler().defineEvent(event);
+		errorHandler().defineRequest(this);
+		
 		this.m_newPseudo = newPseudo;
 		this.m_newPassword = newPseudo;
 		this.m_newName = newName;
@@ -19,7 +23,7 @@ public class ModifyAccountRequest extends Request<ModifyAccountRequest, ModifyAc
 	}
 
 	@Override
-	public void execute(ModifyAccountEvent event) {
+	public void execute() {
 		ServerEmulator serverEmulator = ServerEmulator.instance();
 		
 		if(Share.user.isAuthentified()) {
@@ -34,10 +38,10 @@ public class ModifyAccountRequest extends Request<ModifyAccountRequest, ModifyAc
 
 			serverEmulator.replaceUser(oldPseudo, oldPassword, Share.user);
 			done();
-			event.onModifyAccount();
+			//event.onModifyAccount();
 		}
 		else {
-			event.errorAuthentificationRequired();
+			//event.errorAuthentificationRequired();
 		}
 	}
 

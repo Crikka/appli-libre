@@ -47,6 +47,7 @@ import rx.Observable;
 import rx.Observable.OnSubscribe;
 import rx.Subscriber;
 import rx.Subscription;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import adullact.publicrowdfunding.shared.User;
 import android.app.Service;
@@ -58,93 +59,8 @@ import android.util.Base64;
  * @brief Storage class for Server information
  */
 public class ServerInfo {
-	/* Singleton */
-	private static ServerInfo m_instance = null;
-	public static ServerInfo instance() { if(m_instance == null) {m_instance = new ServerInfo();} return m_instance; }
-	private ServerInfo(){
-		RestAdapter restAdapter = new RestAdapter.Builder()
-		.setRequestInterceptor(new AuthentificationRequestInterceptor("pierre", "123456"))
-		.setEndpoint("http://10.0.2.2/PublicrowFunding/PublicrowFunding")
-		.build();
-
-		m_service = restAdapter.create(ServerService.class);
-
-	}
-
-	protected class AuthentificationRequestInterceptor implements RequestInterceptor {
-
-		private String username;
-		private String password;
-
-		public AuthentificationRequestInterceptor(String username, String password) {
-			this.username = username;
-			this.password = password;
-		}
-
-		@Override
-		public void intercept(RequestFacade requestFacade) {
-			final String userAndPassword = username + ":" + password;
-			final String encodedUserAndPassword = "Basic " + Base64.encodeToString(userAndPassword.getBytes(), 0);
-			requestFacade.addHeader("Authorization", encodedUserAndPassword);
-		}
-
-	}
-
-
-	/* Communication interface */
-	private final ServerService m_service;
-	private class ServerUser {
-		public String name;
-		public String password;
-	}
-	private interface ServerService {
-		@GET("/")
-		ServerUser connect();
-	}
-	/* 
-	/* --------- */
-
-	public void connect(final String username, final String password){
-		Observable<User> observable = Observable.create(new OnSubscribe<User>() {
-
-			@Override
-			public void call(Subscriber<? super User> subscriber) {
-				try {
-
-					System.out.println("je passe là");
-					ServerUser user = m_service.connect();
-					System.out.println(user.name);
-					System.out.println(user.password);
-					System.out.println("je passe ici");
-
-					/*	JSONObject jsonReceived = new JSONObject(EntityUtils.toString(entity));
-						if(jsonReceived.length() == 0) {
-							// Authentification incorrect
-						}
-						else {      	
-							User user = new User();
-							user.defineFields(
-									jsonReceived.getString("username"),
-									password,
-									jsonReceived.getString("name"),
-									jsonReceived.getString("firstname")
-									);
-
-							System.out.println(user.name());
-							System.out.println(user.firstName());
-						}*/
-					//subscriber.onNext(user);
-					subscriber.onCompleted();
-				}
-
-				catch (Exception exception) {
-					subscriber.onError(exception);
-				}
-			}
-
-		}).subscribeOn(Schedulers.io());
-		observable.subscribe();
-	}
+	public final static String SERVER_URL = "http://10.0.2.2/PublicrowFunding/PublicrowFunding/rest";
+	
 
 	private String streamToString(InputStream is) throws IOException {
 		StringBuilder sb = new StringBuilder();

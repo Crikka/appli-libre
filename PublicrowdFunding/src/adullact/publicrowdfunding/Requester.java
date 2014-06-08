@@ -21,29 +21,29 @@ import adullact.publicrowdfunding.shared.Project;
 public class Requester {
 	
 	public static void authentificateUser(String pseudo, String password, AuthentificationEvent authentificationEvent) {
-		AuthentificationRequest authentificationRequest = new AuthentificationRequest(pseudo, password);
+		AuthentificationRequest authentificationRequest = new AuthentificationRequest(pseudo, password, authentificationEvent);
 		authentificationEvent.defineContextRequest(authentificationRequest);
-		authentificationRequest.execute(authentificationEvent);
+		authentificationRequest.execute();
 	}
 	
 	/**
 	 * @brief Set argument to null if you want to keep old value.
 	 */
 	public static void modifyAccount(String newPseudo, String newPassword, String newName, String newFirstName, ModifyAccountEvent modifyAccountEvent) {
-		ModifyAccountRequest modifyAccountRequest = new ModifyAccountRequest(newPseudo, newPassword, newName, newFirstName);
+		ModifyAccountRequest modifyAccountRequest = new ModifyAccountRequest(newPseudo, newPassword, newName, newFirstName, modifyAccountEvent);
 		modifyAccountEvent.defineContextRequest(modifyAccountRequest);
-		modifyAccountRequest.execute(modifyAccountEvent);
+		modifyAccountRequest.execute();
 	}
 	
 	public static void createProject(String name, String description, String requestedFunding, Date beginOfProject, Date endOfProject, CreateProjectEvent createProjectEvent, LatLng position){
-		CreateProjectRequest createProjectRequest = new CreateProjectRequest(name, description, requestedFunding, beginOfProject, endOfProject, position);
+		CreateProjectRequest createProjectRequest = new CreateProjectRequest(name, description, requestedFunding, beginOfProject, endOfProject, position, createProjectEvent);
 		createProjectEvent.defineContextRequest(createProjectRequest);
-		createProjectRequest.execute(createProjectEvent);
+		createProjectRequest.execute();
 	}
 	
 	public static void validateProject(Project project, ValidateProjectEvent validateProjectEvent) {
-		ValidateProjectRequest validateProjectRequest = new ValidateProjectRequest(project);
+		ValidateProjectRequest validateProjectRequest = new ValidateProjectRequest(project, validateProjectEvent);
 		validateProjectEvent.defineContextRequest(validateProjectRequest);
-		validateProjectRequest.execute(validateProjectEvent);
+		validateProjectRequest.execute();
 	}
 }

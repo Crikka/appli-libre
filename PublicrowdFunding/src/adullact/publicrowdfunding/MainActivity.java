@@ -1,5 +1,6 @@
 package adullact.publicrowdfunding;
 
+import adullact.publicrowdfunding.model.event.AuthentificationEvent;
 import adullact.publicrowdfunding.model.server.ExampleAndTest;
 import adullact.publicrowdfunding.model.server.ServerInfo;
 import android.app.ActionBar;
@@ -100,8 +101,7 @@ public class MainActivity extends Activity implements TabListener {
 		 // MEA TESTA adullact.publicrowdfunding.model.server.ExampleAndTest
 		 //ExampleAndTest exampleAndTest = new ExampleAndTest();
 		 //exampleAndTest.authenticationAdmin();
-		 //exampleAndTest.createProject();
-		 //ServerInfo.instance().connect("pierre", "123456");
+		 //exampleAndTest.createProject();	
 		
 		
 	}
