@@ -49,39 +49,16 @@ public class AuthentificationRequest extends AuthentificatedRequest<Authentifica
 		@GET("/users/UserAPI.php")
 		ServerUser connect();
 	}
-	/* 
 	/* --------- */
 
 	
 	@Override
 	public void execute() {
-		
-		/*ServerEmulator serverEmulator = ServerEmulator.instance();
-		User serverUser = serverEmulator.authentificateUser(m_username, m_password);
-		if(serverUser == null){
-			event.errorUserNotExists(m_username, m_password);
-		}
-		else{
-			if(serverUser instanceof Administrator){
-				Share.user = new Administrator();
-				authentificateAndInitializeUser(serverUser);
-				done();
-				event.onAuthentificate();
-				event.ifUserIsAdministrator();
-			}
-			else {
-				authentificateAndInitializeUser(serverUser);
-				done();
-				event.onAuthentificate();
-			}
-		}*/
-		
 		Observable<ServerUser> obs = Observable.just(new ServerUser()).subscribeOn(Schedulers.io());
 		obs.subscribe(new Action1<ServerUser>(){
 
 			@Override
 			public void call(ServerUser user) {
-				System.out.println("1");
 				user = m_service.connect();
 				if(errorHandler().isOk()){
 					if(user.administrator == "0") {

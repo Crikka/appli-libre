@@ -7,6 +7,7 @@ import com.google.android.gms.maps.model.LatLng;
 import adullact.publicrowdfunding.Requester;
 import adullact.publicrowdfunding.model.event.AuthentificationEvent;
 import adullact.publicrowdfunding.model.event.CreateProjectEvent;
+import adullact.publicrowdfunding.model.event.CreateUserEvent;
 import adullact.publicrowdfunding.model.event.ValidateProjectEvent;
 import adullact.publicrowdfunding.shared.Administrator;
 import adullact.publicrowdfunding.shared.Project;
@@ -102,6 +103,21 @@ public class ExampleAndTest {
 				});
 			}
 		}, new LatLng(50,6));
+	}
+	
+	public void createUser() {
+		Requester.createUser("Francis", "123456", "Nicolas", "Du bonchaux", new CreateUserEvent() {
+			
+			@Override
+			public void onCreateUser() {
+				System.out.println("youpi");
+			}
+			
+			@Override
+			public void errorUsernameAlreadyExists(String username) {
+				System.out.println(username+" existe déja");
+			}
+		});
 	}
 	/* --------------- */
 }

@@ -99,9 +99,11 @@ public class MainActivity extends Activity implements TabListener {
 
 		
 		 // MEA TESTA adullact.publicrowdfunding.model.server.ExampleAndTest
-		 //ExampleAndTest exampleAndTest = new ExampleAndTest();
+		 /*ExampleAndTest exampleAndTest = new ExampleAndTest();
 		 //exampleAndTest.authenticationAdmin();
 		 //exampleAndTest.createProject();	
+		 exampleAndTest.createUser(); // Youpi
+		 exampleAndTest.createUser(); // Francis existe déja*/
 		
 		
 	}
