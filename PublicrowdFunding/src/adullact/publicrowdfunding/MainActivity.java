@@ -1,8 +1,6 @@
 package adullact.publicrowdfunding;
 
-import adullact.publicrowdfunding.model.event.AuthentificationEvent;
-import adullact.publicrowdfunding.model.server.ExampleAndTest;
-import adullact.publicrowdfunding.model.server.ServerInfo;
+import adullact.publicrowdfunding.shared.Share;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
@@ -42,7 +40,7 @@ public class MainActivity extends Activity implements TabListener {
 			bar.setDisplayShowHomeEnabled(true);
 			bar.setDisplayShowTitleEnabled(true);
 			bar.show();
-
+			
 		} catch (Exception e) {
 			e.getMessage();
 		}
@@ -96,15 +94,6 @@ public class MainActivity extends Activity implements TabListener {
 			fragMentTra.add(rl.getId(), fram3);
 			fragMentTra.commit();
 		}
-
-		
-		 // MEA TESTA adullact.publicrowdfunding.model.server.ExampleAndTest
-		 /*ExampleAndTest exampleAndTest = new ExampleAndTest();
-		 //exampleAndTest.authenticationAdmin();
-		 //exampleAndTest.createProject();	
-		 exampleAndTest.createUser(); // Youpi
-		 exampleAndTest.createUser(); // Francis existe déja*/
-		
 		
 	}
 

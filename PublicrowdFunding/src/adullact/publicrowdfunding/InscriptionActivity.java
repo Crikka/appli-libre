@@ -99,6 +99,8 @@ public class InscriptionActivity extends Activity {
 								finish();
 							}
 						});
+				
+				
 
 			}
 
