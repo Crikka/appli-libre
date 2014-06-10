@@ -2,6 +2,7 @@ package adullact.publicrowdfunding;
 
 import adullact.publicrowdfunding.model.event.AuthentificationEvent;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -15,12 +16,15 @@ public class ConnexionActivity extends Activity {
 	private EditText m_password;
 	private Button m_buttonValider;
 	private Button m_buttonInscription;
+	private Context context;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.connexion);
 
+		context = getBaseContext();
+		
 		m_login = (EditText) findViewById(R.id.login_connexion);
 		m_password = (EditText) findViewById(R.id.password_connexion);
 
@@ -32,7 +36,7 @@ public class ConnexionActivity extends Activity {
 			public void onClick(View v) {
 
 				if (m_login.length() == 0) {
-					Toast.makeText(getApplicationContext(),
+					Toast.makeText(context,
 							"Vous avez oublié le login", Toast.LENGTH_SHORT)
 							.show();
 					return;
@@ -40,7 +44,7 @@ public class ConnexionActivity extends Activity {
 
 				if (m_password.length() == 0) {
 
-					Toast.makeText(getApplicationContext(),
+					Toast.makeText(context,
 							"Vous avez oublié le mot de passe",
 							Toast.LENGTH_SHORT).show();
 					return;
@@ -49,26 +53,31 @@ public class ConnexionActivity extends Activity {
 				String login = m_login.getText().toString();
 				String password = m_password.getText().toString();
 
-				Requester.authentificateUser(login, password, new AuthentificationEvent() {
+				Requester.authentificateUser(login, password,
+						new AuthentificationEvent() {
 
-					@Override
-					public void ifUserIsAdministrator() {
-						// TODO
-					}
+							@Override
+							public void ifUserIsAdministrator() {
+								// TODO
+							}
 
-					@Override
-					public void onAuthentificate() {
-						Toast.makeText(getApplicationContext(),
-								"Vous êtes connecté !", Toast.LENGTH_LONG).show();
-						finish();
-					}
+							@Override
+							public void onAuthentificate() {
+								Toast.makeText(context,
+										"Vous êtes connecté !",
+										Toast.LENGTH_LONG).show();
+								finish();
+							}
 
-					@Override
-					public void errorUserNotExists(String pseudo, String password) {
-						Toast.makeText(getApplicationContext(),
-								"Login ou mot de passe incorect", Toast.LENGTH_LONG).show();
-						}
-				});
+							@Override
+							public void errorUserNotExists(String pseudo,
+									String password) {
+								System.out.println("erreur");
+								Toast.makeText(context,
+										"Login ou mot de passe incorect",
+										Toast.LENGTH_LONG).show();
+							}
+						});
 			}
 		});
 
@@ -81,9 +90,24 @@ public class ConnexionActivity extends Activity {
 				Intent in = new Intent(getBaseContext(),
 						InscriptionActivity.class);
 				in.putExtra("login", login);
-				startActivity(in);
+				startActivityForResult(in, 1);
 
 			}
 		});
+	}
+
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+		if (requestCode == 1) {
+			if (resultCode == RESULT_OK) {
+				Toast.makeText(getApplicationContext(),
+						"Incription validé, vous pouvez vous connecter",
+						Toast.LENGTH_LONG).show();
+			}
+			if (resultCode == RESULT_CANCELED) {
+				Toast.makeText(getApplicationContext(), "Inscription refusé",
+						Toast.LENGTH_LONG).show();
+			}
+		}
 	}
 }
