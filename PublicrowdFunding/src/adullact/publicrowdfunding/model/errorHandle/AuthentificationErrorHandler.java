@@ -11,7 +11,6 @@ public class AuthentificationErrorHandler extends AuthentificatedErrorHandler<Au
 	public Throwable handleError(RetrofitError error) {
 	    Response response = error.getResponse();
 	    if (response != null && response.getStatus() == 401) {
-	    	event().errorUserNotExists(request().username(), request().password());
 	    	fail();
 	    }
 	    return error;

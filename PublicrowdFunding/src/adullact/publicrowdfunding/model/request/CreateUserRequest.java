@@ -4,11 +4,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
-import retrofit.client.Response;
 import retrofit.http.Body;
 import retrofit.http.PUT;
 import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import adullact.publicrowdfunding.model.errorHandle.CreateUserErrorHandler;
@@ -46,7 +45,7 @@ public class CreateUserRequest extends AnonymousRequest<CreateUserRequest, Creat
 	}
 	private interface CreateUserService {
 		@PUT("/users/UserAPI.php")
-		ResponseServer create(@Body ServerUser serverUser);
+		Observable<ResponseServer> create(@Body ServerUser serverUser);
 	}
 	/* --------- */
 
@@ -62,28 +61,24 @@ public class CreateUserRequest extends AnonymousRequest<CreateUserRequest, Creat
 
 	@Override
 	public void execute() {
-		Observable<ServerUser> obs = Observable.just(m_serverUser).subscribeOn(Schedulers.io());
-		obs.subscribe(new Action1<ServerUser>(){
-
+		m_service.create(m_serverUser).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<ResponseServer>() {
+			
 			@Override
-			public void call(ServerUser user) {
-				int returnCode = m_service.create(user).returnCode;
+			public void call(ResponseServer response) {
+				int  returnCode = response.returnCode;
 				if(errorHandler().isOk()){
 					switch(returnCode){
 					case 0: // Created
 						event().onCreateUser();
 						break;
-					case 1: // Error, missing useername or password
-
+					case 1: // Error, missing username or password
 						break;
 					case 2: // User exists already
-						event().errorUsernameAlreadyExists(user.username);
+						event().errorUsernameAlreadyExists(m_serverUser.username);
 						break;
 					}
 				}
-			}
-
-		});		
+			};
+		});
 	}
-
 }

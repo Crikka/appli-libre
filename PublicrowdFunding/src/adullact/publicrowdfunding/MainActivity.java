@@ -1,5 +1,6 @@
 package adullact.publicrowdfunding;
 
+import adullact.publicrowdfunding.model.server.ExampleAndTest;
 import adullact.publicrowdfunding.shared.Share;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
@@ -94,7 +95,6 @@ public class MainActivity extends Activity implements TabListener {
 			fragMentTra.add(rl.getId(), fram3);
 			fragMentTra.commit();
 		}
-		
 	}
 
 	@Override

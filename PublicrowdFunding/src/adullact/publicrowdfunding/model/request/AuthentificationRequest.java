@@ -2,7 +2,9 @@ package adullact.publicrowdfunding.model.request;
 
 import retrofit.http.GET;
 import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import adullact.publicrowdfunding.model.errorHandle.AuthentificationErrorHandler;
 import adullact.publicrowdfunding.model.event.AuthentificationEvent;
@@ -22,21 +24,21 @@ public class AuthentificationRequest extends AuthentificatedRequest<Authentifica
 		super(username, password, event, new AuthentificationErrorHandler());		
 		errorHandler().defineEvent(event);
 		errorHandler().defineRequest(this);
-		
+
 		m_service = m_restAdapter.create(AuthentificationService.class);
-		
+
 		this.m_username = username;
 		this.m_password = password;
 	}
-	
+
 	public String username() {
 		return m_username;
 	}
-	
+
 	public String password() {
 		return m_password;
 	}
-	
+
 	/* Communication interface */
 	private final AuthentificationService m_service;
 	private class ServerUser {
@@ -47,20 +49,28 @@ public class AuthentificationRequest extends AuthentificatedRequest<Authentifica
 	}
 	private interface AuthentificationService {
 		@GET("/users/UserAPI.php")
-		ServerUser connect();
+		Observable<ServerUser> connect();
 	}
 	/* --------- */
 
-	
+
 	@Override
 	public void execute() {
-		Observable<ServerUser> obs = Observable.just(new ServerUser()).subscribeOn(Schedulers.io());
-		obs.subscribe(new Action1<ServerUser>(){
+		m_service.connect().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+		.onErrorReturn(new Func1<Throwable, ServerUser>() {
+
+			@Override
+			public ServerUser call(Throwable arg0) {
+				return null;
+			}
+			
+		})
+		.subscribe(new Action1<ServerUser>() {
 
 			@Override
 			public void call(ServerUser user) {
-				user = m_service.connect();
 				if(errorHandler().isOk()){
+					System.out.println("ici");
 					if(user.administrator == "0") {
 						Share.user = new User();
 						authentificateAndInitializeUser(user);
@@ -71,12 +81,13 @@ public class AuthentificationRequest extends AuthentificatedRequest<Authentifica
 					}
 					event().onAuthentificate();
 				}
-			}
-			
+				else {
+			    	event().errorUserNotExists(username(), password());
+				}
+			};
 		});
-		
 	}
-	
+
 	/*private String streamToString(InputStream is) throws IOException {
 		StringBuilder sb = new StringBuilder();
 		BufferedReader rd = new BufferedReader(new InputStreamReader(is));
@@ -86,7 +97,7 @@ public class AuthentificationRequest extends AuthentificatedRequest<Authentifica
 		}
 		return sb.toString();
 	}*/
-	
+
 	private void authentificateAndInitializeUser(ServerUser serverUser) {
 		Share.user.defineFields(serverUser.username, m_password, serverUser.name, serverUser.firstName);
 		Share.user.authentificate();

@@ -59,8 +59,8 @@ import android.util.Base64;
  * @brief Storage class for Server information
  */
 public class ServerInfo {
-	//public final static String SERVER_URL = "http://10.0.2.2/PublicrowFunding/PublicrowFunding/rest";
-	public final static String SERVER_URL = "http://192.168.1.21/PublicrowFunding/PublicrowFunding/rest";
+	public final static String SERVER_URL = "http://10.0.2.2/PublicrowFunding/PublicrowFunding/rest";
+	//public final static String SERVER_URL = "http://192.168.1.21/PublicrowFunding/PublicrowFunding/rest";
 
 	
 	/*

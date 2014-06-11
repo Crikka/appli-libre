@@ -34,7 +34,7 @@ public class ExampleAndTest {
 	}
 	
 	public void authentificationNormalUser() {
-		Requester.authentificateUser("Miaou", "abjectDominera", new AuthentificationEvent() {
+		Requester.authentificateUser("Francis", "123456", new AuthentificationEvent() {
 
 			@Override
 			public void ifUserIsAdministrator() {
@@ -54,7 +54,7 @@ public class ExampleAndTest {
 	}
 	
 	public void authentificationFailUser() {
-		Requester.authentificateUser("MiaouBis", "abjectDominera", new AuthentificationEvent() {
+		Requester.authentificateUser("Miaou", "abjectDominera", new AuthentificationEvent() {
 
 			@Override
 			public void ifUserIsAdministrator() {
