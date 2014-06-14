@@ -1,5 +1,7 @@
 package adullact.publicrowdfunding;
 
+import adullact.publicrowdfunding.model.event.AuthentificationEvent;
+import adullact.publicrowdfunding.model.event.CreateUserEvent;
 import adullact.publicrowdfunding.model.server.ExampleAndTest;
 import adullact.publicrowdfunding.shared.Share;
 import android.app.ActionBar;

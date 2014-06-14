@@ -6,15 +6,18 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import retrofit.http.Body;
 import retrofit.http.PUT;
+import retrofit.http.Path;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import adullact.publicrowdfunding.model.errorHandle.CreateUserErrorHandler;
 import adullact.publicrowdfunding.model.event.CreateUserEvent;
 
 
 public class CreateUserRequest extends AnonymousRequest<CreateUserRequest, CreateUserEvent, CreateUserErrorHandler> {
+	private String m_username;
 	private ServerUser m_serverUser;
 
 	public CreateUserRequest(String username, String password, String name, String firstName, CreateUserEvent event) {
@@ -22,8 +25,8 @@ public class CreateUserRequest extends AnonymousRequest<CreateUserRequest, Creat
 		errorHandler().defineEvent(event);
 		errorHandler().defineRequest(this);
 
+		m_username = username;
 		m_serverUser = new ServerUser();
-		m_serverUser.username = username;
 		m_serverUser.password = password;
 		m_serverUser.name = name;
 		m_serverUser.firstName = firstName;
@@ -35,7 +38,6 @@ public class CreateUserRequest extends AnonymousRequest<CreateUserRequest, Creat
 	private final CreateUserService m_service;
 	@SuppressWarnings("unused")
 	private class ServerUser {
-		public String username;
 		public String password;
 		public String name;
 		public String firstName;
@@ -44,8 +46,8 @@ public class CreateUserRequest extends AnonymousRequest<CreateUserRequest, Creat
 		public Integer returnCode; 
 	}
 	private interface CreateUserService {
-		@PUT("/users/UserAPI.php")
-		Observable<ResponseServer> create(@Body ServerUser serverUser);
+		@PUT("/user/{username}")
+		Observable<ResponseServer> create(@Body ServerUser serverUser, @Path(value = "username") String username);
 	}
 	/* --------- */
 
@@ -61,7 +63,18 @@ public class CreateUserRequest extends AnonymousRequest<CreateUserRequest, Creat
 
 	@Override
 	public void execute() {
-		m_service.create(m_serverUser).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<ResponseServer>() {
+		m_service.create(m_serverUser, m_username).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+		.onErrorReturn(new Func1<Throwable, ResponseServer>() {
+
+			@Override
+			public ResponseServer call(Throwable arg0) {
+				ResponseServer res = new ResponseServer();
+				res.returnCode = 2;
+				return res;
+			}
+			
+		})
+		.subscribe(new Action1<ResponseServer>() {
 			
 			@Override
 			public void call(ResponseServer response) {
@@ -74,7 +87,7 @@ public class CreateUserRequest extends AnonymousRequest<CreateUserRequest, Creat
 					case 1: // Error, missing username or password
 						break;
 					case 2: // User exists already
-						event().errorUsernameAlreadyExists(m_serverUser.username);
+						event().errorUsernameAlreadyExists(m_username);
 						break;
 					}
 				}

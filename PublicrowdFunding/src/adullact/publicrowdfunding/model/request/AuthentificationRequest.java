@@ -48,7 +48,7 @@ public class AuthentificationRequest extends AuthentificatedRequest<Authentifica
 		public String administrator;
 	}
 	private interface AuthentificationService {
-		@GET("/users/UserAPI.php")
+		@GET("/authentification")
 		Observable<ServerUser> connect();
 	}
 	/* --------- */
@@ -70,7 +70,6 @@ public class AuthentificationRequest extends AuthentificatedRequest<Authentifica
 			@Override
 			public void call(ServerUser user) {
 				if(errorHandler().isOk()){
-					System.out.println("ici");
 					if(user.administrator == "0") {
 						Share.user = new User();
 						authentificateAndInitializeUser(user);
