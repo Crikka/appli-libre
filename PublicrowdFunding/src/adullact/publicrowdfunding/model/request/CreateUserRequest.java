@@ -27,6 +27,7 @@ public class CreateUserRequest extends AnonymousRequest<CreateUserRequest, Creat
 
 		m_username = username;
 		m_serverUser = new ServerUser();
+		m_serverUser.command = "create";
 		m_serverUser.password = password;
 		m_serverUser.name = name;
 		m_serverUser.firstName = firstName;
@@ -38,6 +39,7 @@ public class CreateUserRequest extends AnonymousRequest<CreateUserRequest, Creat
 	private final CreateUserService m_service;
 	@SuppressWarnings("unused")
 	private class ServerUser {
+		public String command;
 		public String password;
 		public String name;
 		public String firstName;
@@ -82,6 +84,7 @@ public class CreateUserRequest extends AnonymousRequest<CreateUserRequest, Creat
 				if(errorHandler().isOk()){
 					switch(returnCode){
 					case 0: // Created
+						done();
 						event().onCreateUser();
 						break;
 					case 1: // Error, missing username or password

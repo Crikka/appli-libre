@@ -31,8 +31,8 @@ public class Requester {
 	/**
 	 * @brief Set argument to null if you want to keep old value.
 	 */
-	public static void modifyAccount(String newPseudo, String newPassword, String newName, String newFirstName, ModifyAccountEvent modifyAccountEvent) {
-		ModifyAccountRequest modifyAccountRequest = new ModifyAccountRequest(newPseudo, newPassword, newName, newFirstName, modifyAccountEvent);
+	public static void modifyAccount(String newPassword, String newName, String newFirstName, ModifyAccountEvent modifyAccountEvent) {
+		ModifyAccountRequest modifyAccountRequest = new ModifyAccountRequest(newPassword, newName, newFirstName, modifyAccountEvent);
 		modifyAccountEvent.defineContextRequest(modifyAccountRequest);
 		modifyAccountRequest.execute();
 	}

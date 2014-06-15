@@ -7,6 +7,7 @@ public abstract class ModifyAccountEvent extends AuthentificatedEvent<ModifyAcco
 	
 	/* Callback functions */
 	public abstract void onModifyAccount();
+	public abstract void errorUsernameDoesNotExist(String username);
 	/* ----------------- */
 	
 }

@@ -8,6 +8,7 @@ import adullact.publicrowdfunding.Requester;
 import adullact.publicrowdfunding.model.event.AuthentificationEvent;
 import adullact.publicrowdfunding.model.event.CreateProjectEvent;
 import adullact.publicrowdfunding.model.event.CreateUserEvent;
+import adullact.publicrowdfunding.model.event.ModifyAccountEvent;
 import adullact.publicrowdfunding.model.event.ValidateProjectEvent;
 import adullact.publicrowdfunding.shared.Administrator;
 import adullact.publicrowdfunding.shared.Project;
@@ -116,6 +117,85 @@ public class ExampleAndTest {
 			@Override
 			public void errorUsernameAlreadyExists(String username) {
 				System.out.println(username+" existe déja");
+			}
+		});
+	}
+	
+	public void modifyAccount() {
+		Requester.createUser("Laure25", "150m", "Manodou", "Laura", new CreateUserEvent() {
+			
+			@Override
+			public void onCreateUser() {
+				Requester.authentificateUser("Laure25", "150m", new AuthentificationEvent() {
+					
+					@Override
+					public void ifUserIsAdministrator() {
+						System.out.println("laure est admin, qui l'eu cru?");
+					}
+					
+					@Override
+					public void onAuthentificate() {
+						Requester.modifyAccount(null, null, "Laure", new ModifyAccountEvent() {
+							
+							@Override
+							public void errorAuthentificationRequired() {
+								System.out.println("authentification fail");
+							}
+							
+							@Override
+							public void onModifyAccount() {
+								System.out.println("Laure modifié!");
+							}
+							
+							@Override
+							public void errorUsernameDoesNotExist(String username) {
+								System.out.println("laure n'existe pas");
+							}
+						});						
+					}
+					
+					@Override
+					public void errorUserNotExists(String pseudo, String password) {
+						System.out.println("laure a pas pu être connecter");
+					}
+				});
+			}
+			
+			@Override
+			public void errorUsernameAlreadyExists(String username) {
+				System.out.println("laure existe déja");
+			}
+		});
+	}
+	
+	public void retryWithNewLogin() { // DO NOT USE FOR THE MOMENT
+		Requester.createUser("Laure28", "150m", "Manodou", "Laura", new CreateUserEvent() {
+			
+			@Override
+			public void onCreateUser() {
+				Requester.modifyAccount(null, null, "Laure", new ModifyAccountEvent() {
+					
+					@Override
+					public void errorAuthentificationRequired() {
+						System.out.println("authentification fail");
+						retryWithAnotherLogin("Laure28", "150m");
+					}
+					
+					@Override
+					public void onModifyAccount() {
+						System.out.println("Laure modifié!");
+					}
+					
+					@Override
+					public void errorUsernameDoesNotExist(String username) {
+						System.out.println("laure n'existe pas");
+					}
+				});	
+			}
+			
+			@Override
+			public void errorUsernameAlreadyExists(String username) {
+				System.out.println("laure existe déja");
 			}
 		});
 	}

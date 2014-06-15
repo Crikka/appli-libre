@@ -70,6 +70,7 @@ public class AuthentificationRequest extends AuthentificatedRequest<Authentifica
 			@Override
 			public void call(ServerUser user) {
 				if(errorHandler().isOk()){
+					done();
 					if(user.administrator == "0") {
 						Share.user = new User();
 						authentificateAndInitializeUser(user);
