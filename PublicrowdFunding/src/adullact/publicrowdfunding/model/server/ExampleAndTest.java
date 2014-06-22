@@ -5,11 +5,11 @@ import java.util.Date;
 import com.google.android.gms.maps.model.LatLng;
 
 import adullact.publicrowdfunding.Requester;
-import adullact.publicrowdfunding.model.event.AuthentificationEvent;
-import adullact.publicrowdfunding.model.event.CreateProjectEvent;
-import adullact.publicrowdfunding.model.event.CreateUserEvent;
-import adullact.publicrowdfunding.model.event.ModifyAccountEvent;
-import adullact.publicrowdfunding.model.event.ValidateProjectEvent;
+import adullact.publicrowdfunding.model.server.event.AuthentificationEvent;
+import adullact.publicrowdfunding.model.server.event.CreateProjectEvent;
+import adullact.publicrowdfunding.model.server.event.CreateUserEvent;
+import adullact.publicrowdfunding.model.server.event.ModifyAccountEvent;
+import adullact.publicrowdfunding.model.server.event.ValidateProjectEvent;
 import adullact.publicrowdfunding.shared.Administrator;
 import adullact.publicrowdfunding.shared.Project;
 
@@ -75,35 +75,50 @@ public class ExampleAndTest {
 	}
 
 	public void createProject() {
-		Requester.createProject("Parking sous terrain","Parking au centre de Montpellier", "50000", new Date(114, 5, 10), new Date(114, 8, 10), new CreateProjectEvent() {
-			
-			@Override
-			public void errorAuthentificationRequired() {
-				System.out.println("L'utilisateur n'est pas connecte");
-				authentificationNormalUser();
-				retry();
-			}
-			
-			@Override
-			public void onProjectAdded(Project project) {
-				System.out.println("Un projet a été ajouté !");
-			}
+		Requester.authentificateUser("Francis", "123456", new AuthentificationEvent() {
 
 			@Override
 			public void ifUserIsAdministrator() {
-				System.out.println("Un admin ! On valide ?");
-				Requester.validateProject(project(), new ValidateProjectEvent() {
-					
-					@Override
-					public void errorAdministratorRequired() {}
-					
-					@Override
-					public void onValidateProject(Project project) {
-						System.out.println("Et hop on valide!");
-					}
-				});
+				System.out.println(" et je suis admin : " + (user() instanceof Administrator));					
 			}
-		}, new LatLng(50,6));
+
+			@Override
+			public void onAuthentificate() {
+				System.out.println("Je suis "+ user().pseudo()+" "+ user().name()+" "+ user().firstName());		
+				Requester.createProject("Parking sous terrain","Parking au centre de Montpellier", "50000", new Date(114, 5, 10), new Date(114, 8, 10), new CreateProjectEvent() {
+					
+					@Override
+					public void errorAuthentificationRequired() {
+						System.out.println("L'utilisateur n'est pas connecte");
+					}
+					
+					@Override
+					public void onProjectAdded(Project project) {
+						System.out.println("Un projet a été ajouté !");
+					}
+
+					@Override
+					public void ifUserIsAdministrator() {
+						System.out.println("Un admin ! On valide ?");
+						/*Requester.validateProject(project(), new ValidateProjectEvent() {
+							
+							@Override
+							public void errorAdministratorRequired() {}
+							
+							@Override
+							public void onValidateProject(Project project) {
+								System.out.println("Et hop on valide!");
+							}
+						});*/
+					}
+				}, new LatLng(50,6));
+			}
+
+			@Override
+			public void errorUserNotExists(String pseudo, String password) {
+				System.out.println("Impossible de trouver " + pseudo + " avec le mot de passe : " + password);			
+			}
+		});
 	}
 	
 	public void createUser() {

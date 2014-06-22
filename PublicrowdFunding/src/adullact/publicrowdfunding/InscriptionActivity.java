@@ -1,6 +1,6 @@
 package adullact.publicrowdfunding;
 
-import adullact.publicrowdfunding.model.event.CreateUserEvent;
+import adullact.publicrowdfunding.model.server.event.CreateUserEvent;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;

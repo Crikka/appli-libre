@@ -1,8 +1,15 @@
 package adullact.publicrowdfunding;
 
-import adullact.publicrowdfunding.model.event.AuthentificationEvent;
-import adullact.publicrowdfunding.model.event.CreateUserEvent;
+import java.util.Date;
+
+import com.google.android.gms.maps.model.LatLng;
+
 import adullact.publicrowdfunding.model.server.ExampleAndTest;
+import adullact.publicrowdfunding.model.server.event.AuthentificationEvent;
+import adullact.publicrowdfunding.model.server.event.CreateProjectEvent;
+import adullact.publicrowdfunding.model.server.event.CreateUserEvent;
+import adullact.publicrowdfunding.model.server.request.CreateProjectRequest;
+import adullact.publicrowdfunding.shared.Project;
 import adullact.publicrowdfunding.shared.Share;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
@@ -48,9 +55,6 @@ public class MainActivity extends Activity implements TabListener {
 			e.getMessage();
 		}
 	}		
-	
-
-
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

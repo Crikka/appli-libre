@@ -1,6 +1,6 @@
 package adullact.publicrowdfunding;
 
-import adullact.publicrowdfunding.model.event.AuthentificationEvent;
+import adullact.publicrowdfunding.model.server.event.AuthentificationEvent;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
