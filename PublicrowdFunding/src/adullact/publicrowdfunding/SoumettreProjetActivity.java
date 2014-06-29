@@ -277,6 +277,7 @@ public class SoumettreProjetActivity extends Activity {
 		switch (item.getItemId()) {
 
 		case R.id.soumettre:
+
 			/*
 			 * try { //Communicator.addProject(name, description,
 			 * requestedFunding); if(Share.user.isAdmin()){
