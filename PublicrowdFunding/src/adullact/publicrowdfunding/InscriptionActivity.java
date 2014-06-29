@@ -1,5 +1,6 @@
 package adullact.publicrowdfunding;
 
+import adullact.publicrowdfunding.model.server.UserRequester;
 import adullact.publicrowdfunding.model.server.event.CreateUserEvent;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -79,7 +80,7 @@ public class InscriptionActivity extends Activity {
 				mProgressDialog = ProgressDialog.show(InscriptionActivity.this,
 						"Chargement", "Inscription en cours ...", true);
 
-				Requester.createUser(username, password, "prenom", "nom",
+				UserRequester.createUser(username, password, "prenom", "nom",
 						new CreateUserEvent() {
 
 							@Override

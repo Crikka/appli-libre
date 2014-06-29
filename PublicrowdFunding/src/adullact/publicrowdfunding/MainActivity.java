@@ -1,16 +1,20 @@
 package adullact.publicrowdfunding;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import com.google.android.gms.maps.model.LatLng;
 
 import adullact.publicrowdfunding.model.server.ExampleAndTest;
+import adullact.publicrowdfunding.model.server.UserRequester;
 import adullact.publicrowdfunding.model.server.event.AuthentificationEvent;
 import adullact.publicrowdfunding.model.server.event.CreateProjectEvent;
 import adullact.publicrowdfunding.model.server.event.CreateUserEvent;
+import adullact.publicrowdfunding.model.server.event.UsersListingEvent;
 import adullact.publicrowdfunding.model.server.request.CreateProjectRequest;
 import adullact.publicrowdfunding.shared.Project;
 import adullact.publicrowdfunding.shared.Share;
+import adullact.publicrowdfunding.shared.User;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
@@ -54,6 +58,9 @@ public class MainActivity extends Activity implements TabListener {
 		} catch (Exception e) {
 			e.getMessage();
 		}
+		
+		/*ExampleAndTest ex = new ExampleAndTest();
+		ex.listAllUsers();*/
 	}		
 
 	@Override

@@ -1,10 +1,5 @@
 package adullact.publicrowdfunding.model.server.request;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
 import retrofit.http.Body;
 import retrofit.http.PUT;
 import retrofit.http.Path;
@@ -51,15 +46,21 @@ public class CreateUserRequest extends AnonymousRequest<CreateUserRequest, Creat
 		Observable<ResponseServer> create(@Body ServerUser serverUser, @Path(value = "username") String username);
 	}
 	/* --------- */
-
-	private String streamToString(InputStream is) throws IOException {
-		StringBuilder sb = new StringBuilder();
-		BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-		String line;
-		while ((line = rd.readLine()) != null) {
-			sb.append(line);
-		}
-		return sb.toString();
+	
+	public String username() {
+		return m_username;
+	}
+	
+	public String password() {
+		return m_serverUser.password;
+	}
+	
+	public String name() {
+		return m_serverUser.name;
+	}
+	
+	public String firstName() {
+		return m_serverUser.firstName;
 	}
 
 	@Override

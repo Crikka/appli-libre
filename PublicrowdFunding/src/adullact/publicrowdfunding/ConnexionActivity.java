@@ -1,5 +1,6 @@
 package adullact.publicrowdfunding;
 
+import adullact.publicrowdfunding.model.server.UserRequester;
 import adullact.publicrowdfunding.model.server.event.AuthentificationEvent;
 import android.app.Activity;
 import android.content.Context;
@@ -53,7 +54,7 @@ public class ConnexionActivity extends Activity {
 				String login = m_login.getText().toString();
 				String password = m_password.getText().toString();
 
-				Requester.authentificateUser(login, password,
+				UserRequester.authentificateUser(login, password,
 						new AuthentificationEvent() {
 
 							@Override

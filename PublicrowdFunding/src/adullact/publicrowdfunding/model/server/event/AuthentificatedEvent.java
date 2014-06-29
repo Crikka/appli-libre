@@ -1,6 +1,6 @@
 package adullact.publicrowdfunding.model.server.event;
 
-import adullact.publicrowdfunding.Requester;
+import adullact.publicrowdfunding.model.server.UserRequester;
 import adullact.publicrowdfunding.model.server.errorHandler.AuthentificatedErrorHandler;
 import adullact.publicrowdfunding.model.server.request.AuthentificatedRequest;
 
@@ -11,7 +11,7 @@ TErrorHandler extends AuthentificatedErrorHandler<TRequest, TEvent, TErrorHandle
 extends Event<TRequest, TEvent, TErrorHandler> {
 	final protected void retryWithAnotherLogin(String username, String password) { // DO NOT USE FOR THE MOMENT
 		final Event<TRequest, TEvent, TErrorHandler> contextualEvent = this;
-		Requester.authentificateUser(username, password, new AuthentificationEvent() {
+		UserRequester.authentificateUser(username, password, new AuthentificationEvent() {
 			
 			@Override
 			public void ifUserIsAdministrator() {}
