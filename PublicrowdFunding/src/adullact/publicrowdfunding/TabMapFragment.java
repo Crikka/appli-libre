@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 import adullact.publicrowdfunding.model.server.ServerEmulator;
 import adullact.publicrowdfunding.shared.Project;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,15 +16,35 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class TabMapFragment extends Fragment {
+	
 	private GoogleMap map;
-
+	View rootView;
+	GoogleMap googleMap;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		
 
+
+		        MapFragment fragment = new MapFragment();
+		        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+		        transaction.add(R.id.mapView, fragment).commit();
+		        
+		        rootView = inflater.inflate(R.layout.tabMaps, container, false);
+
+		        googleMap = ((MapFragment) getChildFragmentManager().findFragmentById(R.id.mapView)).getMap();
+		 return rootView
+
+		}
+	        				
+	        				
+		/*
+			 return view;
 		View view = inflater.inflate(R.layout.maps, container, false);
 
 		if (map == null) {
@@ -57,7 +78,7 @@ public class TabMapFragment extends Fragment {
 		}
 
 		return view;
-
+*/
 	}
 
 }
