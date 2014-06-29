@@ -1,20 +1,5 @@
 package adullact.publicrowdfunding;
 
-import java.util.ArrayList;
-import java.util.Date;
-
-import com.google.android.gms.maps.model.LatLng;
-
-import adullact.publicrowdfunding.model.server.ExampleAndTest;
-import adullact.publicrowdfunding.model.server.UserRequester;
-import adullact.publicrowdfunding.model.server.event.AuthentificationEvent;
-import adullact.publicrowdfunding.model.server.event.CreateProjectEvent;
-import adullact.publicrowdfunding.model.server.event.CreateUserEvent;
-import adullact.publicrowdfunding.model.server.event.UsersListingEvent;
-import adullact.publicrowdfunding.model.server.request.CreateProjectRequest;
-import adullact.publicrowdfunding.shared.Project;
-import adullact.publicrowdfunding.shared.Share;
-import adullact.publicrowdfunding.shared.User;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
@@ -23,11 +8,12 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 public class MainActivity extends Activity implements TabListener {
-	
+
 	private RelativeLayout rl;
-	
+
 	TabProjets fram1;
 	TabFavoris fram2;
 	TabAllProjectsMaps fram3;
@@ -54,11 +40,11 @@ public class MainActivity extends Activity implements TabListener {
 			bar.setDisplayShowHomeEnabled(true);
 			bar.setDisplayShowTitleEnabled(true);
 			bar.show();
-			
+
 		} catch (Exception e) {
 			e.getMessage();
 		}
-		
+
 		/*ExampleAndTest ex = new ExampleAndTest();
 		ex.listAllUsers();*/
 	}		
@@ -100,13 +86,16 @@ public class MainActivity extends Activity implements TabListener {
 			try {
 				rl.removeAllViews();
 			} catch (Exception e) {
+				e.printStackTrace();
 			}
-			
+/*
 			fram3 = new TabAllProjectsMaps();
 			fragMentTra.addToBackStack(null);
 			fragMentTra = getFragmentManager().beginTransaction();
 			fragMentTra.add(rl.getId(), fram3);
 			fragMentTra.commit();
+			*/
+			Toast.makeText(getApplicationContext(), "Cette onglet est encore instable", Toast.LENGTH_SHORT).show();
 		}
 	}
 

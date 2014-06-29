@@ -3,9 +3,6 @@ package adullact.publicrowdfunding.controlleur.detailProjet;
 import java.util.HashMap;
 
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.R.id;
-import adullact.publicrowdfunding.R.layout;
-import adullact.publicrowdfunding.R.menu;
 import adullact.publicrowdfunding.model.server.ServerEmulator;
 import adullact.publicrowdfunding.shared.Project;
 import android.content.Intent;

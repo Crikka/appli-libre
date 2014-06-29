@@ -1,7 +1,6 @@
 package adullact.publicrowdfunding.controlleur.ajouterProjet;
 
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.R.drawable;
 import adullact.publicrowdfunding.controlleur.detailProjet.ParticiperActivity;
 import android.app.AlertDialog;
 import android.content.Context;

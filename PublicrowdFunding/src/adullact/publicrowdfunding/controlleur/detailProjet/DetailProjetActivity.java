@@ -1,33 +1,21 @@
 package adullact.publicrowdfunding.controlleur.detailProjet;
 
-import java.util.HashMap;
-
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.R.id;
-import adullact.publicrowdfunding.R.layout;
-import adullact.publicrowdfunding.R.menu;
 import adullact.publicrowdfunding.controlleur.ajouterProjet.choisirMontantDialog;
 import adullact.publicrowdfunding.custom.CustomProgressBar;
-import adullact.publicrowdfunding.model.server.ServerEmulator;
 import adullact.publicrowdfunding.shared.Project;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.graphics.drawable.Drawable;
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class DetailProjetActivity extends FragmentActivity {
+public class DetailProjetActivity extends Fragment {
 
 	private TextView m_titre;
 	private TextView m_description;
@@ -37,39 +25,26 @@ public class DetailProjetActivity extends FragmentActivity {
 	private Button m_payer;
 	private RatingBar m_notation;
 	private CustomProgressBar m_progression;
-	private Drawable m_favorite;
-	private boolean m_Is_favorite;
+
 	private Project projet;
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.detail_projet);
-		String id = getIntent().getExtras().getString("key");
-		if(id == null){
-			Toast.makeText(getApplicationContext(), "Un erreur s'est produite",
-					Toast.LENGTH_SHORT).show();
-			finish();
-		}
-		ServerEmulator serveur = ServerEmulator.instance();
-		HashMap<String, Project> projets = serveur.getAllProjets();
-		projet = projets.get(id);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
 
-		if (projet == null) {
-			Toast.makeText(getApplicationContext(), "Un erreur s'est produite",
-					Toast.LENGTH_SHORT).show();
-			finish();
-		}
-		m_titre = (TextView) findViewById(R.id.titre_projet_detail);
-		m_description = (TextView) findViewById(R.id.detail_projet_detail);
-		m_payer = (Button) findViewById(R.id.payer);
-		m_nombre_participants = (TextView) findViewById(R.id.nombre_participants_detail);
-		m_date_de_fin = (TextView) findViewById(R.id.nombre_jour_restant_detail);
-		m_utilisateur_soumission = (TextView) findViewById(R.id.utilisateur_soumission);
-		m_notation = (RatingBar) findViewById(R.id.rating_bar_projet_detail);
-		m_progression = (CustomProgressBar) findViewById(R.id.avancement_projet_liste);
-
-		m_Is_favorite = false;
+		final View view = inflater.inflate(R.layout.detail_projet, container, false);
+	
+		OneProjectActivity activity = (OneProjectActivity) getActivity();
+		projet = activity.getIdProjet();
+		
+		m_titre = (TextView) view.findViewById(R.id.titre_projet_detail);
+		m_description = (TextView) view.findViewById(R.id.detail_projet_detail);
+		m_payer = (Button) view.findViewById(R.id.payer);
+		m_nombre_participants = (TextView) view.findViewById(R.id.nombre_participants_detail);
+		m_date_de_fin = (TextView) view.findViewById(R.id.nombre_jour_restant_detail);
+		m_utilisateur_soumission = (TextView) view.findViewById(R.id.utilisateur_soumission);
+		m_notation = (RatingBar) view.findViewById(R.id.rating_bar_projet_detail);
+		m_progression = (CustomProgressBar) view.findViewById(R.id.avancement_projet_liste);
 
 		if (m_progression == null) {
 			System.out.println("c'est nul");
@@ -90,7 +65,7 @@ public class DetailProjetActivity extends FragmentActivity {
 					@Override
 					public void onRatingChanged(RatingBar ratingBar,
 							float rating, boolean fromUser) {
-						Toast.makeText(getApplicationContext(),
+						Toast.makeText(getActivity(),
 								"Notation de : " + rating, Toast.LENGTH_SHORT)
 								.show();
 					}
@@ -101,60 +76,12 @@ public class DetailProjetActivity extends FragmentActivity {
 			public void onClick(View v) {
 
 				choisirMontantDialog alertDialogBuilder = new choisirMontantDialog(
-						DetailProjetActivity.this);
+						getActivity());
 				alertDialogBuilder.show();
 
 			}
 		});
-
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu items for use in the action bar
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.detail_projet, menu);
-		m_favorite = menu.getItem(1).getIcon();
-		return super.onCreateOptionsMenu(menu);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-
-		switch (item.getItemId()) {
-
-		case R.id.add_favorite:
-
-			PorterDuffColorFilter filter = null;
-			if (m_Is_favorite) {
-				Toast.makeText(getBaseContext(), "Projet retiré des favoris",
-						Toast.LENGTH_SHORT).show();
-				filter = new PorterDuffColorFilter(Color.TRANSPARENT,
-						PorterDuff.Mode.SRC_ATOP);
-			} else {
-				Toast.makeText(getBaseContext(), "Projet ajouté aux favoris",
-						Toast.LENGTH_SHORT).show();
-
-				filter = new PorterDuffColorFilter(
-						Color.parseColor("#ffffff00"), PorterDuff.Mode.SRC_ATOP);
-
-			}
-			m_Is_favorite = !m_Is_favorite;
-			m_favorite.setColorFilter(filter);
-			return true;
-			
-		case R.id.Share:
-			Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
-			emailIntent.setType("text/plain");
-			emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,
-					"Financement participatif");
-			emailIntent.putExtra(android.content.Intent.EXTRA_TEXT,
-					"J'aime le projet "+ projet.getName() +" venez le financer. (via PublicrowdFunding)");
-			startActivity(emailIntent);
-			return true;
-
-		}
-		return false;
+		return view;
 	}
 
 }

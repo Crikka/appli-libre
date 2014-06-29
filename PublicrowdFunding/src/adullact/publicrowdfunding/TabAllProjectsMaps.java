@@ -51,7 +51,7 @@ public class TabAllProjectsMaps extends Fragment {
 
 
 				} catch (NullPointerException e) {
-					Toast.makeText(view.getContext().getApplicationContext(),
+					Toast.makeText(getActivity(),
 							"Impossible de lancer google Map", Toast.LENGTH_SHORT)
 							.show();
 				}
