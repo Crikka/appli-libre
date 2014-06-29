@@ -1,5 +1,7 @@
 package adullact.publicrowdfunding;
 
+import adullact.publicrowdfunding.controlleur.ajouterProjet.SoumettreProjetActivity;
+import adullact.publicrowdfunding.controlleur.membre.ConnexionActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.View;

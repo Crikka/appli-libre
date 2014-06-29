@@ -1,7 +1,9 @@
-package adullact.publicrowdfunding;
+package adullact.publicrowdfunding.custom;
 
 import java.util.Vector;
 
+import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.R.id;
 import adullact.publicrowdfunding.shared.Project;
 import android.content.Context;
 import android.view.LayoutInflater;

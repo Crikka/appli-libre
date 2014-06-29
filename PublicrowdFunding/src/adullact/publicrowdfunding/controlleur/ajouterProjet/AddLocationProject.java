@@ -1,5 +1,9 @@
-package adullact.publicrowdfunding;
+package adullact.publicrowdfunding.controlleur.ajouterProjet;
 
+import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.R.id;
+import adullact.publicrowdfunding.R.layout;
+import adullact.publicrowdfunding.R.menu;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;

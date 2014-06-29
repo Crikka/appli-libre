@@ -1,7 +1,11 @@
-package adullact.publicrowdfunding;
+package adullact.publicrowdfunding.controlleur.detailProjet;
 
 import java.util.HashMap;
 
+import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.R.id;
+import adullact.publicrowdfunding.R.layout;
+import adullact.publicrowdfunding.R.menu;
 import adullact.publicrowdfunding.model.server.ServerEmulator;
 import adullact.publicrowdfunding.shared.Project;
 import android.content.Intent;
@@ -11,24 +15,29 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-public class DetailProjetFinancement extends FragmentActivity {
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+public class DetailProjetMap extends FragmentActivity {
 
 	private Drawable m_favorite;
 	private boolean m_Is_favorite;
+	private GoogleMap map;
 	private Project projet;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.detail_projet_financement);
+		setContentView(R.layout.maps);
 		String id = getIntent().getExtras().getString("key");
-		if (id == null|| id == "") {
+		if(id == null){
 			Toast.makeText(getApplicationContext(), "Un erreur s'est produite",
 					Toast.LENGTH_SHORT).show();
 			finish();
@@ -42,17 +51,21 @@ public class DetailProjetFinancement extends FragmentActivity {
 					Toast.LENGTH_SHORT).show();
 			finish();
 		}
+		
+		System.out.println("lancement de google map");
+		try {
+			map = ((SupportMapFragment) getSupportFragmentManager()
+					.findFragmentById(R.id.map_frag)).getMap();
+			map.addMarker(new MarkerOptions().position(projet.getPosition()).title(
+					projet.getName()));
 
-		GraphiqueView graph = (GraphiqueView) findViewById(R.id.graphique);
-		DisplayMetrics metrics = new DisplayMetrics();
-		getWindowManager().getDefaultDisplay().getMetrics(metrics);
+			map.moveCamera(CameraUpdateFactory.newLatLngZoom(projet.getPosition(), 4));
+		} catch (NullPointerException e) {
+			Toast.makeText(getApplication(), "Impossible de lancer google Map",
+					Toast.LENGTH_SHORT).show();
+		}
 
-		android.view.ViewGroup.LayoutParams params = graph.getLayoutParams();
-		params.height = metrics.widthPixels;
-		graph.setLayoutParams(params);
-
-		m_Is_favorite = false;
-
+	
 	}
 
 	@Override
@@ -88,15 +101,14 @@ public class DetailProjetFinancement extends FragmentActivity {
 			m_Is_favorite = !m_Is_favorite;
 			m_favorite.setColorFilter(filter);
 			return true;
-
+			
 		case R.id.Share:
 			Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
 			emailIntent.setType("text/plain");
 			emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,
 					"Financement participatif");
 			emailIntent.putExtra(android.content.Intent.EXTRA_TEXT,
-					"J'aime le projet " + projet.getName()
-							+ " venez le financer. (via PublicrowdFunding)");
+					"J'aime le projet "+ projet.getName() +" venez le financer. (via PublicrowdFunding)");
 			startActivity(emailIntent);
 			return true;
 

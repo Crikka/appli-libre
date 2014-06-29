@@ -1,7 +1,13 @@
-package adullact.publicrowdfunding;
+package adullact.publicrowdfunding.controlleur.detailProjet;
 
 import java.util.HashMap;
 
+import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.R.id;
+import adullact.publicrowdfunding.R.layout;
+import adullact.publicrowdfunding.R.menu;
+import adullact.publicrowdfunding.controlleur.ajouterProjet.choisirMontantDialog;
+import adullact.publicrowdfunding.custom.CustomProgressBar;
 import adullact.publicrowdfunding.model.server.ServerEmulator;
 import adullact.publicrowdfunding.shared.Project;
 import android.content.Intent;
@@ -14,24 +20,31 @@ import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.RatingBar;
+import android.widget.RatingBar.OnRatingBarChangeListener;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.MarkerOptions;
+public class DetailProjetActivity extends FragmentActivity {
 
-public class DetailProjetMap extends FragmentActivity {
-
+	private TextView m_titre;
+	private TextView m_description;
+	private TextView m_nombre_participants;
+	private TextView m_date_de_fin;
+	private TextView m_utilisateur_soumission;
+	private Button m_payer;
+	private RatingBar m_notation;
+	private CustomProgressBar m_progression;
 	private Drawable m_favorite;
 	private boolean m_Is_favorite;
-	private GoogleMap map;
 	private Project projet;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.maps);
+		setContentView(R.layout.detail_projet);
 		String id = getIntent().getExtras().getString("key");
 		if(id == null){
 			Toast.makeText(getApplicationContext(), "Un erreur s'est produite",
@@ -47,21 +60,53 @@ public class DetailProjetMap extends FragmentActivity {
 					Toast.LENGTH_SHORT).show();
 			finish();
 		}
-		
-		System.out.println("lancement de google map");
-		try {
-			map = ((SupportMapFragment) getSupportFragmentManager()
-					.findFragmentById(R.id.map_frag)).getMap();
-			map.addMarker(new MarkerOptions().position(projet.getPosition()).title(
-					projet.getName()));
+		m_titre = (TextView) findViewById(R.id.titre_projet_detail);
+		m_description = (TextView) findViewById(R.id.detail_projet_detail);
+		m_payer = (Button) findViewById(R.id.payer);
+		m_nombre_participants = (TextView) findViewById(R.id.nombre_participants_detail);
+		m_date_de_fin = (TextView) findViewById(R.id.nombre_jour_restant_detail);
+		m_utilisateur_soumission = (TextView) findViewById(R.id.utilisateur_soumission);
+		m_notation = (RatingBar) findViewById(R.id.rating_bar_projet_detail);
+		m_progression = (CustomProgressBar) findViewById(R.id.avancement_projet_liste);
 
-			map.moveCamera(CameraUpdateFactory.newLatLngZoom(projet.getPosition(), 4));
-		} catch (NullPointerException e) {
-			Toast.makeText(getApplication(), "Impossible de lancer google Map",
-					Toast.LENGTH_SHORT).show();
+		m_Is_favorite = false;
+
+		if (m_progression == null) {
+			System.out.println("c'est nul");
 		}
 
-	
+		System.out.println("Progression");
+		m_progression.setArgent(1000);
+		m_progression.setProgress(20);
+		m_progression.setMaxArgent(5000);
+
+		m_titre.setText(projet.getName());
+		m_description.setText(projet.getDescription());
+		
+		System.out.println("Notation");
+		m_notation
+				.setOnRatingBarChangeListener(new OnRatingBarChangeListener() {
+
+					@Override
+					public void onRatingChanged(RatingBar ratingBar,
+							float rating, boolean fromUser) {
+						Toast.makeText(getApplicationContext(),
+								"Notation de : " + rating, Toast.LENGTH_SHORT)
+								.show();
+					}
+
+				});
+
+		m_payer.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+
+				choisirMontantDialog alertDialogBuilder = new choisirMontantDialog(
+						DetailProjetActivity.this);
+				alertDialogBuilder.show();
+
+			}
+		});
+
 	}
 
 	@Override

@@ -53,35 +53,35 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.OneProjectActivity"
+            android:name="adullact.publicrowdfunding.controlleur.detailProjet.OneProjectActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.AddLocationProject"
+            android:name="adullact.publicrowdfunding.controlleur.ajouterProjet.AddLocationProject"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.SoumettreProjetActivity"
+            android:name="adullact.publicrowdfunding.controlleur.ajouterProjet.SoumettreProjetActivity"
             android:label="@string/app_name" >
         </activity>
          <activity
-            android:name="adullact.publicrowdfunding.DetailProjetMap"
+            android:name="adullact.publicrowdfunding.controlleur.detailProjet.DetailProjetMap"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.InscriptionActivity"
+            android:name="adullact.publicrowdfunding.controlleur.membre.InscriptionActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.DetailProjetActivity"
+            android:name="adullact.publicrowdfunding.controlleur.detailProjet.DetailProjetActivity"
             android:label="@string/app_name" >
         </activity>
                 <activity
-            android:name="adullact.publicrowdfunding.DetailProjetFinancement"
+            android:name="adullact.publicrowdfunding.controlleur.detailProjet.DetailProjetFinancement"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.ConnexionActivity"
+            android:name="adullact.publicrowdfunding.controlleur.membre.ConnexionActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
@@ -101,7 +101,7 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.ParticiperActivity"
+            android:name="adullact.publicrowdfunding.controlleur.detailProjet.ParticiperActivity"
             android:label="@string/app_name" >
         </activity>
         <activity

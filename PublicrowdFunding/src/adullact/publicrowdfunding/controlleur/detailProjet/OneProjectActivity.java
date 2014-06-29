@@ -1,6 +1,8 @@
-package adullact.publicrowdfunding;
+package adullact.publicrowdfunding.controlleur.detailProjet;
 
 
+import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.R.layout;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;

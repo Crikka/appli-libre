@@ -1,4 +1,4 @@
-package adullact.publicrowdfunding;
+package adullact.publicrowdfunding.controlleur.detailProjet;
 
 import java.math.BigDecimal;
 

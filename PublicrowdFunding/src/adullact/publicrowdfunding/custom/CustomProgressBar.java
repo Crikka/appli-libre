@@ -1,4 +1,4 @@
-package adullact.publicrowdfunding;
+package adullact.publicrowdfunding.custom;
 
 import android.content.Context;
 import android.graphics.Canvas;

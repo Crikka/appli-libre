@@ -1,5 +1,8 @@
-package adullact.publicrowdfunding;
+package adullact.publicrowdfunding.controlleur.membre;
 
+import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.R.id;
+import adullact.publicrowdfunding.R.layout;
 import adullact.publicrowdfunding.model.server.UserRequester;
 import adullact.publicrowdfunding.model.server.event.CreateUserEvent;
 import android.app.Activity;

@@ -1,5 +1,9 @@
-package adullact.publicrowdfunding;
+package adullact.publicrowdfunding.controlleur.ajouterProjet;
 
+import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.R.id;
+import adullact.publicrowdfunding.R.layout;
+import adullact.publicrowdfunding.R.menu;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;

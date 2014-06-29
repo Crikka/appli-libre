@@ -4,6 +4,10 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Vector;
 
+import adullact.publicrowdfunding.controlleur.ajouterProjet.SoumettreProjetActivity;
+import adullact.publicrowdfunding.controlleur.detailProjet.OneProjectActivity;
+import adullact.publicrowdfunding.controlleur.membre.ConnexionActivity;
+import adullact.publicrowdfunding.custom.CustomAdapter;
 import adullact.publicrowdfunding.model.server.ServerEmulator;
 import adullact.publicrowdfunding.shared.Project;
 import android.app.Fragment;
