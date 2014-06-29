@@ -15,7 +15,7 @@ import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class DetailProjetActivity extends Fragment {
+public class TabProjetFragment extends Fragment {
 
 	private TextView m_titre;
 	private TextView m_description;
@@ -34,9 +34,9 @@ public class DetailProjetActivity extends Fragment {
 
 		final View view = inflater.inflate(R.layout.detail_projet, container, false);
 	
-		OneProjectActivity activity = (OneProjectActivity) getActivity();
+		MainActivity activity = (MainActivity) getActivity();
 		projet = activity.getIdProjet();
-		
+
 		m_titre = (TextView) view.findViewById(R.id.titre_projet_detail);
 		m_description = (TextView) view.findViewById(R.id.detail_projet_detail);
 		m_payer = (Button) view.findViewById(R.id.payer);
@@ -51,8 +51,8 @@ public class DetailProjetActivity extends Fragment {
 		}
 
 		System.out.println("Progression");
-		m_progression.setArgent(1000);
-		m_progression.setProgress(20);
+		m_progression.setArgent(5000*projet.getPercentOfAchievement()/100);
+		m_progression.setProgress(projet.getPercentOfAchievement());
 		m_progression.setMaxArgent(5000);
 
 		m_titre.setText(projet.getName());

@@ -6,7 +6,6 @@ import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
 import android.app.Activity;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,16 +13,15 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements TabListener {
 
 	private FrameLayout rl;
 
-	TabProjets fram1;
-	TabFavoris fram2;
-	TabAllProjectsMaps fram3;
+	TabProjetsFragment fram1;
+	TabFavorisFragment fram2;
+	TabMapFragment fram3;
 	private ImageButton m_ajouter_projet;
 	private ImageButton m_mon_compte;
 	private ImageButton m_rechercher;
@@ -70,10 +68,8 @@ public class MainActivity extends Activity implements TabListener {
 		
 		try {
 			rl = (FrameLayout) findViewById(R.id.tabcontent);
-			fragMentTra = getFragmentManager().beginTransaction();
 			
 			ActionBar bar = getActionBar();
-
 
 			bar.addTab(bar.newTab().setText("Projets").setTabListener(this));
 			bar.addTab(bar.newTab().setText("Favoris").setTabListener(this));
@@ -110,12 +106,12 @@ public class MainActivity extends Activity implements TabListener {
 
 		if (tab.getText().equals("Projets")) {
 			
-			fram1 = new TabProjets();
+			fram1 = new TabProjetsFragment();
 			ft.replace(rl.getId(), fram1);
 			
 		} else if (tab.getText().equals("Favoris")) {
 			
-			fram2 = new TabFavoris();
+			fram2 = new TabFavorisFragment();
 			ft.replace(rl.getId(), fram2);
 			
 		} else if (tab.getText().equals("Localisation")) {

@@ -20,7 +20,7 @@ import com.paypal.android.sdk.payments.PayPalService;
 import com.paypal.android.sdk.payments.PaymentActivity;
 import com.paypal.android.sdk.payments.PaymentConfirmation;
 
-public class ParticiperActivity extends Activity {
+public class ParticiperPaypalActivity extends Activity {
 
 	private int participation;
 
@@ -59,7 +59,7 @@ public class ParticiperActivity extends Activity {
 		/* Paypal */
 
 		PayPalPayment thingToBuy = getSommeParticipations(PayPalPayment.PAYMENT_INTENT_SALE);
-		Intent intent = new Intent(ParticiperActivity.this,
+		Intent intent = new Intent(ParticiperPaypalActivity.this,
 				PaymentActivity.class);
 		intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
 		startActivityForResult(intent, REQUEST_CODE_PAYMENT);
@@ -72,7 +72,7 @@ public class ParticiperActivity extends Activity {
 	}
 
 	public void onFuturePaymentPressed(View pressed) {
-		Intent intent = new Intent(ParticiperActivity.this,
+		Intent intent = new Intent(ParticiperPaypalActivity.this,
 				PayPalFuturePaymentActivity.class);
 
 		startActivityForResult(intent, REQUEST_CODE_FUTURE_PAYMENT);

@@ -69,11 +69,10 @@ public class CustomAdapter extends ArrayAdapter<Project> {
 		holder.titre_projet_liste.setText(projet.getName());
 		holder.description_projet_liste.setText(projet.getDescription());
 		holder.nb_participation_projet_liste.setText("10 participants");
-		holder.temps_restant_projet_liste.setText("24 jours restants");
-		int progression = (int) ( 1 + Math.random()*(holder.avancement_projet_liste.getMax()+1) + 1);
-		holder.avancement_projet_liste.setMaxArgent(100);
-		holder.avancement_projet_liste.setArgent(progression);
-		holder.avancement_projet_liste.setProgress(progression);
+		holder.temps_restant_projet_liste.setText("24 jours restants");		
+		holder.avancement_projet_liste.setArgent(5000*projet.getPercentOfAchievement()/100);
+		holder.avancement_projet_liste.setProgress(projet.getPercentOfAchievement());
+		holder.avancement_projet_liste.setMaxArgent(5000);
 		
 		return v;
 

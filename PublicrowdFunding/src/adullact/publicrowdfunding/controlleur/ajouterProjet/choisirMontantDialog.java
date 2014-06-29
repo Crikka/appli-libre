@@ -1,7 +1,7 @@
 package adullact.publicrowdfunding.controlleur.ajouterProjet;
 
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.controlleur.detailProjet.ParticiperActivity;
+import adullact.publicrowdfunding.controlleur.detailProjet.ParticiperPaypalActivity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -62,7 +62,7 @@ public class choisirMontantDialog extends AlertDialog.Builder {
 					public void onClick(DialogInterface dialog, int id) {
 
 						Intent in = new Intent(context,
-								ParticiperActivity.class);
+								ParticiperPaypalActivity.class);
 						
 						int somme = seek.getProgress() / 10;
 						somme = somme * 10;

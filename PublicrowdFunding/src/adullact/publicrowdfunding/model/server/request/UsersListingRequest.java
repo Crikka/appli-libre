@@ -26,7 +26,7 @@ public class UsersListingRequest extends AuthentificatedRequest<UsersListingRequ
 		super(event, new UsersListingErrorHandler());
 
 		m_service = m_restAdapter.create(UsersListingService.class);
-		m_projectId = project == null ? null : project.id();
+		m_projectId = project == null ? null : project.getId();
 	}
 
 	/* Communication interface */

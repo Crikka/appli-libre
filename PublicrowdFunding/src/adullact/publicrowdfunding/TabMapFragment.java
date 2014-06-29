@@ -17,7 +17,7 @@ import android.widget.Toast;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class TabAllProjectsMaps extends Fragment {
+public class TabMapFragment extends Fragment {
 	private GoogleMap map;
 
 	@Override

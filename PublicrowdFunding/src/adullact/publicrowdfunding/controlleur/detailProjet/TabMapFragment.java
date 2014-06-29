@@ -22,7 +22,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class DetailProjetMap extends FragmentActivity {
+public class TabMapFragment extends FragmentActivity {
 
 	private Drawable m_favorite;
 	private boolean m_Is_favorite;

@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class TabFavoris extends Fragment {
+public class TabFavorisFragment extends Fragment {
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -14,7 +14,6 @@ public class TabFavoris extends Fragment {
 		
 	      View view = inflater.inflate(R.layout.tab, container, false);
 		
-
 		return view;
 	}
 	

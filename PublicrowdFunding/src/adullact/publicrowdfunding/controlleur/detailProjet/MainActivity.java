@@ -3,7 +3,6 @@ package adullact.publicrowdfunding.controlleur.detailProjet;
 import java.util.HashMap;
 
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.TabProjets;
 import adullact.publicrowdfunding.model.server.ServerEmulator;
 import adullact.publicrowdfunding.shared.Project;
 import android.app.ActionBar;
@@ -21,16 +20,15 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-public class OneProjectActivity extends Activity implements TabListener {
+public class MainActivity extends Activity implements TabListener {
 
 	private Project projet;
 	private FrameLayout rl;
-	private DetailProjetActivity fram1;
-	private DetailProjetFinancement fram2;
-	private DetailProjetMap fram3;
+	private TabProjetFragment fram1;
+	private TabFinancementFragment fram2;
+	private TabMapFragment fram3;
 
 	private Drawable m_favorite;
 	private boolean m_Is_favorite;
@@ -62,7 +60,7 @@ public class OneProjectActivity extends Activity implements TabListener {
 
 		try {
 			rl = (FrameLayout) findViewById(R.id.tabcontent);
-			fragMentTra = getFragmentManager().beginTransaction();
+
 			ActionBar bar = getActionBar();
 
 			bar.addTab(bar.newTab().setText("Projets").setTabListener(this));
@@ -92,12 +90,12 @@ public class OneProjectActivity extends Activity implements TabListener {
 
 		if (tab.getText().equals("Projets")) {
 
-			fram1 = new DetailProjetActivity();
+			fram1 = new TabProjetFragment();
 			ft.replace(rl.getId(), fram1);
 
 		} else if (tab.getText().equals("Financement")) {
 
-			fram2 = new DetailProjetFinancement();
+			fram2 = new TabFinancementFragment();
 			ft.replace(rl.getId(), fram2);
 
 		} else if (tab.getText().equals("Localisation")) {

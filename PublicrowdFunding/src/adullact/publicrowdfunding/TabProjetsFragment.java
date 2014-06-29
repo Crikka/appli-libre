@@ -4,9 +4,7 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Vector;
 
-import adullact.publicrowdfunding.controlleur.ajouterProjet.SoumettreProjetActivity;
-import adullact.publicrowdfunding.controlleur.detailProjet.OneProjectActivity;
-import adullact.publicrowdfunding.controlleur.membre.ConnexionActivity;
+import adullact.publicrowdfunding.controlleur.detailProjet.MainActivity;
 import adullact.publicrowdfunding.custom.CustomAdapter;
 import adullact.publicrowdfunding.model.server.ServerEmulator;
 import adullact.publicrowdfunding.shared.Project;
@@ -19,10 +17,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.ListView;
 
-public class TabProjets extends Fragment {
+public class TabProjetsFragment extends Fragment {
 
 	private ListView listeProjets;
 
@@ -58,8 +55,8 @@ public class TabProjets extends Fragment {
 				Project projet = (Project) listeProjets
 						.getItemAtPosition(position);
 				Intent in = new Intent(parent.getContext()
-						.getApplicationContext(), OneProjectActivity.class);
-				in.putExtra("key", projet.id());
+						.getApplicationContext(), MainActivity.class);
+				in.putExtra("key", projet.getId());
 				startActivity(in);
 
 			}

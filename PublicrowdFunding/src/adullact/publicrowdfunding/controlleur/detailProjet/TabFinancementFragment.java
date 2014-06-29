@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class DetailProjetFinancement extends Fragment {
+public class TabFinancementFragment extends Fragment {
 
 	// private Project projet;
 

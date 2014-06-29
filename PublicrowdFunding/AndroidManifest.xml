@@ -49,11 +49,11 @@
             android:value="AIzaSyCZq_GRRjpnie92npZYaxhTY0j4JYCMbBE" />
 
         <activity
-            android:name="adullact.publicrowdfunding.TabAllProjectsMaps"
+            android:name="adullact.publicrowdfunding.TabMapFragment"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.controlleur.detailProjet.OneProjectActivity"
+            android:name="adullact.publicrowdfunding.controlleur.detailProjet.MainActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
@@ -65,7 +65,7 @@
             android:label="@string/app_name" >
         </activity>
          <activity
-            android:name="adullact.publicrowdfunding.controlleur.detailProjet.DetailProjetMap"
+            android:name="adullact.publicrowdfunding.controlleur.detailProjet.TabMapFragment"
             android:label="@string/app_name" >
         </activity>
         <activity
@@ -73,11 +73,11 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.controlleur.detailProjet.DetailProjetActivity"
+            android:name="adullact.publicrowdfunding.controlleur.detailProjet.TabProjetFragment"
             android:label="@string/app_name" >
         </activity>
                 <activity
-            android:name="adullact.publicrowdfunding.controlleur.detailProjet.DetailProjetFinancement"
+            android:name="adullact.publicrowdfunding.controlleur.detailProjet.TabFinancementFragment"
             android:label="@string/app_name" >
         </activity>
         <activity
@@ -89,7 +89,7 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.TabFavoris"
+            android:name="adullact.publicrowdfunding.TabFavorisFragment"
             android:label="@string/app_name" >
         </activity>
         <activity
@@ -97,11 +97,11 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.TabProjets"
+            android:name="adullact.publicrowdfunding.TabProjetsFragment"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.controlleur.detailProjet.ParticiperActivity"
+            android:name="adullact.publicrowdfunding.controlleur.detailProjet.ParticiperPaypalActivity"
             android:label="@string/app_name" >
         </activity>
         <activity

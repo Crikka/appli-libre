@@ -48,7 +48,7 @@ public class Project {
 		m_fundingTimePeriods.add(new FundingTimePeriod(new Interval(startDateTime, endDateTime)));
 	}
 
-	public String id() {
+	public String getId() {
 		return m_id.toString();
 	}
 
@@ -75,7 +75,7 @@ public class Project {
 	/**
 	 * @return percent of achievement, may be upper than 100.
 	 */
-	public int percentOfAchievement() {
+	public int getPercentOfAchievement() {
 		return ((m_currentFunding.divide(m_requestedFunding)).multiply(BigDecimal.TEN).multiply(BigDecimal.TEN)).intValue();
 	}
 
@@ -87,7 +87,7 @@ public class Project {
 		m_currentFunding = m_currentFunding.add(new BigDecimal(value));
 	}
 
-	public DateTime date() {
+	public DateTime getDateCreation() {
 		return m_creationDate;
 	}
 
