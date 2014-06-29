@@ -100,9 +100,9 @@ public class MainActivity extends Activity implements TabListener {
 
 		} else if (tab.getText().equals("Localisation")) {
 
-			Toast.makeText(getApplicationContext(),
-					"Cette onglet est encore instable", Toast.LENGTH_SHORT)
-					.show();
+
+			fram3 = new TabMapFragment();
+			ft.replace(rl.getId(), fram3);
 
 		}
 	}
