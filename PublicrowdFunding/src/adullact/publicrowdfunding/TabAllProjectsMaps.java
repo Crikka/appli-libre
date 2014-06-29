@@ -23,46 +23,41 @@ public class TabAllProjectsMaps extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		
-	      View view = inflater.inflate(R.layout.maps, container, false);
-	      
-	      if (map == null) {
-				try {
-					//SupportMapFragment test =	(SupportMapFragment) getFragmentManager().findFragmentById(R.id.map_frag);
 
-				//	map = test.getMap();
+		View view = inflater.inflate(R.layout.maps, container, false);
 
-					ServerEmulator serveur = ServerEmulator.instance();
-					HashMap<String, Project> projets = serveur.getAllProjets();
+		if (map == null) {
+			try {
+				// SupportMapFragment test = (SupportMapFragment)
+				// getFragmentManager().findFragmentById(R.id.map_frag);
 
-					Iterator<Map.Entry<String, Project>> it = projets.entrySet()
-							.iterator();
+				// map = test.getMap();
 
-					while (it.hasNext()) {
-						Entry<String, Project> entry = it.next();
+				ServerEmulator serveur = ServerEmulator.instance();
+				HashMap<String, Project> projets = serveur.getAllProjets();
 
-											
-						
-						map.addMarker(new MarkerOptions().position(entry.getValue().getPosition()).title(
-								entry.getValue().getName()));
-						
-						
-					}
+				Iterator<Map.Entry<String, Project>> it = projets.entrySet()
+						.iterator();
 
+				while (it.hasNext()) {
+					Entry<String, Project> entry = it.next();
 
-				} catch (NullPointerException e) {
-					Toast.makeText(getActivity(),
-							"Impossible de lancer google Map", Toast.LENGTH_SHORT)
-							.show();
+					map.addMarker(new MarkerOptions().position(
+							entry.getValue().getPosition()).title(
+							entry.getValue().getName()));
+
 				}
 
+			} catch (NullPointerException e) {
+				Toast.makeText(getActivity(),
+						"Impossible de lancer google Map", Toast.LENGTH_SHORT)
+						.show();
 			}
-	      
-	      
-	      
+
+		}
+
 		return view;
 
-	      
 	}
 
 }

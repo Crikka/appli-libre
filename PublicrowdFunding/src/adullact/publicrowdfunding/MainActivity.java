@@ -1,33 +1,79 @@
 package adullact.publicrowdfunding;
 
+import adullact.publicrowdfunding.controlleur.ajouterProjet.SoumettreProjetActivity;
+import adullact.publicrowdfunding.controlleur.membre.ConnexionActivity;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements TabListener {
 
-	private RelativeLayout rl;
+	private FrameLayout rl;
 
 	TabProjets fram1;
 	TabFavoris fram2;
 	TabAllProjectsMaps fram3;
-
+	private ImageButton m_ajouter_projet;
+	private ImageButton m_mon_compte;
+	private ImageButton m_rechercher;
 	FragmentTransaction fragMentTra = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_action_bar_main);
+		setContentView(R.layout.activity_main);
+		
+		
+		m_ajouter_projet = (ImageButton) findViewById(R.id.button_soumettre_projet);
+		m_ajouter_projet.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+				Intent in = new Intent(getBaseContext()
+						.getApplicationContext(), SoumettreProjetActivity.class);
+				startActivity(in);
+
+			}
+		});
+
+		m_mon_compte = (ImageButton) findViewById(R.id.button_mon_compte);
+		m_mon_compte.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent in = new Intent(getBaseContext()
+						.getApplicationContext(), ConnexionActivity.class);
+				startActivity(in);
+			}
+		});
+
+		m_rechercher = (ImageButton) findViewById(R.id.button_search);
+		m_rechercher.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				SearchDialog alertDialogBuilder = new SearchDialog(getBaseContext());
+				alertDialogBuilder.show();
+
+			}
+		});
+
+		
 		try {
-			rl = (RelativeLayout) findViewById(R.id.mainLayout);
+			rl = (FrameLayout) findViewById(R.id.tabcontent);
 			fragMentTra = getFragmentManager().beginTransaction();
+			
 			ActionBar bar = getActionBar();
+
 
 			bar.addTab(bar.newTab().setText("Projets").setTabListener(this));
 			bar.addTab(bar.newTab().setText("Favoris").setTabListener(this));
@@ -63,38 +109,20 @@ public class MainActivity extends Activity implements TabListener {
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
 
 		if (tab.getText().equals("Projets")) {
-			try {
-				rl.removeAllViews();
-			} catch (Exception e) {
-			}
+			
 			fram1 = new TabProjets();
-			fragMentTra.addToBackStack(null);
-			fragMentTra = getFragmentManager().beginTransaction();
-			fragMentTra.add(rl.getId(), fram1);
-			fragMentTra.commit();
+			ft.replace(rl.getId(), fram1);
+			
 		} else if (tab.getText().equals("Favoris")) {
-			try {
-				rl.removeAllViews();
-			} catch (Exception e) {
-			}
+			
 			fram2 = new TabFavoris();
-			fragMentTra.addToBackStack(null);
-			fragMentTra = getFragmentManager().beginTransaction();
-			fragMentTra.add(rl.getId(), fram2);
-			fragMentTra.commit();
+			ft.replace(rl.getId(), fram2);
+			
 		} else if (tab.getText().equals("Localisation")) {
-			try {
-				rl.removeAllViews();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-/*
-			fram3 = new TabAllProjectsMaps();
-			fragMentTra.addToBackStack(null);
-			fragMentTra = getFragmentManager().beginTransaction();
-			fragMentTra.add(rl.getId(), fram3);
-			fragMentTra.commit();
-			*/
+
+		/*	fram3 = new TabAllMaps();
+			ft.replace(rl.getId(), fram3);
+		 */
 			Toast.makeText(getApplicationContext(), "Cette onglet est encore instable", Toast.LENGTH_SHORT).show();
 		}
 	}

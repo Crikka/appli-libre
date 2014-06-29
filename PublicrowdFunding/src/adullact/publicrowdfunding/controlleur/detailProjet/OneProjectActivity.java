@@ -1,9 +1,9 @@
 package adullact.publicrowdfunding.controlleur.detailProjet;
 
-
 import java.util.HashMap;
 
 import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.TabProjets;
 import adullact.publicrowdfunding.model.server.ServerEmulator;
 import adullact.publicrowdfunding.shared.Project;
 import android.app.ActionBar;
@@ -20,49 +20,48 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 public class OneProjectActivity extends Activity implements TabListener {
 
 	private Project projet;
-	private RelativeLayout rl;
-	private String idProjet;
+	private FrameLayout rl;
 	private DetailProjetActivity fram1;
 	private DetailProjetFinancement fram2;
 	private DetailProjetMap fram3;
 
 	private Drawable m_favorite;
 	private boolean m_Is_favorite;
-	
+
 	FragmentTransaction fragMentTra = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_action_bar_main);
-		
+		setContentView(R.layout.layout_detail_projet);
+
 		String id = getIntent().getExtras().getString("key");
-		if(id == null){
-			Toast.makeText(getApplicationContext(), "Impossible de récupérer l'ID du projet",
+		if (id == null) {
+			Toast.makeText(getApplicationContext(),
+					"Impossible de récupérer l'ID du projet",
 					Toast.LENGTH_SHORT).show();
 			finish();
-		}else{
-			idProjet = id;
 		}
-		
+
 		ServerEmulator serveur = ServerEmulator.instance();
 		HashMap<String, Project> projets = serveur.getAllProjets();
 		projet = projets.get(id);
 
 		if (projet == null) {
-			Toast.makeText(getApplicationContext(), "Aucun projet avec cet ID.",
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(),
+					"Aucun projet avec cet ID.", Toast.LENGTH_SHORT).show();
 			finish();
 		}
-		
+
 		try {
-			rl = (RelativeLayout) findViewById(R.id.mainLayout);
+			rl = (FrameLayout) findViewById(R.id.tabcontent);
 			fragMentTra = getFragmentManager().beginTransaction();
 			ActionBar bar = getActionBar();
 
@@ -82,7 +81,7 @@ public class OneProjectActivity extends Activity implements TabListener {
 			e.getMessage();
 		}
 
-	}		
+	}
 
 	@Override
 	public void onTabReselected(Tab tab, FragmentTransaction ft) {
@@ -92,40 +91,21 @@ public class OneProjectActivity extends Activity implements TabListener {
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
 
 		if (tab.getText().equals("Projets")) {
-			try {
-				rl.removeAllViews();
-			} catch (Exception e) {
-			}
+
 			fram1 = new DetailProjetActivity();
-			fragMentTra.addToBackStack(null);
-			fragMentTra = getFragmentManager().beginTransaction();
-			fragMentTra.add(rl.getId(), fram1);
-			fragMentTra.commit();
+			ft.replace(rl.getId(), fram1);
+
 		} else if (tab.getText().equals("Financement")) {
-			try {
-				rl.removeAllViews();
-			} catch (Exception e) {
-			}
-			
+
 			fram2 = new DetailProjetFinancement();
-			fragMentTra.addToBackStack(null);
-			fragMentTra = getFragmentManager().beginTransaction();
-			fragMentTra.add(rl.getId(), fram2);
-			fragMentTra.commit();
+			ft.replace(rl.getId(), fram2);
+
 		} else if (tab.getText().equals("Localisation")) {
-			try {
-				rl.removeAllViews();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			Toast.makeText(getApplicationContext(), "Cette onglet est encore instable", Toast.LENGTH_SHORT).show();
-			
-/*
-			fram3 = new DetailProjetMap();
-			fragMentTra.addToBackStack(null);
-			fragMentTra = getFragmentManager().beginTransaction();
-			fragMentTra.add(rl.getId(), fram3);
-			fragMentTra.commit();*/
+
+			Toast.makeText(getApplicationContext(),
+					"Cette onglet est encore instable", Toast.LENGTH_SHORT)
+					.show();
+
 		}
 	}
 
@@ -134,7 +114,6 @@ public class OneProjectActivity extends Activity implements TabListener {
 
 	}
 
-	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu items for use in the action bar
@@ -168,24 +147,24 @@ public class OneProjectActivity extends Activity implements TabListener {
 			m_Is_favorite = !m_Is_favorite;
 			m_favorite.setColorFilter(filter);
 			return true;
-			
+
 		case R.id.Share:
 			Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
 			emailIntent.setType("text/plain");
 			emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,
 					"Financement participatif");
-			emailIntent.putExtra(android.content.Intent.EXTRA_TEXT,
-					"J'aime le projet venez le financer. (via PublicrowdFunding)");
+			emailIntent
+					.putExtra(android.content.Intent.EXTRA_TEXT,
+							"J'aime le projet venez le financer. (via PublicrowdFunding)");
 			startActivity(emailIntent);
 			return true;
 
 		}
 		return false;
 	}
-	
 
-	public Project getIdProjet(){
+	public Project getIdProjet() {
 		return projet;
-		
+
 	}
 }

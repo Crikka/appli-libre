@@ -25,9 +25,6 @@ import android.widget.ListView;
 public class TabProjets extends Fragment {
 
 	private ListView listeProjets;
-	private ImageButton m_ajouter_projet;
-	private ImageButton m_mon_compte;
-	private ImageButton m_rechercher;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,7 +49,6 @@ public class TabProjets extends Fragment {
 				.getBaseContext(), R.layout.projet_list, tabProj);
 
 		listeProjets.setAdapter(adapter);
-
 		listeProjets.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -69,38 +65,7 @@ public class TabProjets extends Fragment {
 			}
 		});
 
-		m_ajouter_projet = (ImageButton) view
-				.findViewById(R.id.button_soumettre_projet);
-		m_ajouter_projet.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-
-				Intent in = new Intent(view.getContext()
-						.getApplicationContext(), SoumettreProjetActivity.class);
-				startActivity(in);
-
-			}
-		});
-
-		m_mon_compte = (ImageButton) view.findViewById(R.id.button_mon_compte);
-		m_mon_compte.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent in = new Intent(view.getContext()
-						.getApplicationContext(), ConnexionActivity.class);
-				startActivity(in);
-			}
-		});
-
-		m_rechercher = (ImageButton) view.findViewById(R.id.button_search);
-		m_rechercher.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				SearchDialog alertDialogBuilder = new SearchDialog(view.getContext());
-				alertDialogBuilder.show();
-
-			}
-		});
+		
 
 		return view;
 	}
