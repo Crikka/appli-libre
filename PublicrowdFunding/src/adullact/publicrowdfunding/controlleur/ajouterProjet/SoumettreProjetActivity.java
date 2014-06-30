@@ -1,9 +1,16 @@
 package adullact.publicrowdfunding.controlleur.ajouterProjet;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.model.server.ProjectRequester;
+import adullact.publicrowdfunding.model.server.event.CreateProjectEvent;
+import adullact.publicrowdfunding.shared.Project;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
@@ -40,6 +47,8 @@ public class SoumettreProjetActivity extends Activity {
 	private EditText m_edit_text_somme;
 	private CheckBox m_is_Not_Defined_On_Seek_Bar;
 	private TextView m_afficher_montant;
+	private Context context;
+	private String m_somme_a_recolter = "0";
 
 	private LatLng position;
 
@@ -60,6 +69,8 @@ public class SoumettreProjetActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.soumettre_projet);
+
+		context = this;
 
 		m_titre = (EditText) findViewById(R.id.titre);
 		m_Description = (EditText) findViewById(R.id.description);
@@ -105,7 +116,7 @@ public class SoumettreProjetActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-			
+
 				Intent intent = new Intent();
 
 				intent.setType("image/*");
@@ -156,20 +167,19 @@ public class SoumettreProjetActivity extends Activity {
 							int progress, boolean fromUser) {
 						progress = progress / 10;
 						progress = progress * 10;
+						m_somme_a_recolter = "" + progress;
 						m_afficher_montant.setText("Somme à récolter : "
-								+ progress + " €");
+								+ m_somme_a_recolter + " €");
 					}
 
 					@Override
 					public void onStartTrackingTouch(SeekBar seekBar) {
-						
 
 					}
 
 					@Override
 					public void onStopTrackingTouch(SeekBar seekBar) {
-						
-						
+
 					}
 
 				});
@@ -184,16 +194,17 @@ public class SoumettreProjetActivity extends Activity {
 						if (isChecked) {
 							m_bar_somme.setEnabled(false);
 
-							String somme = "0";
 							if (m_edit_text_somme.getText().length() != 0) {
-								somme = m_edit_text_somme.getText().toString();
+								m_somme_a_recolter = m_edit_text_somme
+										.getText().toString();
 							}
 							m_afficher_montant.setText("Somme à récolter : "
-									+ somme + " €");
+									+ m_somme_a_recolter + " €");
 
 						} else {
+							m_somme_a_recolter = "" + m_bar_somme.getProgress();
 							m_afficher_montant.setText("Somme à récolter : "
-									+ m_bar_somme.getProgress() + " €");
+									+ m_somme_a_recolter + " €");
 							m_bar_somme.setEnabled(true);
 						}
 
@@ -279,20 +290,61 @@ public class SoumettreProjetActivity extends Activity {
 
 		case R.id.soumettre:
 
-			/*
-			 * try { //Communicator.addProject(name, description,
-			 * requestedFunding); if(Share.user.isAdmin()){
-			 * Toast.makeText(getApplicationContext(), "Connexion required",
-			 * Toast.LENGTH_SHORT).show(); }else{
-			 * 
-			 * } // Soumettre dans la base de donnée } catch
-			 * (AuthentificationRequiredException e) {
-			 * Toast.makeText(getApplicationContext(), "Connexion required",
-			 * Toast.LENGTH_SHORT).show(); }
-			 */
-			Toast.makeText(getApplicationContext(),
-					"Projet soumis titre : "+m_titre.getText().toString()+ " -> "+m_Description.getText().toString(),
-					Toast.LENGTH_SHORT).show();
+			String titre = null;
+			if (m_titre.length() == 0) {
+				Toast.makeText(context, "Merci de mettre un titre",
+						Toast.LENGTH_SHORT).show();
+				return false;
+			}
+			titre = m_titre.getText().toString();
+
+			String description = null;
+			if (m_Description.length() == 0) {
+				Toast.makeText(context, "Merci de mettre une description",
+						Toast.LENGTH_SHORT).show();
+				return false;
+			}
+			description = m_Description.getText().toString();
+
+			Date now = new Date();
+
+			Date date_fin = new Date();
+			int day = m_dateFin.getDayOfMonth();
+			int month = m_dateFin.getMonth();
+			int year = m_dateFin.getYear();
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(year, month, day);
+			date_fin = calendar.getTime();
+
+			ProjectRequester.createProject(titre, description,
+					m_somme_a_recolter, now, date_fin,
+					new CreateProjectEvent() {
+
+						@Override
+						public void errorAuthentificationRequired() {
+							Toast.makeText(context,
+									"Connexion required", Toast.LENGTH_SHORT)
+									.show();
+
+						}
+
+						@Override
+						public void ifUserIsAdministrator() {
+							Toast.makeText(context,
+									"Projet ajouté", Toast.LENGTH_SHORT).show();
+
+						}
+
+						@Override
+						public void onProjectAdded(Project project) {
+							Toast.makeText(context,
+									"Projet en attente de validation",
+									Toast.LENGTH_SHORT).show();
+
+						}
+
+					}, position);
+
 			return true;
 
 		}

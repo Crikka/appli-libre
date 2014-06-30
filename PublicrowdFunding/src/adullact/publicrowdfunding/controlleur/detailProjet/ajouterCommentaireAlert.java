@@ -12,8 +12,6 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
-import android.widget.TableLayout;
-import android.widget.TextView;
 
 public class ajouterCommentaireAlert extends AlertDialog.Builder {
 

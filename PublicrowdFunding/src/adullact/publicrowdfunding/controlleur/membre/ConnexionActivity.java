@@ -25,7 +25,7 @@ public class ConnexionActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.connexion);
 
-		context = getBaseContext();
+		context = this;
 		
 		m_login = (EditText) findViewById(R.id.login_connexion);
 		m_password = (EditText) findViewById(R.id.password_connexion);
