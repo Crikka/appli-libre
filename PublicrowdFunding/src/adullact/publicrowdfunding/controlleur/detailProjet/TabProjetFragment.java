@@ -9,7 +9,9 @@ import adullact.publicrowdfunding.shared.Project;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
@@ -94,9 +96,10 @@ public class TabProjetFragment extends Fragment {
 					@Override
 					public void onRatingChanged(RatingBar ratingBar,
 							float rating, boolean fromUser) {
-						Toast.makeText(getActivity(),
-								"Notation de : " + rating, Toast.LENGTH_SHORT)
-								.show();
+						System.out.println(rating);
+						ajouterCommentaireAlert commentaireBuilder = new ajouterCommentaireAlert(
+								getActivity(), rating);
+						commentaireBuilder.show();
 					}
 
 				});

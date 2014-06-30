@@ -78,16 +78,17 @@
             android:progress="0"
             android:progressDrawable="@drawable/progressbar" />
 
-        <Button
+      <Button
             android:id="@+id/payer"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="#afff00"
+            android:background="#d0d0d0"
             android:drawableLeft="@drawable/paypal"
             android:layout_marginTop="6dip"
             android:layout_marginBottom="6dip"
             android:text="Participer"
-            android:textColor="#ffffff"
+            android:gravity="center"
+            android:textColor="#808080"
             android:textSize="30sp" />
 
         <TextView
@@ -101,6 +102,7 @@
             android:id="@+id/rating_bar_projet_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:gravity="center" />
 
         <ListView

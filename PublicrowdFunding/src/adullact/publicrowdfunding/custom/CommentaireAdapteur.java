@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -42,10 +43,13 @@ public class CommentaireAdapteur extends ArrayAdapter<Commentaire> {
 
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View row = convertView;
+		
+		LayoutInflater inflater = null;
 		if (row == null) {
-			LayoutInflater inflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			inflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			row = inflater.inflate(R.layout.listitem_discuss, parent, false);
 		}
+		
 
 		layout = (LinearLayout) row.findViewById(R.id.wrapper);
 
@@ -59,7 +63,7 @@ public class CommentaireAdapteur extends ArrayAdapter<Commentaire> {
 		commentaire.setBackgroundResource(position % 2 == 0 ? R.drawable.bubble_yellow : R.drawable.bubble_green);
 		layout.setGravity(position % 2 == 0 ? Gravity.LEFT : Gravity.RIGHT);
 
-		
+
 		return row;
 	}
 
