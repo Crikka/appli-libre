@@ -21,7 +21,6 @@ public class CommentaireAdapteur extends ArrayAdapter<Commentaire> {
 	private TextView commentaire;
 	private List<Commentaire> commentaires = new ArrayList<Commentaire>();
 	private LinearLayout layout;
-	private boolean left;
 
 	@Override
 	public void add(Commentaire object) {
@@ -31,7 +30,6 @@ public class CommentaireAdapteur extends ArrayAdapter<Commentaire> {
 
 	public CommentaireAdapteur(Context context, int textViewResourceId) {
 		super(context, textViewResourceId);
-		left = true;
 	}
 
 	public int getCount() {
@@ -58,11 +56,10 @@ public class CommentaireAdapteur extends ArrayAdapter<Commentaire> {
 		commentaire.setText(coment.getMessage());
 
 
-		commentaire.setBackgroundResource(left ? R.drawable.bubble_yellow : R.drawable.bubble_green);
-		layout.setGravity(left ? Gravity.LEFT : Gravity.RIGHT);
+		commentaire.setBackgroundResource(position % 2 == 0 ? R.drawable.bubble_yellow : R.drawable.bubble_green);
+		layout.setGravity(position % 2 == 0 ? Gravity.LEFT : Gravity.RIGHT);
 
 		
-		left = !left;
 		return row;
 	}
 
