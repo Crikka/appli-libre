@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLayoutDetail"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
 
     <LinearLayout
-        android:id="@+id/linearLayoutDetail"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -81,7 +82,13 @@
             android:id="@+id/payer"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Participer (Paypal)" />
+            android:background="#afff00"
+            android:drawableLeft="@drawable/paypal"
+            android:layout_marginTop="6dip"
+            android:layout_marginBottom="6dip"
+            android:text="Participer"
+            android:textColor="#ffffff"
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/utilisateur_soumission"
@@ -95,6 +102,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center" />
+
+        <ListView
+            android:id="@+id/commentaires"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </ListView>
     </LinearLayout>
 
-</ScrollView>
+</LinearLayout>

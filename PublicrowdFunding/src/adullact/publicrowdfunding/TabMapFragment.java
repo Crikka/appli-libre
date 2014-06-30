@@ -29,10 +29,9 @@ public class TabMapFragment extends Fragment {
 		ft.replace(R.id.tabcontent, fragment, "mapid").commit();
 	
 		rootView = inflater.inflate(R.layout.tab_maps, container, false);
-	
-		//googleMap = mySupportMapFragment.getMap();
+		fm.executePendingTransactions();
 		
-		
+
 	
 		//	googleMap = ((MapFragment) fm.findFragmentByTag("mapid")).getMap();
 			
