@@ -17,6 +17,12 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+/**
+ * 
+ * @author warting 
+ * {@link https://github.com/warting/AndroidChatBubbles}
+ *
+ */
 public class CommentaireAdapteur extends ArrayAdapter<Commentaire> {
 
 	private TextView commentaire;
