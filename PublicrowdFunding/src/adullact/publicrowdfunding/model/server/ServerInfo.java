@@ -86,6 +86,7 @@ return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     static public class ServerProject {
         public String id;
         public String proposedBy;
+        public boolean validate;
         public String name;
         public String description;
         public String currentFunding;
@@ -138,7 +139,7 @@ return activeNetworkInfo != null && activeNetworkInfo.isConnected();
         @POST("/project/")
         Observable<SimpleServerResponse> createProject(@Body ServerProject serverProject);
         @PUT("/project/{projectID}")
-        Observable<SimpleServerResponse> modifyProject(@Path("projectID") String projectID);
+        Observable<SimpleServerResponse> modifyProject(@Path("projectID") String projectID, @Body ServerProject serverProject);
         @DELETE("/project/{projectID}")
         Observable<SimpleServerResponse> deleteProject(@Path("projectID") String projectID);
 

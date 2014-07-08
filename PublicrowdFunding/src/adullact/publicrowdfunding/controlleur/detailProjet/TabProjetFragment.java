@@ -87,7 +87,7 @@ public class TabProjetFragment extends Fragment {
 		m_progression.setMaxArgent(5000);
 
 		m_titre.setText(projet.getName());
-		m_description.setText(projet.getDescription());
+		m_description.setText(projet.description());
 
 		System.out.println("Notation");
 		m_notation

@@ -71,7 +71,7 @@ public class TabMapFragment extends Fragment {
 			map = ((SupportMapFragment) getSupportFragmentManager()
 					.findFragmentById(R.id.map_frag)).getMap();
 			map.addMarker(new MarkerOptions().position(projet.getPosition()).title(
-					projet.getName()));
+					projet.name()));
 
 			map.moveCamera(CameraUpdateFactory.newLatLngZoom(projet.getPosition(), 4));
 		} catch (NullPointerException e) {

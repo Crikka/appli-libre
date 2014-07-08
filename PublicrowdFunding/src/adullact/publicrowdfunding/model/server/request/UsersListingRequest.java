@@ -23,7 +23,7 @@ public class UsersListingRequest extends AuthenticatedRequest<UsersListingReques
 	public UsersListingRequest(Project project, UsersListingEvent event) {
 		super(event, new UsersListingErrorHandler());
 
-		m_projectId = project == null ? null : project.getId();
+		m_projectId = project == null ? null : project.id();
 	}
 
 
