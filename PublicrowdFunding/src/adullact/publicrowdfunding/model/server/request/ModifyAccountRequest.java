@@ -1,19 +1,13 @@
 package adullact.publicrowdfunding.model.server.request;
+
 import adullact.publicrowdfunding.model.server.ServerInfo;
-
-import org.apache.http.protocol.ResponseServer;
-
-import retrofit.http.Body;
-import retrofit.http.PUT;
-import retrofit.http.Path;
-import rx.Observable;
+import adullact.publicrowdfunding.model.server.errorHandler.ModifyAccountErrorHandler;
+import adullact.publicrowdfunding.model.server.event.ModifyAccountEvent;
+import adullact.publicrowdfunding.shared.Share;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
-import adullact.publicrowdfunding.model.server.errorHandler.ModifyAccountErrorHandler;
-import adullact.publicrowdfunding.model.server.event.ModifyAccountEvent;
-import adullact.publicrowdfunding.shared.Share;
 
 public class ModifyAccountRequest extends AuthenticatedRequest<ModifyAccountRequest, ModifyAccountEvent, ModifyAccountErrorHandler> {
 	private ServerInfo.ServerUser m_serverUser;
@@ -56,7 +50,7 @@ public class ModifyAccountRequest extends AuthenticatedRequest<ModifyAccountRequ
 					case 2: // User don't exist
 						event().errorUsernameDoesNotExist(m_username);
 						break;
-					case 3: // missing authentification
+					case 3: // missing authentication
 						event().errorAuthenticationRequired();
 						break;
 					}

@@ -12,7 +12,7 @@ public abstract class CreateUserEvent extends AnonymousEvent<CreateUserRequest, 
 	public abstract void onCreateUser();
 	/* ----------------- */
 
-	protected void authentificate() {
+	protected void authenticate() {
 		if(request().isDone()){
 			Share.user = new User();
 			Share.user.defineFields(request().username(), request().password(), request().name(), request().firstName());

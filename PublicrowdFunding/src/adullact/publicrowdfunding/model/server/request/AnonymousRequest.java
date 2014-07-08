@@ -1,7 +1,5 @@
 package adullact.publicrowdfunding.model.server.request;
 
-import retrofit.RestAdapter;
-import adullact.publicrowdfunding.model.server.ServerInfo;
 import adullact.publicrowdfunding.model.server.errorHandler.AnonymousErrorHandler;
 import adullact.publicrowdfunding.model.server.event.AnonymousEvent;
 

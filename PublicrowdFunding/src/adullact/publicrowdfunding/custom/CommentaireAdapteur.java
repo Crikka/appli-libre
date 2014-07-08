@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.shared.Commentaire;
+import adullact.publicrowdfunding.shared.Commentary;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -23,15 +23,15 @@ import android.widget.TextView;
  * {@link https://github.com/warting/AndroidChatBubbles}
  *
  */
-public class CommentaireAdapteur extends ArrayAdapter<Commentaire> {
+public class CommentaireAdapteur extends ArrayAdapter<Commentary> {
 
 	private TextView commentaire;
-	private List<Commentaire> commentaires = new ArrayList<Commentaire>();
+	private List<Commentary> commentaries = new ArrayList<Commentary>();
 	private LinearLayout layout;
 
 	@Override
-	public void add(Commentaire object) {
-		commentaires.add(object);
+	public void add(Commentary object) {
+		commentaries.add(object);
 		super.add(object);
 	}
 
@@ -40,11 +40,11 @@ public class CommentaireAdapteur extends ArrayAdapter<Commentaire> {
 	}
 
 	public int getCount() {
-		return this.commentaires.size();
+		return this.commentaries.size();
 	}
 
-	public Commentaire getItem(int index) {
-		return this.commentaires.get(index);
+	public Commentary getItem(int index) {
+		return this.commentaries.get(index);
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -59,7 +59,7 @@ public class CommentaireAdapteur extends ArrayAdapter<Commentaire> {
 
 		layout = (LinearLayout) row.findViewById(R.id.wrapper);
 
-		Commentaire coment = getItem(position);
+		Commentary coment = getItem(position);
 
 		commentaire = (TextView) row.findViewById(R.id.comment);
 

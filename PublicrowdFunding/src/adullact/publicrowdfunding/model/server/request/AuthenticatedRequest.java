@@ -35,4 +35,13 @@ extends Request<TRequest, TEvent, TErrorHandler> {
 		
 	}
 
+    public void changeAuthentication(String username, String password) {
+        SecurityRequestInterceptor securityRequestInterceptor = new SecurityRequestInterceptor();
+        securityRequestInterceptor.defineAuthenticator(username, password);
+        defineRequestInterceptor(securityRequestInterceptor);
+
+        this.m_username = username;
+        this.m_password = password;
+    }
+
 }

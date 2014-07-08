@@ -3,7 +3,7 @@ package adullact.publicrowdfunding.model.server.event;
 import adullact.publicrowdfunding.model.server.errorHandler.ModifyAccountErrorHandler;
 import adullact.publicrowdfunding.model.server.request.ModifyAccountRequest;
 
-public abstract class ModifyAccountEvent extends AuthenticatedEvent<ModifyAccountRequest, ModifyAccountEvent, ModifyAccountErrorHandler> implements AuthenticationRequired {
+public abstract class ModifyAccountEvent extends AuthenticatedEvent<ModifyAccountRequest, ModifyAccountEvent, ModifyAccountErrorHandler> implements AuthenticationRequired, AdministratorOrOwnerRequired {
 	
 	/* Callback functions */
 	public abstract void onModifyAccount();

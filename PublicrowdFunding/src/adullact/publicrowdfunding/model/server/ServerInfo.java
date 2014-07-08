@@ -8,14 +8,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 
-import retrofit.http.Body;
-import retrofit.http.DELETE;
-import retrofit.http.GET;
-import retrofit.http.POST;
-import retrofit.http.PUT;
-import retrofit.http.Path;
-import retrofit.http.Query;
+import retrofit.http.*;
 import rx.Observable;
 
 /**
@@ -71,8 +66,8 @@ return activeNetworkInfo != null && activeNetworkInfo.isConnected();
         public String username;
         public String projectID;
         public String title;
-        public String description;
-        public int mark;
+        public String message;
+        public double mark;
         public Date creationDate;
     }
     static public class ServerUser {
@@ -119,9 +114,7 @@ return activeNetworkInfo != null && activeNetworkInfo.isConnected();
         @GET("/user/{username}")
         Observable<DetailedServerUser> detailUser(@Path("username") String username);
         @GET("/user/")
-        Observable<ArrayList<ServerUser>> listUsers();
-        @GET("/user/")
-        Observable<ArrayList<ServerUser>> listUsers(@Query("projectID") String projectID);
+        Observable<ArrayList<ServerUser>> listUsers(@QueryMap Map<String, String> filter);
         @POST("/user/")
         Observable<SimpleServerResponse> createUser(@Body ServerUser serverUser);
         @PUT("/user/{username}")
@@ -133,9 +126,7 @@ return activeNetworkInfo != null && activeNetworkInfo.isConnected();
         @GET("/project/{projectID}")
         Observable<DetailedServerProject> detailProject();
         @GET("/project/")
-        Observable<ArrayList<ServerProject>> listProjects();
-        @GET("/project/")
-        Observable<ArrayList<ServerProject>> listProjects(@Query("userID") String userID);
+        Observable<ArrayList<ServerUser>> listProjects(@QueryMap Map<String, String> filter);
         @POST("/project/")
         Observable<SimpleServerResponse> createProject(@Body ServerProject serverProject);
         @PUT("/project/{projectID}")
@@ -145,21 +136,13 @@ return activeNetworkInfo != null && activeNetworkInfo.isConnected();
 
         // Funding
         @GET("/funding/")
-        Observable<ArrayList<ServerFunding>> listFunding();
-        @GET("/funding/")
-        Observable<ArrayList<ServerFunding>> listFundingByUser(@Query("username") String username);
-        @GET("/funding/")
-        Observable<ArrayList<ServerFunding>> listFundingByProject(@Query("username") String projectID);
+        Observable<ArrayList<ServerFunding>> listFunding(@QueryMap Map<String, String> filter);
         @POST("/funding/")
         Observable<SimpleServerResponse> createFunding(@Body ServerFunding serverFunding);
 
         // Commentaries
         @GET("/commentary/")
-        Observable<ArrayList<ServerFunding>> listCommentaries();
-        @GET("/commentary/")
-        Observable<ArrayList<ServerFunding>> listCommentariesByUser(@Query("username") String username);
-        @GET("/commentary/")
-        Observable<ArrayList<ServerFunding>> listCommentariesByProject(@Query("username") String projectID);
+        Observable<ArrayList<ServerUser>> listCommentaries(@QueryMap Map<String, String> filter);
         @POST("/commentary/")
         Observable<SimpleServerResponse> createCommentary(@Body ServerCommentary serverCommentary);
         @PUT("/commentary/{commentaryID}")

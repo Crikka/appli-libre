@@ -9,20 +9,23 @@ public abstract class AuthenticatedEvent
 TEvent extends AuthenticatedEvent<TRequest, TEvent, TErrorHandler>,
 TErrorHandler extends AuthenticatedErrorHandler<TRequest, TEvent, TErrorHandler>>
 extends Event<TRequest, TEvent, TErrorHandler> {
-	final protected void retryWithAnotherLogin(String username, String password) { // DO NOT USE FOR THE MOMENT
+	final protected void retryWithAnotherLogin(String username, String password) {
 		final Event<TRequest, TEvent, TErrorHandler> contextualEvent = this;
-		UserRequester.authentificateUser(username, password, new AuthenticationEvent() {
-			
-			@Override
-			public void ifUserIsAdministrator() {}
-			
-			@Override
-			public void onAuthenticate() {
-				contextualEvent.retry();
-			}
-			
-			@Override
-			public void errorUserNotExists(String pseudo, String password) {}
-		});
+        request().changeAuthentication(username, password);
+		UserRequester.authenticateUser(username, password, new AuthenticationEvent() {
+
+            @Override
+            public void ifUserIsAdministrator() {
+            }
+
+            @Override
+            public void onAuthenticate() {
+                contextualEvent.retry();
+            }
+
+            @Override
+            public void errorUserNotExists(String pseudo, String password) {
+            }
+        });
 	}
 }

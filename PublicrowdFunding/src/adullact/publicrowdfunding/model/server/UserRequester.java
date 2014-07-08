@@ -8,15 +8,19 @@ import adullact.publicrowdfunding.model.server.request.AuthenticationRequest;
 import adullact.publicrowdfunding.model.server.request.CreateUserRequest;
 import adullact.publicrowdfunding.model.server.request.ModifyAccountRequest;
 import adullact.publicrowdfunding.model.server.request.UsersListingRequest;
+import adullact.publicrowdfunding.shared.Commentary;
 import adullact.publicrowdfunding.shared.Project;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class UserRequester {
-	public static void authentificateUser(String pseudo, String password, AuthenticationEvent authentificationEvent) {
-		new AuthenticationRequest(pseudo, password, authentificationEvent).execute();;
+	public static void authenticateUser(String pseudo, String password, AuthenticationEvent authenticationEvent) {
+		new AuthenticationRequest(pseudo, password, authenticationEvent).execute();
 	}
 
 	/**
-	 * @brief Set argument to null if you want to keep old value.
+	 *  Set argument to null if you want to keep old value.
 	 */
 	public static void modifyAccount(String newPassword, String newName, String newFirstName, ModifyAccountEvent modifyAccountEvent) {
 		new ModifyAccountRequest(newPassword, newName, newFirstName, modifyAccountEvent).execute();
@@ -26,12 +30,19 @@ public class UserRequester {
 		new CreateUserRequest(username, password, name, firstName, createUserEvent).execute();
 	}
 	
-	public static void listOfAllUser(UsersListingEvent usersListingEvent) {
-		new UsersListingRequest(null, usersListingEvent).execute();
+	public static void listAllUsers(UsersListingEvent usersListingEvent) {
+		new UsersListingRequest(new HashMap<String, String>(), usersListingEvent).execute();
 	}
 	
-	public static void listOfUserThatHaveFundedProject(Project project, UsersListingEvent usersListingEvent) {
-		new UsersListingRequest(project, usersListingEvent).execute();
+	public static void listUsersThatHaveFundedProject(Project project, UsersListingEvent usersListingEvent) {
+        HashMap<String, String> filter = new HashMap<String, String>();
+        filter.put("projectID", project.id());
+        new UsersListingRequest(filter, usersListingEvent).execute();
 	}
 
+    public static void listUsersThatHaveCommentedProject(Commentary commentary, UsersListingEvent usersListingEvent) {
+        HashMap<String, String> filter = new HashMap<String, String>();
+        filter.put("commentaryID", Integer.toString(commentary.id()));
+        new UsersListingRequest(filter, usersListingEvent).execute();
+    }
 }

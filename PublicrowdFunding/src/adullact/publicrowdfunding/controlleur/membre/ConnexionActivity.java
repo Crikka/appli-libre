@@ -55,31 +55,31 @@ public class ConnexionActivity extends Activity {
 				String login = m_login.getText().toString();
 				String password = m_password.getText().toString();
 
-				UserRequester.authentificateUser(login, password,
-						new AuthenticationEvent() {
+				UserRequester.authenticateUser(login, password,
+                        new AuthenticationEvent() {
 
-							@Override
-							public void ifUserIsAdministrator() {
-								// TODO
-							}
+                            @Override
+                            public void ifUserIsAdministrator() {
+                                // TODO
+                            }
 
-							@Override
-							public void onAuthenticate() {
-								Toast.makeText(context,
-										"Vous êtes connecté !",
-										Toast.LENGTH_LONG).show();
-								finish();
-							}
+                            @Override
+                            public void onAuthenticate() {
+                                Toast.makeText(context,
+                                        "Vous êtes connecté !",
+                                        Toast.LENGTH_LONG).show();
+                                finish();
+                            }
 
-							@Override
-							public void errorUserNotExists(String pseudo,
-									String password) {
-								System.out.println("erreur");
-								Toast.makeText(context,
-										"Login ou mot de passe incorect",
-										Toast.LENGTH_LONG).show();
-							}
-						});
+                            @Override
+                            public void errorUserNotExists(String pseudo,
+                                                           String password) {
+                                System.out.println("erreur");
+                                Toast.makeText(context,
+                                        "Login ou mot de passe incorect",
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        });
 			}
 		});
 
