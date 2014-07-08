@@ -1,69 +1,43 @@
 package adullact.publicrowdfunding.model.server.request;
 
-import retrofit.http.Body;
-import retrofit.http.PUT;
-import retrofit.http.Path;
-import rx.Observable;
+import adullact.publicrowdfunding.model.server.ServerInfo;
+import adullact.publicrowdfunding.model.server.errorHandler.ModifyAccountErrorHandler;
+import adullact.publicrowdfunding.model.server.event.ModifyAccountEvent;
+import adullact.publicrowdfunding.shared.Share;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
-import adullact.publicrowdfunding.model.server.errorHandler.ModifyAccountErrorHandler;
-import adullact.publicrowdfunding.model.server.event.ModifyAccountEvent;
-import adullact.publicrowdfunding.shared.Share;
 
-public class ModifyAccountRequest extends AuthentificatedRequest<ModifyAccountRequest, ModifyAccountEvent, ModifyAccountErrorHandler> {
-	private ServerUser m_serverUser;
+public class ModifyAccountRequest extends AuthenticatedRequest<ModifyAccountRequest, ModifyAccountEvent, ModifyAccountErrorHandler> {
+	private ServerInfo.ServerUser m_serverUser;
 
-	public ModifyAccountRequest(String newPassword, String newName, String newFirstName, ModifyAccountEvent event) {
+	public ModifyAccountRequest(String newPassWord, String newName, String newFirstName, ModifyAccountEvent event) {
 		super(event, new ModifyAccountErrorHandler());
 		
-		m_serverUser = new ServerUser();
-		m_serverUser.command = "modify";
-		m_serverUser.password = newPassword == null ? Share.user.password() : newPassword;
-		m_serverUser.name = newName == null ? Share.user.name() : newName;
+		m_serverUser = new ServerInfo.ServerUser();
+        m_serverUser.password = newPassWord == null ? Share.user.password() : newPassWord;
+        m_serverUser.name = newName == null ? Share.user.name() : newName;
 		m_serverUser.firstName = newFirstName == null ? Share.user.firstName() : newFirstName;
 		
-
-		m_service = m_restAdapter.create(ModifyAccountService.class);
 	}
-	
-	/* Communication interface */
-	private final ModifyAccountService m_service;
-	@SuppressWarnings("unused")
-	private class ServerUser {
-		public String command;
-		public String password;
-		public String name;
-		public String firstName;
-	}
-	private class ResponseServer {
-		public Integer returnCode; 
-	}
-	private interface ModifyAccountService {
-		@PUT("/user/{username}")
-		Observable<ResponseServer> modify(@Body ServerUser serverUser, @Path(value = "username") String username);
-	}
-	/* --------- */
 
 	@Override
 	public void execute() {
-		m_service.modify(m_serverUser, m_username).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-		.onErrorReturn(new Func1<Throwable, ResponseServer>() {
+		service().modifyUser(m_serverUser, Share.user.pseudo()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+		.onErrorReturn(new Func1<Throwable, ServerInfo.SimpleServerResponse>() {
 
 			@Override
-			public ResponseServer call(Throwable arg0) {
-				ResponseServer res = new ResponseServer();
-				res.returnCode = 3;
-				return res;
+			public ServerInfo.SimpleServerResponse call(Throwable arg0) {
+                return null;
 			}
 			
 		})
-		.subscribe(new Action1<ResponseServer>() {
+		.subscribe(new Action1<ServerInfo.SimpleServerResponse>() {
 			
 			@Override
-			public void call(ResponseServer response) {
-				int  returnCode = response.returnCode;
+			public void call(ServerInfo.SimpleServerResponse response) {
+				int  returnCode = response.code;
 				if(errorHandler().isOk()){
 					switch(returnCode){
 					case 0: // Created
@@ -76,8 +50,8 @@ public class ModifyAccountRequest extends AuthentificatedRequest<ModifyAccountRe
 					case 2: // User don't exist
 						event().errorUsernameDoesNotExist(m_username);
 						break;
-					case 3: // missing authentification
-						event().errorAuthentificationRequired();
+					case 3: // missing authentication
+						event().errorAuthenticationRequired();
 						break;
 					}
 				}

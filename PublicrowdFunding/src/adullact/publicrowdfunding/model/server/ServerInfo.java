@@ -1,58 +1,17 @@
 package adullact.publicrowdfunding.model.server;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
+import com.google.android.gms.maps.model.LatLng;
+
 import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
-import java.util.Locale;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
-import java.util.TreeMap;
 
-import org.apache.http.Header;
-import org.apache.http.HeaderIterator;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.ProtocolVersion;
-import org.apache.http.StatusLine;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpPut;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.HttpParams;
-import org.apache.http.util.EntityUtils;
-import org.json.JSONObject;
-
-import retrofit.ErrorHandler;
-import retrofit.RequestInterceptor;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
-import retrofit.http.Body;
-import retrofit.http.GET;
-import retrofit.http.POST;
-import retrofit.http.Path;
+import retrofit.http.*;
 import rx.Observable;
-import rx.Observable.OnSubscribe;
-import rx.Subscriber;
-import rx.Subscription;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
-import adullact.publicrowdfunding.shared.User;
-import android.app.Service;
-import android.os.AsyncTask;
-import android.util.Base64;
 
 /**
  * @author Ferrand
@@ -84,4 +43,111 @@ return activeNetworkInfo != null && activeNetworkInfo.isConnected();
 		}
 		return sb.toString();
 	}
+
+    /* Type of server response */
+    static public class SimpleServerResponse {
+        public int code;
+    }
+    static public class ServerFunding {
+        public int id;
+        public String value;
+        public String username;
+        public String projectID;
+        public Date creationDate;
+    }
+    static public class ServerBookmark {
+        public int id;
+        public String username;
+        public String projectID;
+        public Date creationDate;
+    }
+    public class ServerCommentary {
+        public int id;
+        public String username;
+        public String projectID;
+        public String title;
+        public String message;
+        public double mark;
+        public Date creationDate;
+    }
+    static public class ServerUser {
+        public String username;
+        public String password;
+        public String mail;
+        public String name;
+        public String firstName;
+        public String administrator;
+    }
+    static public class ServerProject {
+        public String id;
+        public String proposedBy;
+        public boolean validate;
+        public String name;
+        public String description;
+        public String currentFunding;
+        public String requestedFunding;
+        public Date creationDate;
+        public Date beginDate;
+        public Date endDate;
+        public LatLng position;
+    }
+    static public class DetailedServerUser extends ServerUser {
+        public ArrayList<ServerProject> projects; // All project
+        public ArrayList<ServerFunding> fundedProjects;
+        public ArrayList<ServerBookmark> bookmarkedProjects;
+        public ArrayList<ServerCommentary> commentaries;
+    }
+    static public class DetailedServerProject extends ServerProject {
+        public ArrayList<ServerFunding> fundedBy;
+        public ArrayList<ServerBookmark> bookmarkedBy;
+        public ArrayList<ServerCommentary> commentedBy;
+    }
+    /* ----------------------- */
+    static public interface Service {
+        // Check
+        @GET("/check/authentication")
+        Observable<DetailedServerUser> authenticate();
+        @GET("/check/ready") // Indicate if server is ready
+        Observable<SimpleServerResponse> ready();
+
+        // Users
+        @GET("/user/{username}")
+        Observable<DetailedServerUser> detailUser(@Path("username") String username);
+        @GET("/user/")
+        Observable<ArrayList<ServerUser>> listUsers(@QueryMap Map<String, String> filter);
+        @POST("/user/")
+        Observable<SimpleServerResponse> createUser(@Body ServerUser serverUser);
+        @PUT("/user/{username}")
+        Observable<SimpleServerResponse> modifyUser(@Body ServerUser serverUser, @Path("username") String username);
+        @DELETE("/user/{username}")
+        Observable<SimpleServerResponse> deleteUser(@Path("username") String username);
+
+        // Projects
+        @GET("/project/{projectID}")
+        Observable<DetailedServerProject> detailProject();
+        @GET("/project/")
+        Observable<ArrayList<ServerUser>> listProjects(@QueryMap Map<String, String> filter);
+        @POST("/project/")
+        Observable<SimpleServerResponse> createProject(@Body ServerProject serverProject);
+        @PUT("/project/{projectID}")
+        Observable<SimpleServerResponse> modifyProject(@Path("projectID") String projectID, @Body ServerProject serverProject);
+        @DELETE("/project/{projectID}")
+        Observable<SimpleServerResponse> deleteProject(@Path("projectID") String projectID);
+
+        // Funding
+        @GET("/funding/")
+        Observable<ArrayList<ServerFunding>> listFunding(@QueryMap Map<String, String> filter);
+        @POST("/funding/")
+        Observable<SimpleServerResponse> createFunding(@Body ServerFunding serverFunding);
+
+        // Commentaries
+        @GET("/commentary/")
+        Observable<ArrayList<ServerUser>> listCommentaries(@QueryMap Map<String, String> filter);
+        @POST("/commentary/")
+        Observable<SimpleServerResponse> createCommentary(@Body ServerCommentary serverCommentary);
+        @PUT("/commentary/{commentaryID}")
+        Observable<SimpleServerResponse> modifyCommentary(@Path("commentaryID") String commentaryID);
+        @DELETE("/commentary/{commentaryID}")
+        Observable<SimpleServerResponse> deleteCommentary(@Path("commentaryID") String commentaryID);
+    }
 }

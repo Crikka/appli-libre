@@ -56,7 +56,7 @@ public class TabProjetsFragment extends Fragment {
 						.getItemAtPosition(position);
 				Intent in = new Intent(parent.getContext()
 						.getApplicationContext(), MainActivity.class);
-				in.putExtra("key", projet.getId());
+				in.putExtra("key", projet.id());
 				startActivity(in);
 
 			}

@@ -71,11 +71,11 @@ public class ServerEmulator {
 		renovation.validate();
 		lampadaire.validate();
 
-		projectsBase.put(ecole.getId(), ecole);
-		projectsBase.put(parking.getId(), parking);
-		projectsBase.put(laveVaisselle.getId(), laveVaisselle);
-		projectsBase.put(renovation.getId(), renovation);
-		projectsBase.put(lampadaire.getId(), lampadaire);
+		projectsBase.put(ecole.id(), ecole);
+		projectsBase.put(parking.id(), parking);
+		projectsBase.put(laveVaisselle.id(), laveVaisselle);
+		projectsBase.put(renovation.id(), renovation);
+		projectsBase.put(lampadaire.id(), lampadaire);
 		/* ------------- */
 	}
 
@@ -97,12 +97,12 @@ public class ServerEmulator {
 	}
 
 	public boolean projectExist(Project project) {
-		return projectsBase.containsKey(project.getId());
+		return projectsBase.containsKey(project.id());
 	}
 
 	public void addProject(Project project) {
 		if (!projectExist(project)) {
-			projectsBase.put(project.getId(), project);
+			projectsBase.put(project.id(), project);
 		}
 	}
 

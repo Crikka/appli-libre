@@ -4,7 +4,7 @@ import adullact.publicrowdfunding.model.server.errorHandler.ValidateProjectError
 import adullact.publicrowdfunding.model.server.request.ValidateProjectRequest;
 import adullact.publicrowdfunding.shared.Project;
 
-public abstract class ValidateProjectEvent  extends AuthentificatedEvent<ValidateProjectRequest, ValidateProjectEvent, ValidateProjectErrorHandler> implements AdministratorRequired {
+public abstract class ValidateProjectEvent  extends AuthenticatedEvent<ValidateProjectRequest, ValidateProjectEvent, ValidateProjectErrorHandler> implements AdministratorRequired {
 	
 	/* Callback functions */
 	public abstract void onValidateProject(Project project);

@@ -10,42 +10,23 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import adullact.publicrowdfunding.model.server.errorHandler.CreateUserErrorHandler;
 import adullact.publicrowdfunding.model.server.event.CreateUserEvent;
+import adullact.publicrowdfunding.model.server.ServerInfo;
 
 
 public class CreateUserRequest extends AnonymousRequest<CreateUserRequest, CreateUserEvent, CreateUserErrorHandler> {
 	private String m_username;
-	private ServerUser m_serverUser;
+	private ServerInfo.ServerUser m_serverUser;
 
 	public CreateUserRequest(String username, String password, String name, String firstName, CreateUserEvent event) {
-		super(event, new CreateUserErrorHandler());
+        super(event, new CreateUserErrorHandler());
 
-		m_username = username;
-		m_serverUser = new ServerUser();
-		m_serverUser.command = "create";
-		m_serverUser.password = password;
-		m_serverUser.name = name;
-		m_serverUser.firstName = firstName;
+        m_username = username;
+        m_serverUser = new ServerInfo.ServerUser();
+        m_serverUser.password = password;
+        m_serverUser.name = name;
+        m_serverUser.firstName = firstName;
 
-		m_service = m_restAdapter.create(CreateUserService.class);
-	}
-
-	/* Communication interface */
-	private final CreateUserService m_service;
-	@SuppressWarnings("unused")
-	private class ServerUser {
-		public String command;
-		public String password;
-		public String name;
-		public String firstName;
-	}
-	private class ResponseServer {
-		public Integer returnCode; 
-	}
-	private interface CreateUserService {
-		@PUT("/user/{username}")
-		Observable<ResponseServer> create(@Body ServerUser serverUser, @Path(value = "username") String username);
-	}
-	/* --------- */
+    }
 	
 	public String username() {
 		return m_username;
@@ -65,22 +46,20 @@ public class CreateUserRequest extends AnonymousRequest<CreateUserRequest, Creat
 
 	@Override
 	public void execute() {
-		m_service.create(m_serverUser, m_username).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-		.onErrorReturn(new Func1<Throwable, ResponseServer>() {
+		service().createUser(m_serverUser).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+		.onErrorReturn(new Func1<Throwable, ServerInfo.SimpleServerResponse>() {
 
 			@Override
-			public ResponseServer call(Throwable arg0) {
-				ResponseServer res = new ResponseServer();
-				res.returnCode = 2;
-				return res;
+			public ServerInfo.SimpleServerResponse call(Throwable arg0) {
+                return null;
 			}
 			
 		})
-		.subscribe(new Action1<ResponseServer>() {
+		.subscribe(new Action1<ServerInfo.SimpleServerResponse>() {
 			
 			@Override
-			public void call(ResponseServer response) {
-				int  returnCode = response.returnCode;
+			public void call(ServerInfo.SimpleServerResponse response) {
+				int  returnCode = response.code;
 				if(errorHandler().isOk()){
 					switch(returnCode){
 					case 0: // Created

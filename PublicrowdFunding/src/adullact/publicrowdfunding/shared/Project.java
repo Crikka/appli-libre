@@ -48,29 +48,41 @@ public class Project {
 		m_fundingTimePeriods.add(new FundingTimePeriod(new Interval(startDateTime, endDateTime)));
 	}
 
-	public String getId() {
+	public String id() {
 		return m_id.toString();
 	}
 
-	public String getName() {
+	public String name() {
 		return m_name;
 	}
 
-	public String getDescription(){
+	public String description(){
 		return m_description;
 	}
-	
-	public boolean isValidate() {
-		return m_validate;
-	}
-	
-	public void validate() {
-		m_validate = true;
-	}
-	
-	public LatLng getPosition(){
+
+    public String requestedFunding(){
+        return m_requestedFunding.toString();
+    }
+
+    public String currentFunding(){
+        return m_currentFunding.toString();
+    }
+
+    public DateTime creationDate() {
+        return m_creationDate;
+    }
+
+    public LatLng position(){
 		return m_position;
 	}
+
+    public boolean isValidate() {
+        return m_validate;
+    }
+
+    public void validate() {
+        m_validate = true;
+    }
 
 	/**
 	 * @return percent of achievement, may be upper than 100.
@@ -85,10 +97,6 @@ public class Project {
 	 */
 	public void finance(String value) {
 		m_currentFunding = m_currentFunding.add(new BigDecimal(value));
-	}
-
-	public DateTime getDateCreation() {
-		return m_creationDate;
 	}
 
 }

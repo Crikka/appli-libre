@@ -5,7 +5,7 @@ import java.util.Date;
 
 import com.google.android.gms.maps.model.LatLng;
 
-import adullact.publicrowdfunding.model.server.event.AuthentificationEvent;
+import adullact.publicrowdfunding.model.server.event.AuthenticationEvent;
 import adullact.publicrowdfunding.model.server.event.CreateProjectEvent;
 import adullact.publicrowdfunding.model.server.event.CreateUserEvent;
 import adullact.publicrowdfunding.model.server.event.ModifyAccountEvent;
@@ -16,91 +16,91 @@ import adullact.publicrowdfunding.shared.User;
 
 public class ExampleAndTest {
 	public void authenticationAdmin() {
-		UserRequester.authentificateUser("MisterGate", "azE45WIN", new AuthentificationEvent() {
+		UserRequester.authenticateUser("MisterGate", "azE45WIN", new AuthenticationEvent() {
 
-			@Override
-			public void ifUserIsAdministrator() {
-				System.out.println(" et je suis admin : " + (user() instanceof Administrator));					
-			}
+            @Override
+            public void ifUserIsAdministrator() {
+                System.out.println(" et je suis admin : " + (user() instanceof Administrator));
+            }
 
-			@Override
-			public void onAuthentificate() {
-				System.out.println("Je suis "+ user().pseudo()+" "+ user().name()+" "+ user().firstName());					
-			}
+            @Override
+            public void onAuthenticate() {
+                System.out.println("Je suis " + user().pseudo() + " " + user().name() + " " + user().firstName());
+            }
 
-			@Override
-			public void errorUserNotExists(String pseudo, String password) {
-				System.out.println("Impossible de trouver " + pseudo + " avec le mot de passe : " + password);			
-			}
-		});
+            @Override
+            public void errorUserNotExists(String pseudo, String password) {
+                System.out.println("Impossible de trouver " + pseudo + " avec le mot de passe : " + password);
+            }
+        });
 	}
 
 	public void authentificationNormalUser() {
-		UserRequester.authentificateUser("Francis", "123456", new AuthentificationEvent() {
+		UserRequester.authenticateUser("Francis", "123456", new AuthenticationEvent() {
 
-			@Override
-			public void ifUserIsAdministrator() {
-				System.out.println(" et je suis admin : " + (user() instanceof Administrator));					
-			}
+            @Override
+            public void ifUserIsAdministrator() {
+                System.out.println(" et je suis admin : " + (user() instanceof Administrator));
+            }
 
-			@Override
-			public void onAuthentificate() {
-				System.out.println("Je suis "+ user().pseudo()+" "+ user().name()+" "+ user().firstName());					
-			}
+            @Override
+            public void onAuthenticate() {
+                System.out.println("Je suis " + user().pseudo() + " " + user().name() + " " + user().firstName());
+            }
 
-			@Override
-			public void errorUserNotExists(String pseudo, String password) {
-				System.out.println("Impossible de trouver " + pseudo + " avec le mot de passe : " + password);			
-			}
-		});
+            @Override
+            public void errorUserNotExists(String pseudo, String password) {
+                System.out.println("Impossible de trouver " + pseudo + " avec le mot de passe : " + password);
+            }
+        });
 	}
 
 	public void authentificationFailUser() {
-		UserRequester.authentificateUser("Miaou", "abjectDominera", new AuthentificationEvent() {
+		UserRequester.authenticateUser("Miaou", "abjectDominera", new AuthenticationEvent() {
 
-			@Override
-			public void ifUserIsAdministrator() {
-				System.out.println(" et je suis admin : " + (user() instanceof Administrator));					
-			}
+            @Override
+            public void ifUserIsAdministrator() {
+                System.out.println(" et je suis admin : " + (user() instanceof Administrator));
+            }
 
-			@Override
-			public void onAuthentificate() {
-				System.out.println("Je suis "+ user().pseudo()+" "+ user().name()+" "+ user().firstName());					
-			}
+            @Override
+            public void onAuthenticate() {
+                System.out.println("Je suis " + user().pseudo() + " " + user().name() + " " + user().firstName());
+            }
 
-			@Override
-			public void errorUserNotExists(String pseudo, String password) {
-				System.out.println("Impossible de trouver " + pseudo + " avec le mot de passe : " + password);				
-			}
-		});
+            @Override
+            public void errorUserNotExists(String pseudo, String password) {
+                System.out.println("Impossible de trouver " + pseudo + " avec le mot de passe : " + password);
+            }
+        });
 	}
 
 	public void createProject() {
-		UserRequester.authentificateUser("Francis", "123456", new AuthentificationEvent() {
+		UserRequester.authenticateUser("Francis", "123456", new AuthenticationEvent() {
 
-			@Override
-			public void ifUserIsAdministrator() {
-				System.out.println(" et je suis admin : " + (user() instanceof Administrator));					
-			}
+            @Override
+            public void ifUserIsAdministrator() {
+                System.out.println(" et je suis admin : " + (user() instanceof Administrator));
+            }
 
-			@Override
-			public void onAuthentificate() {
-				System.out.println("Je suis "+ user().pseudo()+" "+ user().name()+" "+ user().firstName());		
-				ProjectRequester.createProject("Parking sous terrain","Parking au centre de Montpellier", "50000", new Date(114, 5, 10), new Date(114, 8, 10), new CreateProjectEvent() {
+            @Override
+            public void onAuthenticate() {
+                System.out.println("Je suis " + user().pseudo() + " " + user().name() + " " + user().firstName());
+                ProjectRequester.createProject("Parking sous terrain", "Parking au centre de Montpellier", "50000", new Date(114, 5, 10), new Date(114, 8, 10), new CreateProjectEvent() {
 
-					@Override
-					public void errorAuthentificationRequired() {
-						System.out.println("L'utilisateur n'est pas connecte");
-					}
+                    @Override
+                    public void errorAuthenticationRequired() {
+                        System.out.println("L'utilisateur n'est pas connecte");
+                    }
 
-					@Override
-					public void onProjectAdded(Project project) {
-						System.out.println("Un projet a été ajouté !");
-					}
+                    @Override
+                    public void onProjectAdded(Project project) {
+                        System.out.println("Un projet a été ajouté !");
+                    }
 
-					@Override
-					public void ifUserIsAdministrator() {
-						System.out.println("Un admin ! On valide ?");
+                    @Override
+                    public void ifUserIsAdministrator() {
+                        System.out.println("Un admin ! On valide ?");
 						/*Requester.validateProject(project(), new ValidateProjectEvent() {
 
 							@Override
@@ -111,15 +111,15 @@ public class ExampleAndTest {
 								System.out.println("Et hop on valide!");
 							}
 						});*/
-					}
-				}, new LatLng(50,6));
-			}
+                    }
+                }, new LatLng(50, 6));
+            }
 
-			@Override
-			public void errorUserNotExists(String pseudo, String password) {
-				System.out.println("Impossible de trouver " + pseudo + " avec le mot de passe : " + password);			
-			}
-		});
+            @Override
+            public void errorUserNotExists(String pseudo, String password) {
+                System.out.println("Impossible de trouver " + pseudo + " avec le mot de passe : " + password);
+            }
+        });
 	}
 
 	public void createUser() {
@@ -142,39 +142,39 @@ public class ExampleAndTest {
 
 			@Override
 			public void onCreateUser() {
-				UserRequester.authentificateUser("Laure25", "150m", new AuthentificationEvent() {
+				UserRequester.authenticateUser("Laure25", "150m", new AuthenticationEvent() {
 
-					@Override
-					public void ifUserIsAdministrator() {
-						System.out.println("laure est admin, qui l'eu cru?");
-					}
+                    @Override
+                    public void ifUserIsAdministrator() {
+                        System.out.println("laure est admin, qui l'eu cru?");
+                    }
 
-					@Override
-					public void onAuthentificate() {
-						UserRequester.modifyAccount(null, null, "Laure", new ModifyAccountEvent() {
+                    @Override
+                    public void onAuthenticate() {
+                        UserRequester.modifyAccount(null, null, "Laure", new ModifyAccountEvent() {
 
-							@Override
-							public void errorAuthentificationRequired() {
-								System.out.println("authentification fail");
-							}
+                            @Override
+                            public void errorAuthenticationRequired() {
+                                System.out.println("authentification fail");
+                            }
 
-							@Override
-							public void onModifyAccount() {
-								System.out.println("Laure modifié!");
-							}
+                            @Override
+                            public void onModifyAccount() {
+                                System.out.println("Laure modifié!");
+                            }
 
-							@Override
-							public void errorUsernameDoesNotExist(String username) {
-								System.out.println("laure n'existe pas");
-							}
-						});						
-					}
+                            @Override
+                            public void errorUsernameDoesNotExist(String username) {
+                                System.out.println("laure n'existe pas");
+                            }
+                        });
+                    }
 
-					@Override
-					public void errorUserNotExists(String pseudo, String password) {
-						System.out.println("laure a pas pu être connecter");
-					}
-				});
+                    @Override
+                    public void errorUserNotExists(String pseudo, String password) {
+                        System.out.println("laure a pas pu être connecter");
+                    }
+                });
 			}
 
 			@Override
@@ -184,7 +184,7 @@ public class ExampleAndTest {
 		});
 	}
 
-	public void retryWithNewLogin() { // DO NOT USE FOR THE MOMENT
+	public void retryWithNewLogin() {
 		UserRequester.createUser("Laure28", "150m", "Manodou", "Laura", new CreateUserEvent() {
 
 			@Override
@@ -192,7 +192,7 @@ public class ExampleAndTest {
 				UserRequester.modifyAccount(null, null, "Laure", new ModifyAccountEvent() {
 
 					@Override
-					public void errorAuthentificationRequired() {
+					public void errorAuthenticationRequired() {
 						System.out.println("authentification fail");
 						retryWithAnotherLogin("Laure28", "150m");
 					}
@@ -206,7 +206,12 @@ public class ExampleAndTest {
 					public void errorUsernameDoesNotExist(String username) {
 						System.out.println("laure n'existe pas");
 					}
-				});	
+
+                    @Override
+                    public void errorAdministratorOrOwnerRequired() {
+
+                    }
+                });
 			}
 
 			@Override
@@ -221,7 +226,7 @@ public class ExampleAndTest {
 
 			@Override
 			public void onCreateUser() {
-				authentificate();
+				authenticate();
 				UserRequester.listOfAllUser(new UsersListingEvent() {
 
 					@Override
@@ -233,7 +238,7 @@ public class ExampleAndTest {
 
 			@Override
 			public void errorUsernameAlreadyExists(String username) {
-				authentificate();
+				authenticate();
 				UserRequester.listOfAllUser(new UsersListingEvent() {
 
 					@Override

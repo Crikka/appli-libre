@@ -56,7 +56,7 @@ public class TabMapFragment extends Fragment {
 		 * while (it.hasNext()) { Entry<String, Project> entry = it.next();
 		 * 
 		 * map.addMarker(new MarkerOptions().position(
-		 * entry.getValue().getPosition()).title( entry.getValue().getName()));
+		 * entry.getValue().position()).title( entry.getValue().name()));
 		 * 
 		 * }
 		 * 

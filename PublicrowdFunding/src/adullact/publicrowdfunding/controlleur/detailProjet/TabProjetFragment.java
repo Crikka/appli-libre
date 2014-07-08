@@ -4,7 +4,7 @@ import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.controlleur.ajouterProjet.choisirMontantDialog;
 import adullact.publicrowdfunding.custom.CommentaireAdapteur;
 import adullact.publicrowdfunding.custom.CustomProgressBar;
-import adullact.publicrowdfunding.shared.Commentaire;
+import adullact.publicrowdfunding.shared.Commentary;
 import adullact.publicrowdfunding.shared.Project;
 import android.app.Fragment;
 import android.os.Bundle;
@@ -50,12 +50,12 @@ public class TabProjetFragment extends Fragment {
 				.getApplicationContext(), R.layout.listitem_discuss);
 
 		// Ajout de quelques commentaires de test
-		adapter.add(new Commentaire(null, null, "Trop cool", 0));
-		adapter.add(new Commentaire(null, null, "Bonne idée", 0));
-		adapter.add(new Commentaire(null, null, "Idée de merde", 0));
-		adapter.add(new Commentaire(null, null, "Au top", 0));
-		adapter.add(new Commentaire(null, null, "Je test le scroll", 0));
-		adapter.add(new Commentaire(
+		adapter.add(new Commentary(null, null, "Trop cool", 0));
+		adapter.add(new Commentary(null, null, "Bonne idée", 0));
+		adapter.add(new Commentary(null, null, "Idée de merde", 0));
+		adapter.add(new Commentary(null, null, "Au top", 0));
+		adapter.add(new Commentary(null, null, "Je test le scroll", 0));
+		adapter.add(new Commentary(
 				null,
 				null,
 				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec molestie hendrerit lorem, vitae viverra nisl convallis at. Morbi venenatis, ipsum mattis pharetra dictum, turpis mauris rutrum ante, et laoreet nibh tellus in lorem. Donec tincidunt elit sit amet tincidunt luctus. Curabitur et lectus nec augue pretium tempus ac quis mauris.",
@@ -87,7 +87,7 @@ public class TabProjetFragment extends Fragment {
 		m_progression.setMaxArgent(5000);
 
 		m_titre.setText(projet.getName());
-		m_description.setText(projet.getDescription());
+		m_description.setText(projet.description());
 
 		System.out.println("Notation");
 		m_notation
