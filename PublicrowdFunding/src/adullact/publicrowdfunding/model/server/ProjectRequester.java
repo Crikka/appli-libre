@@ -18,7 +18,7 @@ public class ProjectRequester {
 	}
 
 	public static void validateProject(Project project, ValidateProjectEvent validateProjectEvent) {
-		new ValidateProjectRequest(project, validateProjectEvent).execute();
+		new ValidateProjectRequest(project, false, validateProjectEvent).execute();
 	}
 	
 	// TODO

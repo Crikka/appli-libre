@@ -45,4 +45,10 @@ public class UserRequester {
         filter.put("commentaryID", Integer.toString(commentary.id()));
         new UsersListingRequest(filter, usersListingEvent).execute();
     }
+
+    // A completer. Mais necessaire pour la compilation.
+	public static void listOfAllUser(UsersListingEvent usersListingEvent) {
+		// TODO Auto-generated method stub
+		
+	}
 }

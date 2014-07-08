@@ -63,7 +63,7 @@ public class CommentaireAdapteur extends ArrayAdapter<Commentary> {
 
 		commentaire = (TextView) row.findViewById(R.id.comment);
 
-		commentaire.setText(coment.getMessage());
+		commentaire.setText(coment.message());
 
 
 		commentaire.setBackgroundResource(position % 2 == 0 ? R.drawable.bubble_yellow : R.drawable.bubble_green);

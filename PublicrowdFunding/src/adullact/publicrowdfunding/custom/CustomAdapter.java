@@ -66,7 +66,7 @@ public class CustomAdapter extends ArrayAdapter<Project> {
 		}
 		
 		Project projet = data.elementAt(position);
-		holder.titre_projet_liste.setText(projet.getName());
+		holder.titre_projet_liste.setText(projet.name());
 		holder.description_projet_liste.setText(projet.description());
 		holder.nb_participation_projet_liste.setText("10 participants");
 		holder.temps_restant_projet_liste.setText("24 jours restants");		

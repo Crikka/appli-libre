@@ -167,6 +167,12 @@ public class ExampleAndTest {
                             public void errorUsernameDoesNotExist(String username) {
                                 System.out.println("laure n'existe pas");
                             }
+
+							@Override
+							public void errorAdministratorOrOwnerRequired() {
+								// TODO Auto-generated method stub
+								
+							}
                         });
                     }
 

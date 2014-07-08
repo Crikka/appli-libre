@@ -28,7 +28,7 @@ public class TabProjetsFragment extends Fragment {
 			Bundle savedInstanceState) {
 
 		final View view = inflater.inflate(R.layout.tab, container, false);
-		
+
 		listeProjets = (ListView) view.findViewById(R.id.liste);
 
 		ServerEmulator serveur = ServerEmulator.instance();
@@ -62,7 +62,7 @@ public class TabProjetsFragment extends Fragment {
 			}
 		});
 
-		
+
 
 		return view;
 	}

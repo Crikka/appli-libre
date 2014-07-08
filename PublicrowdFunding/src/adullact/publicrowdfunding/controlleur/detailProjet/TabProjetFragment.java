@@ -50,16 +50,16 @@ public class TabProjetFragment extends Fragment {
 				.getApplicationContext(), R.layout.listitem_discuss);
 
 		// Ajout de quelques commentaires de test
-		adapter.add(new Commentary(null, null, "Trop cool", 0));
-		adapter.add(new Commentary(null, null, "Bonne idée", 0));
-		adapter.add(new Commentary(null, null, "Idée de merde", 0));
-		adapter.add(new Commentary(null, null, "Au top", 0));
-		adapter.add(new Commentary(null, null, "Je test le scroll", 0));
+		adapter.add(new Commentary(0, null, null, projet, "Trop cool", null, 0));
+		adapter.add(new Commentary(1, null, null, projet, "Bonne idée", null, 0));
+		adapter.add(new Commentary(2, null, null, projet, "Idée de merde", null, 0));
+		adapter.add(new Commentary(3, null, null, projet, "Au top", null, 0));
+		adapter.add(new Commentary(4, null, null, projet, "Je test le scroll", null, 0));
 		adapter.add(new Commentary(
+				5, null,
 				null,
-				null,
-				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec molestie hendrerit lorem, vitae viverra nisl convallis at. Morbi venenatis, ipsum mattis pharetra dictum, turpis mauris rutrum ante, et laoreet nibh tellus in lorem. Donec tincidunt elit sit amet tincidunt luctus. Curabitur et lectus nec augue pretium tempus ac quis mauris.",
-				0));
+				projet, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec molestie hendrerit lorem, vitae viverra nisl convallis at. Morbi venenatis, ipsum mattis pharetra dictum, turpis mauris rutrum ante, et laoreet nibh tellus in lorem. Donec tincidunt elit sit amet tincidunt luctus. Curabitur et lectus nec augue pretium tempus ac quis mauris.",
+				null, 0));
 
 		lv.setAdapter(adapter);
 
@@ -86,7 +86,7 @@ public class TabProjetFragment extends Fragment {
 		m_progression.setProgress(projet.getPercentOfAchievement());
 		m_progression.setMaxArgent(5000);
 
-		m_titre.setText(projet.getName());
+		m_titre.setText(projet.name());
 		m_description.setText(projet.description());
 
 		System.out.println("Notation");

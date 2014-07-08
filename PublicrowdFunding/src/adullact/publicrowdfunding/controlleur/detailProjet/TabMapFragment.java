@@ -5,22 +5,26 @@ import adullact.publicrowdfunding.shared.Project;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 public class TabMapFragment extends Fragment {
 
 	private Drawable m_favorite;
 	private boolean m_Is_favorite;
-	private GoogleMap map;
 	private Project projet;
-
+	private MapFragment fragment;
+	private FragmentManager fm;
+	private ProgressDialog mprogressDialog;
 
 	View rootView;
 	GoogleMap googleMap;
@@ -29,58 +33,52 @@ public class TabMapFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		MapFragment fragment = new MapFragment();
+		mprogressDialog = new ProgressDialog(getActivity());
+		mprogressDialog.setMessage("Chargement en cours...");
+		mprogressDialog.setTitle("Google Map");
 
-		FragmentManager fm = getFragmentManager();
+		mprogressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
+		mprogressDialog.show();
+
+		fragment = new MapFragment();
+
+		fm = getFragmentManager();
 
 		FragmentTransaction ft = fm.beginTransaction();
 		ft.replace(R.id.tabcontent, fragment, "mapid").commit();
-	
+
+		MainActivity activity = (MainActivity) getActivity();
+		projet = activity.getIdProjet();
+
 		rootView = inflater.inflate(R.layout.tab_maps, container, false);
-	
+
+		final Handler handler = new Handler();
+
+		handler.postDelayed(new Runnable() {
+
+			@Override
+			public void run() {
+
+				googleMap = ((MapFragment) fm.findFragmentByTag("mapid"))
+						.getMap();
+
+				if (googleMap != null) {
+
+					googleMap.addMarker(
+							new MarkerOptions().position(projet.position()))
+							.setVisible(true);
+
+					handler.removeCallbacksAndMessages(null);
+					mprogressDialog.dismiss();
+				}
+
+				else {
+					handler.postDelayed(this, 500);
+				}
+			}
+		}, 500);
+
 		return rootView;
 	}
 }
-	
-	
-	
-	/*
-	
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.maps);
-		String id = getIntent().getExtras().getString("key");
-		if(id == null){
-			Toast.makeText(getApplicationContext(), "Un erreur s'est produite",
-					Toast.LENGTH_SHORT).show();
-			finish();
-		}
-		ServerEmulator serveur = ServerEmulator.instance();
-		HashMap<String, Project> projets = serveur.getAllProjets();
-		projet = projets.get(id);
-
-		if (projet == null) {
-			Toast.makeText(getApplicationContext(), "Un erreur s'est produite",
-					Toast.LENGTH_SHORT).show();
-			finish();
-		}
-		
-		System.out.println("lancement de google map");
-		try {
-			map = ((SupportMapFragment) getSupportFragmentManager()
-					.findFragmentById(R.id.map_frag)).getMap();
-			map.addMarker(new MarkerOptions().position(projet.getPosition()).title(
-					projet.name()));
-
-			map.moveCamera(CameraUpdateFactory.newLatLngZoom(projet.getPosition(), 4));
-		} catch (NullPointerException e) {
-			Toast.makeText(getApplication(), "Impossible de lancer google Map",
-					Toast.LENGTH_SHORT).show();
-		}
-
-	
-	}
-
-}
-*/

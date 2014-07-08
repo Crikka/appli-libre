@@ -1,7 +1,13 @@
 package adullact.publicrowdfunding;
 
+import java.util.HashMap;
+import java.util.Vector;
+import java.util.Map.Entry;
+
 import adullact.publicrowdfunding.controlleur.ajouterProjet.SoumettreProjetActivity;
 import adullact.publicrowdfunding.controlleur.membre.ConnexionActivity;
+import adullact.publicrowdfunding.model.server.ServerEmulator;
+import adullact.publicrowdfunding.shared.Project;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
@@ -24,6 +30,7 @@ public class MainActivity extends Activity implements TabListener {
 	private ImageButton m_ajouter_projet;
 	private ImageButton m_mon_compte;
 	private ImageButton m_rechercher;
+	private Vector<Project> projets = new Vector<Project>();
 	FragmentTransaction fragMentTra = null;
 
 	@Override
@@ -31,6 +38,15 @@ public class MainActivity extends Activity implements TabListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
+		
+		ServerEmulator serveur = ServerEmulator.instance();
+		HashMap<String, Project> hashproj = serveur.getAllProjets();
+
+		for (Entry<String, Project> entry : hashproj.entrySet()) {
+			Project projet = entry.getValue();
+
+			projets.add(projet);
+		}
 		
 		m_ajouter_projet = (ImageButton) findViewById(R.id.button_soumettre_projet);
 		m_ajouter_projet.setOnClickListener(new View.OnClickListener() {
@@ -124,6 +140,11 @@ public class MainActivity extends Activity implements TabListener {
 	@Override
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 
+	}
+	
+	public Vector<Project> getProjets(){
+		
+		return projets;
 	}
 
 }
