@@ -171,6 +171,7 @@ public class SoumettreProjetActivity extends Activity {
 						m_afficher_montant.setText("Somme à récolter : "
 								+ m_somme_a_recolter + " €");
 					}
+					
 
 					@Override
 					public void onStartTrackingTouch(SeekBar seekBar) {
