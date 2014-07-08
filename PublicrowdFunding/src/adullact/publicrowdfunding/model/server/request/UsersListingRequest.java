@@ -8,15 +8,14 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Map;
 
-import adullact.publicrowdfunding.model.server.ServerInfo;
-import adullact.publicrowdfunding.model.server.errorHandler.UsersListingErrorHandler;
-import adullact.publicrowdfunding.model.server.event.UsersListingEvent;
-import adullact.publicrowdfunding.shared.Project;
-import adullact.publicrowdfunding.shared.User;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
+import adullact.publicrowdfunding.model.server.ServerInfo;
+import adullact.publicrowdfunding.model.server.errorHandler.UsersListingErrorHandler;
+import adullact.publicrowdfunding.model.server.event.UsersListingEvent;
+import adullact.publicrowdfunding.shared.User;
 
 public class UsersListingRequest extends AuthenticatedRequest<UsersListingRequest, UsersListingEvent, UsersListingErrorHandler> {
     private Map<String, String> m_filter;

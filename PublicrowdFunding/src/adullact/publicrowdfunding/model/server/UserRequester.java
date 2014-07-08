@@ -1,5 +1,7 @@
 package adullact.publicrowdfunding.model.server;
 
+import java.util.HashMap;
+
 import adullact.publicrowdfunding.model.server.event.AuthenticationEvent;
 import adullact.publicrowdfunding.model.server.event.CreateUserEvent;
 import adullact.publicrowdfunding.model.server.event.ModifyAccountEvent;
@@ -10,9 +12,6 @@ import adullact.publicrowdfunding.model.server.request.ModifyAccountRequest;
 import adullact.publicrowdfunding.model.server.request.UsersListingRequest;
 import adullact.publicrowdfunding.shared.Commentary;
 import adullact.publicrowdfunding.shared.Project;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class UserRequester {
 	public static void authenticateUser(String pseudo, String password, AuthenticationEvent authenticationEvent) {

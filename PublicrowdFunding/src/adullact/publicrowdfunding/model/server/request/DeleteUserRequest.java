@@ -4,9 +4,9 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
+import adullact.publicrowdfunding.model.server.ServerInfo;
 import adullact.publicrowdfunding.model.server.errorHandler.DeleteUserErrorHandler;
 import adullact.publicrowdfunding.model.server.event.DeleteUserEvent;
-import adullact.publicrowdfunding.model.server.ServerInfo;
 
 public class DeleteUserRequest extends AuthenticatedRequest<DeleteUserRequest, DeleteUserEvent, DeleteUserErrorHandler> {
 

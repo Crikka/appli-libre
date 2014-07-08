@@ -1,7 +1,8 @@
 package adullact.publicrowdfunding.controlleur.detailProjet;
 
+import org.joda.time.DateTime;
+
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.controlleur.ajouterProjet.choisirMontantDialog;
 import adullact.publicrowdfunding.custom.CommentaireAdapteur;
 import adullact.publicrowdfunding.custom.CustomProgressBar;
 import adullact.publicrowdfunding.shared.Commentary;
@@ -9,23 +10,20 @@ import adullact.publicrowdfunding.shared.Project;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class TabProjetFragment extends Fragment {
 
 	private TextView m_titre;
 	private TextView m_description;
 	private TextView m_nombre_participants;
-	private TextView m_date_de_fin;
+	private TextView m_jour_restant;
 	private TextView m_utilisateur_soumission;
 	private Button m_payer;
 	private RatingBar m_notation;
@@ -48,18 +46,24 @@ public class TabProjetFragment extends Fragment {
 
 		CommentaireAdapteur adapter = new CommentaireAdapteur(getActivity()
 				.getApplicationContext(), R.layout.listitem_discuss);
-
 		// Ajout de quelques commentaires de test
-		adapter.add(new Commentary(0, null, null, projet, "Trop cool", null, 0));
-		adapter.add(new Commentary(1, null, null, projet, "Bonne idée", null, 0));
-		adapter.add(new Commentary(2, null, null, projet, "Idée de merde", null, 0));
-		adapter.add(new Commentary(3, null, null, projet, "Au top", null, 0));
-		adapter.add(new Commentary(4, null, null, projet, "Je test le scroll", null, 0));
+		adapter.add(new Commentary(0, null, null, projet, "Trop cool",
+				"Trop cool", 0));
+		adapter.add(new Commentary(1, null, null, projet, "Bonne idée",
+				"Bonne idée", 0));
+		adapter.add(new Commentary(2, null, null, projet, "Idée de merde",
+				"Idée de merde", 0));
+		adapter.add(new Commentary(3, null, null, projet, "Au top", "Au top", 0));
+		adapter.add(new Commentary(4, null, null, projet, "Je test le scroll",
+				"Je test le scroll", 0));
 		adapter.add(new Commentary(
-				5, null,
+				5,
 				null,
-				projet, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec molestie hendrerit lorem, vitae viverra nisl convallis at. Morbi venenatis, ipsum mattis pharetra dictum, turpis mauris rutrum ante, et laoreet nibh tellus in lorem. Donec tincidunt elit sit amet tincidunt luctus. Curabitur et lectus nec augue pretium tempus ac quis mauris.",
-				null, 0));
+				null,
+				projet,
+				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec molestie hendrerit lorem, vitae viverra nisl convallis at. Morbi venenatis, ipsum mattis pharetra dictum, turpis mauris rutrum ante, et laoreet nibh tellus in lorem. Donec tincidunt elit sit amet tincidunt luctus. Curabitur et lectus nec augue pretium tempus ac quis mauris.",
+				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec molestie hendrerit lorem, vitae viverra nisl convallis at. Morbi venenatis, ipsum mattis pharetra dictum, turpis mauris rutrum ante, et laoreet nibh tellus in lorem. Donec tincidunt elit sit amet tincidunt luctus. Curabitur et lectus nec augue pretium tempus ac quis mauris.",
+				0));
 
 		lv.setAdapter(adapter);
 
@@ -68,7 +72,7 @@ public class TabProjetFragment extends Fragment {
 		m_payer = (Button) view.findViewById(R.id.payer);
 		m_nombre_participants = (TextView) view
 				.findViewById(R.id.nombre_participants_detail);
-		m_date_de_fin = (TextView) view
+		m_jour_restant = (TextView) view
 				.findViewById(R.id.nombre_jour_restant_detail);
 		m_utilisateur_soumission = (TextView) view
 				.findViewById(R.id.utilisateur_soumission);
@@ -85,9 +89,13 @@ public class TabProjetFragment extends Fragment {
 		m_progression.setArgent(5000 * projet.getPercentOfAchievement() / 100);
 		m_progression.setProgress(projet.getPercentOfAchievement());
 		m_progression.setMaxArgent(5000);
-
+		projet.creationDate();
 		m_titre.setText(projet.name());
 		m_description.setText(projet.description());
+		DateTime date = projet.creationDate();
+
+		m_jour_restant.setText("Date de creation : " + date.getDayOfMonth()
+				+ "/" + date.getMonthOfYear() + "/" + date.getYear());
 
 		System.out.println("Notation");
 		m_notation
@@ -107,10 +115,16 @@ public class TabProjetFragment extends Fragment {
 		m_payer.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 
-				choisirMontantDialog alertDialogBuilder = new choisirMontantDialog(
-						getActivity());
-				alertDialogBuilder.show();
+				projet.finance("50");
+				m_progression.setProgress(m_progression.getProgress() + 1);
+				m_progression.setArgent(Integer.parseInt(projet
+						.currentFunding()));
 
+				/* Paypal
+				 * choisirMontantDialog alertDialogBuilder = new
+				 * choisirMontantDialog( getActivity());
+				 * alertDialogBuilder.show();
+				 */
 			}
 		});
 		return view;

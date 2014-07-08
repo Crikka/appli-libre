@@ -1,7 +1,5 @@
 package adullact.publicrowdfunding.model.server;
 
-import com.google.android.gms.maps.model.LatLng;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,8 +8,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 
-import retrofit.http.*;
+import retrofit.http.Body;
+import retrofit.http.DELETE;
+import retrofit.http.GET;
+import retrofit.http.POST;
+import retrofit.http.PUT;
+import retrofit.http.Path;
+import retrofit.http.QueryMap;
 import rx.Observable;
+
+import com.google.android.gms.maps.model.LatLng;
 
 /**
  * @author Ferrand

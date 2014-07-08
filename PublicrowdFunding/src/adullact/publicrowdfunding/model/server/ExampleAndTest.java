@@ -3,8 +3,6 @@ package adullact.publicrowdfunding.model.server;
 import java.util.ArrayList;
 import java.util.Date;
 
-import com.google.android.gms.maps.model.LatLng;
-
 import adullact.publicrowdfunding.model.server.event.AuthenticationEvent;
 import adullact.publicrowdfunding.model.server.event.CreateProjectEvent;
 import adullact.publicrowdfunding.model.server.event.CreateUserEvent;
@@ -13,6 +11,8 @@ import adullact.publicrowdfunding.model.server.event.UsersListingEvent;
 import adullact.publicrowdfunding.shared.Administrator;
 import adullact.publicrowdfunding.shared.Project;
 import adullact.publicrowdfunding.shared.User;
+
+import com.google.android.gms.maps.model.LatLng;
 
 public class ExampleAndTest {
 	public void authenticationAdmin() {

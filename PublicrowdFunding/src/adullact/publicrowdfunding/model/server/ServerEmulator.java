@@ -2,11 +2,13 @@ package adullact.publicrowdfunding.model.server;
 
 import java.util.Date;
 import java.util.HashMap;
-import com.google.android.gms.maps.model.LatLng;
+
 import adullact.publicrowdfunding.shared.Administrator;
 import adullact.publicrowdfunding.shared.Project;
 import adullact.publicrowdfunding.shared.User;
 import android.util.Pair;
+
+import com.google.android.gms.maps.model.LatLng;
 
 /**
  * @author Ferrand

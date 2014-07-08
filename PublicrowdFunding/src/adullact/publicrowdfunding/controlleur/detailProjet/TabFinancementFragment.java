@@ -20,10 +20,10 @@ public class TabFinancementFragment extends Fragment {
 				container, false);
 
 		/*
-		 * OneProjectActivity activity = (OneProjectActivity) getActivity();
-		 * projet = activity.getIdProjet();
+		  MainActivity activity = (MainActivity) getActivity();
+		  activity.getIdProjet();
 		 */
-		
+
 		GraphiqueView graph = (GraphiqueView) view.findViewById(R.id.graphique);
 		DisplayMetrics metrics = new DisplayMetrics();
 		getActivity().getWindowManager().getDefaultDisplay()

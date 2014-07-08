@@ -1,6 +1,7 @@
 package adullact.publicrowdfunding.model.server;
 
 import java.util.Date;
+
 import adullact.publicrowdfunding.model.server.event.CreateProjectEvent;
 import adullact.publicrowdfunding.model.server.event.ProjectsListingEvent;
 import adullact.publicrowdfunding.model.server.event.ValidateProjectEvent;

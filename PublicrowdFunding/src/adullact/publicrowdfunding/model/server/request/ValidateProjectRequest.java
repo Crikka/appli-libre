@@ -1,13 +1,13 @@
 package adullact.publicrowdfunding.model.server.request;
 
-import adullact.publicrowdfunding.model.server.ServerInfo;
-import adullact.publicrowdfunding.model.server.errorHandler.ValidateProjectErrorHandler;
-import adullact.publicrowdfunding.model.server.event.ValidateProjectEvent;
-import adullact.publicrowdfunding.shared.Project;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
+import adullact.publicrowdfunding.model.server.ServerInfo;
+import adullact.publicrowdfunding.model.server.errorHandler.ValidateProjectErrorHandler;
+import adullact.publicrowdfunding.model.server.event.ValidateProjectEvent;
+import adullact.publicrowdfunding.shared.Project;
 
 public class ValidateProjectRequest extends AuthenticatedRequest<ValidateProjectRequest, ValidateProjectEvent, ValidateProjectErrorHandler> implements ConcernProject {
 	private Project m_project;

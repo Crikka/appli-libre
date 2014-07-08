@@ -1,8 +1,8 @@
 package adullact.publicrowdfunding;
 
 import java.util.HashMap;
-import java.util.Vector;
 import java.util.Map.Entry;
+import java.util.Vector;
 
 import adullact.publicrowdfunding.controlleur.ajouterProjet.SoumettreProjetActivity;
 import adullact.publicrowdfunding.controlleur.membre.ConnexionActivity;
@@ -24,14 +24,13 @@ public class MainActivity extends Activity implements TabListener {
 
 	private FrameLayout rl;
 
-	TabProjetsFragment fram1;
-	TabFavorisFragment fram2;
-	TabMapFragment fram3;
+	private TabProjetsFragment fram1;
+	private TabFavorisFragment fram2;
+	private TabMapFragment fram3;
 	private ImageButton m_ajouter_projet;
 	private ImageButton m_mon_compte;
 	private ImageButton m_rechercher;
 	private Vector<Project> projets = new Vector<Project>();
-	FragmentTransaction fragMentTra = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -102,8 +101,7 @@ public class MainActivity extends Activity implements TabListener {
 			e.getMessage();
 		}
 
-		/*ExampleAndTest ex = new ExampleAndTest();
-		ex.listAllUsers();*/
+
 	}		
 
 	@Override

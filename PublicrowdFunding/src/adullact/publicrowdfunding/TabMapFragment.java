@@ -1,5 +1,6 @@
 package adullact.publicrowdfunding;
 
+import java.util.HashMap;
 import java.util.Vector;
 
 import adullact.publicrowdfunding.shared.Project;
@@ -14,18 +15,22 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class TabMapFragment extends Fragment {
+public class TabMapFragment extends Fragment implements
+		OnInfoWindowClickListener {
 
 	private MapFragment fragment;
 	private FragmentManager fm;
 	private ProgressDialog mprogressDialog;
 	private Vector<Project> projets = new Vector<Project>();
-	View rootView;
-	GoogleMap googleMap;
-
+	private View rootView;
+	private GoogleMap googleMap;
+	private HashMap<Marker, String> markers = new HashMap<Marker, String>();
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -60,11 +65,16 @@ public class TabMapFragment extends Fragment {
 						MarkerOptions marker = new MarkerOptions();
 						marker.position(proj.position());
 						marker.title(proj.name());
-						googleMap.addMarker(marker);
-								
+						marker.snippet(proj.description());
+						Marker m = googleMap.addMarker(marker);
+						markers.put(m, proj.id());
+
 					}
 
 					handler.removeCallbacksAndMessages(null);
+
+					googleMap.setOnInfoWindowClickListener(TabMapFragment.this);
+
 					mprogressDialog.dismiss();
 				}
 
@@ -76,4 +86,21 @@ public class TabMapFragment extends Fragment {
 
 		return rootView;
 	}
+
+	@Override
+	public void onInfoWindowClick(Marker marker) {
+		
+
+/*	
+ * String id = markers.get(marker);
+		System.out.println("test");
+		Intent intent = new Intent(
+				getActivity().getParent(),
+				adullact.publicrowdfunding.controlleur.detailProjet.MainActivity.class);
+		intent.putExtra("key", id);
+		 ((MainActivity) getActivity()).startActivity(intent);
+	*/	
+
+	}
+
 }

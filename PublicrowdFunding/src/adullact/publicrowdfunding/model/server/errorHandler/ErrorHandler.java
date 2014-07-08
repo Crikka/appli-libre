@@ -1,9 +1,9 @@
 package adullact.publicrowdfunding.model.server.errorHandler;
 
+import retrofit.RetrofitError;
 import adullact.publicrowdfunding.model.server.ServerObject;
 import adullact.publicrowdfunding.model.server.event.Event;
 import adullact.publicrowdfunding.model.server.request.Request;
-import retrofit.RetrofitError;
 
 public abstract class ErrorHandler
 <TRequest extends Request<TRequest, TEvent, TErrorHandler>, 

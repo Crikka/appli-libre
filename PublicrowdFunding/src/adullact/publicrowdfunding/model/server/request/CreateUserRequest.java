@@ -1,16 +1,12 @@
 package adullact.publicrowdfunding.model.server.request;
 
-import retrofit.http.Body;
-import retrofit.http.PUT;
-import retrofit.http.Path;
-import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
+import adullact.publicrowdfunding.model.server.ServerInfo;
 import adullact.publicrowdfunding.model.server.errorHandler.CreateUserErrorHandler;
 import adullact.publicrowdfunding.model.server.event.CreateUserEvent;
-import adullact.publicrowdfunding.model.server.ServerInfo;
 
 
 public class CreateUserRequest extends AnonymousRequest<CreateUserRequest, CreateUserEvent, CreateUserErrorHandler> {

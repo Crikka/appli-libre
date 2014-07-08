@@ -1,7 +1,5 @@
 package adullact.publicrowdfunding.model.server.request;
 
-import retrofit.http.GET;
-import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;

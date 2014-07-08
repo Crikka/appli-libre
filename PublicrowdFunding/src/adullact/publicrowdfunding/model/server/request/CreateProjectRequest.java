@@ -1,28 +1,19 @@
 package adullact.publicrowdfunding.model.server.request;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.Date;
 import java.util.UUID;
 
-import retrofit.http.Body;
-import retrofit.http.POST;
-import retrofit.http.Path;
-import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
-
-import com.google.android.gms.maps.model.LatLng;
-
+import adullact.publicrowdfunding.model.server.ServerInfo;
 import adullact.publicrowdfunding.model.server.errorHandler.CreateProjectErrorHandler;
 import adullact.publicrowdfunding.model.server.event.CreateProjectEvent;
 import adullact.publicrowdfunding.shared.Project;
 import adullact.publicrowdfunding.shared.Share;
-import adullact.publicrowdfunding.model.server.ServerInfo;
+
+import com.google.android.gms.maps.model.LatLng;
 
 public class CreateProjectRequest extends AuthenticatedRequest<CreateProjectRequest, CreateProjectEvent, CreateProjectErrorHandler> {
 	private ServerInfo.ServerProject m_project;

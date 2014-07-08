@@ -1,13 +1,13 @@
 package adullact.publicrowdfunding.model.server.request;
 
-import adullact.publicrowdfunding.model.server.ServerInfo;
-import adullact.publicrowdfunding.model.server.errorHandler.ModifyAccountErrorHandler;
-import adullact.publicrowdfunding.model.server.event.ModifyAccountEvent;
-import adullact.publicrowdfunding.shared.Share;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
+import adullact.publicrowdfunding.model.server.ServerInfo;
+import adullact.publicrowdfunding.model.server.errorHandler.ModifyAccountErrorHandler;
+import adullact.publicrowdfunding.model.server.event.ModifyAccountEvent;
+import adullact.publicrowdfunding.shared.Share;
 
 public class ModifyAccountRequest extends AuthenticatedRequest<ModifyAccountRequest, ModifyAccountEvent, ModifyAccountErrorHandler> {
 	private ServerInfo.ServerUser m_serverUser;

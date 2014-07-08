@@ -6,21 +6,20 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class TabMapFragment extends Fragment {
 
-	private Drawable m_favorite;
-	private boolean m_Is_favorite;
 	private Project projet;
 	private MapFragment fragment;
 	private FragmentManager fm;
@@ -60,17 +59,32 @@ public class TabMapFragment extends Fragment {
 			@Override
 			public void run() {
 
-				googleMap = ((MapFragment) fm.findFragmentByTag("mapid"))
-						.getMap();
+				Fragment fr = fm.findFragmentByTag("mapid");
+
+				if (fr == null) {
+					getActivity().finish();
+				}
+
+				if (fr instanceof MapFragment) {
+					handler.removeCallbacksAndMessages(null);
+					googleMap = ((MapFragment) fr).getMap();
+				} else {
+					handler.removeCallbacksAndMessages(null);
+				}
 
 				if (googleMap != null) {
 
-					googleMap.addMarker(
-							new MarkerOptions().position(projet.position()))
-							.setVisible(true);
-
+					MarkerOptions marker = new MarkerOptions();
+					marker.position(projet.position());
+					marker.snippet(projet.description());
+					googleMap.addMarker(marker);
 					handler.removeCallbacksAndMessages(null);
 					mprogressDialog.dismiss();
+					CameraUpdate center = CameraUpdateFactory.newLatLng(projet
+							.position());
+					CameraUpdate zoom = CameraUpdateFactory.zoomTo(5);
+					googleMap.moveCamera(center);
+					googleMap.animateCamera(zoom);
 				}
 
 				else {

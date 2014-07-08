@@ -1,6 +1,7 @@
 package adullact.publicrowdfunding.shared;
 
 import java.math.BigDecimal;
+
 import org.joda.time.DateTime;
 
 public class Funding {
