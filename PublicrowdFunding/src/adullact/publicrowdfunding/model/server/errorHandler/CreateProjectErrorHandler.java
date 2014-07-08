@@ -4,7 +4,7 @@ import retrofit.RetrofitError;
 import adullact.publicrowdfunding.model.server.event.CreateProjectEvent;
 import adullact.publicrowdfunding.model.server.request.CreateProjectRequest;
 
-public class CreateProjectErrorHandler extends AuthentificatedErrorHandler<CreateProjectRequest, CreateProjectEvent, CreateProjectErrorHandler>{
+public class CreateProjectErrorHandler extends AuthenticatedErrorHandler<CreateProjectRequest, CreateProjectEvent, CreateProjectErrorHandler> {
 
 	@Override
 	public Throwable handleError(RetrofitError error) {

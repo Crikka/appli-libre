@@ -7,14 +7,10 @@ import java.io.InputStreamReader;
 import java.util.Date;
 import java.util.UUID;
 
-import retrofit.client.Response;
 import retrofit.http.Body;
-import retrofit.http.GET;
 import retrofit.http.POST;
-import retrofit.http.PUT;
 import retrofit.http.Path;
 import rx.Observable;
-import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -26,72 +22,52 @@ import adullact.publicrowdfunding.model.server.errorHandler.CreateProjectErrorHa
 import adullact.publicrowdfunding.model.server.event.CreateProjectEvent;
 import adullact.publicrowdfunding.shared.Project;
 import adullact.publicrowdfunding.shared.Share;
-import android.app.Application.OnProvideAssistDataListener;
+import adullact.publicrowdfunding.model.server.ServerInfo;
 
-public class CreateProjectRequest extends AuthentificatedRequest<CreateProjectRequest, CreateProjectEvent, CreateProjectErrorHandler> {
-	private ServerProject m_project;
+public class CreateProjectRequest extends AuthenticatedRequest<CreateProjectRequest, CreateProjectEvent, CreateProjectErrorHandler> {
+	private ServerInfo.ServerProject m_project;
 	private Project m_cacheProject;
 
 	public CreateProjectRequest(String name, String description, String requestedFunding, Date beginDate, Date endDate, LatLng position, CreateProjectEvent event) {
 		super(event, new CreateProjectErrorHandler());
 
-		m_service = m_restAdapter.create(CreateProjectService.class);
-
 		m_cacheProject = new Project(name, description, requestedFunding, new Date(), beginDate, endDate, position);
-		this.m_project = new ServerProject();
-		m_project.id = UUID.randomUUID().toString();
-		m_project.name = name;
+        m_project = new ServerInfo.ServerProject();
+        m_project.id = UUID.randomUUID().toString();
+        m_project.proposedBy = Share.user.pseudo();
+        m_project.name = name;
 		m_project.description = description;
-		m_project.requestedFunding = requestedFunding;
-		m_project.beginDate = beginDate;
+        m_project.currentFunding = "0";
+        m_project.requestedFunding = requestedFunding;
+        m_project.creationDate = new Date();
+        m_project.beginDate = beginDate;
 		m_project.endDate = endDate;
 		m_project.position = position;
 	}
 
-	/* Communication interface */
-	private final CreateProjectService m_service;
-	private class ServerProject {
-		public String id;
-		public String name;
-		public String description;
-		public String requestedFunding;
-		public Date beginDate;
-		public Date endDate;
-		public LatLng position;
-	}
-	private class ResponseServer {
-		public Integer returnCode; 
-	}
-	private interface CreateProjectService {
-		@POST("/user/{username}")
-		Observable<ResponseServer> createProject(@Body ServerProject serverProject, @Path(value = "username") String username);
-	}
-	/* --------- */
-
-
 	@Override
 	public void execute() {
-		m_service.createProject(m_project, Share.user.pseudo()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-		.onErrorReturn(new Func1<Throwable, ResponseServer>() {
+		service().createProject(m_project).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+		.onErrorReturn(new Func1<Throwable, ServerInfo.SimpleServerResponse>() {
 
 			@Override
-			public ResponseServer call(Throwable arg0) {
+			public ServerInfo.SimpleServerResponse call(Throwable arg0) {
 				return null;
 			}
 
 		})
-		.subscribe(new Action1<ResponseServer>() {
+		.subscribe(new Action1<ServerInfo.SimpleServerResponse>() {
 
 			@Override
-			public void call(ResponseServer response) {
+			public void call(ServerInfo.SimpleServerResponse response) {
 				if(errorHandler().isOk()){
 					done();
-					switch(response.returnCode) {
+					switch(response.code) {
 					case 0: // Ok!
 						event().onProjectAdded(m_cacheProject);
 						break;
 					case 1:
-						event().errorAuthentificationRequired();
+						event().errorAuthenticationRequired();
 						break;
 					case 2: // ServerError
 						break;
@@ -100,15 +76,4 @@ public class CreateProjectRequest extends AuthentificatedRequest<CreateProjectRe
 			};
 		});
 	}
-
-	private String streamToString(InputStream is) throws IOException {
-		StringBuilder sb = new StringBuilder();
-		BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-		String line;
-		while ((line = rd.readLine()) != null) {
-			sb.append(line);
-		}
-		return sb.toString();
-	}
-
 }

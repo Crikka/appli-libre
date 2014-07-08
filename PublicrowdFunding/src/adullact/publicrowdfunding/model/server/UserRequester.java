@@ -1,18 +1,18 @@
 package adullact.publicrowdfunding.model.server;
 
-import adullact.publicrowdfunding.model.server.event.AuthentificationEvent;
+import adullact.publicrowdfunding.model.server.event.AuthenticationEvent;
 import adullact.publicrowdfunding.model.server.event.CreateUserEvent;
 import adullact.publicrowdfunding.model.server.event.ModifyAccountEvent;
 import adullact.publicrowdfunding.model.server.event.UsersListingEvent;
-import adullact.publicrowdfunding.model.server.request.AuthentificationRequest;
+import adullact.publicrowdfunding.model.server.request.AuthenticationRequest;
 import adullact.publicrowdfunding.model.server.request.CreateUserRequest;
 import adullact.publicrowdfunding.model.server.request.ModifyAccountRequest;
 import adullact.publicrowdfunding.model.server.request.UsersListingRequest;
 import adullact.publicrowdfunding.shared.Project;
 
 public class UserRequester {
-	public static void authentificateUser(String pseudo, String password, AuthentificationEvent authentificationEvent) {
-		new AuthentificationRequest(pseudo, password, authentificationEvent).execute();;
+	public static void authentificateUser(String pseudo, String password, AuthenticationEvent authentificationEvent) {
+		new AuthenticationRequest(pseudo, password, authentificationEvent).execute();;
 	}
 
 	/**

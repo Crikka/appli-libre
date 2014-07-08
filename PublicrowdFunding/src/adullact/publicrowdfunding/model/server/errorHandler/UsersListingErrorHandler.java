@@ -9,7 +9,7 @@ import retrofit.RetrofitError;
 import adullact.publicrowdfunding.model.server.event.UsersListingEvent;
 import adullact.publicrowdfunding.model.server.request.UsersListingRequest;
 
-public class UsersListingErrorHandler extends AuthentificatedErrorHandler<UsersListingRequest, UsersListingEvent, UsersListingErrorHandler> {
+public class UsersListingErrorHandler extends AuthenticatedErrorHandler<UsersListingRequest, UsersListingEvent, UsersListingErrorHandler> {
 
 	@Override
 	public Throwable handleError(RetrofitError error) {

@@ -321,7 +321,7 @@ public class SoumettreProjetActivity extends Activity {
 					new CreateProjectEvent() {
 
 						@Override
-						public void errorAuthentificationRequired() {
+						public void errorAuthenticationRequired() {
 							Toast.makeText(context,
 									"Connexion required", Toast.LENGTH_SHORT)
 									.show();

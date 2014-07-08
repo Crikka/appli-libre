@@ -5,7 +5,7 @@ import adullact.publicrowdfunding.model.server.event.ValidateProjectEvent;
 import adullact.publicrowdfunding.shared.Project;
 import adullact.publicrowdfunding.shared.Share;
 
-public class ValidateProjectRequest extends AuthentificatedRequest<ValidateProjectRequest, ValidateProjectEvent, ValidateProjectErrorHandler> implements ConcernProject {
+public class ValidateProjectRequest extends AuthenticatedRequest<ValidateProjectRequest, ValidateProjectEvent, ValidateProjectErrorHandler> implements ConcernProject {
 	private Project m_project;
 
 	public ValidateProjectRequest(Project project, ValidateProjectEvent event) {

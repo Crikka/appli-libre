@@ -11,6 +11,6 @@ TEvent extends AnonymousEvent<TRequest, TEvent, TErrorHandler>,
 TErrorHandler extends AnonymousErrorHandler<TRequest, TEvent, TErrorHandler>> 
 extends Request<TRequest, TEvent, TErrorHandler> {
 	public AnonymousRequest(TEvent event, TErrorHandler errorHandler) {
-		super(event, new RestAdapter.Builder().setEndpoint(ServerInfo.SERVER_URL), errorHandler);
+		super(event, errorHandler);
 	}
 }

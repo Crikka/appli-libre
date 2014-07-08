@@ -6,6 +6,6 @@ import adullact.publicrowdfunding.model.server.errorHandler.ProjectsListingError
 import adullact.publicrowdfunding.model.server.request.ProjectsListingRequest;
 import adullact.publicrowdfunding.shared.Project;
 
-public abstract class ProjectsListingEvent extends AuthentificatedEvent<ProjectsListingRequest, ProjectsListingEvent, ProjectsListingErrorHandler> {
+public abstract class ProjectsListingEvent extends AuthenticatedEvent<ProjectsListingRequest, ProjectsListingEvent, ProjectsListingErrorHandler> {
 	public abstract void onProjectsReceived(ArrayList<Project> projects);
 }

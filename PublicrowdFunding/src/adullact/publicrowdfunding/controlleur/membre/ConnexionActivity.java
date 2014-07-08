@@ -2,7 +2,7 @@ package adullact.publicrowdfunding.controlleur.membre;
 
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.model.server.UserRequester;
-import adullact.publicrowdfunding.model.server.event.AuthentificationEvent;
+import adullact.publicrowdfunding.model.server.event.AuthenticationEvent;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -56,7 +56,7 @@ public class ConnexionActivity extends Activity {
 				String password = m_password.getText().toString();
 
 				UserRequester.authentificateUser(login, password,
-						new AuthentificationEvent() {
+						new AuthenticationEvent() {
 
 							@Override
 							public void ifUserIsAdministrator() {
@@ -64,7 +64,7 @@ public class ConnexionActivity extends Activity {
 							}
 
 							@Override
-							public void onAuthentificate() {
+							public void onAuthenticate() {
 								Toast.makeText(context,
 										"Vous êtes connecté !",
 										Toast.LENGTH_LONG).show();

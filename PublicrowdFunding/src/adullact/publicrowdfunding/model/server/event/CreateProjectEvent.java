@@ -4,7 +4,7 @@ import adullact.publicrowdfunding.model.server.errorHandler.CreateProjectErrorHa
 import adullact.publicrowdfunding.model.server.request.CreateProjectRequest;
 import adullact.publicrowdfunding.shared.Project;
 
-public abstract class CreateProjectEvent extends AuthentificatedEvent< CreateProjectRequest, CreateProjectEvent, CreateProjectErrorHandler> implements AuthentificationRequired, AdministratorFavour {
+public abstract class CreateProjectEvent extends AuthenticatedEvent< CreateProjectRequest, CreateProjectEvent, CreateProjectErrorHandler> implements AuthenticationRequired, AdministratorFavour {
 	
 	/* Callback functions */
 	public abstract void onProjectAdded(Project project);

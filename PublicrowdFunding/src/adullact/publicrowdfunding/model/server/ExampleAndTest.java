@@ -5,7 +5,7 @@ import java.util.Date;
 
 import com.google.android.gms.maps.model.LatLng;
 
-import adullact.publicrowdfunding.model.server.event.AuthentificationEvent;
+import adullact.publicrowdfunding.model.server.event.AuthenticationEvent;
 import adullact.publicrowdfunding.model.server.event.CreateProjectEvent;
 import adullact.publicrowdfunding.model.server.event.CreateUserEvent;
 import adullact.publicrowdfunding.model.server.event.ModifyAccountEvent;
@@ -16,7 +16,7 @@ import adullact.publicrowdfunding.shared.User;
 
 public class ExampleAndTest {
 	public void authenticationAdmin() {
-		UserRequester.authentificateUser("MisterGate", "azE45WIN", new AuthentificationEvent() {
+		UserRequester.authentificateUser("MisterGate", "azE45WIN", new AuthenticationEvent() {
 
 			@Override
 			public void ifUserIsAdministrator() {
@@ -24,7 +24,7 @@ public class ExampleAndTest {
 			}
 
 			@Override
-			public void onAuthentificate() {
+			public void onAuthenticate() {
 				System.out.println("Je suis "+ user().pseudo()+" "+ user().name()+" "+ user().firstName());					
 			}
 
@@ -36,7 +36,7 @@ public class ExampleAndTest {
 	}
 
 	public void authentificationNormalUser() {
-		UserRequester.authentificateUser("Francis", "123456", new AuthentificationEvent() {
+		UserRequester.authentificateUser("Francis", "123456", new AuthenticationEvent() {
 
 			@Override
 			public void ifUserIsAdministrator() {
@@ -44,7 +44,7 @@ public class ExampleAndTest {
 			}
 
 			@Override
-			public void onAuthentificate() {
+			public void onAuthenticate() {
 				System.out.println("Je suis "+ user().pseudo()+" "+ user().name()+" "+ user().firstName());					
 			}
 
@@ -56,7 +56,7 @@ public class ExampleAndTest {
 	}
 
 	public void authentificationFailUser() {
-		UserRequester.authentificateUser("Miaou", "abjectDominera", new AuthentificationEvent() {
+		UserRequester.authentificateUser("Miaou", "abjectDominera", new AuthenticationEvent() {
 
 			@Override
 			public void ifUserIsAdministrator() {
@@ -64,7 +64,7 @@ public class ExampleAndTest {
 			}
 
 			@Override
-			public void onAuthentificate() {
+			public void onAuthenticate() {
 				System.out.println("Je suis "+ user().pseudo()+" "+ user().name()+" "+ user().firstName());					
 			}
 
@@ -76,7 +76,7 @@ public class ExampleAndTest {
 	}
 
 	public void createProject() {
-		UserRequester.authentificateUser("Francis", "123456", new AuthentificationEvent() {
+		UserRequester.authentificateUser("Francis", "123456", new AuthenticationEvent() {
 
 			@Override
 			public void ifUserIsAdministrator() {
@@ -84,12 +84,12 @@ public class ExampleAndTest {
 			}
 
 			@Override
-			public void onAuthentificate() {
+			public void onAuthenticate() {
 				System.out.println("Je suis "+ user().pseudo()+" "+ user().name()+" "+ user().firstName());		
 				ProjectRequester.createProject("Parking sous terrain","Parking au centre de Montpellier", "50000", new Date(114, 5, 10), new Date(114, 8, 10), new CreateProjectEvent() {
 
 					@Override
-					public void errorAuthentificationRequired() {
+					public void errorAuthenticationRequired() {
 						System.out.println("L'utilisateur n'est pas connecte");
 					}
 
@@ -142,7 +142,7 @@ public class ExampleAndTest {
 
 			@Override
 			public void onCreateUser() {
-				UserRequester.authentificateUser("Laure25", "150m", new AuthentificationEvent() {
+				UserRequester.authentificateUser("Laure25", "150m", new AuthenticationEvent() {
 
 					@Override
 					public void ifUserIsAdministrator() {
@@ -150,11 +150,11 @@ public class ExampleAndTest {
 					}
 
 					@Override
-					public void onAuthentificate() {
+					public void onAuthenticate() {
 						UserRequester.modifyAccount(null, null, "Laure", new ModifyAccountEvent() {
 
 							@Override
-							public void errorAuthentificationRequired() {
+							public void errorAuthenticationRequired() {
 								System.out.println("authentification fail");
 							}
 
@@ -192,7 +192,7 @@ public class ExampleAndTest {
 				UserRequester.modifyAccount(null, null, "Laure", new ModifyAccountEvent() {
 
 					@Override
-					public void errorAuthentificationRequired() {
+					public void errorAuthenticationRequired() {
 						System.out.println("authentification fail");
 						retryWithAnotherLogin("Laure28", "150m");
 					}
