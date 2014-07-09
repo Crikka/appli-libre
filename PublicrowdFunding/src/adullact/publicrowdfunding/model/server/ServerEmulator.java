@@ -3,6 +3,7 @@ package adullact.publicrowdfunding.model.server;
 import java.util.Date;
 import java.util.HashMap;
 
+import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.shared.Administrator;
 import adullact.publicrowdfunding.shared.Project;
 import adullact.publicrowdfunding.shared.User;
@@ -61,12 +62,12 @@ public class ServerEmulator {
 		/* ---------- */
 
 		/* Projects base */
-		Project ecole = new Project("Bataille d'eau","Achat de bombe et de pistolets à eau", "1000", new Date(), new Date(114, 5, 10), new Date(114, 7, 10), new LatLng(43.607605, 3.893000));
-		Project lampadaire = new Project("Cours à pieds","Organisation d'une course à pieds, de la maire jusqu'a Palavas", "300", new Date(), new Date(114, 5, 10), new Date(114, 7, 10),new LatLng(43.543364, 3.898044));
-		Project parking = new Project("Fête des voisins","Besoin de financement pour organiser une fête des voisins", "500", new Date(), new Date(114, 5, 10), new Date(114, 7, 10), new LatLng(46.9, 0));
-		Project laveVaisselle = new Project("Nouveau ballons","Achat de nouveaux ballons de foot pour le club", "600", new Date(), new Date(114, 5, 10), new Date(114, 7, 10),new LatLng(43.591891, 3.846318));
-		Project renovation = new Project("Tournois d'échec","Besoin de financement pour organiser un concours d'échec à odysseum", "200", new Date(), new Date(114, 5, 10), new Date(114, 7, 10),new LatLng(43.603477, 3.918862));
-		Project lan = new Project("LAN Party","Achat de chips et de coca pour une LAN sur un jeu (Choix du jeu dans les commentaires !)", "200", new Date(), new Date(114, 5, 10), new Date(114, 7, 10),new LatLng(43.603477, 3.918862));
+		Project ecole = new Project("Bataille d'eau","Achat de bombe et de pistolets à eau", "1000", new Date(), new Date(114, 5, 10), new Date(114, 7, 10), new LatLng(43.607605, 3.893000),0);
+		Project lampadaire = new Project("Course à pieds","Organisation d'une course à pieds, de la maire jusqu'a Palavas", "300", new Date(), new Date(114, 5, 10), new Date(114, 7, 10),new LatLng(43.543364, 3.898044),0);
+		Project parking = new Project("Fête des voisins","Besoin de financement pour organiser une fête des voisins", "500", new Date(), new Date(114, 5, 10), new Date(114, 7, 10), new LatLng(46.9, 0),0);
+		Project laveVaisselle = new Project("Nouveau ballons","Achat de nouveaux ballons de basket pour le club", "600", new Date(), new Date(114, 5, 10), new Date(114, 7, 10),new LatLng(43.591891, 3.846318),R.drawable.basketball);
+		Project renovation = new Project("Tournois d'échec","Besoin de financement pour organiser un concours d'échec à odysseum", "200", new Date(), new Date(114, 5, 10), new Date(114, 7, 10),new LatLng(43.603477, 3.918862), R.drawable.roi);
+		Project lan = new Project("LAN Party","Achat de chips et de coca pour une LAN sur un jeu (Choix du jeu dans les commentaires !)", "200", new Date(), new Date(114, 5, 10), new Date(114, 7, 10),new LatLng(43.603477, 3.918862),0);
 		
 		
 		ecole.validate();

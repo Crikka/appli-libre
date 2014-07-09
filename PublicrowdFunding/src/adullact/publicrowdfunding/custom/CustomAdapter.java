@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class CustomAdapter extends ArrayAdapter<Project> {
@@ -31,6 +32,7 @@ public class CustomAdapter extends ArrayAdapter<Project> {
 		public TextView nb_participation_projet_liste;
 		public TextView temps_restant_projet_liste;
 		public CustomProgressBar avancement_projet_liste;
+		public ImageView illustration;
 
 	}
 
@@ -58,7 +60,8 @@ public class CustomAdapter extends ArrayAdapter<Project> {
 					.findViewById(R.id.temps_restant_projet_liste);
 			holder.avancement_projet_liste = (CustomProgressBar) v
 					.findViewById(R.id.avancement_projet_liste);
-			
+			holder.illustration = (ImageView) v
+					.findViewById(R.id.icon);
 
 			v.setTag(holder);
 		} else {
@@ -73,7 +76,11 @@ public class CustomAdapter extends ArrayAdapter<Project> {
 		holder.avancement_projet_liste.setArgent(5000*projet.getPercentOfAchievement()/100);
 		holder.avancement_projet_liste.setProgress(projet.getPercentOfAchievement());
 		holder.avancement_projet_liste.setMaxArgent(5000);
-		
+		if(projet.illustration() != 0){
+		holder.illustration.setImageResource(projet.illustration());
+		}else{
+			holder.illustration.setImageResource(R.drawable.ic_launcher);
+		}
 		return v;
 
 	}

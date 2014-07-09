@@ -1,9 +1,11 @@
 package adullact.publicrowdfunding.controlleur.ajouterProjet;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.custom.CarouselAdapter;
 import adullact.publicrowdfunding.model.server.ProjectRequester;
 import adullact.publicrowdfunding.model.server.event.CreateProjectEvent;
 import adullact.publicrowdfunding.shared.Project;
@@ -33,6 +35,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.touchmenotapps.carousel.simple.HorizontalCarouselLayout;
+import com.touchmenotapps.carousel.simple.HorizontalCarouselLayout.CarouselInterface;
+import com.touchmenotapps.carousel.simple.HorizontalCarouselStyle;
 
 public class SoumettreProjetActivity extends Activity {
 
@@ -42,7 +47,6 @@ public class SoumettreProjetActivity extends Activity {
 	private ImageButton m_bouttonPhoto;
 	private ImageButton m_bouttonGallery;
 	private ImageButton m_localisation;
-	private ImageView m_illustration;
 	private SeekBar m_bar_somme;
 	private EditText m_edit_text_somme;
 	private CheckBox m_is_Not_Defined_On_Seek_Bar;
@@ -55,6 +59,11 @@ public class SoumettreProjetActivity extends Activity {
 	private static final int PICK_FROM_CAMERA = 1;
 	private static final int PICK_FROM_GALLERY = 2;
 	private static final int PICK_MAPS = 3;
+
+	private HorizontalCarouselStyle mStyle;
+	private HorizontalCarouselLayout mCarousel;
+	private CarouselAdapter mAdapter;
+	private ArrayList<Integer> mData = new ArrayList<Integer>(0);
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	public void supprimerCalendarView() {
@@ -78,11 +87,35 @@ public class SoumettreProjetActivity extends Activity {
 		m_bouttonPhoto = (ImageButton) findViewById(R.id.button_photo_camera);
 		m_bouttonGallery = (ImageButton) findViewById(R.id.button_photo_gallery);
 		m_localisation = (ImageButton) findViewById(R.id.button_localisation);
-		m_illustration = (ImageView) findViewById(R.id.illustration);
 		m_bar_somme = (SeekBar) findViewById(R.id.seek_bar_somme);
 		m_edit_text_somme = (EditText) findViewById(R.id.edit_text_somme);
 		m_is_Not_Defined_On_Seek_Bar = (CheckBox) findViewById(R.id.is_Defined_On_Seek_Bar);
 		m_afficher_montant = (TextView) findViewById(R.id.afficher_montant);
+
+		mData.add(R.drawable.ic_launcher);
+		mData.add(R.drawable.basketball);
+		mData.add(R.drawable.roi);
+		mData.add(R.drawable.ic_launcher);
+		mData.add(R.drawable.basketball);
+		mData.add(R.drawable.roi);
+		mData.add(R.drawable.ic_launcher);
+		mData.add(R.drawable.basketball);
+		mData.add(R.drawable.roi);
+		
+		mAdapter = new CarouselAdapter(this);
+		mAdapter.setData(mData);
+		mCarousel = (HorizontalCarouselLayout) findViewById(R.id.carousel_layout);
+		mStyle = new HorizontalCarouselStyle(this,
+				HorizontalCarouselStyle.NO_STYLE);
+		mCarousel.setStyle(mStyle);
+		mCarousel.setAdapter(mAdapter);
+
+		  mCarousel.setOnCarouselViewChangedListener(new CarouselInterface() {
+		  
+		  @Override public void onItemChangedListener(View v, int position) {
+		  
+		  }});
+		 
 
 		m_bouttonPhoto.setOnClickListener(new View.OnClickListener() {
 
@@ -171,7 +204,6 @@ public class SoumettreProjetActivity extends Activity {
 						m_afficher_montant.setText("Somme à récolter : "
 								+ m_somme_a_recolter + " €");
 					}
-					
 
 					@Override
 					public void onStartTrackingTouch(SeekBar seekBar) {
@@ -245,6 +277,7 @@ public class SoumettreProjetActivity extends Activity {
 
 		switch (requestCode) {
 
+		/*
 		case PICK_FROM_CAMERA:
 			Bundle extras = data.getExtras();
 			if (extras != null) {
@@ -262,7 +295,7 @@ public class SoumettreProjetActivity extends Activity {
 
 			}
 			break;
-
+*/
 		case PICK_MAPS:
 			Bundle extras3 = data.getExtras();
 			if (extras3 != null) {
@@ -323,16 +356,15 @@ public class SoumettreProjetActivity extends Activity {
 
 						@Override
 						public void errorAuthenticationRequired() {
-							Toast.makeText(context,
-									"Connexion required", Toast.LENGTH_SHORT)
-									.show();
+							Toast.makeText(context, "Connexion required",
+									Toast.LENGTH_SHORT).show();
 
 						}
 
 						@Override
 						public void ifUserIsAdministrator() {
-							Toast.makeText(context,
-									"Projet ajouté", Toast.LENGTH_SHORT).show();
+							Toast.makeText(context, "Projet ajouté",
+									Toast.LENGTH_SHORT).show();
 
 						}
 

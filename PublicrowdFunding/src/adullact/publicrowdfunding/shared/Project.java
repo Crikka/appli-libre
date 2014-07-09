@@ -21,8 +21,9 @@ public class Project {
 	private LatLng m_position;
 	private ArrayList<FundingTimePeriod> m_fundingTimePeriods;
 	private boolean m_validate;
+	private int m_illustration;
 
-	public Project(String name, String description, String requestedFunding, Date creationDate, Date beginDate, Date endDate, LatLng position) {
+	public Project(String name, String description, String requestedFunding, Date creationDate, Date beginDate, Date endDate, LatLng position, int illustration) {
 		this.m_id = UUID.randomUUID();
 		this.m_name = name;
 		this.m_description = description;
@@ -33,6 +34,7 @@ public class Project {
 		this.m_fundingTimePeriods = new ArrayList<FundingTimePeriod>();
 		this.m_position = position;
 		this.m_validate = false;
+		this.m_illustration = illustration;
 		
 		// Now, we calculate 10 periods for graphics
 		int numberOfPeriod = 10;
@@ -97,6 +99,10 @@ public class Project {
 	 */
 	public void finance(String value) {
 		m_currentFunding = m_currentFunding.add(new BigDecimal(value));
+	}
+	
+	public int illustration(){
+		return this.m_illustration;
 	}
 
 }

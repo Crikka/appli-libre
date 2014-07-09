@@ -22,7 +22,7 @@ public class CreateProjectRequest extends AuthenticatedRequest<CreateProjectRequ
 	public CreateProjectRequest(String name, String description, String requestedFunding, Date beginDate, Date endDate, LatLng position, CreateProjectEvent event) {
 		super(event, new CreateProjectErrorHandler());
 
-		m_cacheProject = new Project(name, description, requestedFunding, new Date(), beginDate, endDate, position);
+		m_cacheProject = new Project(name, description, requestedFunding, new Date(), beginDate, endDate, position, 0);
         m_project = new ServerInfo.ServerProject();
         m_project.id = UUID.randomUUID().toString();
         m_project.proposedBy = Share.user.pseudo();

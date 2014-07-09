@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RatingBar;
@@ -29,7 +30,7 @@ public class TabProjetFragment extends Fragment {
 	private TextView m_utilisateur_soumission;
 	private Button m_payer;
 	private CustomProgressBar m_progression;
-
+	private ImageView m_illustration;
 
 	private Project projet;
 
@@ -43,9 +44,6 @@ public class TabProjetFragment extends Fragment {
 		MainActivity activity = (MainActivity) getActivity();
 		projet = activity.getIdProjet();
 
-		
-		
-		
 		GraphiqueView graph = (GraphiqueView) view.findViewById(R.id.graphique);
 		DisplayMetrics metrics = new DisplayMetrics();
 		getActivity().getWindowManager().getDefaultDisplay()
@@ -54,7 +52,7 @@ public class TabProjetFragment extends Fragment {
 		android.view.ViewGroup.LayoutParams params = graph.getLayoutParams();
 		params.height = metrics.widthPixels + 100;
 		graph.setLayoutParams(params);
-		
+
 		m_titre = (TextView) view.findViewById(R.id.titre_projet_detail);
 		m_description = (TextView) view.findViewById(R.id.detail_projet_detail);
 		m_payer = (Button) view.findViewById(R.id.payer);
@@ -64,10 +62,15 @@ public class TabProjetFragment extends Fragment {
 				.findViewById(R.id.nombre_jour_restant_detail);
 		m_utilisateur_soumission = (TextView) view
 				.findViewById(R.id.utilisateur_soumission);
-		
-	//fd
 		m_progression = (CustomProgressBar) view
 				.findViewById(R.id.avancement_projet_liste);
+		m_illustration = (ImageView) view.findViewById(R.id.icon);
+
+		if (projet.illustration() != 0) {
+			m_illustration.setImageResource(projet.illustration());
+		} else {
+			m_illustration.setImageResource(R.drawable.ic_launcher);
+		}
 
 		if (m_progression == null) {
 			System.out.println("c'est nul");
@@ -85,8 +88,6 @@ public class TabProjetFragment extends Fragment {
 		m_jour_restant.setText("Date de creation : " + date.getDayOfMonth()
 				+ "/" + date.getMonthOfYear() + "/" + date.getYear());
 
-		
-
 		m_payer.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 
@@ -95,8 +96,8 @@ public class TabProjetFragment extends Fragment {
 				m_progression.setArgent(Integer.parseInt(projet
 						.currentFunding()));
 
-				/* Paypal
-				 * choisirMontantDialog alertDialogBuilder = new
+				/*
+				 * Paypal choisirMontantDialog alertDialogBuilder = new
 				 * choisirMontantDialog( getActivity());
 				 * alertDialogBuilder.show();
 				 */
