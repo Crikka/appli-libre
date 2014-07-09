@@ -74,7 +74,7 @@ public class TabMapFragment extends Fragment implements
 					handler.removeCallbacksAndMessages(null);
 
 					googleMap.setOnInfoWindowClickListener(TabMapFragment.this);
-
+					googleMap.setMyLocationEnabled(true);
 					mprogressDialog.dismiss();
 				}
 

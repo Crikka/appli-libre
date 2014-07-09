@@ -61,11 +61,12 @@ public class ServerEmulator {
 		/* ---------- */
 
 		/* Projects base */
-		Project ecole = new Project("Ecole publique","Construction d'une école primaire", "25000", new Date(), new Date(114, 5, 10), new Date(114, 7, 10), new LatLng(43.6, 2.7));
-		Project parking = new Project("Parking sous terrain","Parking au centre de Montpellier", "50000", new Date(), new Date(114, 5, 10), new Date(114, 7, 10), new LatLng(46.9, 0));
-		Project laveVaisselle = new Project("Lave vaisselle","Lave vaisselle pour le restaurant universitaire de Montpellier", "100", new Date(), new Date(114, 5, 10), new Date(114, 7, 10),new LatLng(47, 4.5));
-		Project renovation = new Project("Renovation Faculté","Rénovation de la fac des sciences", "165000", new Date(), new Date(114, 5, 10), new Date(114, 7, 10),new LatLng(48, 1.5));
-		Project lampadaire = new Project("Lampadaires écolo","Achat de lampadaires basse consommation", "5000", new Date(), new Date(114, 5, 10), new Date(114, 7, 10),new LatLng(44, 4.5));
+		Project ecole = new Project("Bataille d'eau","Achat de bombe et de pistolets à eau", "1000", new Date(), new Date(114, 5, 10), new Date(114, 7, 10), new LatLng(43.607605, 3.893000));
+		Project lampadaire = new Project("Cours à pieds","Organisation d'une course à pieds, de la maire jusqu'a Palavas", "300", new Date(), new Date(114, 5, 10), new Date(114, 7, 10),new LatLng(43.543364, 3.898044));
+		Project parking = new Project("Fête des voisins","Besoin de financement pour organiser une fête des voisins", "500", new Date(), new Date(114, 5, 10), new Date(114, 7, 10), new LatLng(46.9, 0));
+		Project laveVaisselle = new Project("Nouveau ballons","Achat de nouveaux ballons de foot pour le club", "600", new Date(), new Date(114, 5, 10), new Date(114, 7, 10),new LatLng(43.591891, 3.846318));
+		Project renovation = new Project("Tournois d'échec","Besoin de financement pour organiser un concours d'échec à odysseum", "200", new Date(), new Date(114, 5, 10), new Date(114, 7, 10),new LatLng(43.603477, 3.918862));
+		
 		
 		ecole.validate();
 		parking.validate();
