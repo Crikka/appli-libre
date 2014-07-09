@@ -66,6 +66,7 @@ public class ServerEmulator {
 		Project parking = new Project("Fête des voisins","Besoin de financement pour organiser une fête des voisins", "500", new Date(), new Date(114, 5, 10), new Date(114, 7, 10), new LatLng(46.9, 0));
 		Project laveVaisselle = new Project("Nouveau ballons","Achat de nouveaux ballons de foot pour le club", "600", new Date(), new Date(114, 5, 10), new Date(114, 7, 10),new LatLng(43.591891, 3.846318));
 		Project renovation = new Project("Tournois d'échec","Besoin de financement pour organiser un concours d'échec à odysseum", "200", new Date(), new Date(114, 5, 10), new Date(114, 7, 10),new LatLng(43.603477, 3.918862));
+		Project lan = new Project("LAN Party","Achat de chips et de coca pour une LAN sur un jeu (Choix du jeu dans les commentaires !)", "200", new Date(), new Date(114, 5, 10), new Date(114, 7, 10),new LatLng(43.603477, 3.918862));
 		
 		
 		ecole.validate();
@@ -73,12 +74,14 @@ public class ServerEmulator {
 		laveVaisselle.validate();
 		renovation.validate();
 		lampadaire.validate();
-
+		lan.validate();
+		
 		projectsBase.put(ecole.id(), ecole);
 		projectsBase.put(parking.id(), parking);
 		projectsBase.put(laveVaisselle.id(), laveVaisselle);
 		projectsBase.put(renovation.id(), renovation);
 		projectsBase.put(lampadaire.id(), lampadaire);
+		projectsBase.put(lan.id(), lan);
 		/* ------------- */
 	}
 
