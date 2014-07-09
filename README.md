@@ -6,16 +6,10 @@ Application android open source de crowdfunding
 
 Version encore non stable, toujours en développement
 
-## 1.5 Support
-
-To use the widget on 1.5 the necessary drawables needs to be copied to that
-projects drawable folder. The drawables needed by the widget can be found in
-the drawable-hdpi folder in the library project.
-
 ## Contributors
 
 * [Lucas Nelaupe](http://www.lucasnelaupe.fr/) - <https://github.com/lucas34>
-* [Anthony]() - <https://github.com/crikka>
+* Anthony - <https://github.com/crikka>
 
 ## License
 
