@@ -55,7 +55,6 @@ public class TabProjetFragment extends Fragment {
 		params.height = metrics.widthPixels + 100;
 		graph.setLayoutParams(params);
 		
-		
 		m_titre = (TextView) view.findViewById(R.id.titre_projet_detail);
 		m_description = (TextView) view.findViewById(R.id.detail_projet_detail);
 		m_payer = (Button) view.findViewById(R.id.payer);
@@ -66,6 +65,7 @@ public class TabProjetFragment extends Fragment {
 		m_utilisateur_soumission = (TextView) view
 				.findViewById(R.id.utilisateur_soumission);
 		
+	//fd
 		m_progression = (CustomProgressBar) view
 				.findViewById(R.id.avancement_projet_liste);
 

@@ -22,8 +22,7 @@ public class GraphiqueView extends View {
 	private boolean isDrawing;
 	private float positionX;
 	private float positionY;
-	private int [] avancement = new int[11];
-	
+	private int[] avancement = new int[11];
 
 	/**
 	 * @param context
@@ -48,10 +47,7 @@ public class GraphiqueView extends View {
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		
-		
 
-		
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
 			isDrawing = true;
@@ -90,45 +86,28 @@ public class GraphiqueView extends View {
 		avancement[8] = 5;
 		avancement[9] = 15;
 		avancement[10] = 0;
-		
+
 		paint.setAntiAlias(true);
 
-		int nombreDeCarre = 10;
+		
 
 		int largeur = canvas.getWidth() - 10;
 		int hauteur = largeur;
 		int offset = 100; // décalement vertical
 
-		
-
-		for (int i = 0; i < nombreDeCarre + 1; i++) {
-			
-			if(i == 0){
-				paint.setColor(Color.rgb(109, 195, 41));
-			}
-			
-			// Horizontal
-			canvas.drawLine(0, i * (largeur / nombreDeCarre) + offset, largeur, i
-					* (largeur / nombreDeCarre) + offset, paint);
-			// Vertical
-			paint.setColor(Color.rgb(170, 170, 170));
-			canvas.drawLine(i * (largeur / nombreDeCarre), offset, i
-					* (largeur / nombreDeCarre) , largeur + offset, paint);
-
-		}
 		Paint textPaint = new Paint();
 		int xPos = (int) (canvas.getWidth() / 2);
-		int yPos = offset / 2 ;
+		int yPos = offset / 2;
 		textPaint.setTextAlign(Align.CENTER);
-	    textPaint.setTextSize(40);
-	    textPaint.setColor(Color.rgb(128, 128, 128));
+		textPaint.setTextSize(40);
+		textPaint.setColor(Color.rgb(128, 128, 128));
 		canvas.drawText("FUNDING PROGRESS", xPos, yPos, textPaint);
-		
-        textPaint = new Paint();
+
+		textPaint = new Paint();
 		xPos = (int) (3 * canvas.getWidth() / 4);
-		yPos = offset + 20 ;
-	    textPaint.setTextSize(20);
-	    textPaint.setColor(Color.rgb(109, 195, 41));
+		yPos = offset + 20;
+		textPaint.setTextSize(20);
+		textPaint.setColor(Color.rgb(109, 195, 41));
 		canvas.drawText("100 %", xPos, yPos, textPaint);
 
 		// Exemple de coubre
@@ -136,16 +115,34 @@ public class GraphiqueView extends View {
 		// / 100% = hauteur
 		// 30 % =
 
+		int nombreDeCarre = 10;
 		for (int i = 0; i < nombreDeCarre + 1; i++) {
 
-			//int random = (int) (Math.random() * (20 + 1 - 1)) + 1;
-			//System.out.println(random);
+			if (i == 0) {
+				paint.setColor(Color.rgb(109, 195, 41));
+			}
+
+			// Horizontal
+			canvas.drawLine(0, i * (largeur / nombreDeCarre) + offset, largeur,
+					i * (largeur / nombreDeCarre) + offset, paint);
+			// Vertical
+			paint.setColor(Color.rgb(210, 210, 210));
+			canvas.drawLine(i * (largeur / nombreDeCarre), offset, i
+					* (largeur / nombreDeCarre), largeur + offset, paint);
+
+		}
+		
+		for (int i = 0; i < nombreDeCarre + 1; i++) {
+
+			// int random = (int) (Math.random() * (20 + 1 - 1)) + 1;
+			// System.out.println(random);
 			int newPourcentage = pourcentageAccomplie + avancement[i];
 			if (newPourcentage > 100) {
 				newPourcentage = 100;
 			}
 
-			int yDepart = largeur - ((pourcentageAccomplie * hauteur) / 100) + offset;
+			int yDepart = largeur - ((pourcentageAccomplie * hauteur) / 100)
+					+ offset;
 			int yArrive = largeur - ((newPourcentage * hauteur) / 100) + offset;
 
 			int xDepart = i * (largeur / nombreDeCarre);
@@ -170,19 +167,20 @@ public class GraphiqueView extends View {
 			paint.setColor(Color.rgb(183, 0, 0));
 			paint.setStrokeWidth(2);
 			canvas.drawLine(xDepart, yDepart, xArrive, yArrive, paint);
-			
 
 			pourcentageAccomplie = newPourcentage;
 		}
-		
-		if(isDrawing){
+
+
+
+		if (isDrawing) {
 			paint.setColor(Color.rgb(183, 0, 0));
 			paint.setStrokeWidth(2);
-			canvas.drawLine(positionX, offset, positionX, largeur + offset, paint);
+			canvas.drawLine(positionX, offset, positionX, largeur + offset,
+					paint);
 			
-			
+
 		}
-		
-		
+
 	}
 }
