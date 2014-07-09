@@ -27,7 +27,7 @@ public class MainActivity extends Activity implements TabListener {
 	private Project projet;
 	private FrameLayout rl;
 	private TabProjetFragment fram1;
-	private TabFinancementFragment fram2;
+	private TabCommentaireFragment fram2;
 	private TabMapFragment fram3;
 
 	private Drawable m_favorite;
@@ -64,7 +64,7 @@ public class MainActivity extends Activity implements TabListener {
 			ActionBar bar = getActionBar();
 
 			bar.addTab(bar.newTab().setText("Projets").setTabListener(this));
-			bar.addTab(bar.newTab().setText("Financement").setTabListener(this));
+			bar.addTab(bar.newTab().setText("Commentaires").setTabListener(this));
 			bar.addTab(bar.newTab().setText("Localisation")
 					.setTabListener(this));
 
@@ -93,9 +93,9 @@ public class MainActivity extends Activity implements TabListener {
 			fram1 = new TabProjetFragment();
 			ft.replace(rl.getId(), fram1);
 
-		} else if (tab.getText().equals("Financement")) {
+		} else if (tab.getText().equals("Commentaires")) {
 
-			fram2 = new TabFinancementFragment();
+			fram2 = new TabCommentaireFragment();
 			ft.replace(rl.getId(), fram2);
 
 		} else if (tab.getText().equals("Localisation")) {

@@ -6,6 +6,7 @@
     android:orientation="vertical" >
 
     <LinearLayout
+        android:id="@+id/ll"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -78,16 +79,16 @@
             android:progress="0"
             android:progressDrawable="@drawable/progressbar" />
 
-      <Button
+        <Button
             android:id="@+id/payer"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="6dip"
+            android:layout_marginTop="6dip"
             android:background="#d0d0d0"
             android:drawableLeft="@drawable/paypal"
-            android:layout_marginTop="6dip"
-            android:layout_marginBottom="6dip"
-            android:text="Participer"
             android:gravity="center"
+            android:text="Participer"
             android:textColor="#808080"
             android:textSize="30sp" />
 
@@ -98,18 +99,11 @@
             android:text="@string/projet_soumission"
             android:textSize="12sp" />
 
-        <RatingBar
-            android:id="@+id/rating_bar_projet_detail"
-            android:layout_width="wrap_content"
+        <adullact.publicrowdfunding.controlleur.detailProjet.GraphiqueView
+            android:id="@+id/graphique"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center" />
-
-        <ListView
-            android:id="@+id/commentaires"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-        </ListView>
+            android:layout_marginTop="10dp" />
     </LinearLayout>
 
 </LinearLayout>

@@ -9,10 +9,12 @@ import adullact.publicrowdfunding.shared.Commentary;
 import adullact.publicrowdfunding.shared.Project;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.RatingBar.OnRatingBarChangeListener;
@@ -26,9 +28,8 @@ public class TabProjetFragment extends Fragment {
 	private TextView m_jour_restant;
 	private TextView m_utilisateur_soumission;
 	private Button m_payer;
-	private RatingBar m_notation;
 	private CustomProgressBar m_progression;
-	private ListView lv;
+
 
 	private Project projet;
 
@@ -42,31 +43,19 @@ public class TabProjetFragment extends Fragment {
 		MainActivity activity = (MainActivity) getActivity();
 		projet = activity.getIdProjet();
 
-		lv = (ListView) view.findViewById(R.id.commentaires);
+		
+		
+		
+		GraphiqueView graph = (GraphiqueView) view.findViewById(R.id.graphique);
+		DisplayMetrics metrics = new DisplayMetrics();
+		getActivity().getWindowManager().getDefaultDisplay()
+				.getMetrics(metrics);
 
-		CommentaireAdapteur adapter = new CommentaireAdapteur(getActivity()
-				.getApplicationContext(), R.layout.listitem_discuss);
-		// Ajout de quelques commentaires de test
-		adapter.add(new Commentary(0, null, null, projet, "Trop cool",
-				"Trop cool", 0));
-		adapter.add(new Commentary(1, null, null, projet, "Bonne idée",
-				"Bonne idée", 0));
-		adapter.add(new Commentary(2, null, null, projet, "Idée de merde",
-				"Idée de merde", 0));
-		adapter.add(new Commentary(3, null, null, projet, "Au top", "Au top", 0));
-		adapter.add(new Commentary(4, null, null, projet, "Je test le scroll",
-				"Je test le scroll", 0));
-		adapter.add(new Commentary(
-				5,
-				null,
-				null,
-				projet,
-				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec molestie hendrerit lorem, vitae viverra nisl convallis at. Morbi venenatis, ipsum mattis pharetra dictum, turpis mauris rutrum ante, et laoreet nibh tellus in lorem. Donec tincidunt elit sit amet tincidunt luctus. Curabitur et lectus nec augue pretium tempus ac quis mauris.",
-				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec molestie hendrerit lorem, vitae viverra nisl convallis at. Morbi venenatis, ipsum mattis pharetra dictum, turpis mauris rutrum ante, et laoreet nibh tellus in lorem. Donec tincidunt elit sit amet tincidunt luctus. Curabitur et lectus nec augue pretium tempus ac quis mauris.",
-				0));
-
-		lv.setAdapter(adapter);
-
+		android.view.ViewGroup.LayoutParams params = graph.getLayoutParams();
+		params.height = metrics.widthPixels + 100;
+		graph.setLayoutParams(params);
+		
+		
 		m_titre = (TextView) view.findViewById(R.id.titre_projet_detail);
 		m_description = (TextView) view.findViewById(R.id.detail_projet_detail);
 		m_payer = (Button) view.findViewById(R.id.payer);
@@ -76,8 +65,7 @@ public class TabProjetFragment extends Fragment {
 				.findViewById(R.id.nombre_jour_restant_detail);
 		m_utilisateur_soumission = (TextView) view
 				.findViewById(R.id.utilisateur_soumission);
-		m_notation = (RatingBar) view
-				.findViewById(R.id.rating_bar_projet_detail);
+		
 		m_progression = (CustomProgressBar) view
 				.findViewById(R.id.avancement_projet_liste);
 
@@ -97,20 +85,7 @@ public class TabProjetFragment extends Fragment {
 		m_jour_restant.setText("Date de creation : " + date.getDayOfMonth()
 				+ "/" + date.getMonthOfYear() + "/" + date.getYear());
 
-		System.out.println("Notation");
-		m_notation
-				.setOnRatingBarChangeListener(new OnRatingBarChangeListener() {
-
-					@Override
-					public void onRatingChanged(RatingBar ratingBar,
-							float rating, boolean fromUser) {
-						System.out.println(rating);
-						ajouterCommentaireAlert commentaireBuilder = new ajouterCommentaireAlert(
-								getActivity(), rating);
-						commentaireBuilder.show();
-					}
-
-				});
+		
 
 		m_payer.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
