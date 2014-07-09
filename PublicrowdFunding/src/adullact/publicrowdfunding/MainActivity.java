@@ -36,8 +36,8 @@ public class MainActivity extends Activity implements TabListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
-		
+
+
 		ServerEmulator serveur = ServerEmulator.instance();
 		HashMap<String, Project> hashproj = serveur.getAllProjets();
 
@@ -46,14 +46,15 @@ public class MainActivity extends Activity implements TabListener {
 
 			projets.add(projet);
 		}
-		
+
 		m_ajouter_projet = (ImageButton) findViewById(R.id.button_soumettre_projet);
 		m_ajouter_projet.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 
-				Intent in = new Intent(getBaseContext()
-						.getApplicationContext(), SoumettreProjetActivity.class);
+				Intent in = new Intent(
+						getBaseContext().getApplicationContext(),
+						SoumettreProjetActivity.class);
 				startActivity(in);
 
 			}
@@ -63,8 +64,9 @@ public class MainActivity extends Activity implements TabListener {
 		m_mon_compte.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent in = new Intent(getBaseContext()
-						.getApplicationContext(), ConnexionActivity.class);
+				Intent in = new Intent(
+						getBaseContext().getApplicationContext(),
+						ConnexionActivity.class);
 				startActivity(in);
 			}
 		});
@@ -73,16 +75,16 @@ public class MainActivity extends Activity implements TabListener {
 		m_rechercher.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				SearchDialog alertDialogBuilder = new SearchDialog(getBaseContext());
+				SearchDialog alertDialogBuilder = new SearchDialog(
+						getBaseContext());
 				alertDialogBuilder.show();
 
 			}
 		});
 
-		
 		try {
 			rl = (FrameLayout) findViewById(R.id.tabcontent);
-			
+
 			ActionBar bar = getActionBar();
 
 			bar.addTab(bar.newTab().setText("Projets").setTabListener(this));
@@ -101,8 +103,7 @@ public class MainActivity extends Activity implements TabListener {
 			e.getMessage();
 		}
 
-
-	}		
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -118,20 +119,20 @@ public class MainActivity extends Activity implements TabListener {
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
 
 		if (tab.getText().equals("Projets")) {
-			
+
 			fram1 = new TabProjetsFragment();
 			ft.replace(rl.getId(), fram1);
-			
+
 		} else if (tab.getText().equals("Favoris")) {
-			
+
 			fram2 = new TabFavorisFragment();
 			ft.replace(rl.getId(), fram2);
-			
+
 		} else if (tab.getText().equals("Localisation")) {
 
 			fram3 = new TabMapFragment();
 			ft.replace(rl.getId(), fram3);
-		 
+
 		}
 	}
 
@@ -139,10 +140,11 @@ public class MainActivity extends Activity implements TabListener {
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 
 	}
-	
-	public Vector<Project> getProjets(){
-		
+
+	public Vector<Project> getProjets() {
+
 		return projets;
 	}
+
 
 }
