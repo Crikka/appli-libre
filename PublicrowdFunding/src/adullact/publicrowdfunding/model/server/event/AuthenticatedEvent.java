@@ -9,14 +9,18 @@ public abstract class AuthenticatedEvent
 TEvent extends AuthenticatedEvent<TRequest, TEvent, TErrorHandler>,
 TErrorHandler extends AuthenticatedErrorHandler<TRequest, TEvent, TErrorHandler>>
 extends Event<TRequest, TEvent, TErrorHandler> {
+
+    /* Callback functions */
+    public abstract void errorAuthenticationFailed(String pseudo, String password);
+	/* ----------------- */
+
 	final protected void retryWithAnotherLogin(String username, String password) {
 		final Event<TRequest, TEvent, TErrorHandler> contextualEvent = this;
         request().changeAuthentication(username, password);
 		UserRequester.authenticateUser(username, password, new AuthenticationEvent() {
 
             @Override
-            public void ifUserIsAdministrator() {
-            }
+            public void ifUserIsAdministrator() {}
 
             @Override
             public void onAuthenticate() {
@@ -24,8 +28,10 @@ extends Event<TRequest, TEvent, TErrorHandler> {
             }
 
             @Override
-            public void errorUserNotExists(String pseudo, String password) {
-            }
+            public void errorUserNotExists(String pseudo, String password) {}
+
+            @Override
+            public void errorAuthenticationFailed(String pseudo, String password) {}
         });
 	}
 }

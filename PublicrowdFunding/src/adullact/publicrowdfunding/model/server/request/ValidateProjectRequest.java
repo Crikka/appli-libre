@@ -22,7 +22,7 @@ public class ValidateProjectRequest extends AuthenticatedRequest<ValidateProject
 
 	@Override
 	public void execute() {
-        ServerInfo.ServerProject serverProject = new ServerInfo.ServerProject();
+        ServerProject serverProject = new ServerProject();
         serverProject.id = m_project.id();
         serverProject.name = m_project.name();
         serverProject.description = m_project.description();
@@ -30,35 +30,39 @@ public class ValidateProjectRequest extends AuthenticatedRequest<ValidateProject
         serverProject.currentFunding = m_project.currentFunding();
         serverProject.creationDate = m_project.creationDate().toDate();
         serverProject.validate = m_toValidate;
+
         service().modifyProject(m_project.id(), serverProject).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .onErrorReturn(new Func1<Throwable, ServerInfo.SimpleServerResponse>() {
+                .onErrorReturn(new Func1<Throwable, SimpleServerResponse>() {
 
                     @Override
-                    public ServerInfo.SimpleServerResponse call(Throwable arg0) {
+                    public SimpleServerResponse call(Throwable arg0) {
                         return null;
                     }
 
                 })
-                .subscribe(new Action1<ServerInfo.SimpleServerResponse>() {
+                .subscribe(new Action1<SimpleServerResponse>() {
 
                     @Override
-                    public void call(ServerInfo.SimpleServerResponse response) {
-                        if (errorHandler().isOk()) {
-                            done();
-                            switch (response.code) {
-                                case 0: // Ok!
-                                    m_project.validate();
-                                    event().onValidateProject(m_project);
-                                    break;
-                                case 1:
-                                    break;
-                                case 2: // ServerError
-                                    break;
-                            }
+                    public void call(SimpleServerResponse response) {
+                        if (response == null) {
+                            errorHandler().manageCallback();
+                            return;
+                        }
+
+                        switch (response.code) {
+                            case 0: // Ok!
+                                done();
+                                m_project.validate();
+                                event().onValidateProject(m_project);
+                                break;
+                            case 1:
+                                break;
+                            case 2: // ServerError
+                                break;
                         }
                     }
                 });
-	}
+    }
 
 	@Override
 	public Project project() {

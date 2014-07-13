@@ -9,8 +9,8 @@ public abstract class AuthenticatedRequest
 TEvent extends AuthenticatedEvent<TRequest, TEvent, TErrorHandler>,
 TErrorHandler extends AuthenticatedErrorHandler<TRequest, TEvent, TErrorHandler>>
 extends Request<TRequest, TEvent, TErrorHandler> {
-	protected String m_username;
-	protected String m_password;
+	private String m_username;
+    private String m_password;
 	
 	public AuthenticatedRequest(TEvent event, TErrorHandler errorHandler) {
 		super(event, errorHandler);
@@ -34,6 +34,14 @@ extends Request<TRequest, TEvent, TErrorHandler> {
 		this.m_password = password;
 		
 	}
+
+    public String username() {
+        return m_username;
+    }
+
+    public String password() {
+        return m_password;
+    }
 
     public void changeAuthentication(String username, String password) {
         SecurityRequestInterceptor securityRequestInterceptor = new SecurityRequestInterceptor();

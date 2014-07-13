@@ -21,26 +21,33 @@ public class DeleteUserRequest extends AuthenticatedRequest<DeleteUserRequest, D
     @Override
     public void execute() {
         service().deleteUser(m_username).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .onErrorReturn(new Func1<Throwable, ServerInfo.SimpleServerResponse>() {
+                .onErrorReturn(new Func1<Throwable, SimpleServerResponse>() {
 
                     @Override
-                    public ServerInfo.SimpleServerResponse call(Throwable throwable) {
+                    public SimpleServerResponse call(Throwable throwable) {
                         return null;
                     }
 
                 })
-                .subscribe(new Action1<ServerInfo.SimpleServerResponse>() {
+                .subscribe(new Action1<SimpleServerResponse>() {
 
                     @Override
-                    public void call(ServerInfo.SimpleServerResponse response) {
-                        if (errorHandler().isOk()) {
-                            done();
-                        } else {
+                    public void call(SimpleServerResponse response) {
+                        if (response == null) {
+                            errorHandler().manageCallback();
+                            return;
+                        }
 
+                        switch (response.code) {
+                            case 0: // Ok!
+                                done();
+                                event().onDeleteUser(m_username);
+                                break;
+                            case 1:
+                                event().errorUsernameDoesNotExist(m_username);
+                                break;
                         }
                     }
-
-                    ;
                 });
     }
 }

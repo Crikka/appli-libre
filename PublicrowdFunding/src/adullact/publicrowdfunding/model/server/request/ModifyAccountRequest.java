@@ -10,12 +10,12 @@ import adullact.publicrowdfunding.model.server.event.ModifyAccountEvent;
 import adullact.publicrowdfunding.shared.Share;
 
 public class ModifyAccountRequest extends AuthenticatedRequest<ModifyAccountRequest, ModifyAccountEvent, ModifyAccountErrorHandler> {
-	private ServerInfo.ServerUser m_serverUser;
+	private ServerUser m_serverUser;
 
 	public ModifyAccountRequest(String newPassWord, String newName, String newFirstName, ModifyAccountEvent event) {
 		super(event, new ModifyAccountErrorHandler());
 		
-		m_serverUser = new ServerInfo.ServerUser();
+		m_serverUser = new ServerUser();
         m_serverUser.password = newPassWord == null ? Share.user.password() : newPassWord;
         m_serverUser.name = newName == null ? Share.user.name() : newName;
 		m_serverUser.firstName = newFirstName == null ? Share.user.firstName() : newFirstName;
@@ -25,21 +25,25 @@ public class ModifyAccountRequest extends AuthenticatedRequest<ModifyAccountRequ
 	@Override
 	public void execute() {
 		service().modifyUser(m_serverUser, Share.user.pseudo()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-		.onErrorReturn(new Func1<Throwable, ServerInfo.SimpleServerResponse>() {
+		.onErrorReturn(new Func1<Throwable, SimpleServerResponse>() {
 
 			@Override
-			public ServerInfo.SimpleServerResponse call(Throwable arg0) {
+			public SimpleServerResponse call(Throwable arg0) {
                 return null;
 			}
 			
 		})
-		.subscribe(new Action1<ServerInfo.SimpleServerResponse>() {
+		.subscribe(new Action1<SimpleServerResponse>() {
 			
 			@Override
-			public void call(ServerInfo.SimpleServerResponse response) {
-				int  returnCode = response.code;
-				if(errorHandler().isOk()){
-					switch(returnCode){
+			public void call(SimpleServerResponse response) {
+                if (response == null) {
+                    errorHandler().manageCallback();
+                    return;
+                }
+
+				int  code = response.code;
+					switch(code){
 					case 0: // Created
 						done();
 						Share.user.defineFields(Share.user.pseudo(), m_serverUser.password, m_serverUser.name, m_serverUser.firstName);
@@ -48,14 +52,13 @@ public class ModifyAccountRequest extends AuthenticatedRequest<ModifyAccountRequ
 					case 1: // Error, missing username or password
 						break;
 					case 2: // User don't exist
-						event().errorUsernameDoesNotExist(m_username);
+						event().errorUsernameDoesNotExist(Share.user.pseudo());
 						break;
 					case 3: // missing authentication
 						event().errorAuthenticationRequired();
 						break;
 					}
-				}
-			};
+			}
 		});
 	}
 

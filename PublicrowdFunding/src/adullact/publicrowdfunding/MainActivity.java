@@ -6,6 +6,7 @@ import java.util.Vector;
 
 import adullact.publicrowdfunding.controlleur.ajouterProjet.SoumettreProjetActivity;
 import adullact.publicrowdfunding.controlleur.membre.ConnexionActivity;
+import adullact.publicrowdfunding.model.server.ExampleAndTest;
 import adullact.publicrowdfunding.model.server.ServerEmulator;
 import adullact.publicrowdfunding.shared.Project;
 import android.app.ActionBar;
@@ -15,6 +16,7 @@ import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -40,6 +42,9 @@ public class MainActivity extends Activity implements TabListener {
 
 		ServerEmulator serveur = ServerEmulator.instance();
 		HashMap<String, Project> hashproj = serveur.getAllProjets();
+
+        ExampleAndTest ex = new ExampleAndTest();
+        ex.createUser();
 
 		for (Entry<String, Project> entry : hashproj.entrySet()) {
 			Project projet = entry.getValue();

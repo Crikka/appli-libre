@@ -1,5 +1,7 @@
 package adullact.publicrowdfunding.model.server;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -32,6 +34,11 @@ public class ExampleAndTest {
             public void errorUserNotExists(String pseudo, String password) {
                 System.out.println("Impossible de trouver " + pseudo + " avec le mot de passe : " + password);
             }
+
+            @Override
+            public void errorAuthenticationFailed(String pseudo, String password) {
+
+            }
         });
 	}
 
@@ -52,6 +59,11 @@ public class ExampleAndTest {
             public void errorUserNotExists(String pseudo, String password) {
                 System.out.println("Impossible de trouver " + pseudo + " avec le mot de passe : " + password);
             }
+
+            @Override
+            public void errorAuthenticationFailed(String pseudo, String password) {
+
+            }
         });
 	}
 
@@ -71,6 +83,11 @@ public class ExampleAndTest {
             @Override
             public void errorUserNotExists(String pseudo, String password) {
                 System.out.println("Impossible de trouver " + pseudo + " avec le mot de passe : " + password);
+            }
+
+            @Override
+            public void errorAuthenticationFailed(String pseudo, String password) {
+
             }
         });
 	}
@@ -112,6 +129,11 @@ public class ExampleAndTest {
 							}
 						});*/
                     }
+
+                    @Override
+                    public void errorAuthenticationFailed(String pseudo, String password) {
+
+                    }
                 }, new LatLng(50, 6));
             }
 
@@ -119,11 +141,16 @@ public class ExampleAndTest {
             public void errorUserNotExists(String pseudo, String password) {
                 System.out.println("Impossible de trouver " + pseudo + " avec le mot de passe : " + password);
             }
+
+            @Override
+            public void errorAuthenticationFailed(String pseudo, String password) {
+
+            }
         });
 	}
 
 	public void createUser() {
-		UserRequester.createUser("Francis", "123456", "Nicolas", "Du bonchaux", new CreateUserEvent() {
+        UserRequester.createUser("Francis", "123456", "Nicolas", "Du bonchaux", new CreateUserEvent() {
 
 			@Override
 			public void onCreateUser() {
@@ -173,12 +200,22 @@ public class ExampleAndTest {
 								// TODO Auto-generated method stub
 								
 							}
+
+                            @Override
+                            public void errorAuthenticationFailed(String pseudo, String password) {
+
+                            }
                         });
                     }
 
                     @Override
                     public void errorUserNotExists(String pseudo, String password) {
                         System.out.println("laure a pas pu être connecter");
+                    }
+
+                    @Override
+                    public void errorAuthenticationFailed(String pseudo, String password) {
+
                     }
                 });
 			}
@@ -217,6 +254,11 @@ public class ExampleAndTest {
                     public void errorAdministratorOrOwnerRequired() {
 
                     }
+
+                    @Override
+                    public void errorAuthenticationFailed(String pseudo, String password) {
+
+                    }
                 });
 			}
 
@@ -228,18 +270,25 @@ public class ExampleAndTest {
 	}
 
 	public void listAllUsers() {
-		UserRequester.createUser("Laure"+Math.random()*1500, "150m", "Manodou", "Laura", new CreateUserEvent() {
+        Log.i("Triumvirat", "Je suis là");
+        UserRequester.createUser("Laure"+Math.random()*1500, "150m", "Manodou", "Laura", new CreateUserEvent() {
 
 			@Override
 			public void onCreateUser() {
-				authenticate();
+                Log.i("Triumvirat", "Creation de laure");
+                authenticate();
 				UserRequester.listOfAllUser(new UsersListingEvent() {
 
 					@Override
 					public void onUsersReceived(ArrayList<User> users) {
-						System.out.println("hello");
+                        Log.i("Example", "je suis là");
 					}
-				});
+
+                    @Override
+                    public void errorAuthenticationFailed(String pseudo, String password) {
+
+                    }
+                });
 			}
 
 			@Override
@@ -251,7 +300,12 @@ public class ExampleAndTest {
 					public void onUsersReceived(ArrayList<User> users) {
 						System.out.println("hello");
 					}
-				});
+
+                    @Override
+                    public void errorAuthenticationFailed(String pseudo, String password) {
+
+                    }
+                });
 			}
 		});
 	}

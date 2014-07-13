@@ -1,5 +1,12 @@
 package adullact.publicrowdfunding.model.server.errorHandler;
 
+import android.util.Log;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 import retrofit.RetrofitError;
 import adullact.publicrowdfunding.model.server.ServerObject;
 import adullact.publicrowdfunding.model.server.event.Event;
@@ -10,20 +17,34 @@ public abstract class ErrorHandler
 TEvent extends Event<TRequest, TEvent, TErrorHandler>, 
 TErrorHandler extends ErrorHandler<TRequest, TEvent, TErrorHandler>> 
 extends ServerObject<TRequest, TEvent, TErrorHandler> implements retrofit.ErrorHandler {
-	private boolean m_ok = true;
+    private boolean m_networkError = false;
+
+    public void manageCallback() {
+        if(m_networkError) {
+            event().errorNetwork();
+        }
+    }
 
     @Override
     public Throwable handleError(RetrofitError error) {
-        fail();
-        System.out.println(error.getMessage());
+        m_networkError = error.isNetworkError();
+        Log.i("Triumvirat", error.getMessage());
+        try {
+            Log.i("Triumvirat", streamToString(error.getResponse().getBody().in()));
+        } catch (IOException e) {
+            Log.i("Triumvirat", "AHHHHHHHHHHHHHHHHHHHHHHHHH");
+            e.printStackTrace();
+        }
         return error;
     }
-	
-	final protected void fail() {
-		m_ok = false;
-	}
-	
-	final public boolean isOk() {
-		return m_ok;
-	}
+
+    private String streamToString(InputStream is) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+        String line;
+        while ((line = rd.readLine()) != null) {
+            sb.append(line);
+        }
+        return sb.toString();
+    }
 }

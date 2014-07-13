@@ -23,7 +23,7 @@ public class SecurityRequestInterceptor implements RequestInterceptor {
 
 	@Override
 	public void intercept(RequestFacade requestFacade) {
-        requestFacade.addHeader("apiKey", "adrtyuRyUO25J10SS");
+        requestFacade.addHeader("apiKey", "azerty");
         if(authenticator) {
             final String userAndPassword = username + ":" + password;
             final String encodedUserAndPassword = "Basic " + Base64.encodeToString(userAndPassword.getBytes(), 0);

@@ -30,21 +30,21 @@ public class UsersListingRequest extends AuthenticatedRequest<UsersListingReques
     @Override
     public void execute() {
         service().listUsers(m_filter).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .onErrorReturn(new Func1<Throwable, ArrayList<ServerInfo.ServerUser>>() {
+                .onErrorReturn(new Func1<Throwable, ArrayList<ServerUser>>() {
 
                     @Override
-                    public ArrayList<ServerInfo.ServerUser> call(Throwable arg0) {
+                    public ArrayList<ServerUser> call(Throwable arg0) {
                         return null;
                     }
 
                 })
-                .subscribe(new Action1<ArrayList<ServerInfo.ServerUser>>() {
+                .subscribe(new Action1<ArrayList<ServerUser>>() {
 
                     @Override
-                    public void call(ArrayList<ServerInfo.ServerUser> response) {
+                    public void call(ArrayList<ServerUser> response) {
                         done();
                         ArrayList<User> users = new ArrayList<User>();
-                        for(ServerInfo.ServerUser user : response) {
+                        for(ServerUser user : response) {
                             User buffer = new User();
                             buffer.defineFields(user.username, null, user.name, user.firstName);
                             users.add(buffer);

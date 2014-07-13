@@ -6,7 +6,8 @@ import adullact.publicrowdfunding.model.server.request.DeleteUserRequest;
 public abstract class DeleteUserEvent extends AuthenticatedEvent<DeleteUserRequest, DeleteUserEvent, DeleteUserErrorHandler>  {
 
 	/* Callback functions */
-    // TODO
+    public abstract void errorUsernameDoesNotExist(String username);
+    public abstract void onDeleteUser(String username);
     /* ----------------- */
 
 }

@@ -376,7 +376,11 @@ public class SoumettreProjetActivity extends Activity {
 
 						}
 
-					}, position);
+                        @Override
+                        public void errorAuthenticationFailed(String pseudo, String password) {
+
+                        }
+                    }, position);
 
 			return true;
 

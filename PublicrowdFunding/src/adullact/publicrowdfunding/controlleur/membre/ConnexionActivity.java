@@ -79,6 +79,11 @@ public class ConnexionActivity extends Activity {
                                         "Login ou mot de passe incorect",
                                         Toast.LENGTH_LONG).show();
                             }
+
+                            @Override
+                            public void errorAuthenticationFailed(String pseudo, String password) {
+
+                            }
                         });
 			}
 		});

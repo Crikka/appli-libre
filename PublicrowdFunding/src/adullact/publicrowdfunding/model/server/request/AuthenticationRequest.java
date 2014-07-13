@@ -37,19 +37,23 @@ public class AuthenticationRequest extends AuthenticatedRequest<AuthenticationRe
 	@Override
 	public void execute() {
 		service().authenticate().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-		.onErrorReturn(new Func1<Throwable, ServerInfo.DetailedServerUser>() {
+		.onErrorReturn(new Func1<Throwable, DetailedServerUser>() {
 
 			@Override
-			public ServerInfo.DetailedServerUser call(Throwable arg0) {
+			public DetailedServerUser call(Throwable arg0) {
 				return null;
 			}
 			
 		})
-		.subscribe(new Action1<ServerInfo.DetailedServerUser>() {
+		.subscribe(new Action1<DetailedServerUser>() {
 
 			@Override
-			public void call(ServerInfo.DetailedServerUser user) {
-				if(errorHandler().isOk()){
+			public void call(DetailedServerUser user) {
+                if(user == null) {
+                    errorHandler().manageCallback();
+                    return;
+                }
+
 					done();
 					if(user.administrator == "0") {
 						Share.user = new User();
@@ -60,15 +64,12 @@ public class AuthenticationRequest extends AuthenticatedRequest<AuthenticationRe
                         authenticateAndInitializeUser(user);
 					}
 					event().onAuthenticate();
-				}
-				else {
 			    	event().errorUserNotExists(username(), password());
-				}
 			};
 		});
 	}
 
-	private void authenticateAndInitializeUser(ServerInfo.ServerUser serverUser) {
+	private void authenticateAndInitializeUser(ServerUser serverUser) {
 		Share.user.defineFields(serverUser.username, m_password, serverUser.name, serverUser.firstName);
 		Share.user.authentificate();
 	}
