@@ -6,15 +6,14 @@ import java.util.Date;
 
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.custom.CarouselAdapter;
-import adullact.publicrowdfunding.model.server.ProjectRequester;
-import adullact.publicrowdfunding.model.server.event.CreateProjectEvent;
-import adullact.publicrowdfunding.shared.Project;
+import adullact.publicrowdfunding.model.local.ressource.Project;
+import adullact.publicrowdfunding.model.server.event.CreateEvent;
+
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -29,7 +28,6 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -350,37 +348,33 @@ public class SoumettreProjetActivity extends Activity {
 			calendar.set(year, month, day);
 			date_fin = calendar.getTime();
 
-			ProjectRequester.createProject(titre, description,
-					m_somme_a_recolter, now, date_fin,
-					new CreateProjectEvent() {
+            Project project = new Project(); // TODO titre, description, m_somme_a_recolter, now, date_fin,
+            project.serverCreate(new CreateEvent<Project>() {
 
 						@Override
 						public void errorAuthenticationRequired() {
 							Toast.makeText(context, "Connexion required",
 									Toast.LENGTH_SHORT).show();
 
-						}
-
-						@Override
-						public void ifUserIsAdministrator() {
-							Toast.makeText(context, "Projet ajouté",
-									Toast.LENGTH_SHORT).show();
+                            // Invite le à se reconnecté/connecté avec : retryWithAnotherAccount();
 
 						}
 
-						@Override
-						public void onProjectAdded(Project project) {
-							Toast.makeText(context,
-									"Projet en attente de validation",
-									Toast.LENGTH_SHORT).show();
+                @Override
+                public void errorResourceIdAlreadyUsed(String id) {
 
-						}
+                }
 
-                        @Override
-                        public void errorAuthenticationFailed(String pseudo, String password) {
-
-                        }
-                    }, position);
+                @Override
+                public void onCreate(Project project) {
+                    Toast.makeText(context,
+                            "Projet en attente de validation",
+                            Toast.LENGTH_SHORT).show();
+                    if(isAdmin()) {
+                        // On  valide ?
+                    }
+                }
+            });
 
 			return true;
 

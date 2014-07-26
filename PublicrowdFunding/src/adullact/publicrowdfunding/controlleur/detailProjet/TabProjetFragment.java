@@ -3,10 +3,8 @@ package adullact.publicrowdfunding.controlleur.detailProjet;
 import org.joda.time.DateTime;
 
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.custom.CommentaireAdapteur;
 import adullact.publicrowdfunding.custom.CustomProgressBar;
-import adullact.publicrowdfunding.shared.Commentary;
-import adullact.publicrowdfunding.shared.Project;
+import adullact.publicrowdfunding.model.local.ressource.Project;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -15,10 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RatingBar;
-import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.TextView;
 
 public class TabProjetFragment extends Fragment {
@@ -66,8 +60,8 @@ public class TabProjetFragment extends Fragment {
 				.findViewById(R.id.avancement_projet_liste);
 		m_illustration = (ImageView) view.findViewById(R.id.icon);
 
-		if (projet.illustration() != 0) {
-			m_illustration.setImageResource(projet.illustration());
+		if (projet.getIllustration() != 0) {
+			m_illustration.setImageResource(projet.getIllustration());
 		} else {
 			m_illustration.setImageResource(R.drawable.ic_launcher);
 		}
@@ -80,10 +74,10 @@ public class TabProjetFragment extends Fragment {
 		m_progression.setArgent(5000 * projet.getPercentOfAchievement() / 100);
 		m_progression.setProgress(projet.getPercentOfAchievement());
 		m_progression.setMaxArgent(5000);
-		projet.creationDate();
-		m_titre.setText(projet.name());
-		m_description.setText(projet.description());
-		DateTime date = projet.creationDate();
+		projet.getCreationDate();
+		m_titre.setText(projet.getName());
+		m_description.setText(projet.getDescription());
+		DateTime date = projet.getCreationDate();
 
 		m_jour_restant.setText("Date de creation : " + date.getDayOfMonth()
 				+ "/" + date.getMonthOfYear() + "/" + date.getYear());
@@ -94,7 +88,7 @@ public class TabProjetFragment extends Fragment {
 				projet.finance("50");
 				m_progression.setProgress(m_progression.getProgress() + 1);
 				m_progression.setArgent(Integer.parseInt(projet
-						.currentFunding()));
+						.getCurrentFunding()));
 
 				/*
 				 * Paypal choisirMontantDialog alertDialogBuilder = new

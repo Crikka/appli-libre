@@ -3,11 +3,12 @@ package adullact.publicrowdfunding;
 import java.util.HashMap;
 import java.util.Vector;
 
-import adullact.publicrowdfunding.shared.Project;
+import adullact.publicrowdfunding.model.local.ressource.Project;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -63,11 +64,11 @@ public class TabMapFragment extends Fragment implements
 				if (googleMap != null) {
 					for (Project proj : projets) {
 						MarkerOptions marker = new MarkerOptions();
-						marker.position(proj.position());
-						marker.title(proj.name());
-						marker.snippet(proj.description());
+						marker.position(proj.getPosition());
+						marker.title(proj.getName());
+						marker.snippet(proj.getDescription());
 						Marker m = googleMap.addMarker(marker);
-						markers.put(m, proj.id());
+						markers.put(m, proj.getId());
 
 					}
 
@@ -89,18 +90,13 @@ public class TabMapFragment extends Fragment implements
 
 	@Override
 	public void onInfoWindowClick(Marker marker) {
-		
-
-/*	
- * String id = markers.get(marker);
+		String id = markers.get(marker);
 		System.out.println("test");
 		Intent intent = new Intent(
 				getActivity().getParent(),
 				adullact.publicrowdfunding.controlleur.detailProjet.MainActivity.class);
 		intent.putExtra("key", id);
 		 ((MainActivity) getActivity()).startActivity(intent);
-	*/	
-
 	}
 
 }

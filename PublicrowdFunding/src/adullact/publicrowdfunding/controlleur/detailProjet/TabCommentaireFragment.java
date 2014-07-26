@@ -2,11 +2,10 @@ package adullact.publicrowdfunding.controlleur.detailProjet;
 
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.custom.CommentaireAdapteur;
-import adullact.publicrowdfunding.shared.Commentary;
-import adullact.publicrowdfunding.shared.Project;
+import adullact.publicrowdfunding.model.local.ressource.Commentary;
+import adullact.publicrowdfunding.model.local.ressource.Project;
 import android.app.Fragment;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

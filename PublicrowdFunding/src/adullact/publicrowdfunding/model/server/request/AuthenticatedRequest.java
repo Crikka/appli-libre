@@ -1,5 +1,7 @@
 package adullact.publicrowdfunding.model.server.request;
 
+import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
+import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.server.errorHandler.AuthenticatedErrorHandler;
 import adullact.publicrowdfunding.model.server.event.AuthenticatedEvent;
 import adullact.publicrowdfunding.shared.Share;
@@ -15,12 +17,18 @@ extends Request<TRequest, TEvent, TErrorHandler> {
 	public AuthenticatedRequest(TEvent event, TErrorHandler errorHandler) {
 		super(event, errorHandler);
 
+        try {
+            this.m_username = Account.getOwn().getUsername();
+            this.m_password = Account.getOwn().getPassword();
+        } catch (NoAccountExistsInLocal noAccountExistsInLocal) { // Never will append
+            this.m_username = "";
+            this.m_password = "" ;
+        }
+
         SecurityRequestInterceptor securityRequestInterceptor = new SecurityRequestInterceptor();
-        securityRequestInterceptor.defineAuthenticator(Share.user.pseudo(), Share.user.password());
+        securityRequestInterceptor.defineAuthenticator(m_username, m_password);
         defineRequestInterceptor(securityRequestInterceptor);
-		
-		this.m_username = Share.user.pseudo();
-		this.m_password = Share.user.password();
+
 	}
 	
 	public AuthenticatedRequest(String username, String password, TEvent event, TErrorHandler errorHandler) {

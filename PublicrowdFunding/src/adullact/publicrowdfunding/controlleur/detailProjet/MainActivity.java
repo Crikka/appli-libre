@@ -3,8 +3,10 @@ package adullact.publicrowdfunding.controlleur.detailProjet;
 import java.util.HashMap;
 
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.model.server.ServerEmulator;
-import adullact.publicrowdfunding.shared.Project;
+import adullact.publicrowdfunding.model.local.cache.Cache;
+import adullact.publicrowdfunding.model.local.cache.CacheManager;
+import adullact.publicrowdfunding.model.local.callback.HoldToDo;
+import adullact.publicrowdfunding.model.local.ressource.Project;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
@@ -48,9 +50,7 @@ public class MainActivity extends Activity implements TabListener {
 			finish();
 		}
 
-		ServerEmulator serveur = ServerEmulator.instance();
-		HashMap<String, Project> projets = serveur.getAllProjets();
-		projet = projets.get(id);
+        Cache<Project> projet = CacheManager.getInstance().projects.get(id);
 
 		if (projet == null) {
 			Toast.makeText(getApplicationContext(),
@@ -58,27 +58,32 @@ public class MainActivity extends Activity implements TabListener {
 			finish();
 		}
 
-		try {
-			rl = (FrameLayout) findViewById(R.id.tabcontent);
+        final MainActivity _this = this;
+        projet.toData(new HoldToDo<Project>() {
+            @Override
+            public void hold(Project project) {
+                try {
+                    rl = (FrameLayout) findViewById(R.id.tabcontent);
 
-			ActionBar bar = getActionBar();
+                    ActionBar bar = getActionBar();
 
-			bar.addTab(bar.newTab().setText("Projets").setTabListener(this));
-			bar.addTab(bar.newTab().setText("Commentaires").setTabListener(this));
-			bar.addTab(bar.newTab().setText("Localisation")
-					.setTabListener(this));
+                    bar.addTab(bar.newTab().setText("Projets").setTabListener(_this));
+                    bar.addTab(bar.newTab().setText("Commentaires").setTabListener(_this));
+                    bar.addTab(bar.newTab().setText("Localisation")
+                            .setTabListener(_this));
 
-			bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM
-					| ActionBar.DISPLAY_USE_LOGO);
-			bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-			bar.setDisplayShowHomeEnabled(true);
-			bar.setDisplayShowTitleEnabled(true);
-			bar.show();
+                    bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM
+                            | ActionBar.DISPLAY_USE_LOGO);
+                    bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+                    bar.setDisplayShowHomeEnabled(true);
+                    bar.setDisplayShowTitleEnabled(true);
+                    bar.show();
 
-		} catch (Exception e) {
-			e.getMessage();
-		}
-
+                } catch (Exception e) {
+                    e.getMessage();
+                }
+            }
+        });
 	}
 
 	@Override

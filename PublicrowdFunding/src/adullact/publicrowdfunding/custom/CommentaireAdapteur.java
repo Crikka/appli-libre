@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.shared.Commentary;
+import adullact.publicrowdfunding.model.local.ressource.Commentary;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -61,7 +61,7 @@ public class CommentaireAdapteur extends ArrayAdapter<Commentary> {
 		Commentary coment = getItem(position);
 
 		commentaire = (TextView) row.findViewById(R.id.comment);
-		commentaire.setText(coment.message());
+		commentaire.setText(coment.getMessage());
 
 
 		commentaire.setBackgroundResource(position % 2 == 0 ? R.drawable.bubble_yellow : R.drawable.bubble_green);

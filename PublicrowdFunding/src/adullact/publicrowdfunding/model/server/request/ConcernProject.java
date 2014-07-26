@@ -1,6 +1,6 @@
 package adullact.publicrowdfunding.model.server.request;
 
-import adullact.publicrowdfunding.shared.Project;
+import adullact.publicrowdfunding.model.local.ressource.Project;
 
 public interface ConcernProject {
 	Project project();

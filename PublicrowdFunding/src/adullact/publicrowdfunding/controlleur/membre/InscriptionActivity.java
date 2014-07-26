@@ -1,8 +1,12 @@
 package adullact.publicrowdfunding.controlleur.membre;
 
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.model.server.UserRequester;
-import adullact.publicrowdfunding.model.server.event.CreateUserEvent;
+import adullact.publicrowdfunding.model.local.ressource.Account;
+import adullact.publicrowdfunding.model.local.ressource.User;
+import adullact.publicrowdfunding.model.server.event.AuthenticationEvent;
+import adullact.publicrowdfunding.model.server.event.CreateEvent;
+import adullact.publicrowdfunding.model.server.request.AuthenticationRequest;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -81,27 +85,50 @@ public class InscriptionActivity extends Activity {
 				mProgressDialog = ProgressDialog.show(InscriptionActivity.this,
 						"Chargement", "Inscription en cours ...", true);
 
-				UserRequester.createUser(username, password, "prenom", "nom",
-						new CreateUserEvent() {
+                // Je differencie compte (username + password) et user maintenant, je te divise ta requête
+                final Account account = new Account(username, password);
+                final User user = new User(username, "prenom", "nom");
+                account.serverCreate(new CreateEvent<Account>() {
 
-							@Override
-							public void errorUsernameAlreadyExists(
-									String username) {
-								mProgressDialog.dismiss();
-								Intent returnIntent = new Intent();
-								setResult(RESULT_CANCELED, returnIntent);
-								finish();
-							}
+                    @Override
+                    public void errorResourceIdAlreadyUsed(String id) {
+                        mProgressDialog.dismiss();
+                        Intent returnIntent = new Intent();
+                        setResult(RESULT_CANCELED, returnIntent);
+                        finish();
+                    }
 
-							@Override
-							public void onCreateUser() {
-								mProgressDialog.dismiss();
-								Intent returnIntent = new Intent();
-								setResult(RESULT_OK, returnIntent);
-								finish();
-							}
-						});
-				
+                    @Override
+                    public void onCreate(Account resource) {
+                        account.setOwn();
+                        mProgressDialog.dismiss();
+                        Intent returnIntent = new Intent();
+                        setResult(RESULT_OK, returnIntent);
+                        finish();
+                    }
+
+                    @Override
+                    public void errorAuthenticationRequired() {
+
+                    }
+                });
+
+                user.serverCreate(new CreateEvent<User>() {
+                    @Override
+                    public void errorResourceIdAlreadyUsed(String id) {
+
+                    }
+
+                    @Override
+                    public void onCreate(User resource) {
+                        account.setUser(user);
+                    }
+
+                    @Override
+                    public void errorAuthenticationRequired() {
+
+                    }
+                });
 				
 
 			}

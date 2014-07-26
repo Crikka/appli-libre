@@ -1,14 +1,17 @@
 package adullact.publicrowdfunding;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Vector;
 
 import adullact.publicrowdfunding.controlleur.ajouterProjet.SoumettreProjetActivity;
 import adullact.publicrowdfunding.controlleur.membre.ConnexionActivity;
-import adullact.publicrowdfunding.model.server.ExampleAndTest;
-import adullact.publicrowdfunding.model.server.ServerEmulator;
-import adullact.publicrowdfunding.shared.Project;
+import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
+import adullact.publicrowdfunding.model.local.SyncServerToLocal;
+import adullact.publicrowdfunding.model.local.callback.GatherToDo;
+import adullact.publicrowdfunding.model.local.callback.WhatToDo;
+import adullact.publicrowdfunding.model.local.ressource.Project;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
@@ -16,7 +19,6 @@ import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -39,75 +41,74 @@ public class MainActivity extends Activity implements TabListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+        SyncServerToLocal sync = SyncServerToLocal.getInstance();
+        final MainActivity _this = this;
+        try {
+            sync.sync(new GatherToDo<Project>(){
 
-		ServerEmulator serveur = ServerEmulator.instance();
-		HashMap<String, Project> hashproj = serveur.getAllProjets();
+                @Override
+                public void eventually(ArrayList<Project> projects) {
+                    _this.projets.addAll(projects);
+                    m_ajouter_projet = (ImageButton) findViewById(R.id.button_soumettre_projet);
+                    m_ajouter_projet.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
 
-        ExampleAndTest ex = new ExampleAndTest();
-        ex.createUser();
+                            Intent in = new Intent(
+                                    getBaseContext().getApplicationContext(),
+                                    SoumettreProjetActivity.class);
+                            startActivity(in);
 
-		for (Entry<String, Project> entry : hashproj.entrySet()) {
-			Project projet = entry.getValue();
+                        }
+                    });
 
-			projets.add(projet);
-		}
+                    m_mon_compte = (ImageButton) findViewById(R.id.button_mon_compte);
+                    m_mon_compte.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent in = new Intent(
+                                    getBaseContext().getApplicationContext(),
+                                    ConnexionActivity.class);
+                            startActivity(in);
+                        }
+                    });
 
-		m_ajouter_projet = (ImageButton) findViewById(R.id.button_soumettre_projet);
-		m_ajouter_projet.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
+                    m_rechercher = (ImageButton) findViewById(R.id.button_search);
+                    m_rechercher.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            SearchDialog alertDialogBuilder = new SearchDialog(
+                                    getBaseContext());
+                            alertDialogBuilder.show();
 
-				Intent in = new Intent(
-						getBaseContext().getApplicationContext(),
-						SoumettreProjetActivity.class);
-				startActivity(in);
+                        }
+                    });
 
-			}
-		});
+                    try {
+                        rl = (FrameLayout) findViewById(R.id.tabcontent);
 
-		m_mon_compte = (ImageButton) findViewById(R.id.button_mon_compte);
-		m_mon_compte.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent in = new Intent(
-						getBaseContext().getApplicationContext(),
-						ConnexionActivity.class);
-				startActivity(in);
-			}
-		});
+                        ActionBar bar = getActionBar();
 
-		m_rechercher = (ImageButton) findViewById(R.id.button_search);
-		m_rechercher.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				SearchDialog alertDialogBuilder = new SearchDialog(
-						getBaseContext());
-				alertDialogBuilder.show();
+                        bar.addTab(bar.newTab().setText("Projets").setTabListener(_this));
+                        bar.addTab(bar.newTab().setText("Favoris").setTabListener(_this));
+                        bar.addTab(bar.newTab().setText("Localisation")
+                                .setTabListener(_this));
 
-			}
-		});
+                        bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM
+                                | ActionBar.DISPLAY_USE_LOGO);
+                        bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+                        bar.setDisplayShowHomeEnabled(true);
+                        bar.setDisplayShowTitleEnabled(true);
+                        bar.show();
 
-		try {
-			rl = (FrameLayout) findViewById(R.id.tabcontent);
-
-			ActionBar bar = getActionBar();
-
-			bar.addTab(bar.newTab().setText("Projets").setTabListener(this));
-			bar.addTab(bar.newTab().setText("Favoris").setTabListener(this));
-			bar.addTab(bar.newTab().setText("Localisation")
-					.setTabListener(this));
-
-			bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM
-					| ActionBar.DISPLAY_USE_LOGO);
-			bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-			bar.setDisplayShowHomeEnabled(true);
-			bar.setDisplayShowTitleEnabled(true);
-			bar.show();
-
-		} catch (Exception e) {
-			e.getMessage();
-		}
-
+                    } catch (Exception e) {
+                        e.getMessage();
+                    }
+                }
+            });
+        } catch (NoAccountExistsInLocal noAccountExistsInLocal) {
+            noAccountExistsInLocal.printStackTrace();
+        }
 	}
 
 	@Override

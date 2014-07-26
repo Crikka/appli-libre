@@ -1,7 +1,7 @@
 package adullact.publicrowdfunding.controlleur.detailProjet;
 
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.shared.Project;
+import adullact.publicrowdfunding.model.local.ressource.Project;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -75,13 +75,13 @@ public class TabMapFragment extends Fragment {
 				if (googleMap != null) {
 
 					MarkerOptions marker = new MarkerOptions();
-					marker.position(projet.position());
-					marker.snippet(projet.description());
+					marker.position(projet.getPosition());
+					marker.snippet(projet.getDescription());
 					googleMap.addMarker(marker);
 					handler.removeCallbacksAndMessages(null);
 					mprogressDialog.dismiss();
 					CameraUpdate center = CameraUpdateFactory.newLatLng(projet
-							.position());
+							.getPosition());
 					CameraUpdate zoom = CameraUpdateFactory.zoomTo(5);
 					googleMap.moveCamera(center);
 					googleMap.animateCamera(zoom);

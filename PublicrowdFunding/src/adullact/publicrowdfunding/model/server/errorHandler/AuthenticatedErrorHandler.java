@@ -9,19 +9,19 @@ public abstract class AuthenticatedErrorHandler
 TEvent extends AuthenticatedEvent<TRequest, TEvent, TErrorHandler>,
 TErrorHandler extends AuthenticatedErrorHandler<TRequest, TEvent, TErrorHandler>>
 extends ErrorHandler<TRequest, TEvent, TErrorHandler> {
-    private boolean m_authenticationFail = false;
+    private boolean m_authenticationRequired = false;
 
     @Override
     public void manageCallback() {
         super.manageCallback();
-        if(m_authenticationFail) {
-            event().errorAuthenticationFailed(request().username(), request().password());
+        if(m_authenticationRequired) {
+            event().errorAuthenticationRequired();
         }
     }
 
     @Override
     public Throwable handleError(RetrofitError error) {
-        m_authenticationFail = (error.getResponse().getStatus() == 401);
+        m_authenticationRequired = (error.getResponse().getStatus() == 401);
         return super.handleError(error);
     }
 }

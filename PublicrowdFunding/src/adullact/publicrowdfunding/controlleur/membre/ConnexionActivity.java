@@ -1,8 +1,11 @@
 package adullact.publicrowdfunding.controlleur.membre;
 
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.model.server.UserRequester;
+import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.server.event.AuthenticationEvent;
+import adullact.publicrowdfunding.model.server.event.RetrieveEvent;
+import adullact.publicrowdfunding.model.server.request.AuthenticationRequest;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -55,36 +58,23 @@ public class ConnexionActivity extends Activity {
 				String login = m_login.getText().toString();
 				String password = m_password.getText().toString();
 
-				UserRequester.authenticateUser(login, password,
-                        new AuthenticationEvent() {
+                AuthenticationRequest request = new AuthenticationRequest(login, password, new AuthenticationEvent() {
+                    @Override
+                    public void errorUsernamePasswordDoesNotMatch(String username, String password) {
+                        System.out.println("erreur");
+                        Toast.makeText(context,
+                                "Login ou mot de passe incorect",
+                                Toast.LENGTH_LONG).show();
+                    }
 
-                            @Override
-                            public void ifUserIsAdministrator() {
-                                // TODO
-                            }
-
-                            @Override
-                            public void onAuthenticate() {
-                                Toast.makeText(context,
-                                        "Vous êtes connecté !",
-                                        Toast.LENGTH_LONG).show();
-                                finish();
-                            }
-
-                            @Override
-                            public void errorUserNotExists(String pseudo,
-                                                           String password) {
-                                System.out.println("erreur");
-                                Toast.makeText(context,
-                                        "Login ou mot de passe incorect",
-                                        Toast.LENGTH_LONG).show();
-                            }
-
-                            @Override
-                            public void errorAuthenticationFailed(String pseudo, String password) {
-
-                            }
-                        });
+                    @Override
+                    public void onAuthentication() {
+                        Toast.makeText(context,
+                                "Vous êtes connecté !",
+                                Toast.LENGTH_LONG).show();
+                        finish();
+                    }
+                });
 			}
 		});
 

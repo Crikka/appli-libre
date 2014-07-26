@@ -1,13 +1,16 @@
 package adullact.publicrowdfunding;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Vector;
 
 import adullact.publicrowdfunding.controlleur.detailProjet.MainActivity;
 import adullact.publicrowdfunding.custom.CustomAdapter;
-import adullact.publicrowdfunding.model.server.ServerEmulator;
-import adullact.publicrowdfunding.shared.Project;
+import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
+import adullact.publicrowdfunding.model.local.SyncServerToLocal;
+import adullact.publicrowdfunding.model.local.callback.GatherToDo;
+import adullact.publicrowdfunding.model.local.ressource.Project;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,7 +34,7 @@ public class TabProjetsFragment extends Fragment {
 
 		listeProjets = (ListView) view.findViewById(R.id.liste);
 
-		ServerEmulator serveur = ServerEmulator.instance();
+		/*ServerEmulator serveur = ServerEmulator.instance();
 		HashMap<String, Project> projets = serveur.getAllProjets();
 
 		Vector<Project> tabProj = new Vector<Project>();
@@ -56,14 +59,47 @@ public class TabProjetsFragment extends Fragment {
 						.getItemAtPosition(position);
 				Intent in = new Intent(parent.getContext()
 						.getApplicationContext(), MainActivity.class);
-				in.putExtra("key", projet.id());
+				in.putExtra("key", projet.getId());
 				startActivity(in);
 
 			}
-		});
+		});*/
+
+        SyncServerToLocal sync = SyncServerToLocal.getInstance();
+        final TabProjetsFragment _this = this;
+        try {
+            sync.sync(new GatherToDo<Project>() {
+                @Override
+                public void eventually(ArrayList<Project> projects) {
+                    Vector<Project> vector_projects = new Vector<Project>();
+                    vector_projects.addAll(projects);
+
+                    ArrayAdapter<Project> adapter = new CustomAdapter(_this.getActivity()
+                            .getBaseContext(), R.layout.projet_list, vector_projects);
+
+                    listeProjets.setAdapter(adapter);
+                    listeProjets.setOnItemClickListener(new OnItemClickListener() {
+
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view,
+                                                int position, long id) {
+
+                            Project projet = (Project) listeProjets
+                                    .getItemAtPosition(position);
+                            Intent in = new Intent(parent.getContext()
+                                    .getApplicationContext(), MainActivity.class);
+                            in.putExtra("key", projet.getId());
+                            startActivity(in);
+
+                        }
+                    });
+                }
+            });
+        } catch (NoAccountExistsInLocal noAccountExistsInLocal) {
+            noAccountExistsInLocal.printStackTrace();
+        }
 
 
-
-		return view;
+        return view;
 	}
 }

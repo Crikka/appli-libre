@@ -1,8 +1,10 @@
 package adullact.publicrowdfunding.model.server.event;
 
-import adullact.publicrowdfunding.model.server.UserRequester;
+import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
+import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.server.errorHandler.AuthenticatedErrorHandler;
 import adullact.publicrowdfunding.model.server.request.AuthenticatedRequest;
+import adullact.publicrowdfunding.model.server.request.AuthenticationRequest;
 
 public abstract class AuthenticatedEvent
 <TRequest extends AuthenticatedRequest<TRequest, TEvent, TErrorHandler>,
@@ -11,27 +13,35 @@ TErrorHandler extends AuthenticatedErrorHandler<TRequest, TEvent, TErrorHandler>
 extends Event<TRequest, TEvent, TErrorHandler> {
 
     /* Callback functions */
-    public abstract void errorAuthenticationFailed(String pseudo, String password);
+    public abstract void errorAuthenticationRequired();
 	/* ----------------- */
 
-	final protected void retryWithAnotherLogin(String username, String password) {
-		final Event<TRequest, TEvent, TErrorHandler> contextualEvent = this;
+    final protected boolean isAdmin() {
+        try {
+            return Account.getOwn().isAdmin();
+        } catch (NoAccountExistsInLocal noAccountExistsInLocal) {
+            return false;
+        }
+    }
+
+	final protected void retryWithAnotherAccount(String username, String password) {
+		final AuthenticatedEvent<TRequest, TEvent, TErrorHandler> contextualEvent = this;
         request().changeAuthentication(username, password);
-		UserRequester.authenticateUser(username, password, new AuthenticationEvent() {
-
+        AuthenticationRequest request = new AuthenticationRequest(username, password, new AuthenticationEvent() {
             @Override
-            public void ifUserIsAdministrator() {}
-
-            @Override
-            public void onAuthenticate() {
-                contextualEvent.retry();
+            public void errorAuthenticationRequired() {
+                contextualEvent.errorAuthenticationRequired();
             }
 
             @Override
-            public void errorUserNotExists(String pseudo, String password) {}
+            public void errorUsernamePasswordDoesNotMatch(String username, String password) {
+                contextualEvent.errorAuthenticationRequired();
+            }
 
             @Override
-            public void errorAuthenticationFailed(String pseudo, String password) {}
+            public void onAuthentication() {
+                contextualEvent.retry();
+            }
         });
 	}
 }

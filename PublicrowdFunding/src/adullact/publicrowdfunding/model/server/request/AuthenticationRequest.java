@@ -1,77 +1,63 @@
 package adullact.publicrowdfunding.model.server.request;
 
+import adullact.publicrowdfunding.model.local.callback.HoldToDo;
+import adullact.publicrowdfunding.model.local.callback.NothingToDo;
+import adullact.publicrowdfunding.model.local.ressource.Account;
+import adullact.publicrowdfunding.model.local.ressource.User;
+import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
+import adullact.publicrowdfunding.model.server.errorHandler.AuthenticationErrorHandler;
+import adullact.publicrowdfunding.model.server.event.AuthenticationEvent;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
-import adullact.publicrowdfunding.model.server.ServerInfo;
-import adullact.publicrowdfunding.model.server.errorHandler.AuthenticationErrorHandler;
-import adullact.publicrowdfunding.model.server.event.AuthenticationEvent;
-import adullact.publicrowdfunding.shared.Administrator;
-import adullact.publicrowdfunding.shared.Share;
-import adullact.publicrowdfunding.shared.User;
 
 /**
- * @author Ferrand
- * @brief Use this request when a user needs to be authenticate.
+ * Created by Ferrand on 26/07/2014.
  */
 public class AuthenticationRequest extends AuthenticatedRequest<AuthenticationRequest, AuthenticationEvent, AuthenticationErrorHandler> {
-	private String m_username;
-	private String m_password;
 
-	public AuthenticationRequest(String username, String password, AuthenticationEvent event) {
-		super(username, password, event, new AuthenticationErrorHandler());
+    public AuthenticationRequest(String username, String password, AuthenticationEvent authenticationEvent) {
+        super(username, password, authenticationEvent, new AuthenticationErrorHandler());
 
-		this.m_username = username;
-		this.m_password = password;
-	}
+    }
 
-	public String username() {
-		return m_username;
-	}
+    @Override
+    public void execute() {
+        service().authenticate().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .onErrorReturn(new Func1<Throwable, SimpleServerResponse>() {
 
-	public String password() {
-		return m_password;
-	}
+                    @Override
+                    public SimpleServerResponse call(Throwable throwable) {
+                        return null;
+                    }
 
-	@Override
-	public void execute() {
-		service().authenticate().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-		.onErrorReturn(new Func1<Throwable, DetailedServerUser>() {
+                })
+                .subscribe(new Action1<SimpleServerResponse>() {
 
-			@Override
-			public DetailedServerUser call(Throwable arg0) {
-				return null;
-			}
-			
-		})
-		.subscribe(new Action1<DetailedServerUser>() {
+                    @Override
+                    public void call(SimpleServerResponse response) {
+                        if(response == null) {
+                            errorHandler().manageCallback();
+                            return;
+                        }
 
-			@Override
-			public void call(DetailedServerUser user) {
-                if(user == null) {
-                    errorHandler().manageCallback();
-                    return;
-                }
-
-					done();
-					if(user.administrator == "0") {
-						Share.user = new User();
-                        authenticateAndInitializeUser(user);
-					}
-					else {
-						Share.user = new Administrator();
-                        authenticateAndInitializeUser(user);
-					}
-					event().onAuthenticate();
-			    	event().errorUserNotExists(username(), password());
-			};
-		});
-	}
-
-	private void authenticateAndInitializeUser(ServerUser serverUser) {
-		Share.user.defineFields(serverUser.username, m_password, serverUser.name, serverUser.firstName);
-		Share.user.authentificate();
-	}
-
+                        Account account = new Account(username(), password());
+                        switch(response.code) {
+                            case 0:
+                                account.setOwn();
+                                account.getUser(new HoldToDo<User>() {
+                                                    @Override
+                                                    public void hold(User resource) {
+                                                        event().onAuthentication();
+                                                    }
+                                                });
+                                break;
+                            case 1:
+                                event().errorUsernamePasswordDoesNotMatch(username(), password());
+                                break;
+                        }
+                    }
+                });
+    }
 }

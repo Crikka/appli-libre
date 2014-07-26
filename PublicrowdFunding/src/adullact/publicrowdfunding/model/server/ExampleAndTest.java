@@ -1,33 +1,26 @@
 package adullact.publicrowdfunding.model.server;
 
 import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.Date;
-
-import adullact.publicrowdfunding.model.server.event.AuthenticationEvent;
-import adullact.publicrowdfunding.model.server.event.CreateProjectEvent;
-import adullact.publicrowdfunding.model.server.event.CreateUserEvent;
-import adullact.publicrowdfunding.model.server.event.ModifyAccountEvent;
-import adullact.publicrowdfunding.model.server.event.UsersListingEvent;
-import adullact.publicrowdfunding.shared.Administrator;
-import adullact.publicrowdfunding.shared.Project;
-import adullact.publicrowdfunding.shared.User;
+import adullact.publicrowdfunding.model.server.event.UpdateEvent;
+import adullact.publicrowdfunding.model.local.ressource.Project;
+import adullact.publicrowdfunding.model.local.ressource.User;
 
 import com.google.android.gms.maps.model.LatLng;
 
 public class ExampleAndTest {
-	public void authenticationAdmin() {
-		UserRequester.authenticateUser("MisterGate", "azE45WIN", new AuthenticationEvent() {
+    public void authenticationAdmin() {
+		/*UserRequester.authenticateUser("MisterGate", "azE45WIN", new AuthenticationEvent() {
 
             @Override
             public void ifUserIsAdministrator() {
-                System.out.println(" et je suis admin : " + (user() instanceof Administrator));
+                System.out.println(" et je suis admin : " + (user().isAdmin()));
             }
 
             @Override
             public void onAuthenticate() {
-                System.out.println("Je suis " + user().pseudo() + " " + user().name() + " " + user().firstName());
+                System.out.println("Je suis " + user().getPseudo() + " " + user().getName() + " " + user().getFirstName());
             }
 
             @Override
@@ -39,20 +32,20 @@ public class ExampleAndTest {
             public void errorAuthenticationFailed(String pseudo, String password) {
 
             }
-        });
-	}
+        });*/
+    }
 
-	public void authentificationNormalUser() {
-		UserRequester.authenticateUser("Francis", "123456", new AuthenticationEvent() {
+    public void authentificationNormalUser() {
+		/*UserRequester.authenticateUser("Francis", "123456", new AuthenticationEvent() {
 
             @Override
             public void ifUserIsAdministrator() {
-                System.out.println(" et je suis admin : " + (user() instanceof Administrator));
+                System.out.println(" et je suis admin : " + (user().isAdmin()));
             }
 
             @Override
             public void onAuthenticate() {
-                System.out.println("Je suis " + user().pseudo() + " " + user().name() + " " + user().firstName());
+                System.out.println("Je suis " + user().getPseudo() + " " + user().getName() + " " + user().getFirstName());
             }
 
             @Override
@@ -64,20 +57,20 @@ public class ExampleAndTest {
             public void errorAuthenticationFailed(String pseudo, String password) {
 
             }
-        });
-	}
+        });*/
+    }
 
-	public void authentificationFailUser() {
-		UserRequester.authenticateUser("Miaou", "abjectDominera", new AuthenticationEvent() {
+    public void authentificationFailUser() {
+		/*UserRequester.authenticateUser("Miaou", "abjectDominera", new AuthenticationEvent() {
 
             @Override
             public void ifUserIsAdministrator() {
-                System.out.println(" et je suis admin : " + (user() instanceof Administrator));
+                System.out.println(" et je suis admin : " + (user().isAdmin()));
             }
 
             @Override
             public void onAuthenticate() {
-                System.out.println("Je suis " + user().pseudo() + " " + user().name() + " " + user().firstName());
+                System.out.println("Je suis " + user().getPseudo() + " " + user().getName() + " " + user().getFirstName());
             }
 
             @Override
@@ -89,20 +82,20 @@ public class ExampleAndTest {
             public void errorAuthenticationFailed(String pseudo, String password) {
 
             }
-        });
-	}
+        });*/
+    }
 
-	public void createProject() {
-		UserRequester.authenticateUser("Francis", "123456", new AuthenticationEvent() {
+    public void createProject() {
+		/*UserRequester.authenticateUser("Francis", "123456", new AuthenticationEvent() {
 
             @Override
             public void ifUserIsAdministrator() {
-                System.out.println(" et je suis admin : " + (user() instanceof Administrator));
+                System.out.println(" et je suis admin : " + (user().isAdmin()));
             }
 
             @Override
             public void onAuthenticate() {
-                System.out.println("Je suis " + user().pseudo() + " " + user().name() + " " + user().firstName());
+                System.out.println("Je suis " + user().getPseudo() + " " + user().getName() + " " + user().getFirstName());
                 ProjectRequester.createProject("Parking sous terrain", "Parking au centre de Montpellier", "50000", new Date(114, 5, 10), new Date(114, 8, 10), new CreateProjectEvent() {
 
                     @Override
@@ -127,7 +120,7 @@ public class ExampleAndTest {
 							public void onValidateProject(Project project) {
 								System.out.println("Et hop on valide!");
 							}
-						});*/
+						});
                     }
 
                     @Override
@@ -146,11 +139,11 @@ public class ExampleAndTest {
             public void errorAuthenticationFailed(String pseudo, String password) {
 
             }
-        });
-	}
+        });*/
+    }
 
-	public void createUser() {
-        UserRequester.createUser("Francis", "123456", "Nicolas", "Du bonchaux", new CreateUserEvent() {
+    public void createUser() {
+       /* UserRequester.createUser("Francis", "123456", "Nicolas", "Du bonchaux", new CreateUserEvent() {
 
 			@Override
 			public void onCreateUser() {
@@ -178,7 +171,7 @@ public class ExampleAndTest {
 
                     @Override
                     public void onAuthenticate() {
-                        UserRequester.modifyAccount(null, null, "Laure", new ModifyAccountEvent() {
+                        UserRequester.modifyAccount(null, null, "Laure", new UpdateEvent() {
 
                             @Override
                             public void errorAuthenticationRequired() {
@@ -232,12 +225,12 @@ public class ExampleAndTest {
 
 			@Override
 			public void onCreateUser() {
-				UserRequester.modifyAccount(null, null, "Laure", new ModifyAccountEvent() {
+				UserRequester.modifyAccount(null, null, "Laure", new UpdateEvent() {
 
 					@Override
 					public void errorAuthenticationRequired() {
 						System.out.println("authentification fail");
-						retryWithAnotherLogin("Laure28", "150m");
+						retryWithAnotherAccount("Laure28", "150m");
 					}
 
 					@Override
@@ -266,11 +259,11 @@ public class ExampleAndTest {
 			public void errorUsernameAlreadyExists(String username) {
 				System.out.println("laure existe déja");
 			}
-		});
-	}
+		});*/
+    }
 
-	public void listAllUsers() {
-        Log.i("Triumvirat", "Je suis là");
+    public void listAllUsers() {
+      /*  Log.i("Triumvirat", "Je suis là");
         UserRequester.createUser("Laure"+Math.random()*1500, "150m", "Manodou", "Laura", new CreateUserEvent() {
 
 			@Override
@@ -308,7 +301,6 @@ public class ExampleAndTest {
                 });
 			}
 		});
-	}
-
-	/* --------------- */
+	}*/
+    }
 }
