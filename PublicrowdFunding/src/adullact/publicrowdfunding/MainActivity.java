@@ -10,6 +10,7 @@ import adullact.publicrowdfunding.controlleur.membre.ConnexionActivity;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.SyncServerToLocal;
 import adullact.publicrowdfunding.model.local.callback.GatherToDo;
+import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import android.app.ActionBar;
@@ -44,10 +45,10 @@ public class MainActivity extends Activity implements TabListener {
         SyncServerToLocal sync = SyncServerToLocal.getInstance();
         final MainActivity _this = this;
         try {
-            sync.sync(new GatherToDo<Project>(){
+            sync.sync(new HoldAllToDo<Project>(){
 
                 @Override
-                public void eventually(ArrayList<Project> projects) {
+                public void holdAll(ArrayList<Project> projects) {
                     _this.projets.addAll(projects);
                     m_ajouter_projet = (ImageButton) findViewById(R.id.button_soumettre_projet);
                     m_ajouter_projet.setOnClickListener(new View.OnClickListener() {

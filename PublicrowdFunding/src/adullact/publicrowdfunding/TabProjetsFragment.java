@@ -10,6 +10,7 @@ import adullact.publicrowdfunding.custom.CustomAdapter;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.SyncServerToLocal;
 import adullact.publicrowdfunding.model.local.callback.GatherToDo;
+import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import android.app.Fragment;
 import android.content.Intent;
@@ -68,9 +69,10 @@ public class TabProjetsFragment extends Fragment {
         SyncServerToLocal sync = SyncServerToLocal.getInstance();
         final TabProjetsFragment _this = this;
         try {
-            sync.sync(new GatherToDo<Project>() {
+            sync.sync(new HoldAllToDo<Project>() {
+
                 @Override
-                public void eventually(ArrayList<Project> projects) {
+                public void holdAll(ArrayList<Project> projects) {
                     Vector<Project> vector_projects = new Vector<Project>();
                     vector_projects.addAll(projects);
 

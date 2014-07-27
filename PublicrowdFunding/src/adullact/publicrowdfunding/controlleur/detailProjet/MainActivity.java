@@ -1,7 +1,5 @@
 package adullact.publicrowdfunding.controlleur.detailProjet;
 
-import java.util.HashMap;
-
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.model.local.cache.Cache;
 import adullact.publicrowdfunding.model.local.cache.CacheManager;
@@ -59,7 +57,7 @@ public class MainActivity extends Activity implements TabListener {
 		}
 
         final MainActivity _this = this;
-        projet.toData(new HoldToDo<Project>() {
+        projet.toResource(new HoldToDo<Project>() {
             @Override
             public void hold(Project project) {
                 try {

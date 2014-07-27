@@ -178,7 +178,7 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
     }
 
     public void getUser(WhatToDo<User> userWhatToDo) {
-        m_user.toData(userWhatToDo);
+        m_user.toResource(userWhatToDo);
     }
 
     public void requestCreate(CreateEvent createAccountEvent) {

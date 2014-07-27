@@ -54,11 +54,11 @@ public class Commentary {
     }
 
     public void getUser(WhatToDo<User> userWhatToDo) {
-        m_user.toData(userWhatToDo);
+        m_user.toResource(userWhatToDo);
     }
 
     public void getProject(WhatToDo<Project> projectWhatToDo) {
-        m_project.toData(projectWhatToDo);
+        m_project.toResource(projectWhatToDo);
     }
 
 }

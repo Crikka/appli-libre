@@ -22,7 +22,6 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
 	private String m_name;
 	private String m_firstName;
 	private boolean m_authenticated;
-    private boolean m_administrator;
 	private ArrayList<Cache<Project>> m_supportedProjects;
 	private ArrayList<Cache<Project>> m_financedProjects;
 
@@ -39,17 +38,22 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
 
     @Override
     public User fromServerResource(ServerUser serverUser) {
-        return null;
+        if(((m_pseudo != serverUser.pseudo) || (m_name != serverUser.name) || (m_firstName != serverUser.firstName))) {
+            changed();
+        }
+
+        m_pseudo = serverUser.pseudo;
+        m_name = serverUser.name;
+        m_firstName = serverUser.firstName;
+
+        return this;
     }
 
     @Override
     public User fromDetailedServerResource(DetailedServerUser detailedServerUser) {
-        return null;
-    }
+        fromServerResource(detailedServerUser);
 
-    @Override
-    public Observable<SimpleServerResponse> methodDELETE(Service service) {
-        return null;
+        return this;
     }
 
     /* ------ Method ------ */
@@ -72,7 +76,11 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
     public Observable<SimpleServerResponse> methodPOST(Service service) {
         return service.createUser(toServerResource());
     }
-    /* -------------------- */
+
+    @Override
+    public Observable<SimpleServerResponse> methodDELETE(Service service) {
+        return service.deleteUser(getResourceId());
+    }
     /* -------------------- */
 	
 	public User() {
@@ -80,7 +88,6 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
 		this.m_name = null;
 		this.m_firstName = null;
 		this.m_authenticated = false;
-        this.m_administrator = false;
 		this.m_supportedProjects = new ArrayList<Cache<Project>>();
 		this.m_financedProjects = new ArrayList<Cache<Project>>();
 	}
@@ -90,7 +97,6 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
         this.m_name = name;
         this.m_firstName = firstName;
         this.m_authenticated = false;
-        this.m_administrator = false;
         this.m_supportedProjects = new ArrayList<Cache<Project>>();
         this.m_financedProjects = new ArrayList<Cache<Project>>();
     }
@@ -110,44 +116,29 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
 	
 	public void getSupportedProjects(WhatToDo<Project> projectWhatToDo) {
         for(Cache<Project> project : m_supportedProjects) {
-            project.toData(projectWhatToDo);
+            project.toResource(projectWhatToDo);
         }
 	}
 
     public void getFinancedProjects(WhatToDo<Project> projectWhatToDo) {
         for(Cache<Project> project : m_financedProjects) {
-            project.toData(projectWhatToDo);
+            project.toResource(projectWhatToDo);
         }
     }
 	/* ------ */
-	
 
-	public boolean isAuthenticated() {
-		return m_authenticated;
-	}
 
-    public void authenticate() {
-        m_authenticated = true;
+	/* Setters */
+    public void setPseudo(String pseudo) {
+        m_pseudo = pseudo;
     }
 
-	public void authenticate(boolean administrator) {
-        m_administrator = administrator;
-		m_authenticated = true;
-	}
-	
-	/**
-     * Setter for all fiels.
-	 * @param pseudo
-	 * @param name
-	 * @param firstName
-	 */
-	public void defineFields(String pseudo, String name, String firstName) {
-		this.m_pseudo = pseudo;
-		this.m_name = name;
-		this.m_firstName = firstName;
-	}
+    public void setName(String name){
+        m_name = name;
+    }
 
-	public boolean isAdmin() {
-		return m_administrator;
-	}
+    public void setFirstName(String firstName) {
+        m_firstName = firstName;
+    }
+    /* ------- */
 }

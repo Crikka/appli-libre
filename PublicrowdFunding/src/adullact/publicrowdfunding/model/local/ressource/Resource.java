@@ -27,6 +27,23 @@ import rx.schedulers.Schedulers;
  * Created by Ferrand on 18/07/2014.
  */
 public abstract class Resource<TResource extends Resource<TResource, TServerResource, TDetailedServerResource>, TServerResource, TDetailedServerResource extends TServerResource> {
+    private boolean m_changed;
+
+    public Resource() {
+        m_changed = false;
+    }
+
+    protected void changed() {
+        m_changed = true;
+    }
+
+    public boolean hasChanged() {
+        boolean ret = m_changed;
+        m_changed = false;
+
+        return ret;
+    }
+
     public abstract String getResourceId();
     public abstract TServerResource toServerResource();
     public abstract TResource fromServerResource(TServerResource serverResource);
