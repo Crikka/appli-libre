@@ -2,6 +2,8 @@ package adullact.publicrowdfunding.model.server.entities;
 
 import org.joda.time.DateTime;
 
+import java.util.Date;
+
 /**
  * Created by Ferrand on 21/07/2014.
  */
@@ -13,9 +15,9 @@ public class ServerProject {
     public String description;
     public String currentFunding;
     public String requestedFunding;
-    public DateTime creationDate;
-    public DateTime beginDate;
-    public DateTime endDate;
+    public String creationDate;
+    public String beginDate;
+    public String endDate;
     public double latitude;
     public double longitude;
     public int illustration;

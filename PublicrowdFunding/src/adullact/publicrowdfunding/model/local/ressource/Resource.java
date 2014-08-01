@@ -46,8 +46,8 @@ public abstract class Resource<TResource extends Resource<TResource, TServerReso
 
     public abstract String getResourceId();
     public abstract TServerResource toServerResource();
-    public abstract TResource fromServerResource(TServerResource serverResource);
-    public abstract TResource fromDetailedServerResource(TDetailedServerResource detailedServerResource);
+    public abstract TResource makeCopyFromServer(TServerResource serverResource);
+    public abstract TResource syncFromServer(TDetailedServerResource detailedServerResource);
     public abstract Observable<TDetailedServerResource> methodGET(Service service);
     public abstract Observable<ArrayList<TServerResource>> methodGETAll(Service service, Map<String, String> filter);
     public abstract Observable<SimpleServerResponse> methodPUT(Service service);

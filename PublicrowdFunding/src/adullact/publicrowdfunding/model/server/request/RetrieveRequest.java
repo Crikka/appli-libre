@@ -33,7 +33,7 @@ public class RetrieveRequest<TResource extends Resource<TResource, TServerResour
 
                     @Override
                     public void call(TDetailedServerResource  detailedServerResources) {
-                            m_resource.fromDetailedServerResource(detailedServerResources);
+                            m_resource.syncFromServer(detailedServerResources);
                     }
                 });
     }

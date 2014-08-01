@@ -1,15 +1,12 @@
 package adullact.publicrowdfunding;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map.Entry;
 import java.util.Vector;
 
 import adullact.publicrowdfunding.controlleur.detailProjet.MainActivity;
 import adullact.publicrowdfunding.custom.CustomAdapter;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.SyncServerToLocal;
-import adullact.publicrowdfunding.model.local.callback.GatherToDo;
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import android.app.Fragment;
@@ -68,7 +65,6 @@ public class TabProjetsFragment extends Fragment {
 
         SyncServerToLocal sync = SyncServerToLocal.getInstance();
         final TabProjetsFragment _this = this;
-        try {
             sync.sync(new HoldAllToDo<Project>() {
 
                 @Override
@@ -97,9 +93,6 @@ public class TabProjetsFragment extends Fragment {
                     });
                 }
             });
-        } catch (NoAccountExistsInLocal noAccountExistsInLocal) {
-            noAccountExistsInLocal.printStackTrace();
-        }
 
 
         return view;

@@ -1,13 +1,9 @@
 package adullact.publicrowdfunding.model.server.request;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 import adullact.publicrowdfunding.model.local.ressource.Resource;
-import adullact.publicrowdfunding.model.local.ressource.User;
-import adullact.publicrowdfunding.model.server.entities.DetailedServerUser;
-import adullact.publicrowdfunding.model.server.entities.ServerUser;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -42,10 +38,17 @@ public class ListerRequest<TResource extends Resource<TResource, TServerResource
 
                     @Override
                     public void call(ArrayList<TServerResource>  serverResources) {
+                        if(serverResources == null) {
+                            errorHandler().manageCallback();
+                            return;
+                        }
+
                         ArrayList<TResource> resources = new ArrayList<TResource>();
                         for(TServerResource serverResource : serverResources) {
-                            resources.add(m_resource.fromServerResource(serverResource));
+                            resources.add(m_resource.makeCopyFromServer(serverResource));
                         }
+
+                        event().onLister(resources);
                     }
                 });
     }

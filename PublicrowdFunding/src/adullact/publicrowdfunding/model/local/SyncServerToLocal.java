@@ -31,14 +31,12 @@ public class SyncServerToLocal {
         sync(new NothingToDo<Project>());
     }
 
-    public void sync(final WhatToDo<Project> projectWhatToDo) throws NoAccountExistsInLocal {
+    public void sync(final WhatToDo<Project> projectWhatToDo) {
         final DateTime now = DateTime.now();
         ListerEvent<Project> event = new ListerEvent<Project>() {
             @Override
             public void onLister(ArrayList<Project> projects) {
-                try {
-                    Account.getOwn().setLastSync(now);
-                } catch (NoAccountExistsInLocal noAccountExistsInLocal) {}
+                Account.getOwnOrAnonymous().setLastSync(now);
                 for(Project project : projects) {
                     projectWhatToDo.hold(project);
                 }
@@ -50,7 +48,12 @@ public class SyncServerToLocal {
                 projectWhatToDo.eventually();
             }
         };
-        (new Project()).serverListerToSync(event, Account.getOwn().getLastSync());
+        if(Account.getOwnOrAnonymous().getLastSync() == null) {
+            (new Project()).serverLister(event);
+        }
+        else {
+            (new Project()).serverListerToSync(event, Account.getOwnOrAnonymous().getLastSync());
+        }
     }
 
     private void merge(ArrayList<Project> projects) {

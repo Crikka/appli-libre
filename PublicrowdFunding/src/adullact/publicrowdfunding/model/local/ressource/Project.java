@@ -13,6 +13,7 @@ import org.joda.time.Interval;
 import com.google.android.gms.maps.model.LatLng;
 
 import adullact.publicrowdfunding.model.local.cache.Cache;
+import adullact.publicrowdfunding.model.local.utilities.FundingTimePeriod;
 import adullact.publicrowdfunding.model.server.entities.DetailedServerProject;
 import adullact.publicrowdfunding.model.server.entities.ServerProject;
 import adullact.publicrowdfunding.model.server.entities.Service;
@@ -38,23 +39,38 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         serverProject.proposedBy = m_proposedBy.getResourceId();
         serverProject.requestedFunding = m_requestedFunding.toPlainString();
         serverProject.currentFunding = m_currentFunding.toPlainString();
-        serverProject.creationDate = m_creationDate;
+        serverProject.creationDate = m_creationDate.toString();
+        serverProject.latitude = m_position.latitude;
+        serverProject.longitude = m_position.longitude;
+        serverProject.validate = m_validate;
+        serverProject.illustration = m_illustration;
+        serverProject.beginDate = m_fundingInterval.getStart().toString();
+        serverProject.endDate = m_fundingInterval.getEnd().toString();
+        return serverProject;
+    }
+
+    @Override
+    public Project makeCopyFromServer(ServerProject serverProject) {
+        Project res = new Project();
+        res.m_id = serverProject.id;
+        res.m_name = serverProject.name;
+        res.m_description = serverProject.description = m_description;
+        //serverProject.proposedBy = m_proposedBy.getResourceId();
+        res.m_requestedFunding = new BigDecimal(serverProject.requestedFunding);
+        res.m_currentFunding = new BigDecimal(serverProject.currentFunding);
+        /*serverProject.creationDate = m_creationDate;
         serverProject.latitude = m_position.latitude;
         serverProject.longitude = m_position.longitude;
         serverProject.validate = m_validate;
         serverProject.illustration = m_illustration;
         serverProject.beginDate = m_fundingInterval.getStart();
-        serverProject.endDate = m_fundingInterval.getEnd();
-        return serverProject;
+        serverProject.endDate = m_fundingInterval.getEnd();*/
+
+        return res;
     }
 
     @Override
-    public Project fromServerResource(ServerProject serverProject) {
-        return null;
-    }
-
-    @Override
-    public Project fromDetailedServerResource(DetailedServerProject detailedServerProject) {
+    public Project syncFromServer(DetailedServerProject detailedServerProject) {
         return null;
     }
 
@@ -90,7 +106,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
     }
     /* -------------------- */
 
-	private UUID m_id;
+	private String m_id;
 	private String m_name;
 	private String m_description;
     private Cache<User> m_proposedBy;
@@ -118,7 +134,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
     }
 
 	public Project(String name, String description, String requestedFunding, Date creationDate, Date beginDate, Date endDate, LatLng position, int illustration) {
-		this.m_id = UUID.randomUUID();
+		this.m_id = UUID.randomUUID().toString();
 		this.m_name = name;
 		this.m_description = description;
 		this.m_requestedFunding = new BigDecimal(requestedFunding);
@@ -145,7 +161,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
 	}
 
 	public String getId() {
-		return m_id.toString();
+		return m_id;
 	}
 
 	public String getName() {

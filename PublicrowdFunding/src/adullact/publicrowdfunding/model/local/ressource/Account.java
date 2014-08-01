@@ -36,19 +36,27 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
     private static Account m_own = null;
     private void initialize() throws NoAccountExistsInLocal {
         SharedPreferences sharedPreferences = m_context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
-        m_username = sharedPreferences.getString(KEY_USERNAME, null);
-        m_password = sharedPreferences.getString(KEY_PASSWORD, null);
-        String lastSync = sharedPreferences.getString(KEY_LAST_SYNC, null);
-        m_lastSync = DateTime.parse(lastSync);
-
-        if((m_username == null) || (m_password == null) || (lastSync == null)) {
+        if(!sharedPreferences.contains(KEY_USERNAME) || !sharedPreferences.contains(KEY_USERNAME) || !sharedPreferences.contains(KEY_USERNAME)) {
             throw new NoAccountExistsInLocal();
         }
+
+        m_username = sharedPreferences.getString(KEY_USERNAME, "");
+        m_password = sharedPreferences.getString(KEY_PASSWORD, "");
+        m_lastSync = DateTime.parse(sharedPreferences.getString(KEY_LAST_SYNC, ""));
     }
+
     public static Account getOwn() throws NoAccountExistsInLocal {
         if(m_own == null) {
             m_own = new Account(PublicrowFundingApplication.context());
             m_own.initialize();
+        }
+
+        return m_own;
+    }
+
+    public static Account getOwnOrAnonymous() {
+        if(m_own == null) {
+            return (new Account());
         }
 
         return m_own;
@@ -81,12 +89,12 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
     }
 
     @Override
-    public Account fromServerResource(ServerAccount serverAccount) {
+    public Account makeCopyFromServer(ServerAccount serverAccount) {
         return null;
     }
 
     @Override
-    public Account fromDetailedServerResource(ServerAccount serverAccount) {
+    public Account syncFromServer(ServerAccount serverAccount) {
         return null;
     }
 
@@ -121,6 +129,7 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
     private String m_password;
     private DateTime m_lastSync;
     private boolean m_administrator;
+    private boolean m_anonymous;
     private Context m_context;
    /* ------------------ */
 
@@ -131,13 +140,18 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
     public Account() {
         this.m_username = null;
         this.m_password = null;
+        this.m_lastSync = null;
+        this.m_administrator = false;
+        this.m_anonymous = true;
         this.m_context = null;
     }
 
     public Account(String username, String password) {
         this.m_username = username;
         this.m_password = password;
+        this.m_lastSync = null;
         this.m_administrator = false;
+        this.m_anonymous = false;
         this.m_context = null;
     }
 
@@ -145,6 +159,7 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
         this.m_username = username;
         this.m_password = password;
         this.m_administrator = administrator;
+        this.m_anonymous = false;
         this.m_context = null;
     }
 
@@ -183,10 +198,6 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
 
     public void requestCreate(CreateEvent createAccountEvent) {
         new CreateRequest(this, createAccountEvent).execute();
-    }
-
-    public void sync() {
-
     }
 
     private void save() {

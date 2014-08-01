@@ -37,7 +37,7 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
     }
 
     @Override
-    public User fromServerResource(ServerUser serverUser) {
+    public User makeCopyFromServer(ServerUser serverUser) {
         if(((m_pseudo != serverUser.pseudo) || (m_name != serverUser.name) || (m_firstName != serverUser.firstName))) {
             changed();
         }
@@ -50,8 +50,8 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
     }
 
     @Override
-    public User fromDetailedServerResource(DetailedServerUser detailedServerUser) {
-        fromServerResource(detailedServerUser);
+    public User syncFromServer(DetailedServerUser detailedServerUser) {
+        makeCopyFromServer(detailedServerUser);
 
         return this;
     }
