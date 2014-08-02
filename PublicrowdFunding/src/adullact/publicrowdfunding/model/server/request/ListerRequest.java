@@ -12,7 +12,7 @@ import adullact.publicrowdfunding.model.server.errorHandler.ListerErrorHandler;
 import adullact.publicrowdfunding.model.server.event.ListerEvent;
 
 public class ListerRequest<TResource extends Resource<TResource, TServerResource, TDetailedServerResource>, TServerResource, TDetailedServerResource extends TServerResource>
-        extends AuthenticatedRequest<ListerRequest<TResource, ?, ?>, ListerEvent<TResource>, ListerErrorHandler<TResource>> {
+        extends AnonymousRequest<ListerRequest<TResource, ?, ?>, ListerEvent<TResource>, ListerErrorHandler<TResource>> {
     private TResource m_resource;
     private Map<String, String> m_filter;
 

@@ -28,8 +28,17 @@ public class CacheManager {
         }
 	/* --------- */
 
-        public HashMap<String, Cache<User>> users;
-        public HashMap<String, Cache<Project>> projects;
+    private HashMap<String, Cache<User>> users;
+    private HashMap<String, Cache<Project>> projects;
+
+    public Cache<Project> getProjectById(String id) {
+        Cache<Project> res = projects.get(id);
+        if(res == null) {
+            res = new Cache<Project>(new Project().fromResourceId(id)).forceRetrieve();
+        }
+
+        return res;
+    }
         /*public HashMap<Integer, Cache<Tag>> tags;
         public HashMap<Integer, Cache<Commentary>> commentaries;
         public HashMap<Integer, Cache<Bookmark>> bookmarks;*/

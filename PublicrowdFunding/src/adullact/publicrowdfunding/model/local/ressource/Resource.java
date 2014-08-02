@@ -45,6 +45,7 @@ public abstract class Resource<TResource extends Resource<TResource, TServerReso
     }
 
     public abstract String getResourceId();
+    public abstract TResource fromResourceId(String id);
     public abstract TServerResource toServerResource();
     public abstract TResource makeCopyFromServer(TServerResource serverResource);
     public abstract TResource syncFromServer(TDetailedServerResource detailedServerResource);

@@ -14,8 +14,8 @@ public class Cache<TResource extends Resource<TResource, ?, ?>> {
     private Sync<TResource> m_resource;
     private DateTime m_dateTime;
 
-    public Cache(TResource data) {
-        this.m_resource = new Sync<TResource>(data);
+    public Cache(TResource resource) {
+        this.m_resource = new Sync<TResource>(resource);
         this.m_dateTime = DateTime.now();
     }
 
@@ -23,8 +23,10 @@ public class Cache<TResource extends Resource<TResource, ?, ?>> {
         return m_resource.id;
     }
 
-    public void forceRetrieve() {
+    public Cache<TResource> forceRetrieve() {
         m_dateTime = null;
+
+        return this;
     }
 
     public TResource getCachedResource() {

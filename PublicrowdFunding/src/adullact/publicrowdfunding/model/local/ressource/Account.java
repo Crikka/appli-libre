@@ -80,6 +80,18 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
     }
 
     @Override
+    public Account fromResourceId(String id) {
+        this.m_username = id;
+        this.m_password = null;
+        this.m_lastSync = null;
+        this.m_administrator = false;
+        this.m_anonymous = true;
+        this.m_context = null;
+
+        return this;
+    }
+
+    @Override
     public ServerAccount toServerResource() {
         ServerAccount res = new ServerAccount();
         res.username = m_username;

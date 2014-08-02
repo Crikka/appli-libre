@@ -48,7 +48,7 @@ public interface Service {
 
     // Projects
     @GET("/project/{projectID}")
-    Observable<DetailedServerProject> detailProject();
+    Observable<DetailedServerProject> detailProject(@Path("projectID") String projectID);
     @GET("/project/")
     Observable<ArrayList<ServerProject>> listProjects(@QueryMap Map<String, String> filter);
     @POST("/project/")

@@ -4,6 +4,7 @@ import adullact.publicrowdfunding.model.local.ressource.Resource;
 import adullact.publicrowdfunding.model.server.errorHandler.RetrieveErrorHandler;
 import adullact.publicrowdfunding.model.server.event.RetrieveEvent;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
@@ -31,10 +32,30 @@ public class RetrieveRequest<TResource extends Resource<TResource, TServerResour
                 })
                 .subscribe(new Action1<TDetailedServerResource>() {
 
-                    @Override
-                    public void call(TDetailedServerResource  detailedServerResources) {
-                            m_resource.syncFromServer(detailedServerResources);
-                    }
-                });
+                               @Override
+                               public void call(TDetailedServerResource detailedServerResources) {
+                                   if (detailedServerResources == null) {
+                                       errorHandler().manageCallback();
+                                       return;
+                                   }
+
+
+                                   m_resource.syncFromServer(detailedServerResources);
+                                   event().onRetrieve(m_resource);
+                               }
+                           },
+                        new Action1<Throwable>() {
+                            @Override
+                            public void call(Throwable throwable) {
+                                // on main thread; something went wrong
+                                System.out.println("Error! " + throwable);
+                            }
+                        },
+                        new Action0() {
+                            @Override
+                            public void call() {
+                                System.out.println("Hello");
+                            }
+                        });
     }
 }

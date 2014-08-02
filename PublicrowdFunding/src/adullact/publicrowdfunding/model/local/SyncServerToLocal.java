@@ -43,10 +43,6 @@ public class SyncServerToLocal {
                 projectWhatToDo.eventually();
             }
 
-            @Override
-            public void errorAuthenticationRequired() {
-                projectWhatToDo.eventually();
-            }
         };
         if(Account.getOwnOrAnonymous().getLastSync() == null) {
             (new Project()).serverLister(event);

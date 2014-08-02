@@ -48,34 +48,36 @@ public class MainActivity extends Activity implements TabListener {
 			finish();
 		}
 
-        Cache<Project> projet = CacheManager.getInstance().projects.get(id);
-
-		if (projet == null) {
-			Toast.makeText(getApplicationContext(),
-					"Aucun projet avec cet ID.", Toast.LENGTH_SHORT).show();
-			finish();
-		}
+        Cache<Project> projet = CacheManager.getInstance().getProjectById(id);
 
         final MainActivity _this = this;
         projet.toResource(new HoldToDo<Project>() {
             @Override
             public void hold(Project project) {
                 try {
-                    rl = (FrameLayout) findViewById(R.id.tabcontent);
+                    if(isDeleted()) {
+                        Toast.makeText(getApplicationContext(),
+                                "Aucun projet avec cet ID.", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                    else {
+                        _this.projet = project;
+                        rl = (FrameLayout) findViewById(R.id.tabcontent);
 
-                    ActionBar bar = getActionBar();
+                        ActionBar bar = getActionBar();
 
-                    bar.addTab(bar.newTab().setText("Projets").setTabListener(_this));
-                    bar.addTab(bar.newTab().setText("Commentaires").setTabListener(_this));
-                    bar.addTab(bar.newTab().setText("Localisation")
-                            .setTabListener(_this));
+                        bar.addTab(bar.newTab().setText("Projets").setTabListener(_this));
+                        bar.addTab(bar.newTab().setText("Commentaires").setTabListener(_this));
+                        bar.addTab(bar.newTab().setText("Localisation")
+                                .setTabListener(_this));
 
-                    bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM
-                            | ActionBar.DISPLAY_USE_LOGO);
-                    bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-                    bar.setDisplayShowHomeEnabled(true);
-                    bar.setDisplayShowTitleEnabled(true);
-                    bar.show();
+                        bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM
+                                | ActionBar.DISPLAY_USE_LOGO);
+                        bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+                        bar.setDisplayShowHomeEnabled(true);
+                        bar.setDisplayShowTitleEnabled(true);
+                        bar.show();
+                    }
 
                 } catch (Exception e) {
                     e.getMessage();

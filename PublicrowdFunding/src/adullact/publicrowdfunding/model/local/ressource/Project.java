@@ -27,7 +27,24 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
     /* ----- Resource ----- */
     @Override
     public String getResourceId() {
-        return m_id.toString();
+        return m_id;
+    }
+
+    @Override
+    public Project fromResourceId(String id) {
+        this.m_id = id;
+        this.m_name = null;
+        this.m_description = null;
+        this.m_requestedFunding = null;
+        this.m_currentFunding = null;
+        this.m_creationDate = null;
+        this.m_fundingInterval = null;
+        this.m_fundingTimePeriods = null;
+        this.m_position = null;
+        this.m_validate = false;
+        this.m_illustration = -1;
+
+        return this;
     }
 
     @Override
@@ -71,12 +88,26 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
 
     @Override
     public Project syncFromServer(DetailedServerProject detailedServerProject) {
-        return null;
+        this.m_id = detailedServerProject.id;
+        this.m_name = detailedServerProject.name;
+        this.m_description = detailedServerProject.description = m_description;
+        //serverProject.proposedBy = m_proposedBy.getResourceId();
+        this.m_requestedFunding = new BigDecimal(detailedServerProject.requestedFunding);
+        this.m_currentFunding = new BigDecimal(detailedServerProject.currentFunding);
+        /*serverProject.creationDate = m_creationDate;
+        serverProject.latitude = m_position.latitude;
+        serverProject.longitude = m_position.longitude;
+        serverProject.validate = m_validate;
+        serverProject.illustration = m_illustration;
+        serverProject.beginDate = m_fundingInterval.getStart();
+        serverProject.endDate = m_fundingInterval.getEnd();*/
+
+        return this;
     }
 
     @Override
     public Observable<DetailedServerProject> methodGET(Service service) {
-        return service.detailProject();
+        return service.detailProject(getResourceId());
     }
 
     @Override
@@ -159,6 +190,38 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
 		}
 		m_fundingTimePeriods.add(new FundingTimePeriod(new Interval(startDateTime, endDateTime)));
 	}
+
+    /**
+     * Reserved for local database
+     */
+    public Project(String id, String name, String description, boolean validate, String proposedBy, String requestedFunding, String currentFunding, String creationDate, String beginDate, String endDate, Double latitude, Double longitude, Integer illustration) {
+        this.m_id = id;
+        this.m_name = name;
+        this.m_description = description;
+        this.m_proposedBy = new Cache<User>(new User().fromResourceId(proposedBy));
+        this.m_requestedFunding = new BigDecimal(requestedFunding);
+        this.m_currentFunding = new BigDecimal(currentFunding);
+        this.m_creationDate = DateTime.parse(creationDate);
+        this.m_creationDate = DateTime.parse(creationDate);
+        this.m_fundingInterval = new Interval(DateTime.parse(beginDate), DateTime.parse(endDate));
+        this.m_fundingTimePeriods = new ArrayList<FundingTimePeriod>();
+        this.m_position = new LatLng(latitude, longitude);
+        this.m_validate = validate;
+        this.m_illustration = illustration;
+
+        // Now, we calculate 10 periods for graphics
+        int numberOfPeriod = 10;
+        DateTime startDateTime = m_fundingInterval.getStart();
+        DateTime endDateTime = m_fundingInterval.getEnd();
+        long numberOfDayBetweenStartAndEnd = m_fundingInterval.toDuration().getStandardDays();
+        long dayByPeriod = numberOfDayBetweenStartAndEnd/numberOfPeriod;
+
+        for(int i = 0; i < (numberOfPeriod-1); i++){
+            m_fundingTimePeriods.add(new FundingTimePeriod(new Interval(startDateTime, startDateTime.plusDays((int) dayByPeriod))));
+            startDateTime = startDateTime.plusDays((int) dayByPeriod);
+        }
+        m_fundingTimePeriods.add(new FundingTimePeriod(new Interval(startDateTime, endDateTime)));
+    }
 
 	public String getId() {
 		return m_id;

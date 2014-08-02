@@ -8,7 +8,7 @@ import adullact.publicrowdfunding.model.server.request.AuthenticatedRequest;
 import adullact.publicrowdfunding.model.server.request.ListerRequest;
 
 public abstract class ListerEvent<TResource extends Resource<TResource, ?, ?>>
-        extends AuthenticatedEvent<ListerRequest<TResource, ?, ?>, ListerEvent<TResource>, ListerErrorHandler<TResource>>{
+        extends AnonymousEvent<ListerRequest<TResource, ?, ?>, ListerEvent<TResource>, ListerErrorHandler<TResource>>{
 
 	/* Callback functions */
     public abstract void onLister(ArrayList<TResource> resources);

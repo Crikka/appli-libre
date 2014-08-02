@@ -69,8 +69,7 @@ public class TabProjetsFragment extends Fragment {
 
                 @Override
                 public void holdAll(ArrayList<Project> projects) {
-                    Vector<Project> vector_projects = new Vector<Project>();
-                    vector_projects.addAll(projects);
+                    Vector<Project> vector_projects = new Vector<Project>(projects);
 
                     ArrayAdapter<Project> adapter = new CustomAdapter(_this.getActivity()
                             .getBaseContext(), R.layout.projet_list, vector_projects);

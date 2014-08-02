@@ -32,6 +32,18 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
     }
 
     @Override
+    public User fromResourceId(String id) {
+        this.m_pseudo = id;
+        this.m_name = null;
+        this.m_firstName = null;
+        this.m_authenticated = false;
+        this.m_supportedProjects = new ArrayList<Cache<Project>>();
+        this.m_financedProjects = new ArrayList<Cache<Project>>();
+
+        return this;
+    }
+
+    @Override
     public ServerUser toServerResource() {
         return null;
     }
