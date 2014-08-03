@@ -39,6 +39,15 @@ public class CacheManager {
 
         return res;
     }
+
+    public Cache<User> getUserById(String id) {
+        Cache<User> res = users.get(id);
+        if(res == null) {
+            res = new Cache<User>(new User().fromResourceId(id)).forceRetrieve();
+        }
+
+        return res;
+    }
         /*public HashMap<Integer, Cache<Tag>> tags;
         public HashMap<Integer, Cache<Commentary>> commentaries;
         public HashMap<Integer, Cache<Bookmark>> bookmarks;*/

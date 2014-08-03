@@ -9,5 +9,5 @@ public class ServerBookmark {
     public int id;
     public String username;
     public String projectID;
-    public DateTime creationDate;
+    public String creationDate;
 }

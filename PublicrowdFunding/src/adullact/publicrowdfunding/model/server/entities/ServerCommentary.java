@@ -12,5 +12,5 @@ public class ServerCommentary {
     public String title;
     public String message;
     public double mark;
-    public DateTime creationDate;
+    public String creationDate;
 }

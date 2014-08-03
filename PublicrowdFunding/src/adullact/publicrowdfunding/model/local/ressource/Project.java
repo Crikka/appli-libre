@@ -13,6 +13,7 @@ import org.joda.time.Interval;
 import com.google.android.gms.maps.model.LatLng;
 
 import adullact.publicrowdfunding.model.local.cache.Cache;
+import adullact.publicrowdfunding.model.local.cache.CacheManager;
 import adullact.publicrowdfunding.model.local.utilities.FundingTimePeriod;
 import adullact.publicrowdfunding.model.server.entities.DetailedServerProject;
 import adullact.publicrowdfunding.model.server.entities.ServerProject;
@@ -20,6 +21,7 @@ import adullact.publicrowdfunding.model.server.entities.Service;
 import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
 import adullact.publicrowdfunding.model.server.event.ListerEvent;
 import adullact.publicrowdfunding.model.server.request.ListerRequest;
+import adullact.publicrowdfunding.shared.Utility;
 import rx.Observable;
 
 public class Project extends Resource<Project, ServerProject, DetailedServerProject> {
@@ -72,16 +74,14 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         res.m_id = serverProject.id;
         res.m_name = serverProject.name;
         res.m_description = serverProject.description = m_description;
-        //serverProject.proposedBy = m_proposedBy.getResourceId();
+        res.m_proposedBy = CacheManager.getInstance().getUserById(serverProject.proposedBy);
         res.m_requestedFunding = new BigDecimal(serverProject.requestedFunding);
         res.m_currentFunding = new BigDecimal(serverProject.currentFunding);
-        /*serverProject.creationDate = m_creationDate;
-        serverProject.latitude = m_position.latitude;
-        serverProject.longitude = m_position.longitude;
-        serverProject.validate = m_validate;
-        serverProject.illustration = m_illustration;
-        serverProject.beginDate = m_fundingInterval.getStart();
-        serverProject.endDate = m_fundingInterval.getEnd();*/
+        res.m_creationDate = Utility.stringToDateTime(serverProject.creationDate);
+        res.m_position = new LatLng(serverProject.latitude, serverProject.longitude);
+        res.m_validate = serverProject.validate;
+        res.m_illustration = serverProject.illustration;
+        res.m_fundingInterval = new Interval(Utility.stringToDateTime(serverProject.beginDate), Utility.stringToDateTime(serverProject.endDate));
 
         return res;
     }
@@ -91,16 +91,18 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         this.m_id = detailedServerProject.id;
         this.m_name = detailedServerProject.name;
         this.m_description = detailedServerProject.description = m_description;
-        //serverProject.proposedBy = m_proposedBy.getResourceId();
+        this.m_proposedBy = CacheManager.getInstance().getUserById(detailedServerProject.proposedBy);
         this.m_requestedFunding = new BigDecimal(detailedServerProject.requestedFunding);
         this.m_currentFunding = new BigDecimal(detailedServerProject.currentFunding);
-        /*serverProject.creationDate = m_creationDate;
-        serverProject.latitude = m_position.latitude;
-        serverProject.longitude = m_position.longitude;
-        serverProject.validate = m_validate;
-        serverProject.illustration = m_illustration;
-        serverProject.beginDate = m_fundingInterval.getStart();
-        serverProject.endDate = m_fundingInterval.getEnd();*/
+        this.m_creationDate = Utility.stringToDateTime(detailedServerProject.creationDate);
+        this.m_position = new LatLng(detailedServerProject.latitude, detailedServerProject.longitude);
+        this.m_validate = detailedServerProject.validate;
+        this.m_illustration = detailedServerProject.illustration;
+        this.m_fundingInterval = new Interval(Utility.stringToDateTime(detailedServerProject.beginDate), Utility.stringToDateTime(detailedServerProject.endDate));
+        this.m_fundingTimePeriods = new ArrayList<FundingTimePeriod>();
+
+        // Now, we calculate 10 periods for graphics
+        calculatePeriods();
 
         return this;
     }
@@ -178,17 +180,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
 		this.m_illustration = illustration;
 		
 		// Now, we calculate 10 periods for graphics
-		int numberOfPeriod = 10;
-		DateTime startDateTime = m_fundingInterval.getStart();
-		DateTime endDateTime = m_fundingInterval.getEnd();
-		long numberOfDayBetweenStartAndEnd = m_fundingInterval.toDuration().getStandardDays();
-		long dayByPeriod = numberOfDayBetweenStartAndEnd/numberOfPeriod;
-		
-		for(int i = 0; i < (numberOfPeriod-1); i++){
-			m_fundingTimePeriods.add(new FundingTimePeriod(new Interval(startDateTime, startDateTime.plusDays((int) dayByPeriod))));
-			startDateTime = startDateTime.plusDays((int) dayByPeriod);
-		}
-		m_fundingTimePeriods.add(new FundingTimePeriod(new Interval(startDateTime, endDateTime)));
+        calculatePeriods();
 	}
 
     /**
@@ -210,6 +202,10 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         this.m_illustration = illustration;
 
         // Now, we calculate 10 periods for graphics
+        calculatePeriods();
+    }
+
+    private void calculatePeriods() {
         int numberOfPeriod = 10;
         DateTime startDateTime = m_fundingInterval.getStart();
         DateTime endDateTime = m_fundingInterval.getEnd();

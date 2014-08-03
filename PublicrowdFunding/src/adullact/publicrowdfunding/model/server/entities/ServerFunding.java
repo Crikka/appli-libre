@@ -10,5 +10,5 @@ public class ServerFunding {
     public String value;
     public String username;
     public String projectID;
-    public DateTime creationDate;
+    public String creationDate;
 }
