@@ -104,7 +104,7 @@ public class MainActivity extends Activity implements TabListener {
                     bar.show();
 
                 } catch (Exception e) {
-                    e.getMessage();
+                    //e.getMessage();
                 }
             }
         });

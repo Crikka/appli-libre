@@ -26,7 +26,7 @@ import com.google.android.gms.maps.model.LatLng;
  */
 public class ServerInfo {
 	public final static String SERVER_URL = "http://10.0.2.2/PublicrowFunding/PublicrowFunding/rest";
-	//public final static String SERVER_URL = "http://192.168.1.21/PublicrowFunding/PublicrowFunding/rest";
+	//public final static String SERVER_URL = "http://192.168.1.25/PublicrowFunding/PublicrowFunding/rest";
 
 	
 	/*
