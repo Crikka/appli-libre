@@ -72,8 +72,5 @@ extends ServerObject<TRequest, TEvent, TErrorHandler> {
 	
 	public abstract void execute();
 
-	// PAS BIEN !!! Pas facile à trouver celui la !
-	
-    //public final static String SERVER_URL = "http://10.0.2.2/PublicrowFunding/PublicrowFunding/rest";
-    public final static String SERVER_URL = "http://sockets.lucasnelaupe.fr/PublicrowFunding/PublicrowFunding/rest";
+    public final static String SERVER_URL = "http://server.lucasnelaupe.fr/PublicrowFunding/PublicrowFunding/controler.php";
 }
