@@ -65,6 +65,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         serverProject.illustration = m_illustration;
         serverProject.beginDate = m_fundingInterval.getStart().toString();
         serverProject.endDate = m_fundingInterval.getEnd().toString();
+
         return serverProject;
     }
 
@@ -166,7 +167,12 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         this.m_illustration = -1;
     }
 
-	public Project(String name, String description, String requestedFunding, Date creationDate, Date beginDate, Date endDate, LatLng position, int illustration) {
+    @Override
+    public Cache<Project> localCache() {
+        return CacheManager.getInstance().getProjectById(getResourceId());
+    }
+
+    public Project(String name, String description, String requestedFunding, Date creationDate, Date beginDate, Date endDate, LatLng position, int illustration) {
 		this.m_id = UUID.randomUUID().toString();
 		this.m_name = name;
 		this.m_description = description;

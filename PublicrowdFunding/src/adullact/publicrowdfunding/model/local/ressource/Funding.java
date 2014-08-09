@@ -1,23 +1,122 @@
 package adullact.publicrowdfunding.model.local.ressource;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Map;
 
 import org.joda.time.DateTime;
 
-public class Funding {
-	private User m_from;
-	private Project m_to;
+import adullact.publicrowdfunding.model.local.cache.Cache;
+import adullact.publicrowdfunding.model.local.cache.CacheManager;
+import adullact.publicrowdfunding.model.server.entities.ServerFunding;
+import adullact.publicrowdfunding.model.server.entities.Service;
+import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
+import adullact.publicrowdfunding.shared.Utility;
+import rx.Observable;
+
+public class Funding extends Resource<Funding, ServerFunding, ServerFunding> {
+    private int m_id;
+	private Cache<User> m_from;
+	private Cache<Project> m_to;
+    private String m_transactionId;
 	private BigDecimal m_value;
 	private DateTime m_date;
 	
-	public Funding(User from, Project to, String value, DateTime date) {
+	public Funding() {
+        super();
+    }
+
+    public Funding(User from, Project to, String transactionId, String value) {
 		super();
-		
-		this.m_from = from;
-		this.m_to = to;
+
+		this.m_from = from.getCache();
+		this.m_to = to.getCache();
+        this.m_transactionId = transactionId;
 		this.m_value = new BigDecimal(value);
-		this.m_date = date;
+		this.m_date = DateTime.now();
 	}
-	
-	
+
+
+    /* --- Resource --- */
+    @Override
+    public Cache<Funding> localCache() {
+        return CacheManager.getInstance().getFundingById(getResourceId());
+    }
+
+    @Override
+    public String getResourceId() {
+        return Integer.toString(m_id);
+    }
+
+    @Override
+    public Funding fromResourceId(String id) {
+        m_id = Integer.parseInt(id);
+
+        return this;
+    }
+
+    @Override
+    public ServerFunding toServerResource() {
+        ServerFunding serverFunding = new ServerFunding();
+        serverFunding.id = m_id;
+        serverFunding.transactionId = m_transactionId;
+        serverFunding.username = m_from.getResourceId();
+        serverFunding.projectID = m_to.getResourceId();
+        serverFunding.value = m_value.toPlainString();
+        serverFunding.creationDate = Utility.DateTimeToString(m_date);
+
+        return serverFunding;
+    }
+
+    @Override
+    public Funding makeCopyFromServer(ServerFunding serverFunding) {
+        Funding funding = new Funding();
+        funding.m_id = serverFunding.id;
+        funding.m_transactionId = serverFunding.transactionId;
+        funding.m_from = CacheManager.getInstance().getUserById(serverFunding.username);
+        funding.m_to = CacheManager.getInstance().getProjectById(serverFunding.projectID);
+        funding.m_value = new BigDecimal(serverFunding.value);
+        funding.m_date = Utility.stringToDateTime(serverFunding.creationDate);
+
+        return funding;
+    }
+
+    @Override
+    public Funding syncFromServer(ServerFunding serverFunding) {
+        this.m_id = serverFunding.id;
+        this.m_transactionId = serverFunding.transactionId;
+        this.m_from = CacheManager.getInstance().getUserById(serverFunding.username);
+        this.m_to = CacheManager.getInstance().getProjectById(serverFunding.projectID);
+        this.m_value = new BigDecimal(serverFunding.value);
+        this.m_date = Utility.stringToDateTime(serverFunding.creationDate);
+
+        return this;
+    }
+
+    @Override
+    public Observable<ServerFunding> methodGET(Service service) {
+        return service.detailFunding(getResourceId());
+    }
+
+    @Override
+    public Observable<ArrayList<ServerFunding>> methodGETAll(Service service, Map<String, String> filter) {
+        return service.listFunding(filter);
+    }
+
+    @Override
+    public Observable<SimpleServerResponse> methodPUT(Service service) {
+        return service.modifyFunding(getResourceId(), toServerResource());
+    }
+
+    @Override
+    public Observable<SimpleServerResponse> methodPOST(Service service) {
+        return service.createFunding(toServerResource());
+    }
+
+    @Override
+    public Observable<SimpleServerResponse> methodDELETE(Service service) {
+        return service.deleteFunding(getResourceId());
+    }
+    /* ---------------- */
 }

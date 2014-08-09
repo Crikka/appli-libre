@@ -29,10 +29,6 @@ public class Cache<TResource extends Resource<TResource, ?, ?>> {
         return this;
     }
 
-    public TResource getCachedResource() {
-        return m_resource.resource;
-    }
-
     public void toResource(final WhatToDo<TResource> whatToDo) {
         boolean timeToRetrieve = false;
         if(m_dateTime == null) {

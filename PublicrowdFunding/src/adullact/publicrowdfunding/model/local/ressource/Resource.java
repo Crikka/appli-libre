@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import adullact.publicrowdfunding.model.local.cache.Cache;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.server.entities.Service;
 import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
@@ -28,9 +29,11 @@ import rx.schedulers.Schedulers;
  */
 public abstract class Resource<TResource extends Resource<TResource, TServerResource, TDetailedServerResource>, TServerResource, TDetailedServerResource extends TServerResource> {
     private boolean m_changed;
+    private Cache<TResource> m_cache;
 
     public Resource() {
         m_changed = false;
+        m_cache = null;
     }
 
     protected void changed() {
@@ -44,6 +47,19 @@ public abstract class Resource<TResource extends Resource<TResource, TServerReso
         return ret;
     }
 
+    public boolean isCached() {
+        return (m_cache != null);
+    }
+
+    public  Cache<TResource> getCache() {
+        if(!isCached()) {
+            m_cache = localCache();
+        }
+
+        return m_cache;
+    }
+
+    public abstract Cache<TResource> localCache();
     public abstract String getResourceId();
     public abstract TResource fromResourceId(String id);
     public abstract TServerResource toServerResource();

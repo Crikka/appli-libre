@@ -7,6 +7,7 @@ import java.util.Map;
 
 import adullact.publicrowdfunding.model.local.ressource.Bookmark;
 import adullact.publicrowdfunding.model.local.ressource.Commentary;
+import adullact.publicrowdfunding.model.local.ressource.Funding;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
 
@@ -17,8 +18,9 @@ public class CacheManager {
         /* Singleton */
         private static CacheManager m_instance = null;
         private CacheManager() {
-            users = new HashMap<String, Cache<User>>();
-            projects = new HashMap<String, Cache<Project>>();
+            m_users = new HashMap<String, Cache<User>>();
+            m_projects = new HashMap<String, Cache<Project>>();
+            m_funding = new HashMap<String, Cache<Funding>>();
         }
         public static CacheManager getInstance() {
             if (m_instance == null) {
@@ -28,11 +30,12 @@ public class CacheManager {
         }
 	/* --------- */
 
-    private HashMap<String, Cache<User>> users;
-    private HashMap<String, Cache<Project>> projects;
+    private HashMap<String, Cache<User>> m_users;
+    private HashMap<String, Cache<Project>> m_projects;
+    private HashMap<String, Cache<Funding>> m_funding;
 
     public Cache<Project> getProjectById(String id) {
-        Cache<Project> res = projects.get(id);
+        Cache<Project> res = m_projects.get(id);
         if(res == null) {
             res = new Cache<Project>(new Project().fromResourceId(id)).forceRetrieve();
         }
@@ -41,9 +44,18 @@ public class CacheManager {
     }
 
     public Cache<User> getUserById(String id) {
-        Cache<User> res = users.get(id);
+        Cache<User> res = m_users.get(id);
         if(res == null) {
             res = new Cache<User>(new User().fromResourceId(id)).forceRetrieve();
+        }
+
+        return res;
+    }
+
+    public Cache<Funding> getFundingById(String id) {
+        Cache<Funding> res = m_funding.get(id);
+        if(res == null) {
+            res = new Cache<Funding>(new Funding().fromResourceId(id)).forceRetrieve();
         }
 
         return res;

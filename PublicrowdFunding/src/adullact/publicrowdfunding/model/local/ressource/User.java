@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import adullact.publicrowdfunding.model.local.cache.Cache;
+import adullact.publicrowdfunding.model.local.cache.CacheManager;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.server.entities.DetailedServerUser;
 import adullact.publicrowdfunding.model.server.entities.ServerUser;
@@ -12,7 +13,6 @@ import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
 import rx.Observable;
 
 /**
- * TODO
  * 
  * @author Ferrand
  * 
@@ -21,11 +21,15 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
 	private String m_pseudo;
 	private String m_name;
 	private String m_firstName;
-	private boolean m_authenticated;
 	private ArrayList<Cache<Project>> m_supportedProjects;
 	private ArrayList<Cache<Project>> m_financedProjects;
 
     /* ----- Resource ----- */
+    @Override
+    public Cache<User> localCache() {
+        return CacheManager.getInstance().getUserById(getResourceId());
+    }
+
     @Override
     public String getResourceId() {
         return m_pseudo;
@@ -36,7 +40,6 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
         this.m_pseudo = id;
         this.m_name = null;
         this.m_firstName = null;
-        this.m_authenticated = false;
         this.m_supportedProjects = new ArrayList<Cache<Project>>();
         this.m_financedProjects = new ArrayList<Cache<Project>>();
 
@@ -45,7 +48,13 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
 
     @Override
     public ServerUser toServerResource() {
-        return null;
+        ServerUser serverUser = new ServerUser();
+        serverUser.pseudo = getResourceId();
+        serverUser.mail = "";
+        serverUser.name = this.m_name;
+        serverUser.firstName = this.m_firstName;
+
+        return serverUser;
     }
 
     @Override
@@ -99,7 +108,6 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
 		this.m_pseudo = null;
 		this.m_name = null;
 		this.m_firstName = null;
-		this.m_authenticated = false;
 		this.m_supportedProjects = new ArrayList<Cache<Project>>();
 		this.m_financedProjects = new ArrayList<Cache<Project>>();
 	}
@@ -108,7 +116,6 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
         this.m_pseudo = pseudo;
         this.m_name = name;
         this.m_firstName = firstName;
-        this.m_authenticated = false;
         this.m_supportedProjects = new ArrayList<Cache<Project>>();
         this.m_financedProjects = new ArrayList<Cache<Project>>();
     }

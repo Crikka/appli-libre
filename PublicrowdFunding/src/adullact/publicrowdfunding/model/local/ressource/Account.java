@@ -20,6 +20,7 @@ import javax.crypto.spec.SecretKeySpec;
 import adullact.publicrowdfunding.PublicrowFundingApplication;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.cache.Cache;
+import adullact.publicrowdfunding.model.local.cache.CacheManager;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.server.entities.ServerAccount;
 import adullact.publicrowdfunding.model.server.entities.Service;
@@ -156,6 +157,11 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
         this.m_administrator = false;
         this.m_anonymous = true;
         this.m_context = null;
+    }
+
+    @Override
+    public Cache<Account> localCache() {
+        return null;//todo
     }
 
     public Account(String username, String password) {

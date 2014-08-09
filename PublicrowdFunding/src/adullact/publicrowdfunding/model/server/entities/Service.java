@@ -59,10 +59,16 @@ public interface Service {
     Observable<SimpleServerResponse> deleteProject(@Path("projectID") String projectID);
 
     // Funding
+    @GET("/funding/{id}")
+    Observable<ServerFunding> detailFunding(@Path("id") String id);
     @GET("/funding/")
     Observable<ArrayList<ServerFunding>> listFunding(@QueryMap Map<String, String> filter);
     @POST("/funding/")
     Observable<SimpleServerResponse> createFunding(@Body ServerFunding serverFunding);
+    @PUT("/funding/{id}")
+    Observable<SimpleServerResponse> modifyFunding(@Path("id") String id, @Body ServerFunding serverFunding);
+    @DELETE("/funding/{id}")
+    Observable<SimpleServerResponse> deleteFunding(@Path("id") String id);
 
     // Commentaries
     @GET("/commentary/")

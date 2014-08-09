@@ -7,6 +7,7 @@ import org.joda.time.DateTime;
  */
 public class ServerFunding {
     public int id;
+    public String transactionId;
     public String value;
     public String username;
     public String projectID;
