@@ -5,6 +5,7 @@ import org.joda.time.DateTime;
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.custom.CustomProgressBar;
 import adullact.publicrowdfunding.model.local.ressource.Project;
+import adullact.publicrowdfunding.shared.Utility;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -61,7 +62,8 @@ public class TabProjetFragment extends Fragment {
 		m_illustration = (ImageView) view.findViewById(R.id.icon);
 
 		if (projet.getIllustration() != 0) {
-			m_illustration.setImageResource(projet.getIllustration());
+			m_illustration.setImageResource(Utility.getDrawable(projet
+					.getIllustration()));
 		} else {
 			m_illustration.setImageResource(R.drawable.ic_launcher);
 		}

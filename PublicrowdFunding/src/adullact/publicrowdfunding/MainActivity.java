@@ -10,7 +10,6 @@ import adullact.publicrowdfunding.model.local.SyncServerToLocal;
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.server.event.RetrieveEvent;
-
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
@@ -38,7 +37,7 @@ public class MainActivity extends Activity implements TabListener {
 	private ImageButton m_mon_compte;
 	private ImageButton m_rechercher;
 	private Vector<Project> projets = new Vector<Project>();
-
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

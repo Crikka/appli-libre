@@ -35,6 +35,7 @@ extends ServerObject<TRequest, TEvent, TErrorHandler> {
 	private boolean m_done;
     private Service m_service;
 	
+    
 	public Request(TEvent event, TErrorHandler errorHandler){
         super(event, errorHandler);
 

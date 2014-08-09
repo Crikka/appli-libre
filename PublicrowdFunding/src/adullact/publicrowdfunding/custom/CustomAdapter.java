@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.model.local.ressource.Project;
+import adullact.publicrowdfunding.shared.Utility;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +20,7 @@ public class CustomAdapter extends ArrayAdapter<Project> {
 	Vector<Project> data = null;
 
 	public CustomAdapter(Context context, int resource, Vector<Project> listItem) {
-		super(context, resource,listItem);
+		super(context, resource, listItem);
 		this.mContext = context;
 		this.layoutResourceId = resource;
 		this.data = listItem;
@@ -49,7 +50,6 @@ public class CustomAdapter extends ArrayAdapter<Project> {
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			v = inflater.inflate(layoutResourceId, null);
 
-			
 			holder.titre_projet_liste = (TextView) v
 					.findViewById(R.id.titre_projet_liste);
 			holder.description_projet_liste = (TextView) v
@@ -60,26 +60,30 @@ public class CustomAdapter extends ArrayAdapter<Project> {
 					.findViewById(R.id.temps_restant_projet_liste);
 			holder.avancement_projet_liste = (CustomProgressBar) v
 					.findViewById(R.id.avancement_projet_liste);
-			holder.illustration = (ImageView) v
-					.findViewById(R.id.icon);
+			holder.illustration = (ImageView) v.findViewById(R.id.icon);
 
 			v.setTag(holder);
 		} else {
 			holder = (UserHolder) v.getTag();
 		}
-		
+
 		Project projet = data.elementAt(position);
 		holder.titre_projet_liste.setText(projet.getName());
 		holder.description_projet_liste.setText(projet.getDescription());
-		holder.nb_participation_projet_liste.setText("nb participants non implémenté");
-		holder.temps_restant_projet_liste.setText(projet.getNumberOfDayToEnd() + " jours restants");		
+		holder.nb_participation_projet_liste
+				.setText("nb participants non implémenté");
+		holder.temps_restant_projet_liste.setText(projet.getNumberOfDayToEnd()
+				+ " jours restants");
 
-		holder.avancement_projet_liste.setArgent(5000*projet.getPercentOfAchievement()/100);
-		holder.avancement_projet_liste.setProgress(projet.getPercentOfAchievement());
+		holder.avancement_projet_liste.setArgent(5000 * projet
+				.getPercentOfAchievement() / 100);
+		holder.avancement_projet_liste.setProgress(projet
+				.getPercentOfAchievement());
 		holder.avancement_projet_liste.setMaxArgent(5000);
-		if(projet.getIllustration() != 0){
-		holder.illustration.setImageResource(projet.getIllustration());
-		}else{
+		if (projet.getIllustration() != 0) {
+			holder.illustration.setImageResource(Utility.getDrawable(projet
+					.getIllustration()));
+		} else {
 			holder.illustration.setImageResource(R.drawable.ic_launcher);
 		}
 		return v;
