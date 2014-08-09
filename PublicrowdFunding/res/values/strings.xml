@@ -17,7 +17,17 @@
     <string name="till_day">Inf jours restants</string>
     <string name="add_project">Soumettre un projet</string>
     <string name="projet_soumission">Projet proposé par lucas</string>
-     <string name="description_image_button">Bouton image</string>
+    <string name="description_image_button">Bouton image</string>
     <string name="valider">Valider</string>
+    <string name="aucune_financement">0e</string>
+    <string name="zero">0</string>
+    <string name="no_days"> 0 jours</string>
+    <string name="participants">participants</string>
+    <string name="restant">restant</string>
+    <string name="recolter">récoltés</string>
+    <string name="default_utilisateur">lucas34</string>
+    <string name="default_localisation">New York</string>
+    <string name="site_web">Site internet</string>
+    <string name="telephone">Numéro de téléphone</string>
 
 </resources>

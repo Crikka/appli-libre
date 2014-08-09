@@ -112,7 +112,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="récolté"
+                        android:text="récoltés"
                         android:textSize="15sp" />
 
                     <TextView
@@ -152,7 +152,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="2dip"
                 android:background="@drawable/buttonshapes"
-                android:drawableLeft="@android:drawable/ic_menu_edit"
+                android:drawableLeft="@drawable/ic_menu_attachment"
                 android:gravity="left|center_vertical"
                 android:text="Aller sur le site web"
                 android:textColor="#808080"

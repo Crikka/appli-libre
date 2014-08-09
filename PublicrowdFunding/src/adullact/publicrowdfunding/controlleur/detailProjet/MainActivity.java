@@ -10,6 +10,7 @@ import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
 import android.app.Activity;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -33,6 +34,8 @@ public class MainActivity extends Activity implements TabListener {
 	private Drawable m_favorite;
 	private boolean m_Is_favorite;
 
+	private ProgressDialog mprogressDialog;
+	
 	FragmentTransaction fragMentTra = null;
 
 	@Override
@@ -48,6 +51,12 @@ public class MainActivity extends Activity implements TabListener {
 			finish();
 		}
 
+		mprogressDialog = new ProgressDialog(this);
+		mprogressDialog.setMessage("Chargement en cours...");
+		mprogressDialog.setTitle("Affichage du projet");
+		mprogressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+		mprogressDialog.show();
+		
         Cache<Project> projet = CacheManager.getInstance().getProjectById(id);
         final MainActivity _this = this;
         projet.toResource(new HoldToDo<Project>() {
@@ -76,6 +85,7 @@ public class MainActivity extends Activity implements TabListener {
                         bar.setDisplayShowHomeEnabled(true);
                         bar.setDisplayShowTitleEnabled(true);
                         bar.show();
+                        mprogressDialog.dismiss();
                     }
 
                 } catch (Exception e) {

@@ -41,8 +41,8 @@ public class  CarouselAdapter  extends BaseAdapter {
 	public View getView(int arg0, View arg1, ViewGroup arg2) {
 		ImageView mImage= new ImageView(mContext);
 		mImage.setImageResource(mData.get(arg0));
-		mImage.setPadding(5, 5, 5, 5);
-		mImage.setBackgroundResource(R.drawable.slider_bg);
+		mImage.setScaleX((float) 1.7);
+		mImage.setScaleY((float) 1.7);
 		return mImage;
 	}
     
