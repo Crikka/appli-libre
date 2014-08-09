@@ -6,6 +6,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -15,7 +16,10 @@ import android.view.ViewGroup;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class TabMapFragment extends Fragment {
@@ -85,6 +89,7 @@ public class TabMapFragment extends Fragment {
 					CameraUpdate zoom = CameraUpdateFactory.zoomTo(5);
 					googleMap.moveCamera(center);
 					googleMap.animateCamera(zoom);
+
 				}
 
 				else {
@@ -95,4 +100,5 @@ public class TabMapFragment extends Fragment {
 
 		return rootView;
 	}
+
 }

@@ -82,10 +82,10 @@ public class GraphiqueView extends View {
 		avancement[4] = 5;
 		avancement[5] = 5;
 		avancement[6] = 10;
-		avancement[7] = 10;
-		avancement[8] = 5;
-		avancement[9] = 15;
-		avancement[10] = 0;
+		avancement[7] = -1;
+		avancement[8] = -1;
+		avancement[9] = -1;
+		avancement[10] = -1;
 
 		paint.setAntiAlias(true);
 
@@ -150,8 +150,9 @@ public class GraphiqueView extends View {
 
 		for (int i = 0; i < nombreDeCarre + 1; i++) {
 
-			// int random = (int) (Math.random() * (20 + 1 - 1)) + 1;
-			// System.out.println(random);
+			if(avancement[i] == -1){
+				break;
+			}
 			int newPourcentage = pourcentageAccomplie + avancement[i];
 			if (newPourcentage > 100) {
 				newPourcentage = 100;
@@ -190,8 +191,8 @@ public class GraphiqueView extends View {
 		if (isDrawing) {
 			paint.setColor(Color.rgb(183, 0, 0));
 			paint.setStrokeWidth(2);
-			canvas.drawLine(positionX, offset, positionX, largeur + offset,
-					paint);
+			//canvas.drawLine(positionX, offset, positionX, largeur + offset,
+			//		paint);
 
 		}
 
