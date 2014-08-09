@@ -15,7 +15,7 @@
         <LinearLayout
             android:id="@+id/ll"
             android:layout_width="fill_parent"
-            android:layout_height="458dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="5dp" >
 
@@ -61,6 +61,78 @@
                 android:text="@string/project_description"
                 android:textSize="15sp" />
 
+            <TableLayout
+                android:id="@+id/tableLayout1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dip" >
+
+                <TableRow
+                    android:id="@+id/tableRow1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="1dip" >
+
+                    <TextView
+                        android:id="@+id/sommeFund"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="1530e"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/nombre_participants_detail"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="150"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/nombre_jour_restant_detail"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="15 jours"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/tableRow2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="1dip" >
+
+                    <TextView
+                        android:id="@+id/recolter"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="récolté"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/participants"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="participants"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/restant"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="restant"
+                        android:textSize="15sp" />
+                </TableRow>
+            </TableLayout>
+
             <Button
                 android:id="@+id/mail"
                 android:layout_width="fill_parent"
@@ -98,49 +170,79 @@
                 android:textColor="#808080"
                 android:textSize="20sp" />
 
+            <LinearLayout
+                android:id="@+id/llinear"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp" >
+
+                <ImageView
+                    android:id="@+id/iconUser"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginRight="6dip"
+                    android:contentDescription="@string/description_image_project"
+                    android:height="152dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_launcher" />
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/buttonshapes"
+                    android:padding="5dp" >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="6dip" >
+
+                        <TextView
+                            android:id="@+id/utilisateur_soumission"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Lucas34"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/ville"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingBottom="5dip"
+                            android:text="New York"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/launchprofile"
+                        android:layout_width="20dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/arrow"
+                        android:contentDescription="@string/description_image_project"
+                        android:gravity="right" />
+                </RelativeLayout>
+            </LinearLayout>
+            
+            
             <adullact.publicrowdfunding.controlleur.detailProjet.drawLine
                 android:id="@+id/svbar"
                 android:layout_width="wrap_content"
                 android:layout_height="6dp"
                 android:layout_marginTop="10dp" />
 
-            <TextView
-                android:id="@+id/nombre_participants_detail"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:text="@string/nombre_participants"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/nombre_jour_restant_detail"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:text="@string/till_day"
-                android:textSize="12sp" />
-
-            <adullact.publicrowdfunding.custom.CustomProgressBar
-                android:id="@+id/avancement_projet_liste"
-                style="@android:style/Widget.ProgressBar.Horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:max="100"
-                android:progress="0"
-                android:progressDrawable="@drawable/progressbar" />
-
-            <TextView
-                android:id="@+id/utilisateur_soumission"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/projet_soumission"
-                android:textSize="12sp" />
-
             <adullact.publicrowdfunding.controlleur.detailProjet.GraphiqueView
                 android:id="@+id/graphique"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp" />
+         
         </LinearLayout>
     </ScrollView>
 
@@ -159,8 +261,8 @@
             android:background="@drawable/buttonshapes"
             android:drawableLeft="@drawable/paypal"
             android:gravity="center"
-            android:text="Participer"
             android:padding="10dip"
+            android:text="Participer"
             android:textColor="#808080"
             android:textSize="25sp" />
     </LinearLayout>

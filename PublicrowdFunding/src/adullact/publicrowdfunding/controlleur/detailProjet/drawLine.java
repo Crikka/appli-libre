@@ -42,7 +42,7 @@ public class drawLine extends View {
         int iWidth = canvas.getWidth();
         int taille = iWidth / 20;
 
-        paint.setColor(Color.rgb(170, 170, 255));
+        paint.setColor(Color.rgb(190,190,190));
         canvas.drawLine(taille, 0, 19 * taille, 1, paint);
     }
 }

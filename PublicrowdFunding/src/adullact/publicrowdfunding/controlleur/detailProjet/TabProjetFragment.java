@@ -3,6 +3,7 @@ package adullact.publicrowdfunding.controlleur.detailProjet;
 import org.joda.time.DateTime;
 
 import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.controlleur.ajouterProjet.choisirMontantDialog;
 import adullact.publicrowdfunding.custom.CustomProgressBar;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.shared.Utility;
@@ -24,7 +25,6 @@ public class TabProjetFragment extends Fragment {
 	private TextView m_jour_restant;
 	private TextView m_utilisateur_soumission;
 	private Button m_payer;
-	private CustomProgressBar m_progression;
 	private ImageView m_illustration;
 
 	private Project projet;
@@ -57,8 +57,7 @@ public class TabProjetFragment extends Fragment {
 				.findViewById(R.id.nombre_jour_restant_detail);
 		m_utilisateur_soumission = (TextView) view
 				.findViewById(R.id.utilisateur_soumission);
-		m_progression = (CustomProgressBar) view
-				.findViewById(R.id.avancement_projet_liste);
+
 		m_illustration = (ImageView) view.findViewById(R.id.icon);
 
 		if (projet.getIllustration() != 0) {
@@ -68,38 +67,25 @@ public class TabProjetFragment extends Fragment {
 			m_illustration.setImageResource(R.drawable.ic_launcher);
 		}
 
-		if (m_progression == null) {
-			System.out.println("c'est nul");
-		}
-
-		System.out.println("Progression");
-		m_progression.setArgent(5000 * projet.getPercentOfAchievement() / 100);
-		m_progression.setProgress(projet.getPercentOfAchievement());
-		m_progression.setMaxArgent(5000);
 		projet.getCreationDate();
 		m_titre.setText(projet.getName());
 		m_description.setText(projet.getDescription());
-		DateTime date = projet.getCreationDate();
-
-		m_jour_restant.setText("Date de creation : " + date.getDayOfMonth()
-				+ "/" + date.getMonthOfYear() + "/" + date.getYear());
+		if (projet.getNumberOfDayToEnd() > 1) {
+			m_jour_restant
+					.setText("" + projet.getNumberOfDayToEnd() + " jours");
+		} else {
+			m_jour_restant.setText("" + projet.getNumberOfDayToEnd() + " jour");
+		}
 
 		m_payer.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 
-				projet.finance("50");
-				m_progression.setProgress(m_progression.getProgress() + 1);
-				m_progression.setArgent(Integer.parseInt(projet
-						.getCurrentFunding()));
+				choisirMontantDialog alertDialogBuilder = new choisirMontantDialog(
+						getActivity());
+				alertDialogBuilder.show();
 
-				/*
-				 * Paypal choisirMontantDialog alertDialogBuilder = new
-				 * choisirMontantDialog( getActivity());
-				 * alertDialogBuilder.show();
-				 */
 			}
 		});
 		return view;
 	}
-
 }

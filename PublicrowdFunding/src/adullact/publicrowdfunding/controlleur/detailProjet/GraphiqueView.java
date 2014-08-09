@@ -89,8 +89,6 @@ public class GraphiqueView extends View {
 
 		paint.setAntiAlias(true);
 
-		
-
 		int largeur = canvas.getWidth() - 10;
 		int hauteur = largeur;
 		int offset = 100; // décalement vertical
@@ -103,12 +101,30 @@ public class GraphiqueView extends View {
 		textPaint.setColor(Color.rgb(128, 128, 128));
 		canvas.drawText("Progression du financement", xPos, yPos, textPaint);
 
+		
+		// Ajout texte 100 %
 		textPaint = new Paint();
-		xPos = (int) (3 * canvas.getWidth() / 4);
-		yPos = offset + 20;
+		xPos = (int) (6 * canvas.getWidth() / 10);
+		yPos = offset - 20;
 		textPaint.setTextSize(20);
 		textPaint.setColor(Color.rgb(109, 195, 41));
 		canvas.drawText("100 %", xPos, yPos, textPaint);
+		
+		// Ajout date de début
+		textPaint = new Paint();
+		xPos = 0;
+		yPos = offset - 20;
+		textPaint.setTextSize(20);
+		textPaint.setColor(Color.rgb(160, 160, 160));
+		canvas.drawText("10/08/2014", xPos, yPos, textPaint);
+		
+		// Ajout date de fin
+		textPaint = new Paint();
+		xPos = (int) (canvas.getWidth() - 120);
+		yPos = offset - 20;
+		textPaint.setTextSize(20);
+		textPaint.setColor(Color.rgb(160, 160, 160));
+		canvas.drawText("15/09/2014", xPos, yPos, textPaint);
 
 		// Exemple de coubre
 		int pourcentageAccomplie = 0;
@@ -131,7 +147,7 @@ public class GraphiqueView extends View {
 					* (largeur / nombreDeCarre), largeur + offset, paint);
 
 		}
-		
+
 		for (int i = 0; i < nombreDeCarre + 1; i++) {
 
 			// int random = (int) (Math.random() * (20 + 1 - 1)) + 1;
@@ -150,7 +166,7 @@ public class GraphiqueView extends View {
 			if (xArrive > largeur) {
 				break;
 			}
-			
+
 			paint.setColor(Color.argb(150, 131, 182, 255));
 			Path path = new Path();
 			path.setFillType(Path.FillType.EVEN_ODD);
@@ -171,14 +187,11 @@ public class GraphiqueView extends View {
 			pourcentageAccomplie = newPourcentage;
 		}
 
-
-
 		if (isDrawing) {
 			paint.setColor(Color.rgb(183, 0, 0));
 			paint.setStrokeWidth(2);
 			canvas.drawLine(positionX, offset, positionX, largeur + offset,
 					paint);
-			
 
 		}
 
