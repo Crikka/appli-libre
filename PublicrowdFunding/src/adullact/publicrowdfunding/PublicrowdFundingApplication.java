@@ -13,6 +13,7 @@ public class PublicrowdFundingApplication extends Application {
     public void onCreate(){
         super.onCreate();
         PublicrowdFundingApplication.m_context = getApplicationContext();
+		System.setProperty("http.keepAlive", "false");
     }
 
     public static Context context () {

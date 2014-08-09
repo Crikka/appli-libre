@@ -3,6 +3,7 @@
     android:id="@+id/linearLayoutDetail"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:background="#f0f0f0"
     android:orientation="vertical" >
 
     <ScrollView
@@ -75,14 +76,14 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <adullact.publicrowdfunding.custom.CustomProgressBar
+           <adullact.publicrowdfunding.custom.CustomProgressBar
                 android:id="@+id/avancement_projet_liste"
                 style="@android:style/Widget.ProgressBar.Horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:max="100"
                 android:progress="0"
-                android:progressDrawable="@drawable/progressbar" />
+                android:progressDrawable="@drawable/progressbar" /> 
 
             <Button
                 android:id="@+id/payer"
@@ -103,7 +104,45 @@
                 android:layout_height="wrap_content"
                 android:text="@string/projet_soumission"
                 android:textSize="12sp" />
--
+            
+              <Button
+                android:id="@+id/mail"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dip"
+                android:layout_marginTop="6dip"
+                android:background="@drawable/buttonshapes"
+                 android:drawableLeft="@android:drawable/ic_menu_send"
+                android:gravity="center"
+                android:text="Envoyer un eMail"  
+                android:textColor="#808080"
+                android:textSize="20sp" />
+              
+                <Button
+                android:id="@+id/website"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dip"
+                android:layout_marginTop="6dip"
+                android:background="#d0d0d0"
+                android:drawableLeft="@android:drawable/ic_menu_edit"
+                android:gravity="center"
+                android:text="Aller sur le site web"
+                android:textColor="#808080"
+                android:textSize="30sp" />
+                
+                  <Button
+                android:id="@+id/phone"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dip"
+                android:layout_marginTop="6dip"
+                android:background="#d0d0d0"
+                android:drawableLeft="@android:drawable/ic_menu_call"
+                android:gravity="center"
+                android:text="Apeller"
+                android:textColor="#808080"
+                android:textSize="30sp" />
 
             <adullact.publicrowdfunding.controlleur.detailProjet.GraphiqueView
                 android:id="@+id/graphique"

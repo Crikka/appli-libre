@@ -18,4 +18,5 @@
         <!-- Support library compatibility -->
         <item name="background">@color/white</item>
     </style>
+    
 </resources>
