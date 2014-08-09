@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.joda.time.DateTime;
+import org.joda.time.Duration;
 import org.joda.time.Interval;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -74,7 +75,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         Project res = new Project();
         res.m_id = serverProject.id;
         res.m_name = serverProject.name;
-        res.m_description = serverProject.description = m_description;
+        res.m_description = serverProject.description;
         res.m_proposedBy = CacheManager.getInstance().getUserById(serverProject.proposedBy);
         res.m_requestedFunding = new BigDecimal(serverProject.requestedFunding);
         res.m_currentFunding = new BigDecimal(serverProject.currentFunding);
@@ -91,7 +92,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
     public Project syncFromServer(DetailedServerProject detailedServerProject) {
         this.m_id = detailedServerProject.id;
         this.m_name = detailedServerProject.name;
-        this.m_description = detailedServerProject.description = m_description;
+        this.m_description = detailedServerProject.description;
         this.m_proposedBy = CacheManager.getInstance().getUserById(detailedServerProject.proposedBy);
         this.m_requestedFunding = new BigDecimal(detailedServerProject.requestedFunding);
         this.m_currentFunding = new BigDecimal(detailedServerProject.currentFunding);
@@ -263,6 +264,11 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
 
     public void validate() {
         m_validate = true;
+    }
+    
+    public long getNumberOfDayToEnd(){
+    	return new Duration(m_creationDate,m_fundingInterval.getEnd()).getStandardDays();
+    			
     }
 
 	/**

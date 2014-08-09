@@ -3,7 +3,7 @@ package adullact.publicrowdfunding.model.local.database;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import adullact.publicrowdfunding.PublicrowFundingApplication;
+import adullact.publicrowdfunding.PublicrowdFundingApplication;
 
 /**
  * Created by Ferrand on 20/07/2014.
@@ -13,7 +13,7 @@ public final class ProjectsDatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "PublicrowFunding.db";
 
     public ProjectsDatabaseHelper() {
-        super(PublicrowFundingApplication.context(), DATABASE_NAME, null, DATABASE_VERSION);
+        super(PublicrowdFundingApplication.context(), DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     public void onCreate(SQLiteDatabase db) {

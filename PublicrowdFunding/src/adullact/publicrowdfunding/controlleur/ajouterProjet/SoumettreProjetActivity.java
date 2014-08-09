@@ -350,7 +350,7 @@ public class SoumettreProjetActivity extends Activity {
 
             Project project = new Project(); // TODO titre, description, m_somme_a_recolter, now, date_fin,
             project.serverCreate(new CreateEvent<Project>() {
-
+/*
 						@Override
 						public void errorAuthenticationRequired() {
 							Toast.makeText(context, "Connexion required",
@@ -358,7 +358,7 @@ public class SoumettreProjetActivity extends Activity {
 
                             // Invite le à se reconnecté/connecté avec : retryWithAnotherAccount();
 
-						}
+						}*/
 
                 @Override
                 public void errorResourceIdAlreadyUsed(String id) {
@@ -370,9 +370,9 @@ public class SoumettreProjetActivity extends Activity {
                     Toast.makeText(context,
                             "Projet en attente de validation",
                             Toast.LENGTH_SHORT).show();
-                    if(isAdmin()) {
-                        // On  valide ?
-                    }
+                  /* if(isAdmin()) {
+                         // On  valide ?
+                    }*/
                 }
             });
 

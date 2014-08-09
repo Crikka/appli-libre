@@ -94,7 +94,7 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
     }
 
     @Override
-    public Observable<SimpleServerResponse> methodPOST(Service service) {
+    public Observable<SimpleServerResponse> methodPOST(Service service){
         return service.createUser(toServerResource());
     }
 

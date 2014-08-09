@@ -101,7 +101,7 @@ public class GraphiqueView extends View {
 		textPaint.setTextAlign(Align.CENTER);
 		textPaint.setTextSize(40);
 		textPaint.setColor(Color.rgb(128, 128, 128));
-		canvas.drawText("FUNDING PROGRESS", xPos, yPos, textPaint);
+		canvas.drawText("Progression du financement", xPos, yPos, textPaint);
 
 		textPaint = new Paint();
 		xPos = (int) (3 * canvas.getWidth() / 4);
@@ -150,8 +150,8 @@ public class GraphiqueView extends View {
 			if (xArrive > largeur) {
 				break;
 			}
-
-			paint.setColor(Color.rgb(131, 182, 255));
+			
+			paint.setColor(Color.argb(150, 131, 182, 255));
 			Path path = new Path();
 			path.setFillType(Path.FillType.EVEN_ODD);
 			path.moveTo(xDepart, yDepart);

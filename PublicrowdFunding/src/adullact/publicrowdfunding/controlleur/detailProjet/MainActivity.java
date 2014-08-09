@@ -47,9 +47,8 @@ public class MainActivity extends Activity implements TabListener {
 					Toast.LENGTH_SHORT).show();
 			finish();
 		}
-int a = R.drawable.roi;
-        Cache<Project> projet = CacheManager.getInstance().getProjectById(id);
 
+        Cache<Project> projet = CacheManager.getInstance().getProjectById(id);
         final MainActivity _this = this;
         projet.toResource(new HoldToDo<Project>() {
             @Override

@@ -85,55 +85,75 @@ public class InscriptionActivity extends Activity {
 				mProgressDialog = ProgressDialog.show(InscriptionActivity.this,
 						"Chargement", "Inscription en cours ...", true);
 
-                // Je differencie compte (username + password) et user maintenant, je te divise ta requête
-                final Account account = new Account(username, password);
-                final User user = new User(username, "prenom", "nom");
-                account.serverCreate(new CreateEvent<Account>() {
+				// Je differencie compte (username + password) et user
+				// maintenant, je te divise ta requête
+				final Account account = new Account(username, password, username);
+				final User user = new User(username, "prenom", "nom");
 
-                    @Override
-                    public void errorResourceIdAlreadyUsed(String id) {
-                        mProgressDialog.dismiss();
-                        Intent returnIntent = new Intent();
-                        setResult(RESULT_CANCELED, returnIntent);
-                        finish();
-                    }
 
-                    @Override
-                    public void onCreate(Account resource) {
-                        account.setOwn();
-                        mProgressDialog.dismiss();
-                        Intent returnIntent = new Intent();
-                        setResult(RESULT_OK, returnIntent);
-                        finish();
-                    }
+				account.serverCreate(new CreateEvent<Account>() {
 
-                    @Override
-                    public void errorAuthenticationRequired() {
+					@Override
+					public void errorResourceIdAlreadyUsed(String id) {
+						mProgressDialog.dismiss();
+						Intent returnIntent = new Intent();
+						setResult(RESULT_CANCELED, returnIntent);
+						finish();
+					}
 
-                    }
-                });
-
-                user.serverCreate(new CreateEvent<User>() {
-                    @Override
-                    public void errorResourceIdAlreadyUsed(String id) {
-
-                    }
-
-                    @Override
-                    public void onCreate(User resource) {
-                        account.setUser(user);
-                    }
-
-                    @Override
-                    public void errorAuthenticationRequired() {
-
-                    }
-                });
+					
+					
+					@Override
+					public void onCreate(Account resource) {
+						account.setOwn();
+						mProgressDialog.dismiss();
+						Intent returnIntent = new Intent();
+						setResult(RESULT_OK, returnIntent);
+						finish();
+					}
+/*
+					@Override
+					public void errorAuthenticationRequired() {
+						// TODO Auto-generated method stub
+						
+					}
+			*/
+				});
 				
+			}
+		});
+	}
+}
+				
+		
+				/*
+				user.serverCreate(new CreateEvent<User>() {
+					@Override
+					public void errorResourceIdAlreadyUsed(String id) {
+
+					}
+
+					@Override
+					public void onCreate(User resource) {
+						account.setUser(user);
+
+							@Override
+							public void errorAuthenticationRequired() {
+
+							}
+						});
+
+					}
+
+					@Override
+					public void errorAuthenticationRequired() {
+
+					}
+				});
 
 			}
 
 		});
+*/
+			
 
-	}
-}

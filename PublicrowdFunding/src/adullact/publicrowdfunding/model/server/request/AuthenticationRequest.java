@@ -42,7 +42,7 @@ public class AuthenticationRequest extends AuthenticatedRequest<AuthenticationRe
                             return;
                         }
 
-                        Account account = new Account(username(), password());
+                        Account account = new Account(username(), password(), "");
                         switch(response.code) {
                             case 0:
                                 account.setOwn();

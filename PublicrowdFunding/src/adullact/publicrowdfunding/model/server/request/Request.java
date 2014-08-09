@@ -9,7 +9,6 @@ import java.util.Map;
 import adullact.publicrowdfunding.model.server.entities.Service;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
-import adullact.publicrowdfunding.model.server.ServerInfo;
 import adullact.publicrowdfunding.model.server.ServerObject;
 import adullact.publicrowdfunding.model.server.errorHandler.ErrorHandler;
 import adullact.publicrowdfunding.model.server.event.Event;
@@ -53,7 +52,7 @@ extends ServerObject<TRequest, TEvent, TErrorHandler> {
         m_service = new RestAdapter.Builder()
                 .setRequestInterceptor(requestInterceptor)
                 .setErrorHandler(errorHandler())
-                .setEndpoint(ServerInfo.SERVER_URL).build()
+                .setEndpoint(SERVER_URL).build()
                 .create(Service.class);
     }
 

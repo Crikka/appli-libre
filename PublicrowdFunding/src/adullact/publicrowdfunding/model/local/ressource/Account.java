@@ -17,7 +17,7 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
-import adullact.publicrowdfunding.PublicrowFundingApplication;
+import adullact.publicrowdfunding.PublicrowdFundingApplication;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.cache.Cache;
 import adullact.publicrowdfunding.model.local.cache.CacheManager;
@@ -48,7 +48,7 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
 
     public static Account getOwn() throws NoAccountExistsInLocal {
         if(m_own == null) {
-            m_own = new Account(PublicrowFundingApplication.context());
+            m_own = new Account(PublicrowdFundingApplication.context());
             m_own.initialize();
         }
 
@@ -98,6 +98,7 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
         res.username = m_username;
         res.password = m_password;
         res.administrator = m_administrator;
+        res.pseudo = m_user.getResourceId();
         return res;
     }
 
@@ -108,7 +109,14 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
 
     @Override
     public Account syncFromServer(ServerAccount serverAccount) {
-        return null;
+    	 this.m_username = serverAccount.username;
+         this.m_lastSync = DateTime.now();
+         this.m_administrator = serverAccount.administrator;
+         this.m_anonymous = false;
+         this.m_context = PublicrowdFundingApplication.context();
+         this.m_user = CacheManager.getInstance().getUserById(serverAccount.pseudo);
+        		 
+         return this;
     }
 
     @Override
@@ -132,7 +140,7 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
     }
 
     @Override
-    public Observable<ArrayList<ServerAccount>> methodGETAll(Service service, Map filter) {
+    public Observable<ArrayList<ServerAccount>> methodGETAll(Service service, Map<String,String> filter) {
         return service.listAccount(filter);
     }
     /* -------------------- */
@@ -164,13 +172,14 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
         return null;//todo
     }
 
-    public Account(String username, String password) {
+    public Account(String username, String password, String pseudo) {
         this.m_username = username;
         this.m_password = password;
         this.m_lastSync = null;
         this.m_administrator = false;
         this.m_anonymous = false;
         this.m_context = null;
+        this.m_user = CacheManager.getInstance().getUserById(pseudo);
     }
 
     public Account(String username, String password, boolean administrator) {

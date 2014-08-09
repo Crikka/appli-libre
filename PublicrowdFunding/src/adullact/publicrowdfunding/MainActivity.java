@@ -29,127 +29,128 @@ import org.joda.time.format.DateTimeFormatterBuilder;
 
 public class MainActivity extends Activity implements TabListener {
 
-    private FrameLayout rl;
+	private FrameLayout rl;
 
-    private TabProjetsFragment fram1;
-    private TabFavorisFragment fram2;
-    private TabMapFragment fram3;
-    private ImageButton m_ajouter_projet;
-    private ImageButton m_mon_compte;
-    private ImageButton m_rechercher;
-    private Vector<Project> projets = new Vector<Project>();
+	private TabProjetsFragment fram1;
+	private TabFavorisFragment fram2;
+	private TabMapFragment fram3;
+	private ImageButton m_ajouter_projet;
+	private ImageButton m_mon_compte;
+	private ImageButton m_rechercher;
+	private Vector<Project> projets = new Vector<Project>();
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
 
-        SyncServerToLocal sync = SyncServerToLocal.getInstance();
-        final MainActivity _this = this;
-        sync.sync(new HoldAllToDo<Project>(){
+		SyncServerToLocal sync = SyncServerToLocal.getInstance();
+		final MainActivity _this = this;
+		sync.sync(new HoldAllToDo<Project>() {
 
-            @Override
-            public void holdAll(ArrayList<Project> projects) {
-                _this.projets.addAll(projects);
-                m_ajouter_projet = (ImageButton) findViewById(R.id.button_soumettre_projet);
-                m_ajouter_projet.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+			@Override
+			public void holdAll(ArrayList<Project> projects) {
+				_this.projets.addAll(projects);
 
-                        Intent in = new Intent(
-                                getBaseContext().getApplicationContext(),
-                                SoumettreProjetActivity.class);
-                        startActivity(in);
+			}
+		});
 
-                    }
-                });
+		m_ajouter_projet = (ImageButton) findViewById(R.id.button_soumettre_projet);
+		m_ajouter_projet.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
 
-                m_mon_compte = (ImageButton) findViewById(R.id.button_mon_compte);
-                m_mon_compte.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent in = new Intent(
-                                getBaseContext().getApplicationContext(),
-                                ConnexionActivity.class);
-                        startActivity(in);
-                    }
-                });
+				Intent in = new Intent(
+						getBaseContext().getApplicationContext(),
+						SoumettreProjetActivity.class);
+				startActivity(in);
 
-                m_rechercher = (ImageButton) findViewById(R.id.button_search);
-                m_rechercher.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        SearchDialog alertDialogBuilder = new SearchDialog(
-                                getBaseContext());
-                        alertDialogBuilder.show();
+			}
+		});
 
-                    }
-                });
+		m_mon_compte = (ImageButton) findViewById(R.id.button_mon_compte);
+		m_mon_compte.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent in = new Intent(
+						getBaseContext().getApplicationContext(),
+						ConnexionActivity.class);
+				startActivity(in);
+			}
+		});
 
-                try {
-                    rl = (FrameLayout) findViewById(R.id.tabcontent);
+		m_rechercher = (ImageButton) findViewById(R.id.button_search);
+		m_rechercher.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				SearchDialog alertDialogBuilder = new SearchDialog(
+						getBaseContext());
+				alertDialogBuilder.show();
 
-                    ActionBar bar = getActionBar();
+			}
+		});
 
-                    bar.addTab(bar.newTab().setText("Projets").setTabListener(_this));
-                    bar.addTab(bar.newTab().setText("Favoris").setTabListener(_this));
-                    bar.addTab(bar.newTab().setText("Localisation")
-                            .setTabListener(_this));
+		try {
+			rl = (FrameLayout) findViewById(R.id.tabcontent);
 
-                    bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM
-                            | ActionBar.DISPLAY_USE_LOGO);
-                    bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-                    bar.setDisplayShowHomeEnabled(true);
-                    bar.setDisplayShowTitleEnabled(true);
-                    bar.show();
+			ActionBar bar = getActionBar();
 
-                } catch (Exception e) {
-                    e.getMessage();
-                }
-            }
-        });
-    }
+			bar.addTab(bar.newTab().setText("Projets").setTabListener(_this));
+			bar.addTab(bar.newTab().setText("Favoris").setTabListener(_this));
+			bar.addTab(bar.newTab().setText("Localisation")
+					.setTabListener(_this));
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_action_bar_main, menu);
-        return true;
-    }
+			bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM
+					| ActionBar.DISPLAY_USE_LOGO);
+			bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+			bar.setDisplayShowHomeEnabled(true);
+			bar.setDisplayShowTitleEnabled(true);
+			bar.show();
 
-    @Override
-    public void onTabReselected(Tab tab, FragmentTransaction ft) {
-    }
+		} catch (Exception e) {
+			e.getMessage();
+		}
+	}
 
-    @Override
-    public void onTabSelected(Tab tab, FragmentTransaction ft) {
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.activity_action_bar_main, menu);
+		return true;
+	}
 
-        if (tab.getText().equals("Projets")) {
+	@Override
+	public void onTabReselected(Tab tab, FragmentTransaction ft) {
+	}
 
-            fram1 = new TabProjetsFragment();
-            ft.replace(rl.getId(), fram1);
+	@Override
+	public void onTabSelected(Tab tab, FragmentTransaction ft) {
 
-        } else if (tab.getText().equals("Favoris")) {
+		if (tab.getText().equals("Projets")) {
 
-            fram2 = new TabFavorisFragment();
-            ft.replace(rl.getId(), fram2);
+			fram1 = new TabProjetsFragment();
+			ft.replace(rl.getId(), fram1);
 
-        } else if (tab.getText().equals("Localisation")) {
+		} else if (tab.getText().equals("Favoris")) {
 
-            fram3 = new TabMapFragment();
-            ft.replace(rl.getId(), fram3);
+			fram2 = new TabFavorisFragment();
+			ft.replace(rl.getId(), fram2);
 
-        }
-    }
+		} else if (tab.getText().equals("Localisation")) {
 
-    @Override
-    public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+			fram3 = new TabMapFragment();
+			ft.replace(rl.getId(), fram3);
 
-    }
+		}
+	}
 
-    public Vector<Project> getProjets() {
+	@Override
+	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 
-        return projets;
-    }
+	}
 
+	public Vector<Project> getProjets() {
+
+		return projets;
+	}
 
 }

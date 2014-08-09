@@ -6,7 +6,7 @@ import adullact.publicrowdfunding.model.server.errorHandler.CreateErrorHandler;
 import adullact.publicrowdfunding.model.server.request.CreateRequest;
 
 public abstract class CreateEvent<TResource extends Resource<TResource, ?, ?>>
-        extends AuthenticatedEvent<CreateRequest<TResource, ?, ?>, CreateEvent<TResource>, CreateErrorHandler<TResource>> {
+        extends AnonymousEvent<CreateRequest<TResource, ?, ?>, CreateEvent<TResource>, CreateErrorHandler<TResource>> {
 
 	/* Callback functions */
     public abstract void errorResourceIdAlreadyUsed(String id);
