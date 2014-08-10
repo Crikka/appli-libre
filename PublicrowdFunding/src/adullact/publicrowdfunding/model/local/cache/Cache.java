@@ -35,7 +35,7 @@ public class Cache<TResource extends Resource<TResource, ?, ?>> {
             timeToRetrieve = true;
         }
         else {
-            Duration duration = new Duration(DateTime.now(), m_dateTime);
+            Duration duration = new Duration(m_dateTime, DateTime.now());
             timeToRetrieve = (duration.getStandardMinutes() > 15);// Data may be outdated
        }
         if(timeToRetrieve) {
@@ -55,13 +55,14 @@ public class Cache<TResource extends Resource<TResource, ?, ?>> {
                     else {
                         m_resource.setState(Sync.State.unchanged);
                     }
+                    m_dateTime = DateTime.now();
                     whatToDo.give(m_resource);
                 }
             };
             m_resource.resource.serverRetrieve(event);
         }
         else {
-            whatToDo.hold(m_resource.resource);
+            whatToDo.give(m_resource);
         }
     }
 }

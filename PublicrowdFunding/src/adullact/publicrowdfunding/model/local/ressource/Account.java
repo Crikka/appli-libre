@@ -20,7 +20,6 @@ import javax.crypto.spec.SecretKeySpec;
 import adullact.publicrowdfunding.PublicrowdFundingApplication;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.cache.Cache;
-import adullact.publicrowdfunding.model.local.cache.CacheManager;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.server.entities.ServerAccount;
 import adullact.publicrowdfunding.model.server.entities.Service;
@@ -81,7 +80,7 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
     }
 
     @Override
-    public Account fromResourceId(String id) {
+    protected Account internInitializeID(String id) {
         this.m_username = id;
         this.m_password = null;
         this.m_lastSync = null;
@@ -114,7 +113,8 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
          this.m_administrator = serverAccount.administrator;
          this.m_anonymous = false;
          this.m_context = PublicrowdFundingApplication.context();
-         this.m_user = CacheManager.getInstance().getUserById(serverAccount.pseudo);
+         this.m_user = new User().internInitializeID(serverAccount.pseudo).getCache();
+        insertIntoCache();
         		 
          return this;
     }
@@ -167,25 +167,11 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
         this.m_context = null;
     }
 
-    @Override
-    public Cache<Account> localCache() {
-        return null;//todo
-    }
-
-    public Account(String username, String password, String pseudo) {
+    public Account(String username, String password) {
         this.m_username = username;
         this.m_password = password;
         this.m_lastSync = null;
         this.m_administrator = false;
-        this.m_anonymous = false;
-        this.m_context = null;
-        this.m_user = CacheManager.getInstance().getUserById(pseudo);
-    }
-
-    public Account(String username, String password, boolean administrator) {
-        this.m_username = username;
-        this.m_password = password;
-        this.m_administrator = administrator;
         this.m_anonymous = false;
         this.m_context = null;
     }

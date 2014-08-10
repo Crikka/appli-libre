@@ -28,8 +28,38 @@ import rx.schedulers.Schedulers;
  * Created by Ferrand on 18/07/2014.
  */
 public abstract class Resource<TResource extends Resource<TResource, TServerResource, TDetailedServerResource>, TServerResource, TDetailedServerResource extends TServerResource> {
-    private boolean m_changed;
+    /* ---- Cache manager ---- */
+    private static HashMap<String, HashMap<String, Cache>> cachedResource = new HashMap<String, HashMap<String, Cache>>();
     private Cache<TResource> m_cache;
+
+    public boolean isCached() {
+        return (m_cache != null);
+    }
+
+    protected void insertIntoCache() {
+        if(!isCached()) {
+            HashMap<String, Cache> cachedType = cachedResource.get(getClass().getSimpleName());
+            m_cache = new Cache(this);
+            if(cachedType == null) {
+                cachedType = new HashMap<String, Cache>();
+                cachedResource.put(getClass().getSimpleName(), cachedType);
+            }
+
+            cachedType.put(getResourceId(), m_cache);
+        }
+    }
+
+    public Cache<TResource> getCache() {
+        if(!isCached()) {
+            return new Cache(this).forceRetrieve(); // Shallow cache
+        }
+
+        return m_cache;
+    }
+
+    /* ----------------------- */
+
+    private boolean m_changed;
 
     public Resource() {
         m_changed = false;
@@ -47,21 +77,20 @@ public abstract class Resource<TResource extends Resource<TResource, TServerReso
         return ret;
     }
 
-    public boolean isCached() {
-        return (m_cache != null);
-    }
-
-    public  Cache<TResource> getCache() {
-        if(!isCached()) {
-            m_cache = localCache();
+    final public TResource initializeID(String id) {
+        HashMap<String, Cache> cachedType = cachedResource.get(getClass().getSimpleName());
+        if (cachedType == null) {
+            cachedType = new HashMap<String, Cache>();
+            cachedResource.put(getClass().getSimpleName(), cachedType);
+        } else {
+            m_cache = cachedType.get(id);
         }
 
-        return m_cache;
+        return internInitializeID(id);
     }
 
-    public abstract Cache<TResource> localCache();
     public abstract String getResourceId();
-    public abstract TResource fromResourceId(String id);
+    protected abstract TResource internInitializeID(String id);
     public abstract TServerResource toServerResource();
     public abstract TResource makeCopyFromServer(TServerResource serverResource);
     public abstract TResource syncFromServer(TDetailedServerResource detailedServerResource);

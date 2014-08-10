@@ -87,11 +87,11 @@ public class InscriptionActivity extends Activity {
 
 				// Je differencie compte (username + password) et user
 				// maintenant, je te divise ta requête
-				final Account account = new Account(username, password, username);
 				final User user = new User(username, "prenom", "nom");
+                final Account account = new Account(username, password);
 
 
-				account.serverCreate(new CreateEvent<Account>() {
+                account.serverCreate(new CreateEvent<Account>() {
 
 					@Override
 					public void errorResourceIdAlreadyUsed(String id) {

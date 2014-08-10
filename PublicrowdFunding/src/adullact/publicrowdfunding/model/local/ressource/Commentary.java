@@ -6,10 +6,8 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import adullact.publicrowdfunding.model.local.cache.Cache;
-import adullact.publicrowdfunding.model.local.cache.CacheManager;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.server.entities.ServerCommentary;
-import adullact.publicrowdfunding.model.server.entities.ServerFunding;
 import adullact.publicrowdfunding.model.server.entities.Service;
 import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
 import adullact.publicrowdfunding.shared.Utility;
@@ -47,17 +45,12 @@ public class Commentary extends Resource<Commentary, ServerCommentary, ServerCom
 
     /* --- Resource --- */
     @Override
-    public Cache<Commentary> localCache() {
-        return CacheManager.getInstance().getCommentaryById(getResourceId());
-    }
-
-    @Override
     public String getResourceId() {
         return Integer.toString(m_id);
     }
 
     @Override
-    public Commentary fromResourceId(String id) {
+    protected Commentary internInitializeID(String id) {
         m_id = Integer.parseInt(id);
 
         return this;
@@ -84,8 +77,8 @@ public class Commentary extends Resource<Commentary, ServerCommentary, ServerCom
         commentary.m_title = serverCommentary.title;
         commentary.m_message = serverCommentary.message;
         commentary.m_mark = serverCommentary.mark;
-        commentary.m_user= CacheManager.getInstance().getUserById(serverCommentary.username);
-        commentary.m_project = CacheManager.getInstance().getProjectById(serverCommentary.projectID);
+        commentary.m_user = new User().internInitializeID(serverCommentary.username).getCache();
+        commentary.m_project = new Project().internInitializeID(serverCommentary.projectID).getCache();
         commentary.m_creationDate = Utility.stringToDateTime(serverCommentary.creationDate);
 
         return commentary;
@@ -97,8 +90,8 @@ public class Commentary extends Resource<Commentary, ServerCommentary, ServerCom
         this.m_title = serverCommentary.title;
         this.m_message = serverCommentary.message;
         this.m_mark = serverCommentary.mark;
-        this.m_user= CacheManager.getInstance().getUserById(serverCommentary.username);
-        this.m_project = CacheManager.getInstance().getProjectById(serverCommentary.projectID);
+        this.m_user = new User().internInitializeID(serverCommentary.username).getCache();
+        this.m_project = new Project().internInitializeID(serverCommentary.projectID).getCache();
         this.m_creationDate = Utility.stringToDateTime(serverCommentary.creationDate);
 
         return this;

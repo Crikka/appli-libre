@@ -15,7 +15,6 @@ import com.google.android.gms.maps.model.LatLng;
 
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.cache.Cache;
-import adullact.publicrowdfunding.model.local.cache.CacheManager;
 import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.utilities.FundingTimePeriod;
@@ -38,7 +37,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
     }
 
     @Override
-    public Project fromResourceId(String id) {
+    protected Project internInitializeID(String id) {
         this.m_id = id;
         this.m_name = null;
         this.m_description = null;
@@ -80,7 +79,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         res.m_id = serverProject.id;
         res.m_name = serverProject.name;
         res.m_description = serverProject.description;
-        res.m_proposedBy = CacheManager.getInstance().getUserById(serverProject.proposedBy);
+        res.m_proposedBy = new User().internInitializeID(serverProject.proposedBy).getCache();
         res.m_requestedFunding = new BigDecimal(serverProject.requestedFunding);
         res.m_currentFunding = new BigDecimal(serverProject.currentFunding);
         res.m_creationDate = Utility.stringToDateTime(serverProject.creationDate);
@@ -97,7 +96,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         this.m_id = detailedServerProject.id;
         this.m_name = detailedServerProject.name;
         this.m_description = detailedServerProject.description;
-        this.m_proposedBy = CacheManager.getInstance().getUserById(detailedServerProject.proposedBy);
+        this.m_proposedBy = new User().internInitializeID(detailedServerProject.proposedBy).getCache();
         this.m_requestedFunding = new BigDecimal(detailedServerProject.requestedFunding);
         this.m_currentFunding = new BigDecimal(detailedServerProject.currentFunding);
         this.m_creationDate = Utility.stringToDateTime(detailedServerProject.creationDate);
@@ -109,6 +108,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
 
         // Now, we calculate 10 periods for graphics
         calculatePeriods();
+        insertIntoCache();
 
         return this;
     }
@@ -172,11 +172,6 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         this.m_illustration = -1;
     }
 
-    @Override
-    public Cache<Project> localCache() {
-        return CacheManager.getInstance().getProjectById(getResourceId());
-    }
-
     public Project(String name, String description, String requestedFunding, Date creationDate, Date beginDate, Date endDate, LatLng position, int illustration) {
 		this.m_id = UUID.randomUUID().toString();
 		this.m_name = name;
@@ -201,7 +196,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         this.m_id = id;
         this.m_name = name;
         this.m_description = description;
-        this.m_proposedBy = new Cache<User>(new User().fromResourceId(proposedBy));
+        this.m_proposedBy = new Cache<User>(new User().internInitializeID(proposedBy));
         this.m_requestedFunding = new BigDecimal(requestedFunding);
         this.m_currentFunding = new BigDecimal(currentFunding);
         this.m_creationDate = DateTime.parse(creationDate);

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import adullact.publicrowdfunding.model.local.cache.Cache;
-import adullact.publicrowdfunding.model.local.cache.CacheManager;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.server.entities.ServerBookmark;
 import adullact.publicrowdfunding.model.server.entities.Service;
@@ -62,17 +61,12 @@ public class Bookmark extends Resource<Bookmark, ServerBookmark, ServerBookmark>
 
     /* --- Resource --- */
     @Override
-    public Cache<Bookmark> localCache() {
-        return CacheManager.getInstance().getBookmarkById(getResourceId());
-    }
-
-    @Override
     public String getResourceId() {
         return Integer.toString(m_id);
     }
 
     @Override
-    public Bookmark fromResourceId(String id) {
+    protected Bookmark internInitializeID(String id) {
         return null;
     }
 
@@ -91,8 +85,8 @@ public class Bookmark extends Resource<Bookmark, ServerBookmark, ServerBookmark>
     public Bookmark makeCopyFromServer(ServerBookmark serverBookmark) {
         Bookmark bookmark = new Bookmark();
         bookmark.m_id = serverBookmark.id;
-        bookmark.m_user = CacheManager.getInstance().getUserById(serverBookmark.username);
-        bookmark.m_project = CacheManager.getInstance().getProjectById(serverBookmark.projectID);
+        bookmark.m_user = new User().internInitializeID(serverBookmark.username).getCache();
+        bookmark.m_project = new Project().internInitializeID(serverBookmark.projectID).getCache();
         bookmark.m_creationDate = Utility.stringToDateTime(serverBookmark.creationDate);
 
         return bookmark;
@@ -101,8 +95,8 @@ public class Bookmark extends Resource<Bookmark, ServerBookmark, ServerBookmark>
     @Override
     public Bookmark syncFromServer(ServerBookmark serverBookmark) {
         this.m_id = serverBookmark.id;
-        this.m_user = CacheManager.getInstance().getUserById(serverBookmark.username);
-        this.m_project = CacheManager.getInstance().getProjectById(serverBookmark.projectID);
+        this.m_user = new User().internInitializeID(serverBookmark.username).getCache();
+        this.m_project = new Project().internInitializeID(serverBookmark.projectID).getCache();
         this.m_creationDate = Utility.stringToDateTime(serverBookmark.creationDate);
 
         return this;

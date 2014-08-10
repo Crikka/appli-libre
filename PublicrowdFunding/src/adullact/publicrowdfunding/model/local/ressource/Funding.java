@@ -2,13 +2,9 @@ package adullact.publicrowdfunding.model.local.ressource;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Map;
-
 import org.joda.time.DateTime;
-
 import adullact.publicrowdfunding.model.local.cache.Cache;
-import adullact.publicrowdfunding.model.local.cache.CacheManager;
 import adullact.publicrowdfunding.model.server.entities.ServerFunding;
 import adullact.publicrowdfunding.model.server.entities.Service;
 import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
@@ -40,17 +36,12 @@ public class Funding extends Resource<Funding, ServerFunding, ServerFunding> {
 
     /* --- Resource --- */
     @Override
-    public Cache<Funding> localCache() {
-        return CacheManager.getInstance().getFundingById(getResourceId());
-    }
-
-    @Override
     public String getResourceId() {
         return Integer.toString(m_id);
     }
 
     @Override
-    public Funding fromResourceId(String id) {
+    protected Funding internInitializeID(String id) {
         m_id = Integer.parseInt(id);
 
         return this;
@@ -74,8 +65,8 @@ public class Funding extends Resource<Funding, ServerFunding, ServerFunding> {
         Funding funding = new Funding();
         funding.m_id = serverFunding.id;
         funding.m_transactionId = serverFunding.transactionId;
-        funding.m_from = CacheManager.getInstance().getUserById(serverFunding.username);
-        funding.m_to = CacheManager.getInstance().getProjectById(serverFunding.projectID);
+        funding.m_from = new User().internInitializeID(serverFunding.username).getCache();
+        funding.m_to = new Project().internInitializeID(serverFunding.projectID).getCache();
         funding.m_value = new BigDecimal(serverFunding.value);
         funding.m_date = Utility.stringToDateTime(serverFunding.creationDate);
 
@@ -86,8 +77,8 @@ public class Funding extends Resource<Funding, ServerFunding, ServerFunding> {
     public Funding syncFromServer(ServerFunding serverFunding) {
         this.m_id = serverFunding.id;
         this.m_transactionId = serverFunding.transactionId;
-        this.m_from = CacheManager.getInstance().getUserById(serverFunding.username);
-        this.m_to = CacheManager.getInstance().getProjectById(serverFunding.projectID);
+        this.m_from = new User().internInitializeID(serverFunding.username).getCache();
+        this.m_to = new Project().internInitializeID(serverFunding.projectID).getCache();
         this.m_value = new BigDecimal(serverFunding.value);
         this.m_date = Utility.stringToDateTime(serverFunding.creationDate);
 

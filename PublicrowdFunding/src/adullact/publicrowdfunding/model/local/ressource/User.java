@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import adullact.publicrowdfunding.model.local.cache.Cache;
-import adullact.publicrowdfunding.model.local.cache.CacheManager;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.server.entities.DetailedServerUser;
 import adullact.publicrowdfunding.model.server.entities.ServerUser;
@@ -26,17 +25,12 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
 
     /* ----- Resource ----- */
     @Override
-    public Cache<User> localCache() {
-        return CacheManager.getInstance().getUserById(getResourceId());
-    }
-
-    @Override
     public String getResourceId() {
         return m_pseudo;
     }
 
     @Override
-    public User fromResourceId(String id) {
+    protected User internInitializeID(String id) {
         this.m_pseudo = id;
         this.m_name = null;
         this.m_firstName = null;

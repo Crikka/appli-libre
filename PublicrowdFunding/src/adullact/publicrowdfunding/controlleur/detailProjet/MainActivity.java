@@ -2,7 +2,6 @@ package adullact.publicrowdfunding.controlleur.detailProjet;
 
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.model.local.cache.Cache;
-import adullact.publicrowdfunding.model.local.cache.CacheManager;
 import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import android.app.ActionBar;
@@ -57,7 +56,7 @@ public class MainActivity extends Activity implements TabListener {
 		mprogressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 		mprogressDialog.show();
 		
-        Cache<Project> projet = CacheManager.getInstance().getProjectById(id);
+        Cache<Project> projet = new Project().initializeID(id).getCache();
         final MainActivity _this = this;
         projet.toResource(new HoldToDo<Project>() {
             @Override
