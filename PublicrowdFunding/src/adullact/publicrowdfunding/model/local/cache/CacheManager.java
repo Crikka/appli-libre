@@ -20,7 +20,9 @@ public class CacheManager {
         private CacheManager() {
             m_users = new HashMap<String, Cache<User>>();
             m_projects = new HashMap<String, Cache<Project>>();
+            m_commentaries = new HashMap<String, Cache<Commentary>>();
             m_funding = new HashMap<String, Cache<Funding>>();
+            m_bookmarks = new HashMap<String, Cache<Bookmark>>();
         }
         public static CacheManager getInstance() {
             if (m_instance == null) {
@@ -32,7 +34,9 @@ public class CacheManager {
 
     private HashMap<String, Cache<User>> m_users;
     private HashMap<String, Cache<Project>> m_projects;
+    private HashMap<String, Cache<Commentary>> m_commentaries;
     private HashMap<String, Cache<Funding>> m_funding;
+    private HashMap<String, Cache<Bookmark>> m_bookmarks;
 
     public Cache<Project> getProjectById(String id) {
         Cache<Project> res = m_projects.get(id);
@@ -56,6 +60,24 @@ public class CacheManager {
         Cache<Funding> res = m_funding.get(id);
         if(res == null) {
             res = new Cache<Funding>(new Funding().fromResourceId(id)).forceRetrieve();
+        }
+
+        return res;
+    }
+
+    public Cache<Commentary> getCommentaryById(String id) {
+        Cache<Commentary> res = m_commentaries.get(id);
+        if(res == null) {
+            res = new Cache<Commentary>(new Commentary().fromResourceId(id)).forceRetrieve();
+        }
+
+        return res;
+    }
+
+    public Cache<Bookmark> getBookmarkById(String id) {
+        Cache<Bookmark> res = m_bookmarks.get(id);
+        if(res == null) {
+            res = new Cache<Bookmark>(new Bookmark().fromResourceId(id)).forceRetrieve();
         }
 
         return res;

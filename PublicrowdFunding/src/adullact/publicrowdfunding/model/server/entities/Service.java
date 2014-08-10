@@ -72,11 +72,25 @@ public interface Service {
 
     // Commentaries
     @GET("/commentary/")
-    Observable<ArrayList<ServerUser>> listCommentaries(@QueryMap Map<String, String> filter);
+    Observable<ArrayList<ServerCommentary>> listCommentaries(@QueryMap Map<String, String> filter);
+    @GET("/commentary/{id}")
+    Observable<ServerCommentary> detailCommentary(@Path("id") String id);
     @POST("/commentary/")
     Observable<SimpleServerResponse> createCommentary(@Body ServerCommentary serverCommentary);
     @PUT("/commentary/{commentaryID}")
-    Observable<SimpleServerResponse> modifyCommentary(@Path("commentaryID") String commentaryID);
+    Observable<SimpleServerResponse> modifyCommentary(@Path("commentaryID") String commentaryID, @Body ServerCommentary serverCommentary);
     @DELETE("/commentary/{commentaryID}")
     Observable<SimpleServerResponse> deleteCommentary(@Path("commentaryID") String commentaryID);
+
+    // Bookmarks
+    @GET("/bookmark/")
+    Observable<ArrayList<ServerBookmark>> listBookmarks(@QueryMap Map<String, String> filter);
+    @GET("/bookmark/{id}")
+    Observable<ServerBookmark> detailBookmark(@Path("id") String id);
+    @POST("/bookmark/")
+    Observable<SimpleServerResponse> createBookmark(@Body ServerBookmark serverBookmark);
+    @PUT("/bookmark/{id}")
+    Observable<SimpleServerResponse> modifyBookmark(@Path("id") String id, @Body ServerBookmark serverBookmark);
+    @DELETE("/bookmark/{id}")
+    Observable<SimpleServerResponse> deleteBookmark(@Path("id") String id);
 }

@@ -13,13 +13,17 @@ import org.joda.time.Interval;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.cache.Cache;
 import adullact.publicrowdfunding.model.local.cache.CacheManager;
+import adullact.publicrowdfunding.model.local.callback.HoldToDo;
+import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.utilities.FundingTimePeriod;
 import adullact.publicrowdfunding.model.server.entities.DetailedServerProject;
 import adullact.publicrowdfunding.model.server.entities.ServerProject;
 import adullact.publicrowdfunding.model.server.entities.Service;
 import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
+import adullact.publicrowdfunding.model.server.event.CreateEvent;
 import adullact.publicrowdfunding.model.server.event.ListerEvent;
 import adullact.publicrowdfunding.model.server.request.ListerRequest;
 import adullact.publicrowdfunding.shared.Utility;
@@ -262,6 +266,10 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         return this.m_illustration;
     }
 
+    public void getUser(WhatToDo<User> userWhatToDo) {
+        m_proposedBy.toResource(userWhatToDo);
+    }
+
     public void validate() {
         m_validate = true;
     }
@@ -285,4 +293,15 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
 	public void finance(String value) {
 		m_currentFunding = m_currentFunding.add(new BigDecimal(value));
 	}
+
+    public void postCommentary(final String title, final String text, final double mark, final CreateEvent<Commentary> commentaryCreateEvent) throws NoAccountExistsInLocal {
+        Account account = Account.getOwn();
+        final Project _this = this;
+        account.getUser(new HoldToDo<User>() {
+            @Override
+            public void hold(User resource) {
+                new Commentary(resource, _this, title, text, mark).serverCreate(commentaryCreateEvent);
+            }
+        });
+    }
 }

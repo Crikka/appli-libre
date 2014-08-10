@@ -41,7 +41,6 @@ extends ServerObject<TRequest, TEvent, TErrorHandler> {
 
 
         this.m_service = new RestAdapter.Builder()
-        		.setLogLevel(RestAdapter.LogLevel.FULL)
                 .setRequestInterceptor(new SecurityRequestInterceptor())
                 .setErrorHandler(errorHandler())
                 .setEndpoint(SERVER_URL).build()

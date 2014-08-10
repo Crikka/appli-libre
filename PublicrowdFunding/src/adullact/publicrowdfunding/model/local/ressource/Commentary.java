@@ -2,10 +2,20 @@ package adullact.publicrowdfunding.model.local.ressource;
 
 import org.joda.time.DateTime;
 
-import adullact.publicrowdfunding.model.local.cache.Cache;
-import adullact.publicrowdfunding.model.local.callback.WhatToDo;
+import java.util.ArrayList;
+import java.util.Map;
 
-public class Commentary {
+import adullact.publicrowdfunding.model.local.cache.Cache;
+import adullact.publicrowdfunding.model.local.cache.CacheManager;
+import adullact.publicrowdfunding.model.local.callback.WhatToDo;
+import adullact.publicrowdfunding.model.server.entities.ServerCommentary;
+import adullact.publicrowdfunding.model.server.entities.ServerFunding;
+import adullact.publicrowdfunding.model.server.entities.Service;
+import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
+import adullact.publicrowdfunding.shared.Utility;
+import rx.Observable;
+
+public class Commentary extends Resource<Commentary, ServerCommentary, ServerCommentary>{
 
     /* ---- Own data ---- */
     private int m_id;
@@ -20,17 +30,105 @@ public class Commentary {
     private Cache<Project> m_project;
     /* ------------------ */
 
-    public Commentary(int id, DateTime creationDate, User user, Project m_project, String title, String message, double mark) {
+    public Commentary() {
+        super();
+    }
+
+    public Commentary(User user, Project project, String title, String message, double mark) {
         super();
 
-        this.m_id = id;
-        this.m_creationDate = creationDate;
-        this.m_user = new Cache<User>(user);
-        this.m_project = new Cache<Project>(m_project);
+        this.m_creationDate = DateTime.now();
+        this.m_user = user.getCache();
+        this.m_project = project.getCache();
         this.m_title = title;
         this.m_message = message;
         this.m_mark = mark;
     }
+
+    /* --- Resource --- */
+    @Override
+    public Cache<Commentary> localCache() {
+        return CacheManager.getInstance().getCommentaryById(getResourceId());
+    }
+
+    @Override
+    public String getResourceId() {
+        return Integer.toString(m_id);
+    }
+
+    @Override
+    public Commentary fromResourceId(String id) {
+        m_id = Integer.parseInt(id);
+
+        return this;
+    }
+
+    @Override
+    public ServerCommentary toServerResource() {
+        ServerCommentary serverCommentary = new ServerCommentary();
+        serverCommentary.id = m_id;
+        serverCommentary.title = m_title;
+        serverCommentary.message = m_message;
+        serverCommentary.mark = m_mark;
+        serverCommentary.username = m_user.getResourceId();
+        serverCommentary.projectID = m_project.getResourceId();
+        serverCommentary.creationDate = Utility.DateTimeToString(m_creationDate);
+
+        return serverCommentary;
+    }
+
+    @Override
+    public Commentary makeCopyFromServer(ServerCommentary serverCommentary) {
+        Commentary commentary = new Commentary();
+        commentary.m_id = serverCommentary.id;
+        commentary.m_title = serverCommentary.title;
+        commentary.m_message = serverCommentary.message;
+        commentary.m_mark = serverCommentary.mark;
+        commentary.m_user= CacheManager.getInstance().getUserById(serverCommentary.username);
+        commentary.m_project = CacheManager.getInstance().getProjectById(serverCommentary.projectID);
+        commentary.m_creationDate = Utility.stringToDateTime(serverCommentary.creationDate);
+
+        return commentary;
+    }
+
+    @Override
+    public Commentary syncFromServer(ServerCommentary serverCommentary) {
+        this.m_id = serverCommentary.id;
+        this.m_title = serverCommentary.title;
+        this.m_message = serverCommentary.message;
+        this.m_mark = serverCommentary.mark;
+        this.m_user= CacheManager.getInstance().getUserById(serverCommentary.username);
+        this.m_project = CacheManager.getInstance().getProjectById(serverCommentary.projectID);
+        this.m_creationDate = Utility.stringToDateTime(serverCommentary.creationDate);
+
+        return this;
+    }
+
+    @Override
+    public Observable<ServerCommentary> methodGET(Service service) {
+        return service.detailCommentary(getResourceId());
+    }
+
+    @Override
+    public Observable<ArrayList<ServerCommentary>> methodGETAll(Service service, Map<String, String> filter) {
+        return service.listCommentaries(filter);
+    }
+
+    @Override
+    public Observable<SimpleServerResponse> methodPUT(Service service) {
+        return service.modifyCommentary(getResourceId(), toServerResource());
+    }
+
+    @Override
+    public Observable<SimpleServerResponse> methodPOST(Service service) {
+        return service.createCommentary(toServerResource());
+    }
+
+    @Override
+    public Observable<SimpleServerResponse> methodDELETE(Service service) {
+        return service.deleteCommentary(getResourceId());
+    }
+    /* ---------------- */
 
     public int getId() {
         return m_id;
@@ -60,5 +158,4 @@ public class Commentary {
     public void getProject(WhatToDo<Project> projectWhatToDo) {
         m_project.toResource(projectWhatToDo);
     }
-
 }
