@@ -56,7 +56,7 @@ public class MainActivity extends Activity implements TabListener {
 		mprogressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 		mprogressDialog.show();
 		
-        Cache<Project> projet = new Project().initializeID(id).getCache();
+        Cache<Project> projet = new Project().getCache(id);
         final MainActivity _this = this;
         projet.toResource(new HoldToDo<Project>() {
             @Override

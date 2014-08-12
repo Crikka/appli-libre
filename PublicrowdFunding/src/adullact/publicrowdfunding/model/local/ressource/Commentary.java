@@ -50,10 +50,8 @@ public class Commentary extends Resource<Commentary, ServerCommentary, ServerCom
     }
 
     @Override
-    protected Commentary internInitializeID(String id) {
+    protected void setResourceId(String id) {
         m_id = Integer.parseInt(id);
-
-        return this;
     }
 
     @Override
@@ -77,8 +75,8 @@ public class Commentary extends Resource<Commentary, ServerCommentary, ServerCom
         commentary.m_title = serverCommentary.title;
         commentary.m_message = serverCommentary.message;
         commentary.m_mark = serverCommentary.mark;
-        commentary.m_user = new User().internInitializeID(serverCommentary.username).getCache();
-        commentary.m_project = new Project().internInitializeID(serverCommentary.projectID).getCache();
+        commentary.m_user = new User().getCache(serverCommentary.username);
+        commentary.m_project = new Project().getCache(serverCommentary.projectID);
         commentary.m_creationDate = Utility.stringToDateTime(serverCommentary.creationDate);
 
         return commentary;
@@ -90,8 +88,8 @@ public class Commentary extends Resource<Commentary, ServerCommentary, ServerCom
         this.m_title = serverCommentary.title;
         this.m_message = serverCommentary.message;
         this.m_mark = serverCommentary.mark;
-        this.m_user = new User().internInitializeID(serverCommentary.username).getCache();
-        this.m_project = new Project().internInitializeID(serverCommentary.projectID).getCache();
+        this.m_user = new User().getCache(serverCommentary.username);
+        this.m_project = new Project().getCache(serverCommentary.projectID);
         this.m_creationDate = Utility.stringToDateTime(serverCommentary.creationDate);
 
         return this;

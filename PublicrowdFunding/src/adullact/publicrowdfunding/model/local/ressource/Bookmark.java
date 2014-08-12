@@ -66,8 +66,8 @@ public class Bookmark extends Resource<Bookmark, ServerBookmark, ServerBookmark>
     }
 
     @Override
-    protected Bookmark internInitializeID(String id) {
-        return null;
+    protected void setResourceId(String id) {
+        this.m_id = Integer.parseInt(id);
     }
 
     @Override
@@ -85,8 +85,8 @@ public class Bookmark extends Resource<Bookmark, ServerBookmark, ServerBookmark>
     public Bookmark makeCopyFromServer(ServerBookmark serverBookmark) {
         Bookmark bookmark = new Bookmark();
         bookmark.m_id = serverBookmark.id;
-        bookmark.m_user = new User().internInitializeID(serverBookmark.username).getCache();
-        bookmark.m_project = new Project().internInitializeID(serverBookmark.projectID).getCache();
+        bookmark.m_user = new User().getCache(serverBookmark.username);
+        bookmark.m_project = new Project().getCache(serverBookmark.projectID);
         bookmark.m_creationDate = Utility.stringToDateTime(serverBookmark.creationDate);
 
         return bookmark;
@@ -95,8 +95,8 @@ public class Bookmark extends Resource<Bookmark, ServerBookmark, ServerBookmark>
     @Override
     public Bookmark syncFromServer(ServerBookmark serverBookmark) {
         this.m_id = serverBookmark.id;
-        this.m_user = new User().internInitializeID(serverBookmark.username).getCache();
-        this.m_project = new Project().internInitializeID(serverBookmark.projectID).getCache();
+        this.m_user = new User().getCache(serverBookmark.username);
+        this.m_project = new Project().getCache(serverBookmark.projectID);
         this.m_creationDate = Utility.stringToDateTime(serverBookmark.creationDate);
 
         return this;

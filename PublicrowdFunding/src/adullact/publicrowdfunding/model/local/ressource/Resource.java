@@ -32,26 +32,33 @@ public abstract class Resource<TResource extends Resource<TResource, TServerReso
     private static HashMap<String, HashMap<String, Cache>> cachedResource = new HashMap<String, HashMap<String, Cache>>();
     private Cache<TResource> m_cache;
 
-    public boolean isCached() {
-        return (m_cache != null);
-    }
-
-    protected void insertIntoCache() {
-        if(!isCached()) {
-            HashMap<String, Cache> cachedType = cachedResource.get(getClass().getSimpleName());
-            m_cache = new Cache(this);
-            if(cachedType == null) {
-                cachedType = new HashMap<String, Cache>();
-                cachedResource.put(getClass().getSimpleName(), cachedType);
-            }
-
-            cachedType.put(getResourceId(), m_cache);
+    public Cache<TResource> getCache() {
+        if(getResourceId() == null) {
+            return null;
+        }
+        else {
+            return getCache(getResourceId());
         }
     }
 
-    public Cache<TResource> getCache() {
-        if(!isCached()) {
-            return new Cache(this).forceRetrieve(); // Shallow cache
+    public Cache<TResource> getCache(String id) {
+        setResourceId(id);
+        if(m_cache == null) {
+            HashMap<String, Cache> cachedType = cachedResource.get(getClass().getSimpleName());
+            if (cachedType == null) {
+                cachedType = new HashMap<String, Cache>();
+                cachedResource.put(getClass().getSimpleName(), cachedType);
+                m_cache = new Cache<TResource>((TResource) this);
+                cachedType.put(id, m_cache);
+            }
+            else {
+                m_cache = cachedType.get(id);
+                if(m_cache == null) {
+                    m_cache = new Cache<TResource>((TResource) this);
+                    cachedType.put(id, m_cache);
+                }
+            }
+
         }
 
         return m_cache;
@@ -77,20 +84,8 @@ public abstract class Resource<TResource extends Resource<TResource, TServerReso
         return ret;
     }
 
-    final public TResource initializeID(String id) {
-        HashMap<String, Cache> cachedType = cachedResource.get(getClass().getSimpleName());
-        if (cachedType == null) {
-            cachedType = new HashMap<String, Cache>();
-            cachedResource.put(getClass().getSimpleName(), cachedType);
-        } else {
-            m_cache = cachedType.get(id);
-        }
-
-        return internInitializeID(id);
-    }
-
     public abstract String getResourceId();
-    protected abstract TResource internInitializeID(String id);
+    protected abstract void setResourceId(String id);
     public abstract TServerResource toServerResource();
     public abstract TResource makeCopyFromServer(TServerResource serverResource);
     public abstract TResource syncFromServer(TDetailedServerResource detailedServerResource);

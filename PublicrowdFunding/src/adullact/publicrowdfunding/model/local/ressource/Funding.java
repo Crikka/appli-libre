@@ -41,10 +41,8 @@ public class Funding extends Resource<Funding, ServerFunding, ServerFunding> {
     }
 
     @Override
-    protected Funding internInitializeID(String id) {
+    protected void setResourceId(String id) {
         m_id = Integer.parseInt(id);
-
-        return this;
     }
 
     @Override
@@ -65,8 +63,8 @@ public class Funding extends Resource<Funding, ServerFunding, ServerFunding> {
         Funding funding = new Funding();
         funding.m_id = serverFunding.id;
         funding.m_transactionId = serverFunding.transactionId;
-        funding.m_from = new User().internInitializeID(serverFunding.username).getCache();
-        funding.m_to = new Project().internInitializeID(serverFunding.projectID).getCache();
+        funding.m_from = new User().getCache(serverFunding.username);
+        funding.m_to = new Project().getCache(serverFunding.projectID);
         funding.m_value = new BigDecimal(serverFunding.value);
         funding.m_date = Utility.stringToDateTime(serverFunding.creationDate);
 
@@ -77,8 +75,8 @@ public class Funding extends Resource<Funding, ServerFunding, ServerFunding> {
     public Funding syncFromServer(ServerFunding serverFunding) {
         this.m_id = serverFunding.id;
         this.m_transactionId = serverFunding.transactionId;
-        this.m_from = new User().internInitializeID(serverFunding.username).getCache();
-        this.m_to = new Project().internInitializeID(serverFunding.projectID).getCache();
+        this.m_from = new User().getCache(serverFunding.username);
+        this.m_to = new Project().getCache(serverFunding.projectID);
         this.m_value = new BigDecimal(serverFunding.value);
         this.m_date = Utility.stringToDateTime(serverFunding.creationDate);
 

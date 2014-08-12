@@ -30,14 +30,8 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
     }
 
     @Override
-    protected User internInitializeID(String id) {
+    protected void setResourceId(String id) {
         this.m_pseudo = id;
-        this.m_name = null;
-        this.m_firstName = null;
-        this.m_supportedProjects = new ArrayList<Cache<Project>>();
-        this.m_financedProjects = new ArrayList<Cache<Project>>();
-
-        return this;
     }
 
     @Override

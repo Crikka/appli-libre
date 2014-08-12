@@ -16,11 +16,17 @@ public class Cache<TResource extends Resource<TResource, ?, ?>> {
 
     public Cache(TResource resource) {
         this.m_resource = new Sync<TResource>(resource);
-        this.m_dateTime = DateTime.now();
+        this.m_dateTime = null;
     }
 
     public String getResourceId() {
         return m_resource.id;
+    }
+
+    public Cache<TResource> declareUpToDate() {
+        m_dateTime = DateTime.now();
+
+        return this;
     }
 
     public Cache<TResource> forceRetrieve() {
@@ -30,7 +36,7 @@ public class Cache<TResource extends Resource<TResource, ?, ?>> {
     }
 
     public void toResource(final WhatToDo<TResource> whatToDo) {
-        boolean timeToRetrieve = false;
+        boolean timeToRetrieve;
         if(m_dateTime == null) {
             timeToRetrieve = true;
         }

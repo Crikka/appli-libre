@@ -80,15 +80,8 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
     }
 
     @Override
-    protected Account internInitializeID(String id) {
+    protected void setResourceId(String id) {
         this.m_username = id;
-        this.m_password = null;
-        this.m_lastSync = null;
-        this.m_administrator = false;
-        this.m_anonymous = true;
-        this.m_context = null;
-
-        return this;
     }
 
     @Override
@@ -113,9 +106,8 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
          this.m_administrator = serverAccount.administrator;
          this.m_anonymous = false;
          this.m_context = PublicrowdFundingApplication.context();
-         this.m_user = new User().internInitializeID(serverAccount.pseudo).getCache();
-        insertIntoCache();
-        		 
+         this.m_user = new User().getCache(serverAccount.pseudo);
+
          return this;
     }
 
