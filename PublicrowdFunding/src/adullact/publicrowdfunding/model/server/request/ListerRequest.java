@@ -43,6 +43,7 @@ public class ListerRequest<TResource extends Resource<TResource, TServerResource
                             return;
                         }
 
+                        done();
                         ArrayList<TResource> resources = new ArrayList<TResource>();
                         for(TServerResource serverResource : serverResources) {
                             resources.add(m_resource.makeCopyFromServer(serverResource));

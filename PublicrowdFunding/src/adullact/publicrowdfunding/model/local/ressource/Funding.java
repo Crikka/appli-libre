@@ -1,13 +1,20 @@
 package adullact.publicrowdfunding.model.local.ressource;
 
+import android.app.backup.FullBackupDataOutput;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import org.joda.time.DateTime;
 import adullact.publicrowdfunding.model.local.cache.Cache;
+import adullact.publicrowdfunding.model.local.callback.WhatToDo;
+import adullact.publicrowdfunding.model.server.entities.ServerBookmark;
 import adullact.publicrowdfunding.model.server.entities.ServerFunding;
 import adullact.publicrowdfunding.model.server.entities.Service;
 import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
+import adullact.publicrowdfunding.model.server.event.ListerEvent;
+import adullact.publicrowdfunding.model.server.request.ListerRequest;
 import adullact.publicrowdfunding.shared.Utility;
 import rx.Observable;
 
@@ -33,6 +40,10 @@ public class Funding extends Resource<Funding, ServerFunding, ServerFunding> {
 		this.m_date = DateTime.now();
 	}
 
+    public void getProject(WhatToDo<Project> projectWhatToDo) {
+        m_to.toResource(projectWhatToDo);
+    }
+
 
     /* --- Resource --- */
     @Override
@@ -41,7 +52,7 @@ public class Funding extends Resource<Funding, ServerFunding, ServerFunding> {
     }
 
     @Override
-    protected void setResourceId(String id) {
+    public void setResourceId(String id) {
         m_id = Integer.parseInt(id);
     }
 
@@ -108,4 +119,11 @@ public class Funding extends Resource<Funding, ServerFunding, ServerFunding> {
         return service.deleteFunding(getResourceId());
     }
     /* ---------------- */
+
+    public void serverListerByUser(String pseudo, ListerEvent<Funding> bookmarkListerEvent) {
+        HashMap<String, String> filter = new HashMap<String, String>();
+        filter.put("user", pseudo);
+
+        (new ListerRequest<Funding, ServerFunding, ServerFunding>(this, filter, bookmarkListerEvent)).execute();
+    }
 }

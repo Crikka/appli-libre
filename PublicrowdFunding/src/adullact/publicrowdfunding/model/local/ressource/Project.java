@@ -37,7 +37,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
     }
 
     @Override
-    protected void setResourceId(String id) {
+    public void setResourceId(String id) {
         this.m_id = id;
     }
 
@@ -136,6 +136,8 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
 	private String m_name;
 	private String m_description;
     private Cache<User> m_proposedBy;
+    private ArrayList<Cache<Funding>> m_funding;
+    private ArrayList<Cache<Commentary>> m_commentaries;
 	private BigDecimal m_requestedFunding;
 	private BigDecimal m_currentFunding;
 	private DateTime m_creationDate;
@@ -272,7 +274,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
 	 * @param value
 	 * @brief Add value to current funding.
 	 */
-	public void finance(String value) {
+	public void finance(final String value, final CreateEvent<Funding> fundingCreateEvent) throws NoAccountExistsInLocal  {
 		m_currentFunding = m_currentFunding.add(new BigDecimal(value));
 	}
 
@@ -282,7 +284,18 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         account.getUser(new HoldToDo<User>() {
             @Override
             public void hold(User resource) {
-                new Commentary(resource, _this, title, text, mark).serverCreate(commentaryCreateEvent);
+                new Commentary(resource, _this, title, text, mark).serverCreate(new CreateEvent<Commentary>() {
+                    @Override
+                    public void errorResourceIdAlreadyUsed(String id) {
+                        commentaryCreateEvent.errorResourceIdAlreadyUsed(id);
+                    }
+
+                    @Override
+                    public void onCreate(Commentary commentary) {
+                        _this.m_commentaries.add(commentary.getCache());
+                        commentaryCreateEvent.onCreate(commentary);
+                    }
+                });
             }
         });
     }

@@ -41,15 +41,7 @@ public class DeleteRequest<TResource extends Resource<TResource, TServerResource
                             return;
                         }
 
-                        switch (response.code) {
-                            case 0: // Ok!
-                                done();
-                                event().onDelete(m_resource);
-                                break;
-                            case 1:
-                                event().errorUsernameDoesNotExist(m_resource.getResourceId());
-                                break;
-                        }
+                        done();
                     }
                 });
     }

@@ -3,6 +3,7 @@ package adullact.publicrowdfunding.model.local.ressource;
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import adullact.publicrowdfunding.model.local.cache.Cache;
@@ -10,6 +11,8 @@ import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.server.entities.ServerBookmark;
 import adullact.publicrowdfunding.model.server.entities.Service;
 import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
+import adullact.publicrowdfunding.model.server.event.ListerEvent;
+import adullact.publicrowdfunding.model.server.request.ListerRequest;
 import adullact.publicrowdfunding.shared.Utility;
 import rx.Observable;
 
@@ -19,7 +22,7 @@ import rx.Observable;
 public class Bookmark extends Resource<Bookmark, ServerBookmark, ServerBookmark> {
 
     /* ---- Own data ---- */
-    private int m_id;
+    private Integer m_id;
     private DateTime m_creationDate;
    /* ------------------ */
 
@@ -34,11 +37,11 @@ public class Bookmark extends Resource<Bookmark, ServerBookmark, ServerBookmark>
     }
 
 
-    public Bookmark(int id, DateTime creationDate, User user, Project project) {
+    public Bookmark(User user, Project project) {
         super();
 
-        this.m_id = id;
-        this.m_creationDate = creationDate;
+        this.m_id = null;
+        this.m_creationDate = DateTime.now();
         this.m_user = user.getCache();
         this.m_project = project.getCache();
     }
@@ -62,11 +65,15 @@ public class Bookmark extends Resource<Bookmark, ServerBookmark, ServerBookmark>
     /* --- Resource --- */
     @Override
     public String getResourceId() {
+        if(m_id == null) {
+            return null;
+        }
+
         return Integer.toString(m_id);
     }
 
     @Override
-    protected void setResourceId(String id) {
+    public void setResourceId(String id) {
         this.m_id = Integer.parseInt(id);
     }
 
@@ -88,6 +95,7 @@ public class Bookmark extends Resource<Bookmark, ServerBookmark, ServerBookmark>
         bookmark.m_user = new User().getCache(serverBookmark.username);
         bookmark.m_project = new Project().getCache(serverBookmark.projectID);
         bookmark.m_creationDate = Utility.stringToDateTime(serverBookmark.creationDate);
+        bookmark.getCache().declareUpToDate();
 
         return bookmark;
     }
@@ -127,4 +135,11 @@ public class Bookmark extends Resource<Bookmark, ServerBookmark, ServerBookmark>
         return service.deleteBookmark(getResourceId());
     }
     /* ------------ */
+
+    public void serverListerByUser(String pseudo, ListerEvent<Bookmark> bookmarkListerEvent) {
+        HashMap<String, String> filter = new HashMap<String, String>();
+        filter.put("user", pseudo);
+
+        (new ListerRequest<Bookmark, ServerBookmark, ServerBookmark>(this, filter, bookmarkListerEvent)).execute();
+    }
 }

@@ -31,7 +31,6 @@ public class CreateRequest<TResource extends Resource<TResource, TServerResource
 
 					@Override
 					public SimpleServerResponse call(Throwable throwable) {
-						System.out.println("bug");
 						return null;
 					}
 
@@ -39,17 +38,15 @@ public class CreateRequest<TResource extends Resource<TResource, TServerResource
 
 					@Override
 					public void call(SimpleServerResponse response) {
-						System.out.println("Response : "+response);
-						if (response == null) {
-							errorHandler().manageCallback();
-							return;
-						}
-						switch (response.code) {
-						case 0:
-							event().onCreate(m_resource);
-							break;
-						}
-					}
+                        if (response == null) {
+                            errorHandler().manageCallback();
+                            return;
+                        }
+
+                        done();
+                        m_resource.setResourceId(response.idAffected);
+                        event().onCreate(m_resource);
+                    }
 				}, new Action1<Throwable>() {
 					@Override
 					public void call(Throwable throwable) {

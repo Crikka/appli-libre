@@ -50,7 +50,7 @@ public class Commentary extends Resource<Commentary, ServerCommentary, ServerCom
     }
 
     @Override
-    protected void setResourceId(String id) {
+    public void setResourceId(String id) {
         m_id = Integer.parseInt(id);
     }
 

@@ -20,6 +20,7 @@ import javax.crypto.spec.SecretKeySpec;
 import adullact.publicrowdfunding.PublicrowdFundingApplication;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.cache.Cache;
+import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.server.entities.ServerAccount;
 import adullact.publicrowdfunding.model.server.entities.Service;
@@ -80,7 +81,7 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
     }
 
     @Override
-    protected void setResourceId(String id) {
+    public void setResourceId(String id) {
         this.m_username = id;
     }
 
@@ -199,10 +200,6 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
 
     public void getUser(WhatToDo<User> userWhatToDo) {
         m_user.toResource(userWhatToDo);
-    }
-
-    public void requestCreate(CreateEvent createAccountEvent) {
-        new CreateRequest(this, createAccountEvent).execute();
     }
 
     private void save() {

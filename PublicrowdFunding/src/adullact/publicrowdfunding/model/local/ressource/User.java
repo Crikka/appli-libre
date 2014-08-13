@@ -9,6 +9,7 @@ import adullact.publicrowdfunding.model.server.entities.DetailedServerUser;
 import adullact.publicrowdfunding.model.server.entities.ServerUser;
 import adullact.publicrowdfunding.model.server.entities.Service;
 import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
+import adullact.publicrowdfunding.model.server.event.ListerEvent;
 import rx.Observable;
 
 /**
@@ -20,8 +21,6 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
 	private String m_pseudo;
 	private String m_name;
 	private String m_firstName;
-	private ArrayList<Cache<Project>> m_supportedProjects;
-	private ArrayList<Cache<Project>> m_financedProjects;
 
     /* ----- Resource ----- */
     @Override
@@ -30,7 +29,7 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
     }
 
     @Override
-    protected void setResourceId(String id) {
+    public void setResourceId(String id) {
         this.m_pseudo = id;
     }
 
@@ -96,16 +95,12 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
 		this.m_pseudo = null;
 		this.m_name = null;
 		this.m_firstName = null;
-		this.m_supportedProjects = new ArrayList<Cache<Project>>();
-		this.m_financedProjects = new ArrayList<Cache<Project>>();
 	}
 
     public User(String pseudo, String name, String firstName) {
         this.m_pseudo = pseudo;
         this.m_name = name;
         this.m_firstName = firstName;
-        this.m_supportedProjects = new ArrayList<Cache<Project>>();
-        this.m_financedProjects = new ArrayList<Cache<Project>>();
     }
 
 	/* Getter */
@@ -121,16 +116,26 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
 		return m_pseudo;
 	}
 	
-	public void getSupportedProjects(WhatToDo<Project> projectWhatToDo) {
-        for(Cache<Project> project : m_supportedProjects) {
-            project.toResource(projectWhatToDo);
-        }
+	public void getBookmarkedProjects(final WhatToDo<Project> projectWhatToDo) {
+        new Bookmark().serverListerByUser(m_pseudo, new ListerEvent<Bookmark>() {
+            @Override
+            public void onLister(ArrayList<Bookmark> bookmarks) {
+                for (Bookmark bookmark : bookmarks) {
+                    bookmark.getProject(projectWhatToDo);
+                }
+            }
+        });
 	}
 
-    public void getFinancedProjects(WhatToDo<Project> projectWhatToDo) {
-        for(Cache<Project> project : m_financedProjects) {
-            project.toResource(projectWhatToDo);
-        }
+    public void getFinancedProjects(final WhatToDo<Project> projectWhatToDo) {
+        new Funding().serverListerByUser(m_pseudo, new ListerEvent<Funding>() {
+            @Override
+            public void onLister(ArrayList<Funding> funding) {
+                for (Funding fund : funding) {
+                    fund.getProject(projectWhatToDo);
+                }
+            }
+        });
     }
 	/* ------ */
 
