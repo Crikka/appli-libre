@@ -7,10 +7,10 @@ import adullact.publicrowdfunding.model.server.request.CreateRequest;
 import adullact.publicrowdfunding.model.server.request.DeleteRequest;
 
 public abstract class DeleteEvent<TResource extends Resource<TResource, ?, ?>>
-        extends AuthenticatedEvent<DeleteRequest<TResource, ?, ?>, DeleteEvent<TResource>, DeleteErrorHandler<TResource>>   {
+        extends AdministratorEvent<DeleteRequest<TResource, ?, ?>, DeleteEvent<TResource>, DeleteErrorHandler<TResource>>   {
 
 	/* Callback functions */
-    public abstract void errorUsernameDoesNotExist(String username);
+    public abstract void errorResourceIdDoesNotExist();
     public abstract void onDelete(TResource resource);
     /* ----------------- */
 

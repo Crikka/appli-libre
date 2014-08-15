@@ -61,7 +61,6 @@ public class ConnexionActivity extends Activity {
                 AuthenticationRequest request = new AuthenticationRequest(login, password, new AuthenticationEvent() {
                     @Override
                     public void errorUsernamePasswordDoesNotMatch(String username, String password) {
-                        System.out.println("erreur");
                         Toast.makeText(context,
                                 "Login ou mot de passe incorect",
                                 Toast.LENGTH_LONG).show();
@@ -73,6 +72,13 @@ public class ConnexionActivity extends Activity {
                                 "Vous êtes connecté !",
                                 Toast.LENGTH_LONG).show();
                         finish();
+                    }
+
+                    @Override
+                    public void errorNetwork() {
+                        Toast.makeText(context,
+                                "Connexion impossible au serveur, veuillez vérifier vos paramètres resaux.",
+                                Toast.LENGTH_LONG).show();
                     }
                 });
 			}

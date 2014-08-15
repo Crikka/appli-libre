@@ -93,17 +93,15 @@ public class InscriptionActivity extends Activity {
 
                 account.serverCreate(new CreateEvent<Account>() {
 
-					@Override
-					public void errorResourceIdAlreadyUsed(String id) {
-						mProgressDialog.dismiss();
-						Intent returnIntent = new Intent();
-						setResult(RESULT_CANCELED, returnIntent);
-						finish();
-					}
+                    @Override
+                    public void errorResourceIdAlreadyUsed() {
+                        mProgressDialog.dismiss();
+                        Intent returnIntent = new Intent();
+                        setResult(RESULT_CANCELED, returnIntent);
+                        finish();
+                    }
 
-					
-					
-					@Override
+                    @Override
 					public void onCreate(Account resource) {
 						account.setOwn();
 						mProgressDialog.dismiss();
@@ -111,6 +109,19 @@ public class InscriptionActivity extends Activity {
 						setResult(RESULT_OK, returnIntent);
 						finish();
 					}
+
+                    @Override
+                    public void errorNetwork() {
+                        mProgressDialog.dismiss();
+                        Intent returnIntent = new Intent();
+                        setResult(RESULT_CANCELED, returnIntent);
+                        finish();
+                    }
+
+                    @Override
+                    public void errorAuthenticationRequired() {
+
+                    }
 /*
 					@Override
 					public void errorAuthenticationRequired() {

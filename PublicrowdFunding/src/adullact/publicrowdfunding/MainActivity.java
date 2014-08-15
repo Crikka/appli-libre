@@ -13,6 +13,7 @@ import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
 import android.app.Activity;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -37,6 +38,12 @@ public class MainActivity extends Activity implements TabListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Récuperation des projets...");
+        progressDialog.setTitle("Initialisation de l'application");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.show();
+
 		SyncServerToLocal sync = SyncServerToLocal.getInstance();
 		final MainActivity _this = this;
 		sync.sync(new HoldAllToDo<Project>() {
@@ -44,7 +51,24 @@ public class MainActivity extends Activity implements TabListener {
 			@Override
 			public void holdAll(ArrayList<Project> projects) {
 				_this.projets.addAll(projects);
+                try {
+                    rl = (FrameLayout) findViewById(R.id.tabcontent);
 
+                    ActionBar bar = getActionBar();
+
+                    bar.addTab(bar.newTab().setText("Projets").setTabListener(_this));
+                    bar.addTab(bar.newTab().setText("Favoris").setTabListener(_this));
+                    bar.addTab(bar.newTab().setText("Localisation").setTabListener(_this));
+
+                    bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_USE_LOGO);
+                    bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+                    bar.setDisplayShowHomeEnabled(true);
+                    bar.setDisplayShowTitleEnabled(true);
+                    bar.show();
+                    progressDialog.dismiss();
+                } catch (Exception e) {
+                    e.getMessage();
+                }
 			}
 		});
 
@@ -82,28 +106,8 @@ public class MainActivity extends Activity implements TabListener {
 
 			}
 		});
+    }
 
-		try {
-			rl = (FrameLayout) findViewById(R.id.tabcontent);
-
-			ActionBar bar = getActionBar();
-
-			bar.addTab(bar.newTab().setText("Projets").setTabListener(_this));
-			bar.addTab(bar.newTab().setText("Favoris").setTabListener(_this));
-			bar.addTab(bar.newTab().setText("Localisation")
-					.setTabListener(_this));
-
-			bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM
-					| ActionBar.DISPLAY_USE_LOGO);
-			bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-			bar.setDisplayShowHomeEnabled(true);
-			bar.setDisplayShowTitleEnabled(true);
-			bar.show();
-
-		} catch (Exception e) {
-			e.getMessage();
-		}
-	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

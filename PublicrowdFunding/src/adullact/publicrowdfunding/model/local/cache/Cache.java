@@ -3,6 +3,8 @@ package adullact.publicrowdfunding.model.local.cache;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 
+import java.util.Comparator;
+
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Resource;
 import adullact.publicrowdfunding.model.server.event.RetrieveEvent;
@@ -17,6 +19,15 @@ public class Cache<TResource extends Resource<TResource, ?, ?>> {
     public Cache(TResource resource) {
         this.m_resource = new Sync<TResource>(resource);
         this.m_dateTime = null;
+    }
+
+    public static Comparator<Cache> howCompare() {
+        return new Comparator<Cache>() {
+            @Override
+            public int compare(Cache cache1, Cache cache2) {
+                return cache1.getResourceId().compareTo(cache2.getResourceId());
+            }
+        };
     }
 
     public String getResourceId() {
@@ -62,6 +73,11 @@ public class Cache<TResource extends Resource<TResource, ?, ?>> {
                         m_resource.setState(Sync.State.unchanged);
                     }
                     m_dateTime = DateTime.now();
+                    whatToDo.give(m_resource);
+                }
+
+                @Override
+                public void errorNetwork() {
                     whatToDo.give(m_resource);
                 }
             };

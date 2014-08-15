@@ -33,7 +33,6 @@ extends ServerObject<TRequest, TEvent, TErrorHandler> implements retrofit.ErrorH
             Log.i("Triumvirat", streamToString(error.getResponse().getBody().in()));
         } catch (IOException e) {
             Log.i("Triumvirat", "AHHHHHHHHHHHHHHHHHHHHHHHHH");
-            e.printStackTrace();
         }
         return error;
     }

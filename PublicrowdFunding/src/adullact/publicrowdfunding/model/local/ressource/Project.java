@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeSet;
 import java.util.UUID;
 
 import org.joda.time.DateTime;
@@ -67,6 +68,8 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         res.m_id = serverProject.id;
         res.m_name = serverProject.name;
         res.m_description = serverProject.description;
+        res.m_funding = new TreeSet<Cache<Funding>>(Cache.howCompare());
+        res.m_commentaries = new TreeSet<Cache<Commentary>>(Cache.howCompare());
         res.m_proposedBy = new User().getCache(serverProject.proposedBy);
         res.m_requestedFunding = new BigDecimal(serverProject.requestedFunding);
         res.m_currentFunding = new BigDecimal(serverProject.currentFunding);
@@ -84,6 +87,8 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         this.m_id = detailedServerProject.id;
         this.m_name = detailedServerProject.name;
         this.m_description = detailedServerProject.description;
+        this.m_funding = new TreeSet<Cache<Funding>>(Cache.howCompare());
+        this.m_commentaries = new TreeSet<Cache<Commentary>>(Cache.howCompare());
         this.m_proposedBy = new User().getCache(detailedServerProject.proposedBy);
         this.m_requestedFunding = new BigDecimal(detailedServerProject.requestedFunding);
         this.m_currentFunding = new BigDecimal(detailedServerProject.currentFunding);
@@ -136,8 +141,8 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
 	private String m_name;
 	private String m_description;
     private Cache<User> m_proposedBy;
-    private ArrayList<Cache<Funding>> m_funding;
-    private ArrayList<Cache<Commentary>> m_commentaries;
+    private TreeSet<Cache<Funding>> m_funding;
+    private TreeSet<Cache<Commentary>> m_commentaries;
 	private BigDecimal m_requestedFunding;
 	private BigDecimal m_currentFunding;
 	private DateTime m_creationDate;
@@ -286,14 +291,24 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
             public void hold(User resource) {
                 new Commentary(resource, _this, title, text, mark).serverCreate(new CreateEvent<Commentary>() {
                     @Override
-                    public void errorResourceIdAlreadyUsed(String id) {
-                        commentaryCreateEvent.errorResourceIdAlreadyUsed(id);
+                    public void errorResourceIdAlreadyUsed() {
+                        commentaryCreateEvent.errorResourceIdAlreadyUsed();
                     }
 
                     @Override
                     public void onCreate(Commentary commentary) {
                         _this.m_commentaries.add(commentary.getCache());
                         commentaryCreateEvent.onCreate(commentary);
+                    }
+
+                    @Override
+                    public void errorNetwork() {
+                        commentaryCreateEvent.errorNetwork();
+                    }
+
+                    @Override
+                    public void errorAuthenticationRequired() {
+                        commentaryCreateEvent.errorAuthenticationRequired();
                     }
                 });
             }

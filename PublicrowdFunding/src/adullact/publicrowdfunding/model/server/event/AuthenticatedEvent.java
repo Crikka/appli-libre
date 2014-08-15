@@ -42,6 +42,12 @@ extends Event<TRequest, TEvent, TErrorHandler> {
             public void onAuthentication() {
                 contextualEvent.retry();
             }
+
+            @Override
+            public void errorNetwork() {
+                contextualEvent.errorNetwork();
+            }
         });
+        request.execute();
 	}
 }

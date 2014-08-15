@@ -3,7 +3,6 @@ package adullact.publicrowdfunding;
 import java.util.ArrayList;
 import java.util.Vector;
 
-import adullact.publicrowdfunding.controlleur.detailProjet.MainActivity;
 import adullact.publicrowdfunding.custom.CustomAdapter;
 import adullact.publicrowdfunding.model.local.SyncServerToLocal;
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
@@ -21,47 +20,37 @@ import android.widget.ListView;
 
 public class TabProjetsFragment extends Fragment {
 
-	private ListView listeProjets;
+    private ListView listeProjets;
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
-		final View view = inflater.inflate(R.layout.tab, container, false);
+        final View view = inflater.inflate(R.layout.tab, container, false);
 
-		listeProjets = (ListView) view.findViewById(R.id.liste);
+        listeProjets = (ListView) view.findViewById(R.id.liste);
 
-        SyncServerToLocal sync = SyncServerToLocal.getInstance();
-        final TabProjetsFragment _this = this;
-            sync.sync(new HoldAllToDo<Project>() {
+        MainActivity activity = (MainActivity) getActivity();
 
-                @Override
-                public void holdAll(ArrayList<Project> projects) {
-                    Vector<Project> vector_projects = new Vector<Project>(projects);
+        ArrayAdapter<Project> adapter = new CustomAdapter(this.getActivity()
+                .getBaseContext(), R.layout.projet_list, activity.getProjets());
 
-                    ArrayAdapter<Project> adapter = new CustomAdapter(_this.getActivity()
-                            .getBaseContext(), R.layout.projet_list, vector_projects);
+        listeProjets.setAdapter(adapter);
+        listeProjets.setOnItemClickListener(new OnItemClickListener() {
 
-                    listeProjets.setAdapter(adapter);
-                    listeProjets.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
 
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view,
-                                                int position, long id) {
-
-                            Project projet = (Project) listeProjets
-                                    .getItemAtPosition(position);
-                            Intent in = new Intent(parent.getContext()
-                                    .getApplicationContext(), MainActivity.class);
-                            in.putExtra("key", projet.getId());
-                            startActivity(in);
-
-                        }
-                    });
-                }
-            });
-
+                Project projet = (Project) listeProjets
+                        .getItemAtPosition(position);
+                Intent in = new Intent(parent.getContext()
+                        .getApplicationContext(), MainActivity.class);
+                in.putExtra("key", projet.getId());
+                startActivity(in);
+            }
+        });
 
         return view;
-	}
+    }
 }

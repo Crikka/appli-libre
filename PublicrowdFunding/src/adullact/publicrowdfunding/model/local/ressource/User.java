@@ -124,6 +124,11 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
                     bookmark.getProject(projectWhatToDo);
                 }
             }
+
+            @Override
+            public void errorNetwork() {
+
+            }
         });
 	}
 
@@ -134,6 +139,11 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
                 for (Funding fund : funding) {
                     fund.getProject(projectWhatToDo);
                 }
+            }
+
+            @Override
+            public void errorNetwork() {
+
             }
         });
     }

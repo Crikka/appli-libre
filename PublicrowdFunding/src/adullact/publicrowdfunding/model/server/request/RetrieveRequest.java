@@ -10,7 +10,7 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 public class RetrieveRequest<TResource extends Resource<TResource, TServerResource, TDetailedServerResource>, TServerResource, TDetailedServerResource extends TServerResource>
-        extends AnonymousRequest<RetrieveRequest<TResource, ?, ?>, RetrieveEvent<TResource>, RetrieveErrorHandler<TResource>>{
+        extends Request<RetrieveRequest<TResource,?,?>,RetrieveEvent<TResource>,RetrieveErrorHandler<TResource>> {
     private TResource m_resource;
 
     public RetrieveRequest(TResource resource, RetrieveEvent<TResource> event) {
@@ -31,15 +31,8 @@ public class RetrieveRequest<TResource extends Resource<TResource, TServerResour
 
                 })
                 .subscribe(new Action1<TDetailedServerResource>() {
-
                                @Override
                                public void call(TDetailedServerResource detailedServerResources) {
-                                   if (detailedServerResources == null) {
-                                       errorHandler().manageCallback();
-                                       return;
-                                   }
-
-
                                    m_resource.syncFromServer(detailedServerResources);
                                    event().onRetrieve(m_resource);
                                }
@@ -47,8 +40,7 @@ public class RetrieveRequest<TResource extends Resource<TResource, TServerResour
                         new Action1<Throwable>() {
                             @Override
                             public void call(Throwable throwable) {
-                                // on main thread; something went wrong
-                                System.out.println("Error! " + throwable);
+                                errorHandler().manageCallback();
                             }
                         },
                         new Action0() {

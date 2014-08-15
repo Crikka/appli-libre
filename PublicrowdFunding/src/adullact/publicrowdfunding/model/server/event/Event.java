@@ -19,9 +19,7 @@ TErrorHandler extends ErrorHandler<TRequest, TEvent, TErrorHandler>>
 extends ServerObject<TRequest, TEvent, TErrorHandler> {
 
     /* Callback functions */
-    public void errorNetwork() {
-        Log.i("Triumvirat", "Network error");
-    }
+    public abstract void errorNetwork();
 	/* ----------------- */
 	
 	final protected void retry(){

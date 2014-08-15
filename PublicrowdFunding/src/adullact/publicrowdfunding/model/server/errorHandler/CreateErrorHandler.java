@@ -1,17 +1,25 @@
 package adullact.publicrowdfunding.model.server.errorHandler;
 
 import adullact.publicrowdfunding.model.local.ressource.Resource;
-import adullact.publicrowdfunding.model.server.request.AuthenticatedRequest;
 import retrofit.RetrofitError;
 import adullact.publicrowdfunding.model.server.request.CreateRequest;
 import adullact.publicrowdfunding.model.server.event.CreateEvent;
 
 public class CreateErrorHandler<TResource extends Resource<TResource, ?, ?>>
-        extends AnonymousErrorHandler<CreateRequest<TResource, ?, ?>, CreateEvent<TResource>, CreateErrorHandler<TResource>> {
+        extends AuthenticatedErrorHandler<CreateRequest<TResource,?,?>,CreateEvent<TResource>,CreateErrorHandler<TResource>> {
+    private boolean m_resourceIdAlreadyExist = false;
+
+    @Override
+    public void manageCallback() {
+        super.manageCallback();
+        if(m_resourceIdAlreadyExist) {
+            event().errorResourceIdAlreadyUsed();
+        }
+    }
 
     @Override
     public Throwable handleError(RetrofitError error) {
-        System.out.println(error.getMessage());
-        return null;
+        m_resourceIdAlreadyExist = (error.getResponse().getStatus() == 409);
+        return super.handleError(error);
     }
 }
