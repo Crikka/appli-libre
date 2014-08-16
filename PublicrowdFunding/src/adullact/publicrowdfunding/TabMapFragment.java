@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Vector;
 
 import adullact.publicrowdfunding.model.local.ressource.Project;
+import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
+
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -27,7 +29,7 @@ public class TabMapFragment extends Fragment implements
 	private MapFragment fragment;
 	private FragmentManager fm;
 	private ProgressDialog mprogressDialog;
-	private Vector<Project> projets = new Vector<Project>();
+	private Vector<Project> projets;
 	private View rootView;
 	private GoogleMap googleMap;
 	private HashMap<Marker, String> markers = new HashMap<Marker, String>();
@@ -42,11 +44,9 @@ public class TabMapFragment extends Fragment implements
 		mprogressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 		mprogressDialog.show();
 
-		MainActivity activity = (MainActivity) getActivity();
-		projets = activity.getProjets();
-
 		fragment = new MapFragment();
 		fm = getFragmentManager();
+        projets = new Vector<Project>(SyncServerToLocal.getInstance().getProjects());
 		FragmentTransaction ft = fm.beginTransaction();
 		ft.replace(R.id.tabcontent, fragment, "mapid").commit();
 
@@ -68,7 +68,7 @@ public class TabMapFragment extends Fragment implements
 						marker.title(proj.getName());
 						marker.snippet(proj.getDescription());
 						Marker m = googleMap.addMarker(marker);
-						markers.put(m, proj.getId());
+						markers.put(m, proj.getResourceId());
 
 					}
 

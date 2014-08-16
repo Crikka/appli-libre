@@ -64,7 +64,7 @@ public class ProjectsDatabase {
 
         while (cursor.moveToNext()) {
             Project project = new Project(
-                    cursor.getString(0), // id
+                    cursor.getInt(0), // id
                     cursor.getString(1), // title
                     cursor.getString(2), // description
                     cursor.getInt(3) == 0 ? false : true, // validate

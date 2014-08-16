@@ -26,7 +26,7 @@ import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
 import adullact.publicrowdfunding.model.server.event.CreateEvent;
 import adullact.publicrowdfunding.model.server.event.ListerEvent;
 import adullact.publicrowdfunding.model.server.request.ListerRequest;
-import adullact.publicrowdfunding.shared.Utility;
+import adullact.publicrowdfunding.model.local.utilities.Utility;
 import rx.Observable;
 
 public class Project extends Resource<Project, ServerProject, DetailedServerProject> {
@@ -34,18 +34,22 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
     /* ----- Resource ----- */
     @Override
     public String getResourceId() {
-        return m_id;
+        if(m_id == null) {
+            return null;
+        }
+
+        return m_id.toString();
     }
 
     @Override
     public void setResourceId(String id) {
-        this.m_id = id;
+        this.m_id = Integer.parseInt(id);
     }
 
     @Override
     public ServerProject toServerResource() {
         ServerProject serverProject = new ServerProject();
-        serverProject.id = getResourceId();
+        serverProject.id = m_id;
         serverProject.name = m_name;
         serverProject.description = m_description;
         serverProject.proposedBy = m_proposedBy.getResourceId();
@@ -137,7 +141,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
     }
     /* -------------------- */
 
-	private String m_id;
+	private Integer m_id;
 	private String m_name;
 	private String m_description;
     private Cache<User> m_proposedBy;
@@ -167,7 +171,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
     }
 
     public Project(String name, String description, String requestedFunding, Date creationDate, Date beginDate, Date endDate, LatLng position, int illustration) {
-		this.m_id = UUID.randomUUID().toString();
+        this.m_id = null;
 		this.m_name = name;
 		this.m_description = description;
 		this.m_requestedFunding = new BigDecimal(requestedFunding);
@@ -186,7 +190,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
     /**
      * Reserved for local database
      */
-    public Project(String id, String name, String description, boolean validate, String proposedBy, String requestedFunding, String currentFunding, String creationDate, String beginDate, String endDate, Double latitude, Double longitude, Integer illustration) {
+    public Project(Integer id, String name, String description, boolean validate, String proposedBy, String requestedFunding, String currentFunding, String creationDate, String beginDate, String endDate, Double latitude, Double longitude, Integer illustration) {
         this.m_id = id;
         this.m_name = name;
         this.m_description = description;
@@ -218,10 +222,6 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         }
         m_fundingTimePeriods.add(new FundingTimePeriod(new Interval(startDateTime, endDateTime)));
     }
-
-	public String getId() {
-		return m_id;
-	}
 
 	public String getName() {
 		return m_name;

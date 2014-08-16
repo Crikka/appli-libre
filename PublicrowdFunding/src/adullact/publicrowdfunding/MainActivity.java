@@ -5,7 +5,7 @@ import java.util.Vector;
 
 import adullact.publicrowdfunding.controlleur.ajouterProjet.SoumettreProjetActivity;
 import adullact.publicrowdfunding.controlleur.membre.ConnexionActivity;
-import adullact.publicrowdfunding.model.local.SyncServerToLocal;
+import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import android.app.ActionBar;
@@ -31,8 +31,7 @@ public class MainActivity extends Activity implements TabListener {
 	private ImageButton m_ajouter_projet;
 	private ImageButton m_mon_compte;
 	private ImageButton m_rechercher;
-	private Vector<Project> projets = new Vector<Project>();
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -50,7 +49,6 @@ public class MainActivity extends Activity implements TabListener {
 
 			@Override
 			public void holdAll(ArrayList<Project> projects) {
-				_this.projets.addAll(projects);
                 try {
                     rl = (FrameLayout) findViewById(R.id.tabcontent);
 
@@ -143,11 +141,6 @@ public class MainActivity extends Activity implements TabListener {
 	@Override
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 
-	}
-
-	public Vector<Project> getProjets() {
-
-		return projets;
 	}
 
 }

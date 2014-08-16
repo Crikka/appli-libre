@@ -1,4 +1,4 @@
-package adullact.publicrowdfunding.shared;
+package adullact.publicrowdfunding.model.local.utilities;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;

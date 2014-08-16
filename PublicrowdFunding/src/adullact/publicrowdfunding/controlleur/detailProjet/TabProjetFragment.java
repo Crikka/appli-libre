@@ -1,12 +1,9 @@
 package adullact.publicrowdfunding.controlleur.detailProjet;
 
-import org.joda.time.DateTime;
-
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.controlleur.ajouterProjet.choisirMontantDialog;
-import adullact.publicrowdfunding.custom.CustomProgressBar;
 import adullact.publicrowdfunding.model.local.ressource.Project;
-import adullact.publicrowdfunding.shared.Utility;
+import adullact.publicrowdfunding.model.local.utilities.Utility;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.util.DisplayMetrics;

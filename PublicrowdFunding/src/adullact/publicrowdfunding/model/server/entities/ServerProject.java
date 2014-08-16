@@ -8,7 +8,7 @@ import java.util.Date;
  * Created by Ferrand on 21/07/2014.
  */
 public class ServerProject {
-    public String id;
+    public int id;
     public String proposedBy;
     public boolean validate;
     public String name;

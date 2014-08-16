@@ -19,8 +19,8 @@ public interface Service {
     // Check
     @GET("/authentication/")
     Observable<SimpleServerResponse> authenticate();
-    @GET("/check/ready") // Indicate if server is ready
-    Observable<SimpleServerResponse> ready();
+    @POST("/registration/{pseudo}")
+    Observable<SimpleServerResponse> register(@Body ServerAccount serverAccount, @Path("pseudo") String pseudo);
 
     // Accounts
     @GET("/account/{name}")

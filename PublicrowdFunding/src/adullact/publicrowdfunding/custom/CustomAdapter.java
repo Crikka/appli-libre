@@ -4,7 +4,7 @@ import java.util.Vector;
 
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.model.local.ressource.Project;
-import adullact.publicrowdfunding.shared.Utility;
+import adullact.publicrowdfunding.model.local.utilities.Utility;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

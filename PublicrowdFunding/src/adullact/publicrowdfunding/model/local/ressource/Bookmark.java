@@ -13,7 +13,7 @@ import adullact.publicrowdfunding.model.server.entities.Service;
 import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
 import adullact.publicrowdfunding.model.server.event.ListerEvent;
 import adullact.publicrowdfunding.model.server.request.ListerRequest;
-import adullact.publicrowdfunding.shared.Utility;
+import adullact.publicrowdfunding.model.local.utilities.Utility;
 import rx.Observable;
 
 /**

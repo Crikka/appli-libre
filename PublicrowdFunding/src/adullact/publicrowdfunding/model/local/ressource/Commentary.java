@@ -10,7 +10,7 @@ import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.server.entities.ServerCommentary;
 import adullact.publicrowdfunding.model.server.entities.Service;
 import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
-import adullact.publicrowdfunding.shared.Utility;
+import adullact.publicrowdfunding.model.local.utilities.Utility;
 import rx.Observable;
 
 public class Commentary extends Resource<Commentary, ServerCommentary, ServerCommentary>{
