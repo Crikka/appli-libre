@@ -5,7 +5,9 @@ import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.User;
 import adullact.publicrowdfunding.model.server.event.AuthenticationEvent;
 import adullact.publicrowdfunding.model.server.event.CreateEvent;
+import adullact.publicrowdfunding.model.server.event.RegistrationEvent;
 import adullact.publicrowdfunding.model.server.request.AuthenticationRequest;
+import adullact.publicrowdfunding.model.server.request.RegistrationRequest;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -87,14 +89,18 @@ public class InscriptionActivity extends Activity {
 
 				// Je differencie compte (username + password) et user
 				// maintenant, je te divise ta requête
-				final User user = new User(username, "prenom", "nom");
-                final Account account = new Account(username, password);
 
-
-                account.serverCreate(new CreateEvent<Account>() {
+                new RegistrationRequest(username, password, username, new RegistrationEvent() {
+                    @Override
+                    public void onRegister() {
+                            mProgressDialog.dismiss();
+                        Intent returnIntent = new Intent();
+                        setResult(RESULT_OK, returnIntent);
+                        finish();
+                    }
 
                     @Override
-                    public void errorResourceIdAlreadyUsed() {
+                    public void errorUsernameAlreadyUsed() {
                         mProgressDialog.dismiss();
                         Intent returnIntent = new Intent();
                         setResult(RESULT_CANCELED, returnIntent);
@@ -102,13 +108,12 @@ public class InscriptionActivity extends Activity {
                     }
 
                     @Override
-					public void onCreate(Account resource) {
-						account.setOwn();
-						mProgressDialog.dismiss();
-						Intent returnIntent = new Intent();
-						setResult(RESULT_OK, returnIntent);
-						finish();
-					}
+                    public void errorPseudoAlreadyUsed() {
+                        mProgressDialog.dismiss();
+                        Intent returnIntent = new Intent();
+                        setResult(RESULT_CANCELED, returnIntent);
+                        finish();
+                    }
 
                     @Override
                     public void errorNetwork() {
@@ -117,20 +122,7 @@ public class InscriptionActivity extends Activity {
                         setResult(RESULT_CANCELED, returnIntent);
                         finish();
                     }
-
-                    @Override
-                    public void errorAuthenticationRequired() {
-
-                    }
-/*
-					@Override
-					public void errorAuthenticationRequired() {
-						// TODO Auto-generated method stub
-						
-					}
-			*/
-				});
-				
+                }).execute();
 			}
 		});
 	}

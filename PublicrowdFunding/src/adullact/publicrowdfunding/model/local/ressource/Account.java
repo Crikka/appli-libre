@@ -160,9 +160,10 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
         this.m_context = null;
     }
 
-    public Account(String username, String password) {
+    public Account(String username, String password, String pseudo) {
         this.m_username = username;
         this.m_password = password;
+        this.m_user = new User().getCache(pseudo);
         this.m_lastSync = null;
         this.m_administrator = false;
         this.m_anonymous = false;
@@ -171,11 +172,6 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
 
     public void setOwn() {
         m_own = this;
-        m_user = null;
-    }
-
-    public void setUser(User user) {
-        m_user = new Cache<User>(user);
     }
 
     public void setLastSync(DateTime lastSync) {

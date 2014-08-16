@@ -5,6 +5,8 @@ import java.util.Map;
 
 import retrofit.http.Body;
 import retrofit.http.DELETE;
+import retrofit.http.Field;
+import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.PUT;
@@ -19,8 +21,9 @@ public interface Service {
     // Check
     @GET("/authentication/")
     Observable<SimpleServerResponse> authenticate();
-    @POST("/registration/{pseudo}")
-    Observable<SimpleServerResponse> register(@Body ServerAccount serverAccount, @Path("pseudo") String pseudo);
+    @FormUrlEncoded
+    @POST("/registration/")
+    Observable<ServerRegistrationResponse> register(@Field("username") String username, @Field("password") String password, @Field("pseudo") String pseudo);
 
     // Accounts
     @GET("/account/{name}")
