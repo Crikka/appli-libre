@@ -2,8 +2,12 @@ package adullact.publicrowdfunding.controlleur.detailProjet;
 
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.custom.CommentaireAdapteur;
+import adullact.publicrowdfunding.model.local.callback.HoldToDo;
+import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Commentary;
 import adullact.publicrowdfunding.model.local.ressource.Project;
+import adullact.publicrowdfunding.model.local.ressource.User;
+
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -37,10 +41,11 @@ public class TabCommentaireFragment extends Fragment {
 		
 		lv = (ListView) view.findViewById(R.id.commentaires);
 
-		CommentaireAdapteur adapter = new CommentaireAdapteur(getActivity()
+		final CommentaireAdapteur adapter = new CommentaireAdapteur(getActivity()
 				.getApplicationContext(), R.layout.listitem_discuss);
 		// Ajout de quelques commentaires de test
-		adapter.add(new Commentary(null, projet, "Trop cool", "Trop cool", 0));
+
+		/*adapter.add(new Commentary(null, projet, "Trop cool", "Trop cool", 0));
 		adapter.add(new Commentary(null, projet, "Bonne idée", "Bonne idée", 0));
 		adapter.add(new Commentary(null, projet, "Idée de merde", "Idée de merde", 0));
 		adapter.add(new Commentary(null, projet, "Au top", "Au top", 0));
@@ -50,10 +55,21 @@ public class TabCommentaireFragment extends Fragment {
 				projet,
 				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec molestie hendrerit lorem, vitae viverra nisl convallis at. Morbi venenatis, ipsum mattis pharetra dictum, turpis mauris rutrum ante, et laoreet nibh tellus in lorem. Donec tincidunt elit sit amet tincidunt luctus. Curabitur et lectus nec augue pretium tempus ac quis mauris.",
 				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec molestie hendrerit lorem, vitae viverra nisl convallis at. Morbi venenatis, ipsum mattis pharetra dictum, turpis mauris rutrum ante, et laoreet nibh tellus in lorem. Donec tincidunt elit sit amet tincidunt luctus. Curabitur et lectus nec augue pretium tempus ac quis mauris.",
-				0));
+				0));*/
 
-		lv.setAdapter(adapter);
-		
+        //adapter.add(new Commentary(new User("francis", "francis", "francis"), projet, "Trop cool", "Trop cool", 0));
+        projet.getCommentaries(new WhatToDo<Commentary>() {
+            @Override
+            public void hold(Commentary resource) {
+                adapter.add(resource);
+            }
+
+            @Override
+            public void eventually() {
+                lv.setAdapter(adapter);
+            }
+        });
+
 		
 		m_notation
 		.setOnRatingBarChangeListener(new OnRatingBarChangeListener() {

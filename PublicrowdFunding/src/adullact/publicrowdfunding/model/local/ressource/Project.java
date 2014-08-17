@@ -20,6 +20,8 @@ import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.utilities.FundingTimePeriod;
 import adullact.publicrowdfunding.model.server.entities.DetailedServerProject;
+import adullact.publicrowdfunding.model.server.entities.ServerCommentary;
+import adullact.publicrowdfunding.model.server.entities.ServerFunding;
 import adullact.publicrowdfunding.model.server.entities.ServerProject;
 import adullact.publicrowdfunding.model.server.entities.Service;
 import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
@@ -102,6 +104,30 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         this.m_illustration = detailedServerProject.illustration;
         this.m_fundingInterval = new Interval(Utility.stringToDateTime(detailedServerProject.beginDate), Utility.stringToDateTime(detailedServerProject.endDate));
         this.m_fundingTimePeriods = new ArrayList<FundingTimePeriod>();
+        this. m_funding = new TreeSet<Cache<Funding>>(Cache.howCompare());
+        this.m_commentaries = new TreeSet<Cache<Commentary>>(Cache.howCompare());
+
+        for(final ServerFunding serverFunding : detailedServerProject.fundedBy) {
+            final Cache<Funding> funding = new Funding().getCache(Integer.toString(serverFunding.id)).declareUpToDate();
+            funding.toResource(new HoldToDo<Funding>() {
+                @Override
+                public void hold(Funding resource) {
+                    resource.syncFromServer(serverFunding);
+                    m_funding.add(funding);
+                }
+            });
+        }
+
+        for(final ServerCommentary serverCommentary : detailedServerProject.commentedBy) {
+            final Cache<Commentary> commentary = new Commentary().getCache(Integer.toString(serverCommentary.id)).declareUpToDate();
+            commentary.toResource(new HoldToDo<Commentary>() {
+                @Override
+                public void hold(Commentary resource) {
+                    resource.syncFromServer(serverCommentary);
+                    m_commentaries.add(commentary);
+                }
+            });
+        }
 
         // Now, we calculate 10 periods for graphics
         calculatePeriods();
@@ -257,6 +283,12 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
 
     public void getUser(WhatToDo<User> userWhatToDo) {
         m_proposedBy.toResource(userWhatToDo);
+    }
+
+    public void getCommentaries(WhatToDo<Commentary> commentaryWhatToDo) {
+        for(Cache<Commentary> commentary : m_commentaries) {
+            commentary.toResource(commentaryWhatToDo);
+        }
     }
 
     public void validate() {

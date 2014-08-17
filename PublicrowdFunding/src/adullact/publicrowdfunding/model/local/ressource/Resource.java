@@ -63,7 +63,6 @@ public abstract class Resource<TResource extends Resource<TResource, TServerReso
 
         return m_cache;
     }
-
     /* ----------------------- */
 
     private boolean m_changed;
