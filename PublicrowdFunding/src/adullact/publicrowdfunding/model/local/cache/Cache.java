@@ -62,6 +62,7 @@ public class Cache<TResource extends Resource<TResource, ?, ?>> {
                 public void errorResourceIdDoesNotExists(String id) {
                     m_resource.setState(Sync.State.deleted);
                     whatToDo.give(m_resource);
+                    whatToDo.eventually();
                 }
 
                 @Override
@@ -74,17 +75,20 @@ public class Cache<TResource extends Resource<TResource, ?, ?>> {
                     }
                     m_dateTime = DateTime.now();
                     whatToDo.give(m_resource);
+                    whatToDo.eventually();
                 }
 
                 @Override
                 public void errorNetwork() {
                     whatToDo.give(m_resource);
+                    whatToDo.eventually();
                 }
             };
             m_resource.resource.serverRetrieve(event);
         }
         else {
             whatToDo.give(m_resource);
+            whatToDo.eventually();
         }
     }
 }

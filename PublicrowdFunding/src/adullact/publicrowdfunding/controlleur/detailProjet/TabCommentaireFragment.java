@@ -57,7 +57,6 @@ public class TabCommentaireFragment extends Fragment {
 				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec molestie hendrerit lorem, vitae viverra nisl convallis at. Morbi venenatis, ipsum mattis pharetra dictum, turpis mauris rutrum ante, et laoreet nibh tellus in lorem. Donec tincidunt elit sit amet tincidunt luctus. Curabitur et lectus nec augue pretium tempus ac quis mauris.",
 				0));*/
 
-        //adapter.add(new Commentary(new User("francis", "francis", "francis"), projet, "Trop cool", "Trop cool", 0));
         projet.getCommentaries(new WhatToDo<Commentary>() {
             @Override
             public void hold(Commentary resource) {
