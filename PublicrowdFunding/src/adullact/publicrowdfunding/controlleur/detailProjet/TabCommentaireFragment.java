@@ -49,7 +49,6 @@ public class TabCommentaireFragment extends Fragment {
             @Override
             public void hold(Commentary resource) {
                 adapter.add(resource);
-                System.out.println(resource.getMessage());
             }
 
             @Override

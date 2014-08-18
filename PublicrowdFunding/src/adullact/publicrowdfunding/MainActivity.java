@@ -42,7 +42,7 @@ public class MainActivity extends Activity implements TabListener {
         progressDialog.setTitle("Initialisation de l'application");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.show();
-
+        
 		SyncServerToLocal sync = SyncServerToLocal.getInstance();
 		final MainActivity _this = this;
 		sync.sync(new HoldAllToDo<Project>() {
@@ -82,7 +82,7 @@ public class MainActivity extends Activity implements TabListener {
 
 			}
 		});
-
+		
 		m_mon_compte = (ImageButton) findViewById(R.id.button_mon_compte);
 		m_mon_compte.setOnClickListener(new View.OnClickListener() {
 			@Override

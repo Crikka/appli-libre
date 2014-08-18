@@ -32,8 +32,6 @@ public class ajouterCommentaireAlert extends AlertDialog.Builder {
 		LayoutParams param = new LayoutParams(LayoutParams.WRAP_CONTENT,
 				LayoutParams.WRAP_CONTENT);
 		notation.setLayoutParams(param);
-		
-		
 		notation.setNumStars(5);
 		notation.setMax(5);
 		notation.setRating((int) rating);

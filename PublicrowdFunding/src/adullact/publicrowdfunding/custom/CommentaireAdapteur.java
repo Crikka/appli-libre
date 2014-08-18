@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.model.local.cache.Cache;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Commentary;
 import adullact.publicrowdfunding.model.local.ressource.User;
@@ -84,24 +85,21 @@ public class CommentaireAdapteur extends ArrayAdapter<Commentary> {
 			}
 	    });
 		rating.setFocusable(false);
-		
 		utilisateurName = (TextView) row.findViewById(R.id.utilisateur_name);
 		coment.getUser(new WhatToDo<User>() {
 
 			@Override
 			public void hold(User resource) {
 				utilisateurName.setText(resource.getPseudo());
-
 			}
 
 			@Override
 			public void eventually() {
 				// TODO Auto-generated method stub
-
 			}
 
 		});
-
+		
 		return row;
 	}
 

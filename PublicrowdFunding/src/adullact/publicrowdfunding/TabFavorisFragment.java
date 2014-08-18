@@ -1,5 +1,6 @@
 package adullact.publicrowdfunding;
 
+import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ public class TabFavorisFragment extends Fragment {
 		
 	      View view = inflater.inflate(R.layout.tab, container, false);
 		
+	    
 		return view;
 	}
 	
