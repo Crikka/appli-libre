@@ -43,24 +43,13 @@ public class TabCommentaireFragment extends Fragment {
 
 		final CommentaireAdapteur adapter = new CommentaireAdapteur(getActivity()
 				.getApplicationContext(), R.layout.listitem_discuss);
-		// Ajout de quelques commentaires de test
 
-		/*adapter.add(new Commentary(null, projet, "Trop cool", "Trop cool", 0));
-		adapter.add(new Commentary(null, projet, "Bonne idée", "Bonne idée", 0));
-		adapter.add(new Commentary(null, projet, "Idée de merde", "Idée de merde", 0));
-		adapter.add(new Commentary(null, projet, "Au top", "Au top", 0));
-		adapter.add(new Commentary(null, projet, "Je test le scroll", "Je test le scroll", 0));
-		adapter.add(new Commentary(
-				null,
-				projet,
-				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec molestie hendrerit lorem, vitae viverra nisl convallis at. Morbi venenatis, ipsum mattis pharetra dictum, turpis mauris rutrum ante, et laoreet nibh tellus in lorem. Donec tincidunt elit sit amet tincidunt luctus. Curabitur et lectus nec augue pretium tempus ac quis mauris.",
-				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec molestie hendrerit lorem, vitae viverra nisl convallis at. Morbi venenatis, ipsum mattis pharetra dictum, turpis mauris rutrum ante, et laoreet nibh tellus in lorem. Donec tincidunt elit sit amet tincidunt luctus. Curabitur et lectus nec augue pretium tempus ac quis mauris.",
-				0));*/
-
+		
         projet.getCommentaries(new WhatToDo<Commentary>() {
             @Override
             public void hold(Commentary resource) {
                 adapter.add(resource);
+                System.out.println(resource.getMessage());
             }
 
             @Override

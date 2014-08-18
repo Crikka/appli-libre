@@ -79,16 +79,16 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="1530e"
+                        android:text="XXXe"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/nombre_participants_detail"
+                        android:id="@+id/pourcentage_accomplit"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="150"
+                        android:text="XXX"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
@@ -97,7 +97,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="15 jours"
+                        android:text="XXX jours"
                         android:textSize="15sp"
                         android:textStyle="bold" />
                 </TableRow>
@@ -121,7 +121,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="participants"
+                        android:text="accomplit"
                         android:textSize="15sp" />
 
                     <TextView
@@ -205,7 +205,7 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Lucas34"
+                            android:text="XXX"
                             android:textSize="20sp"
                             android:textStyle="bold" />
 
@@ -215,7 +215,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:paddingBottom="5dip"
-                            android:text="New York"
+                            android:text="XXX"
                             android:textSize="15sp" />
                     </LinearLayout>
 

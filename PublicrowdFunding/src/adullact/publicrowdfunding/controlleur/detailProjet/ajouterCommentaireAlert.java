@@ -1,6 +1,7 @@
 package adullact.publicrowdfunding.controlleur.detailProjet;
 
 import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,15 +18,17 @@ public class ajouterCommentaireAlert extends AlertDialog.Builder {
 
 	public ajouterCommentaireAlert(final Context context, float rating) {
 		super(context);
-
+		
 		LinearLayout linear = new LinearLayout(context);
 		linear.setOrientation(1);
 
 		linear.setGravity(Gravity.CENTER);
 		final RatingBar notation = new RatingBar(context, null,
 				android.R.attr.ratingBarStyleIndicator);
-		final EditText rechercher = new EditText(context);
-
+		final EditText titre = new EditText(context);
+		final EditText message = new EditText(context);
+		titre.setHint("Titre");
+		message.setHint("Commentaire"); 
 		LayoutParams param = new LayoutParams(LayoutParams.WRAP_CONTENT,
 				LayoutParams.WRAP_CONTENT);
 		notation.setLayoutParams(param);
@@ -44,8 +47,9 @@ public class ajouterCommentaireAlert extends AlertDialog.Builder {
 		});
 
 		linear.addView(notation);
-		linear.addView(rechercher);
-
+		linear.addView(titre);
+		linear.addView(message);
+		
 		this.setView(linear);
 
 		this.setTitle("Ajouter un commentaire");
@@ -55,7 +59,8 @@ public class ajouterCommentaireAlert extends AlertDialog.Builder {
 
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
-
+						
+						
 					}
 				});
 	}

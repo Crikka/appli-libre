@@ -2,7 +2,9 @@ package adullact.publicrowdfunding.controlleur.detailProjet;
 
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.controlleur.ajouterProjet.choisirMontantDialog;
+import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Project;
+import adullact.publicrowdfunding.model.local.ressource.User;
 import adullact.publicrowdfunding.model.local.utilities.Utility;
 import android.app.Fragment;
 import android.os.Bundle;
@@ -18,10 +20,17 @@ public class TabProjetFragment extends Fragment {
 
 	private TextView m_titre;
 	private TextView m_description;
+	private TextView m_current_funding;
 	private TextView m_nombre_participants;
 	private TextView m_jour_restant;
 	private TextView m_utilisateur_soumission;
+	private TextView m_pourcentage_accomplish;
+	
 	private Button m_payer;
+	private Button m_mail;
+	private Button m_website;
+	private Button m_call;
+	
 	private ImageView m_illustration;
 
 	private Project projet;
@@ -54,7 +63,21 @@ public class TabProjetFragment extends Fragment {
 				.findViewById(R.id.nombre_jour_restant_detail);
 		m_utilisateur_soumission = (TextView) view
 				.findViewById(R.id.utilisateur_soumission);
+		m_current_funding = (TextView) view.findViewById(R.id.sommeFund);
 
+		m_pourcentage_accomplish = (TextView) view
+				.findViewById(R.id.pourcentage_accomplit);
+
+		m_mail = (Button) view
+				.findViewById(R.id.mail);
+		
+		m_website = (Button) view
+				.findViewById(R.id.website);
+		
+		m_call = (Button) view
+				.findViewById(R.id.phone);
+		
+		
 		m_illustration = (ImageView) view.findViewById(R.id.icon);
 
 		if (projet.getIllustration() != 0) {
@@ -64,6 +87,23 @@ public class TabProjetFragment extends Fragment {
 			m_illustration.setImageResource(R.drawable.ic_launcher);
 		}
 
+		projet.getUser(new WhatToDo<User>() {
+
+			@Override
+			public void hold(User resource) {
+				m_utilisateur_soumission.setText(resource.getPseudo());
+			}
+
+			@Override
+			public void eventually() {
+				// TODO Auto-generated method stub
+
+			}
+
+		});
+
+		m_pourcentage_accomplish.setText(projet.getPercentOfAchievement()+"%");
+		m_current_funding.setText(projet.getCurrentFunding()+"€");
 		projet.getCreationDate();
 		m_titre.setText(projet.getName());
 		m_description.setText(projet.getDescription());
