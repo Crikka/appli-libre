@@ -163,4 +163,10 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
         m_firstName = firstName;
     }
     /* ------- */
+    
+    public String toString(){
+    	return "Pseudo:"+m_pseudo+
+    			"Name:"+m_name+
+    			"First Name:"+m_firstName;
+    }
 }

@@ -8,6 +8,7 @@ import adullact.publicrowdfunding.controlleur.membre.ConnexionActivity;
 import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.ressource.Project;
+import adullact.publicrowdfunding.model.local.ressource.User;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
@@ -39,7 +40,7 @@ public class MainActivity extends Activity implements TabListener {
 		super.onCreate(savedInstanceState);
 
 		boolean isConnected = true;
-
+		
 		if (isConnected) {
 			setContentView(R.layout.activity_main);
 		} else {

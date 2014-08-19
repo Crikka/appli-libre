@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.Vector;
 
@@ -29,6 +30,9 @@ public class TabProjetsFragment extends Fragment {
 
         listeProjets = (ListView) view.findViewById(R.id.liste);
 
+		TextView empty = (TextView) view.findViewById(R.id.empty);
+		listeProjets.setEmptyView(empty);
+        
         ArrayAdapter<Project> adapter = new CustomAdapter(this.getActivity()
                 .getBaseContext(), R.layout.projet_list, new Vector<Project>(SyncServerToLocal.getInstance().getProjects()));
 

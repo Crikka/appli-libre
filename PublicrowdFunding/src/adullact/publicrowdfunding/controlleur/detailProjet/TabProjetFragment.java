@@ -54,7 +54,6 @@ public class TabProjetFragment extends Fragment {
 		params.height = metrics.widthPixels + 100;
 		graph.setLayoutParams(params);
 		graph.setProject(projet);
-		
 
 		m_titre = (TextView) view.findViewById(R.id.titre_projet_detail);
 		m_description = (TextView) view.findViewById(R.id.detail_projet_detail);
@@ -71,9 +70,7 @@ public class TabProjetFragment extends Fragment {
 				.findViewById(R.id.pourcentage_accomplit);
 
 		m_mail = (Button) view.findViewById(R.id.mail);
-
 		m_website = (Button) view.findViewById(R.id.website);
-
 		m_call = (Button) view.findViewById(R.id.phone);
 
 		m_illustration = (ImageView) view.findViewById(R.id.icon);
@@ -89,12 +86,12 @@ public class TabProjetFragment extends Fragment {
 
 			@Override
 			public void hold(User resource) {
-				m_utilisateur_soumission.setText(resource.getName());
+				System.out.println(resource);
+				m_utilisateur_soumission.setText(resource.getPseudo());
 			}
 
 			@Override
 			public void eventually() {
-				// TODO Auto-generated method stub
 
 			}
 
