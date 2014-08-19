@@ -17,12 +17,14 @@ import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 public class MainActivity extends Activity implements TabListener {
 
@@ -35,21 +37,19 @@ public class MainActivity extends Activity implements TabListener {
 	private ImageButton m_mon_compte;
 	private ImageButton m_rechercher;
 	private Button m_connexion;
-	private boolean isConnected;
+	private LinearLayout layoutConnect;
+	private LinearLayout layoutDisconnect;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		setContentView(R.layout.activity_main);
+
+		layoutConnect = (LinearLayout) findViewById(R.id.connect);
+		layoutDisconnect = (LinearLayout) findViewById(R.id.disconnect);
+
 		isConnect();
-
-		if (isConnected) {
-			setContentView(R.layout.activity_main);
-
-		} else {
-			setContentView(R.layout.activity_main_disconnect);
-
-		}
 
 		final ProgressDialog progressDialog = new ProgressDialog(this);
 		progressDialog.setMessage("Récuperation des projets...");
@@ -88,56 +88,52 @@ public class MainActivity extends Activity implements TabListener {
 			}
 		});
 
-		if (!isConnected) {
+		m_connexion = (Button) findViewById(R.id.connexion);
+		m_connexion.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent in = new Intent(
+						getBaseContext().getApplicationContext(),
+						ConnexionActivity.class);
+				startActivity(in);
+			}
+		});
 
-			m_connexion = (Button) findViewById(R.id.connexion);
-			m_connexion.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					Intent in = new Intent(getBaseContext()
-							.getApplicationContext(), ConnexionActivity.class);
-					startActivity(in);
-				}
-			});
+		m_ajouter_projet = (ImageButton) findViewById(R.id.button_soumettre_projet);
+		m_ajouter_projet.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
 
-		} else {
+				Intent in = new Intent(
+						getBaseContext().getApplicationContext(),
+						SoumettreProjetActivity.class);
+				startActivity(in);
 
-			m_ajouter_projet = (ImageButton) findViewById(R.id.button_soumettre_projet);
-			m_ajouter_projet.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
+			}
+		});
 
-					Intent in = new Intent(getBaseContext()
-							.getApplicationContext(),
-							SoumettreProjetActivity.class);
-					startActivity(in);
+		m_mon_compte = (ImageButton) findViewById(R.id.button_mon_compte);
+		m_mon_compte.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent in = new Intent(
+						getBaseContext().getApplicationContext(),
+						adullact.publicrowdfunding.controlleur.profile.MainActivity.class);
+				in.putExtra("myCount", true);
+				startActivity(in);
+			}
+		});
 
-				}
-			});
+		m_rechercher = (ImageButton) findViewById(R.id.button_search);
+		m_rechercher.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				SearchDialog alertDialogBuilder = new SearchDialog(
+						getBaseContext());
+				alertDialogBuilder.show();
 
-			m_mon_compte = (ImageButton) findViewById(R.id.button_mon_compte);
-			m_mon_compte.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					Intent in = new Intent(
-							getBaseContext().getApplicationContext(),
-							adullact.publicrowdfunding.controlleur.profile.MainActivity.class);
-					in.putExtra("myCount", true);
-					startActivity(in);
-				}
-			});
-
-			m_rechercher = (ImageButton) findViewById(R.id.button_search);
-			m_rechercher.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					SearchDialog alertDialogBuilder = new SearchDialog(
-							getBaseContext());
-					alertDialogBuilder.show();
-
-				}
-			});
-		}
+			}
+		});
 	}
 
 	@Override
@@ -173,9 +169,13 @@ public class MainActivity extends Activity implements TabListener {
 	public void isConnect() {
 		try {
 			Account.getOwn();
-			isConnected = true;
+			layoutConnect.setVisibility(View.VISIBLE);
+			layoutDisconnect.setVisibility(View.GONE);
+			System.out.println("Oui connecté");
 		} catch (NoAccountExistsInLocal e1) {
-			isConnected = false;
+			System.out.println("Pas connecté");
+			layoutConnect.setVisibility(View.GONE);
+			layoutDisconnect.setVisibility(View.VISIBLE);
 		}
 	}
 

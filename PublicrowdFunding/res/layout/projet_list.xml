@@ -25,7 +25,10 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:background="@drawable/buttonshapes"
+            android:orientation="vertical"
+            android:layout_marginBottom="5dip"
+            android:padding="6dip" >
 
             <TextView
                 android:id="@+id/titre_projet_liste"
@@ -34,7 +37,8 @@
                 android:ellipsize="marquee"
                 android:singleLine="true"
                 android:text="@string/project_name"
-                android:textSize="16sp" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/description_projet_liste"
@@ -42,14 +46,6 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:text="@string/project_description"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/nb_participation_projet_liste"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:text="@string/nombre_participants"
                 android:textSize="12sp" />
 
             <TextView
@@ -68,9 +64,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:max="100"
-        android:progressDrawable="@drawable/progressbar"
-        android:progress="0" />
-
-
+        android:progress="0"
+        android:progressDrawable="@drawable/progressbar" />
 
 </LinearLayout>

@@ -30,7 +30,6 @@ public class CustomAdapter extends ArrayAdapter<Project> {
 
 		public TextView titre_projet_liste;
 		public TextView description_projet_liste;
-		public TextView nb_participation_projet_liste;
 		public TextView temps_restant_projet_liste;
 		public CustomProgressBar avancement_projet_liste;
 		public ImageView illustration;
@@ -54,8 +53,6 @@ public class CustomAdapter extends ArrayAdapter<Project> {
 					.findViewById(R.id.titre_projet_liste);
 			holder.description_projet_liste = (TextView) v
 					.findViewById(R.id.description_projet_liste);
-			holder.nb_participation_projet_liste = (TextView) v
-					.findViewById(R.id.nb_participation_projet_liste);
 			holder.temps_restant_projet_liste = (TextView) v
 					.findViewById(R.id.temps_restant_projet_liste);
 			holder.avancement_projet_liste = (CustomProgressBar) v
@@ -70,8 +67,6 @@ public class CustomAdapter extends ArrayAdapter<Project> {
 		Project projet = data.elementAt(position);
 		holder.titre_projet_liste.setText(projet.getName());
 		holder.description_projet_liste.setText(projet.getDescription());
-		holder.nb_participation_projet_liste
-				.setText("nb participants non implémenté");
 		holder.temps_restant_projet_liste.setText(projet.getNumberOfDayToEnd()
 				+ " jours restants");
 
