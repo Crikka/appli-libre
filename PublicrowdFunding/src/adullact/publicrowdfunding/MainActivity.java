@@ -42,12 +42,15 @@ public class MainActivity extends Activity implements TabListener {
 		super.onCreate(savedInstanceState);
 
 		isConnect();
-		
+
 		if (isConnected) {
 			setContentView(R.layout.activity_main);
+
 		} else {
 			setContentView(R.layout.activity_main_disconnect);
+
 		}
+
 		final ProgressDialog progressDialog = new ProgressDialog(this);
 		progressDialog.setMessage("Récuperation des projets...");
 		progressDialog.setTitle("Initialisation de l'application");
@@ -116,8 +119,9 @@ public class MainActivity extends Activity implements TabListener {
 			m_mon_compte.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					Intent in = new Intent(getBaseContext()
-							.getApplicationContext(), adullact.publicrowdfunding.controlleur.profile.MainActivity.class);
+					Intent in = new Intent(
+							getBaseContext().getApplicationContext(),
+							adullact.publicrowdfunding.controlleur.profile.MainActivity.class);
 					in.putExtra("myCount", true);
 					startActivity(in);
 				}
@@ -165,8 +169,8 @@ public class MainActivity extends Activity implements TabListener {
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 
 	}
-	
-	public void isConnect(){
+
+	public void isConnect() {
 		try {
 			Account.getOwn();
 			isConnected = true;
@@ -174,11 +178,12 @@ public class MainActivity extends Activity implements TabListener {
 			isConnected = false;
 		}
 	}
-	  @Override
-	    protected void onStart() {
-	        super.onStart();
-	        isConnect();
-	        
-	    }
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		isConnect();
+
+	}
 
 }

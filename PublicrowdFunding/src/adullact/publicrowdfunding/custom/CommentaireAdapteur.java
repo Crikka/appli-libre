@@ -2,6 +2,7 @@ package adullact.publicrowdfunding.custom;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.model.local.cache.Cache;
@@ -34,13 +35,11 @@ public class CommentaireAdapteur extends ArrayAdapter<Commentary> {
 	private TextView utilisateurVille;
 	private RatingBar rating;
 	private TextView titre;
-	private List<Commentary> commentaries = new ArrayList<Commentary>();
+	private Vector<Commentary> commentaries = new Vector<Commentary>();
 	private LinearLayout layout;
 
-	@Override
-	public void add(Commentary object) {
-		commentaries.add(object);
-		super.add(object);
+	public void setCommentaries(Vector<Commentary> object) {
+		commentaries = object;
 	}
 
 	public CommentaireAdapteur(Context context, int textViewResourceId) {
