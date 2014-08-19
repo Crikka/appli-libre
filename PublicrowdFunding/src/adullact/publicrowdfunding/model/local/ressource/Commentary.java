@@ -7,6 +7,7 @@ import java.util.Map;
 
 import adullact.publicrowdfunding.model.local.cache.Cache;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
+import adullact.publicrowdfunding.model.server.entities.RowAffected;
 import adullact.publicrowdfunding.model.server.entities.ServerCommentary;
 import adullact.publicrowdfunding.model.server.entities.Service;
 import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
@@ -111,7 +112,7 @@ public class Commentary extends Resource<Commentary, ServerCommentary, ServerCom
     }
 
     @Override
-    public Observable<SimpleServerResponse> methodPOST(Service service) {
+    public Observable<RowAffected> methodPOST(Service service) {
         return service.createCommentary(toServerResource());
     }
 

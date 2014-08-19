@@ -23,6 +23,7 @@ import adullact.publicrowdfunding.model.local.cache.Cache;
 import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.utilities.Utility;
+import adullact.publicrowdfunding.model.server.entities.RowAffected;
 import adullact.publicrowdfunding.model.server.entities.ServerAccount;
 import adullact.publicrowdfunding.model.server.entities.Service;
 import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
@@ -49,7 +50,8 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
 
     public static Account getOwn() throws NoAccountExistsInLocal {
         if(m_own == null) {
-            m_own = new Account(PublicrowdFundingApplication.context());
+            Account account =  new Account(PublicrowdFundingApplication.context());
+            m_own = account;
             m_own.initialize();
         }
 
@@ -124,7 +126,7 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
     }
 
     @Override
-    public Observable<SimpleServerResponse> methodPOST(Service service) {
+    public Observable<RowAffected> methodPOST(Service service) {
         return service.createAccount(toServerResource());
     }
 
@@ -193,6 +195,10 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
 
     public String getPassword() {
         return m_password;
+    }
+
+    public String getPseudo() {
+        return m_user.getResourceId();
     }
 
     public void getUser(WhatToDo<User> userWhatToDo) {

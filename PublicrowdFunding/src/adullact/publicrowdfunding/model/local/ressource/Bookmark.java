@@ -8,6 +8,7 @@ import java.util.Map;
 
 import adullact.publicrowdfunding.model.local.cache.Cache;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
+import adullact.publicrowdfunding.model.server.entities.RowAffected;
 import adullact.publicrowdfunding.model.server.entities.ServerBookmark;
 import adullact.publicrowdfunding.model.server.entities.Service;
 import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
@@ -126,7 +127,7 @@ public class Bookmark extends Resource<Bookmark, ServerBookmark, ServerBookmark>
     }
 
     @Override
-    public Observable<SimpleServerResponse> methodPOST(Service service) {
+    public Observable<RowAffected> methodPOST(Service service) {
         return service.createBookmark(toServerResource());
     }
 

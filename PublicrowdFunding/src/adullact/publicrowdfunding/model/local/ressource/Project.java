@@ -16,6 +16,7 @@ import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.utilities.FundingTimePeriod;
 import adullact.publicrowdfunding.model.server.entities.DetailedServerProject;
+import adullact.publicrowdfunding.model.server.entities.RowAffected;
 import adullact.publicrowdfunding.model.server.entities.ServerCommentary;
 import adullact.publicrowdfunding.model.server.entities.ServerFunding;
 import adullact.publicrowdfunding.model.server.entities.ServerProject;
@@ -47,10 +48,10 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
     @Override
     public ServerProject toServerResource() {
         ServerProject serverProject = new ServerProject();
-        serverProject.id = m_id;
+        serverProject.id = m_id == null ? -1 : m_id;
         serverProject.name = m_name;
         serverProject.description = m_description;
-        serverProject.proposedBy = m_proposedBy.getResourceId();
+        serverProject.proposedBy = m_proposedBy.getResourceId() ;
         serverProject.requestedFunding = m_requestedFunding.toPlainString();
         serverProject.currentFunding = m_currentFunding.toPlainString();
         serverProject.creationDate = m_creationDate.toString();
@@ -147,7 +148,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
     }
 
     @Override
-    public Observable<SimpleServerResponse> methodPOST(Service service) {
+    public Observable<RowAffected> methodPOST(Service service) {
         return service.createProject(toServerResource());
     }
 
@@ -192,14 +193,15 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         this.m_illustration = -1;
     }
 
-    public Project(String name, String description, String requestedFunding, Date creationDate, Date beginDate, Date endDate, LatLng position, int illustration) {
+    public Project(String name, String description, String proposedBy, String requestedFunding, DateTime beginDate, DateTime endDate, LatLng position, int illustration) {
         this.m_id = null;
 		this.m_name = name;
 		this.m_description = description;
+        this.m_proposedBy = new User().getCache(proposedBy);
 		this.m_requestedFunding = new BigDecimal(requestedFunding);
 		this.m_currentFunding = new BigDecimal("0");
-		this.m_creationDate = new DateTime(creationDate.getTime());
-		this.m_fundingInterval = new Interval(new DateTime(beginDate.getTime()), new DateTime(endDate.getTime()));
+		this.m_creationDate = DateTime.now();
+		this.m_fundingInterval = new Interval(beginDate, endDate);
 		this.m_fundingTimePeriods = new ArrayList<FundingTimePeriod>();
 		this.m_position = position;
 		this.m_validate = false;

@@ -7,6 +7,7 @@ import java.util.Map;
 import org.joda.time.DateTime;
 import adullact.publicrowdfunding.model.local.cache.Cache;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
+import adullact.publicrowdfunding.model.server.entities.RowAffected;
 import adullact.publicrowdfunding.model.server.entities.ServerFunding;
 import adullact.publicrowdfunding.model.server.entities.Service;
 import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
@@ -107,7 +108,7 @@ public class Funding extends Resource<Funding, ServerFunding, ServerFunding> {
     }
 
     @Override
-    public Observable<SimpleServerResponse> methodPOST(Service service) {
+    public Observable<RowAffected> methodPOST(Service service) {
         return service.createFunding(toServerResource());
     }
 
