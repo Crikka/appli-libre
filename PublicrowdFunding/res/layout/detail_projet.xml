@@ -172,7 +172,7 @@
                 android:textSize="20sp" />
 
             <LinearLayout
-                android:id="@+id/llinear"
+                android:id="@+id/layoutUser"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"

@@ -171,7 +171,6 @@ public class MainActivity extends Activity implements TabListener {
 			Account.getOwn();
 			layoutConnect.setVisibility(View.VISIBLE);
 			layoutDisconnect.setVisibility(View.GONE);
-			System.out.println("Oui connecté");
 		} catch (NoAccountExistsInLocal e1) {
 			System.out.println("Pas connecté");
 			layoutConnect.setVisibility(View.GONE);

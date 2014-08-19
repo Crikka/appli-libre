@@ -7,6 +7,8 @@ import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
 import adullact.publicrowdfunding.model.local.utilities.Utility;
 import android.app.Fragment;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -14,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class TabProjetFragment extends Fragment {
@@ -34,6 +37,7 @@ public class TabProjetFragment extends Fragment {
 	private ImageView m_illustration;
 
 	private Project projet;
+	private User user;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -82,12 +86,13 @@ public class TabProjetFragment extends Fragment {
 		} else {
 			m_illustration.setImageResource(R.drawable.ic_launcher);
 		}
-
+		
 		projet.getUser(new WhatToDo<User>() {
 
 			@Override
 			public void hold(User resource) {
 				System.out.println(resource);
+				user = resource;
 				m_utilisateur_soumission.setText(resource.getPseudo());
 			}
 
@@ -97,6 +102,24 @@ public class TabProjetFragment extends Fragment {
 			}
 
 		});
+		
+		LinearLayout userLayoutButton= (LinearLayout) view.findViewById(R.id.layoutUser);
+		userLayoutButton.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				
+				String id = user.getCache().getResourceId();
+				Context c = getActivity().getBaseContext();
+				Intent in = new Intent(
+						c,
+						adullact.publicrowdfunding.controlleur.profile.MainActivity.class);
+				in.putExtra("myCount", false);
+				in.putExtra("id", id);
+				startActivity(in);
+
+			}
+		});
+		
+		
 
 		m_pourcentage_accomplish
 				.setText(projet.getPercentOfAchievement() + "%");

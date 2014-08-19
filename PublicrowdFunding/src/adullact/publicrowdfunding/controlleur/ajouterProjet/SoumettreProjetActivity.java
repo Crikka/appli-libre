@@ -6,6 +6,8 @@ import java.util.Date;
 
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.custom.CarouselAdapter;
+import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
+import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.server.event.CreateEvent;
 import android.annotation.TargetApi;
@@ -24,6 +26,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -39,11 +42,10 @@ public class SoumettreProjetActivity extends Activity {
 	private Button m_localisation;
 	private EditText m_edit_text_somme;
 	private Context context;
+	private TextView m_user_pseudo;
 
 	private LatLng position;
 
-	private static final int PICK_FROM_CAMERA = 1;
-	private static final int PICK_FROM_GALLERY = 2;
 	private static final int PICK_MAPS = 3;
 
 	private HorizontalCarouselStyle mStyle;
@@ -72,6 +74,15 @@ public class SoumettreProjetActivity extends Activity {
 		m_dateFin = (DatePicker) findViewById(R.id.date_de_fin);
 		m_localisation = (Button) findViewById(R.id.button_localisation);
 		m_edit_text_somme = (EditText) findViewById(R.id.edit_text_somme);
+		m_user_pseudo = (TextView) findViewById(R.id.utilisateur_soumission);
+		
+		try {
+			Account count = Account.getOwn();
+			m_user_pseudo.setText(count.getResourceId());
+		} catch (NoAccountExistsInLocal e) {
+			finish();
+		}
+		
 
 		mData.add(R.drawable.ic_launcher);
 		mData.add(R.drawable.basketball);
