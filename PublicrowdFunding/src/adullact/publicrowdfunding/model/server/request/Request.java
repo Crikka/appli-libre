@@ -6,12 +6,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 
+import com.squareup.okhttp.OkHttpClient;
+
 import adullact.publicrowdfunding.model.server.entities.Service;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import adullact.publicrowdfunding.model.server.ServerObject;
 import adullact.publicrowdfunding.model.server.errorHandler.ErrorHandler;
 import adullact.publicrowdfunding.model.server.event.Event;
+import retrofit.client.OkClient;
 import retrofit.client.Response;
 import retrofit.http.Body;
 import retrofit.http.DELETE;
@@ -36,12 +39,13 @@ extends ServerObject<TRequest, TEvent, TErrorHandler> {
     private Service m_service;
 	
     
+    
+ 
 	public Request(TEvent event, TErrorHandler errorHandler){
         super(event, errorHandler);
 
-
         this.m_service = new RestAdapter.Builder()
-                //.setLogLevel(RestAdapter.LogLevel.FULL)
+                .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setRequestInterceptor(new SecurityRequestInterceptor())
                 .setErrorHandler(errorHandler())
                 .setEndpoint(SERVER_URL).build()

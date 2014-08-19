@@ -1,12 +1,13 @@
 package adullact.publicrowdfunding;
 
 import java.util.ArrayList;
-import java.util.Vector;
 
 import adullact.publicrowdfunding.controlleur.ajouterProjet.SoumettreProjetActivity;
 import adullact.publicrowdfunding.controlleur.membre.ConnexionActivity;
+import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
+import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
 import android.app.ActionBar;
@@ -34,12 +35,13 @@ public class MainActivity extends Activity implements TabListener {
 	private ImageButton m_mon_compte;
 	private ImageButton m_rechercher;
 	private Button m_connexion;
+	private boolean isConnected;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		boolean isConnected = true;
+		isConnect();
 		
 		if (isConnected) {
 			setContentView(R.layout.activity_main);
@@ -116,6 +118,7 @@ public class MainActivity extends Activity implements TabListener {
 				public void onClick(View v) {
 					Intent in = new Intent(getBaseContext()
 							.getApplicationContext(), adullact.publicrowdfunding.controlleur.profile.MainActivity.class);
+					in.putExtra("myCount", true);
 					startActivity(in);
 				}
 			});
@@ -132,14 +135,6 @@ public class MainActivity extends Activity implements TabListener {
 			});
 		}
 	}
-
-	/*
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		//getMenuInflater().inflate(R.menu.activity_action_bar_main, menu);
-		return true;
-	}
-	*/
 
 	@Override
 	public void onTabReselected(Tab tab, FragmentTransaction ft) {
@@ -170,5 +165,20 @@ public class MainActivity extends Activity implements TabListener {
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 
 	}
+	
+	public void isConnect(){
+		try {
+			Account.getOwn();
+			isConnected = true;
+		} catch (NoAccountExistsInLocal e1) {
+			isConnected = false;
+		}
+	}
+	  @Override
+	    protected void onStart() {
+	        super.onStart();
+	        isConnect();
+	        
+	    }
 
 }

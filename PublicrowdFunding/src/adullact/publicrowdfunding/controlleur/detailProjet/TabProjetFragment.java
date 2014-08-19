@@ -42,6 +42,7 @@ public class TabProjetFragment extends Fragment {
 		final View view = inflater.inflate(R.layout.detail_projet, container,
 				false);
 
+	
 		MainActivity activity = (MainActivity) getActivity();
 		projet = activity.getIdProjet();
 

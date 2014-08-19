@@ -29,7 +29,7 @@ public class ConnexionActivity extends Activity {
 		setContentView(R.layout.connexion);
 
 		context = this;
-		
+
 		m_login = (EditText) findViewById(R.id.login_connexion);
 		m_password = (EditText) findViewById(R.id.password_connexion);
 
@@ -41,16 +41,14 @@ public class ConnexionActivity extends Activity {
 			public void onClick(View v) {
 
 				if (m_login.length() == 0) {
-					Toast.makeText(context,
-							"Vous avez oublié le login", Toast.LENGTH_SHORT)
-							.show();
+					Toast.makeText(context, "Vous avez oublié le login",
+							Toast.LENGTH_SHORT).show();
 					return;
 				}
 
 				if (m_password.length() == 0) {
 
-					Toast.makeText(context,
-							"Vous avez oublié le mot de passe",
+					Toast.makeText(context, "Vous avez oublié le mot de passe",
 							Toast.LENGTH_SHORT).show();
 					return;
 				}
@@ -58,29 +56,31 @@ public class ConnexionActivity extends Activity {
 				String login = m_login.getText().toString();
 				String password = m_password.getText().toString();
 
-                AuthenticationRequest request = new AuthenticationRequest(login, password, new AuthenticationEvent() {
-                    @Override
-                    public void errorUsernamePasswordDoesNotMatch(String username, String password) {
-                        Toast.makeText(context,
-                                "Login ou mot de passe incorect",
-                                Toast.LENGTH_LONG).show();
-                    }
+				AuthenticationRequest request = new AuthenticationRequest(
+						login, password, new AuthenticationEvent() {
+							@Override
+							public void errorUsernamePasswordDoesNotMatch(
+									String username, String password) {
+								Toast.makeText(context,
+										"Login ou mot de passe incorect",
+										Toast.LENGTH_LONG).show();
+							}
 
-                    @Override
-                    public void onAuthentication() {
-                        Toast.makeText(context,
-                                "Vous êtes connecté !",
-                                Toast.LENGTH_LONG).show();
-                        finish();
-                    }
+							@Override
+							public void onAuthentication() {
+								Toast.makeText(context, "Vous êtes connecté !",
+										Toast.LENGTH_LONG).show();
+								finish();
+							}
 
-                    @Override
-                    public void errorNetwork() {
-                        Toast.makeText(context,
-                                "Connexion impossible au serveur, veuillez vérifier vos paramètres resaux.",
-                                Toast.LENGTH_LONG).show();
-                    }
-                });
+							@Override
+							public void errorNetwork() {
+								Toast.makeText(
+										context,
+										"Connexion impossible au serveur, veuillez vérifier vos paramètres resaux.",
+										Toast.LENGTH_LONG).show();
+							}
+						});
 			}
 		});
 
@@ -103,9 +103,9 @@ public class ConnexionActivity extends Activity {
 
 		if (requestCode == 1) {
 			if (resultCode == RESULT_OK) {
-				Toast.makeText(getApplicationContext(),
-						"Incription validé, vous pouvez vous connecter",
+				Toast.makeText(getApplicationContext(), "Incription validé",
 						Toast.LENGTH_LONG).show();
+				finish();
 			}
 			if (resultCode == RESULT_CANCELED) {
 				Toast.makeText(getApplicationContext(), "Inscription refusé",

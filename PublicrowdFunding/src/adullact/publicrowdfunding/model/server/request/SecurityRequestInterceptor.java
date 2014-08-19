@@ -28,6 +28,7 @@ public class SecurityRequestInterceptor implements RequestInterceptor {
             final String userAndPassword = username + ":" + password;
             final String encodedUserAndPassword = "Basic " + Base64.encodeToString(userAndPassword.getBytes(), 0);
             requestFacade.addHeader("Authorization", encodedUserAndPassword);
+            requestFacade.addHeader("Connection", "close");
         }
 	}
 

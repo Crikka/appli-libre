@@ -35,6 +35,16 @@ public class MainActivity extends Activity implements TabListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		boolean myAccount = this.getIntent().getExtras().getBoolean("myCount", false);
+		
+		// L'utilisateur affiche son propre profile
+		if(myAccount){
+			
+		}else{
+			
+		}
+		
+		
 		setContentView(R.layout.activity_main_profile);
 
 		final ProgressDialog progressDialog = new ProgressDialog(this);
