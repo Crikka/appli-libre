@@ -6,6 +6,7 @@ import java.util.Map;
 import adullact.publicrowdfunding.model.local.cache.Cache;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.server.entities.DetailedServerUser;
+import adullact.publicrowdfunding.model.server.entities.RowAffected;
 import adullact.publicrowdfunding.model.server.entities.ServerUser;
 import adullact.publicrowdfunding.model.server.entities.Service;
 import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
@@ -81,7 +82,7 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
     }
 
     @Override
-    public Observable<SimpleServerResponse> methodPOST(Service service){
+    public Observable<RowAffected> methodPOST(Service service){
         return service.createUser(toServerResource());
     }
 

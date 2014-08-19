@@ -1,6 +1,7 @@
 package adullact.publicrowdfunding.model.server.request;
 
 import adullact.publicrowdfunding.model.local.ressource.Resource;
+import adullact.publicrowdfunding.model.server.entities.RowAffected;
 import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
@@ -25,11 +26,11 @@ public class CreateRequest<TResource extends Resource<TResource, TServerResource
     public void execute() {
         m_resource.methodPOST(service()).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<SimpleServerResponse>() {
+                .subscribe(new Action1<RowAffected>() {
                     @Override
-                    public void call(SimpleServerResponse response) {
+                    public void call(RowAffected response) {
                         done();
-                        m_resource.setResourceId(response.idAffected);
+                        m_resource.setResourceId(response.id);
                         event().onCreate(m_resource);
                     }
                 }, new Action1<Throwable>() {

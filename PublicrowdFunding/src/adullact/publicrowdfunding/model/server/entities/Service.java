@@ -31,7 +31,7 @@ public interface Service {
     @GET("/account/")
     Observable<ArrayList<ServerAccount>> listAccount(@QueryMap Map<String, String> filter);
     @POST("/account/")
-    Observable<SimpleServerResponse> createAccount(@Body ServerAccount serverAccount);
+    Observable<RowAffected> createAccount(@Body ServerAccount serverAccount);
     @PUT("/account/{name}")
     Observable<SimpleServerResponse> modifyAccount(@Body ServerAccount serverAccount, @Path("name") String name);
     @DELETE("/account/{name}")
@@ -43,7 +43,7 @@ public interface Service {
     @GET("/user/")
     Observable<ArrayList<ServerUser>> listUsers(@QueryMap Map<String, String> filter);
     @POST("/user/")
-    Observable<SimpleServerResponse> createUser(@Body ServerUser serverUser);
+    Observable<RowAffected> createUser(@Body ServerUser serverUser);
     @PUT("/user/{username}")
     Observable<SimpleServerResponse> modifyUser(@Body ServerUser serverUser, @Path("username") String username);
     @DELETE("/user/{username}")
@@ -55,7 +55,7 @@ public interface Service {
     @GET("/project/")
     Observable<ArrayList<ServerProject>> listProjects(@QueryMap Map<String, String> filter);
     @POST("/project/")
-    Observable<SimpleServerResponse> createProject(@Body ServerProject serverProject);
+    Observable<RowAffected> createProject(@Body ServerProject serverProject);
     @PUT("/project/{projectID}")
     Observable<SimpleServerResponse> modifyProject(@Path("projectID") String projectID, @Body ServerProject serverProject);
     @DELETE("/project/{projectID}")
@@ -67,7 +67,7 @@ public interface Service {
     @GET("/funding/")
     Observable<ArrayList<ServerFunding>> listFunding(@QueryMap Map<String, String> filter);
     @POST("/funding/")
-    Observable<SimpleServerResponse> createFunding(@Body ServerFunding serverFunding);
+    Observable<RowAffected> createFunding(@Body ServerFunding serverFunding);
     @PUT("/funding/{id}")
     Observable<SimpleServerResponse> modifyFunding(@Path("id") String id, @Body ServerFunding serverFunding);
     @DELETE("/funding/{id}")
@@ -79,7 +79,7 @@ public interface Service {
     @GET("/commentary/{id}")
     Observable<ServerCommentary> detailCommentary(@Path("id") String id);
     @POST("/commentary/")
-    Observable<SimpleServerResponse> createCommentary(@Body ServerCommentary serverCommentary);
+    Observable<RowAffected> createCommentary(@Body ServerCommentary serverCommentary);
     @PUT("/commentary/{commentaryID}")
     Observable<SimpleServerResponse> modifyCommentary(@Path("commentaryID") String commentaryID, @Body ServerCommentary serverCommentary);
     @DELETE("/commentary/{commentaryID}")
@@ -91,7 +91,7 @@ public interface Service {
     @GET("/bookmark/{id}")
     Observable<ServerBookmark> detailBookmark(@Path("id") String id);
     @POST("/bookmark/")
-    Observable<SimpleServerResponse> createBookmark(@Body ServerBookmark serverBookmark);
+    Observable<RowAffected> createBookmark(@Body ServerBookmark serverBookmark);
     @PUT("/bookmark/{id}")
     Observable<SimpleServerResponse> modifyBookmark(@Path("id") String id, @Body ServerBookmark serverBookmark);
     @DELETE("/bookmark/{id}")

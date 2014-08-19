@@ -6,6 +6,7 @@ import java.util.Map;
 
 import adullact.publicrowdfunding.model.local.cache.Cache;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
+import adullact.publicrowdfunding.model.server.entities.RowAffected;
 import adullact.publicrowdfunding.model.server.entities.Service;
 import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
 import adullact.publicrowdfunding.model.server.event.CreateEvent;
@@ -91,7 +92,7 @@ public abstract class Resource<TResource extends Resource<TResource, TServerReso
     public abstract Observable<TDetailedServerResource> methodGET(Service service);
     public abstract Observable<ArrayList<TServerResource>> methodGETAll(Service service, Map<String, String> filter);
     public abstract Observable<SimpleServerResponse> methodPUT(Service service);
-    public abstract Observable<SimpleServerResponse> methodPOST(Service service);
+    public abstract Observable<RowAffected> methodPOST(Service service);
     public abstract Observable<SimpleServerResponse> methodDELETE(Service service);
     public void serverLister(ListerEvent<TResource> listerEvent) {
         (new ListerRequest<TResource, TServerResource, TDetailedServerResource>((TResource) this, new HashMap<String, String>(), listerEvent)).execute();
