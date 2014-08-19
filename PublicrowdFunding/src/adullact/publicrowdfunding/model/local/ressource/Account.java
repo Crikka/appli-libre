@@ -22,6 +22,7 @@ import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.cache.Cache;
 import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
+import adullact.publicrowdfunding.model.local.utilities.Utility;
 import adullact.publicrowdfunding.model.server.entities.ServerAccount;
 import adullact.publicrowdfunding.model.server.entities.Service;
 import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
@@ -43,7 +44,7 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
 
         m_username = sharedPreferences.getString(KEY_USERNAME, "");
         m_password = sharedPreferences.getString(KEY_PASSWORD, "");
-        m_lastSync = DateTime.parse(sharedPreferences.getString(KEY_LAST_SYNC, ""));
+        m_lastSync = Utility.stringToDateTime(sharedPreferences.getString(KEY_LAST_SYNC, ""));
     }
 
     public static Account getOwn() throws NoAccountExistsInLocal {
@@ -199,13 +200,12 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
     }
 
     private void save() {
-        try {
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(new File(m_context.getFilesDir(), FILE_NAME)));
-            String username_password = m_username + ":" + encrypt("azerty", m_password);
-            bufferedWriter.write(username_password);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        SharedPreferences sharedPreferences = m_context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+
+        sharedPreferences.edit().putString(KEY_USERNAME, m_username);
+        sharedPreferences.edit().putString(KEY_PASSWORD, m_password);
+        sharedPreferences.edit().putString(KEY_LAST_SYNC, Utility.DateTimeToString(m_lastSync));
+        sharedPreferences.edit().commit();
     }
 
 

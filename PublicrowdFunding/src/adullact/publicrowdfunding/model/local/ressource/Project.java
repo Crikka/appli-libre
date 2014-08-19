@@ -5,17 +5,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeSet;
-import java.util.UUID;
-
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
-
 import com.google.android.gms.maps.model.LatLng;
-
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.cache.Cache;
+import adullact.publicrowdfunding.model.local.cache.CacheSet;
 import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.utilities.FundingTimePeriod;
@@ -74,8 +70,8 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         res.m_id = serverProject.id;
         res.m_name = serverProject.name;
         res.m_description = serverProject.description;
-        res.m_funding = new TreeSet<Cache<Funding>>(Cache.howCompare());
-        res.m_commentaries = new TreeSet<Cache<Commentary>>(Cache.howCompare());
+        res.m_funding = new CacheSet<Funding>();
+        res.m_commentaries = new CacheSet<Commentary>();
         res.m_proposedBy = new User().getCache(serverProject.proposedBy);
         res.m_requestedFunding = new BigDecimal(serverProject.requestedFunding);
         res.m_currentFunding = new BigDecimal(serverProject.currentFunding);
@@ -93,8 +89,8 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         this.m_id = detailedServerProject.id;
         this.m_name = detailedServerProject.name;
         this.m_description = detailedServerProject.description;
-        this.m_funding = new TreeSet<Cache<Funding>>(Cache.howCompare());
-        this.m_commentaries = new TreeSet<Cache<Commentary>>(Cache.howCompare());
+        this.m_funding = new CacheSet<Funding>();
+        this.m_commentaries = new CacheSet<Commentary>();
         this.m_proposedBy = new User().getCache(detailedServerProject.proposedBy);
         this.m_requestedFunding = new BigDecimal(detailedServerProject.requestedFunding);
         this.m_currentFunding = new BigDecimal(detailedServerProject.currentFunding);
@@ -104,8 +100,8 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         this.m_illustration = detailedServerProject.illustration;
         this.m_fundingInterval = new Interval(Utility.stringToDateTime(detailedServerProject.beginDate), Utility.stringToDateTime(detailedServerProject.endDate));
         this.m_fundingTimePeriods = new ArrayList<FundingTimePeriod>();
-        this. m_funding = new TreeSet<Cache<Funding>>(Cache.howCompare());
-        this.m_commentaries = new TreeSet<Cache<Commentary>>(Cache.howCompare());
+        this. m_funding = new CacheSet<Funding>();
+        this.m_commentaries = new CacheSet<Commentary>();
 
         for(final ServerFunding serverFunding : detailedServerProject.fundedBy) {
             final Cache<Funding> funding = new Funding().getCache(Integer.toString(serverFunding.id)).declareUpToDate();
@@ -171,8 +167,8 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
 	private String m_name;
 	private String m_description;
     private Cache<User> m_proposedBy;
-    private TreeSet<Cache<Funding>> m_funding;
-    private TreeSet<Cache<Commentary>> m_commentaries;
+    private CacheSet<Funding> m_funding;
+    private CacheSet<Commentary> m_commentaries;
 	private BigDecimal m_requestedFunding;
 	private BigDecimal m_currentFunding;
 	private DateTime m_creationDate;
@@ -289,9 +285,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
     }
 
     public void getCommentaries(WhatToDo<Commentary> commentaryWhatToDo) {
-        for(Cache<Commentary> commentary : m_commentaries) {
-            commentary.toResource(commentaryWhatToDo);
-        }
+        m_commentaries.forEach(commentaryWhatToDo);
     }
 
     public void validate() {
