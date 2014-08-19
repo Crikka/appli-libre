@@ -1,8 +1,9 @@
-package adullact.publicrowdfunding;
+package adullact.publicrowdfunding.controlleur.profile;
 
 import java.util.ArrayList;
 import java.util.Vector;
 
+import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.controlleur.ajouterProjet.SoumettreProjetActivity;
 import adullact.publicrowdfunding.controlleur.membre.ConnexionActivity;
 import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
@@ -26,25 +27,16 @@ public class MainActivity extends Activity implements TabListener {
 
 	private FrameLayout rl;
 
-	private TabProjetsFragment fram1;
+	private TabProjetsSoumisFragment fram1;
 	private TabFavorisFragment fram2;
-	private TabMapFragment fram3;
-	private ImageButton m_ajouter_projet;
-	private ImageButton m_mon_compte;
-	private ImageButton m_rechercher;
-	private Button m_connexion;
+	private TabProjetsFinanceFragment fram3;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		boolean isConnected = true;
+		setContentView(R.layout.activity_main_profile);
 
-		if (isConnected) {
-			setContentView(R.layout.activity_main);
-		} else {
-			setContentView(R.layout.activity_main_disconnect);
-		}
 		final ProgressDialog progressDialog = new ProgressDialog(this);
 		progressDialog.setMessage("Récuperation des projets...");
 		progressDialog.setTitle("Initialisation de l'application");
@@ -66,7 +58,7 @@ public class MainActivity extends Activity implements TabListener {
 							.setTabListener(_this));
 					bar.addTab(bar.newTab().setText("Favoris")
 							.setTabListener(_this));
-					bar.addTab(bar.newTab().setText("Localisation")
+					bar.addTab(bar.newTab().setText("Financé")
 							.setTabListener(_this));
 
 					bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM
@@ -82,63 +74,7 @@ public class MainActivity extends Activity implements TabListener {
 			}
 		});
 
-		if (!isConnected) {
-
-			m_connexion = (Button) findViewById(R.id.connexion);
-			m_connexion.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					Intent in = new Intent(getBaseContext()
-							.getApplicationContext(), ConnexionActivity.class);
-					startActivity(in);
-				}
-			});
-
-		} else {
-
-			m_ajouter_projet = (ImageButton) findViewById(R.id.button_soumettre_projet);
-			m_ajouter_projet.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-
-					Intent in = new Intent(getBaseContext()
-							.getApplicationContext(),
-							SoumettreProjetActivity.class);
-					startActivity(in);
-
-				}
-			});
-
-			m_mon_compte = (ImageButton) findViewById(R.id.button_mon_compte);
-			m_mon_compte.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					Intent in = new Intent(getBaseContext()
-							.getApplicationContext(), adullact.publicrowdfunding.controlleur.profile.MainActivity.class);
-					startActivity(in);
-				}
-			});
-
-			m_rechercher = (ImageButton) findViewById(R.id.button_search);
-			m_rechercher.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					SearchDialog alertDialogBuilder = new SearchDialog(
-							getBaseContext());
-					alertDialogBuilder.show();
-
-				}
-			});
-		}
 	}
-
-	/*
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		//getMenuInflater().inflate(R.menu.activity_action_bar_main, menu);
-		return true;
-	}
-	*/
 
 	@Override
 	public void onTabReselected(Tab tab, FragmentTransaction ft) {
@@ -149,7 +85,7 @@ public class MainActivity extends Activity implements TabListener {
 
 		if (tab.getText().equals("Projets")) {
 
-			fram1 = new TabProjetsFragment();
+			fram1 = new TabProjetsSoumisFragment();
 			ft.replace(rl.getId(), fram1);
 
 		} else if (tab.getText().equals("Favoris")) {
@@ -157,9 +93,9 @@ public class MainActivity extends Activity implements TabListener {
 			fram2 = new TabFavorisFragment();
 			ft.replace(rl.getId(), fram2);
 
-		} else if (tab.getText().equals("Localisation")) {
+		} else if (tab.getText().equals("Financé")) {
 
-			fram3 = new TabMapFragment();
+			fram3 = new TabProjetsFinanceFragment();
 			ft.replace(rl.getId(), fram3);
 
 		}

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content" >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f0f0f0" >
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -18,71 +19,135 @@
             android:padding="10dp"
             android:src="@drawable/key" />
 
-        <TextView
-            android:id="@+id/textView1"
+        <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/login"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:background="@drawable/buttonshapes"
+            android:orientation="vertical"
+            android:padding="5dp" >
 
-        <EditText
-            android:id="@+id/inscription_login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="text" >
-        </EditText>
+            <ImageView
+                android:id="@+id/loginIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="6dip"
+                android:contentDescription="@string/description_image_project"
+                android:src="@android:drawable/ic_menu_myplaces" />
 
-        <TextView
-            android:id="@+id/textView3"
+            <EditText
+                android:id="@+id/inscription_login"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dip"
+                android:layout_toRightOf="@+id/loginIcon"
+                android:ems="10"
+                android:gravity="left|center_vertical"
+                android:hint="@string/login"
+                android:inputType="text"
+                android:textColor="#808080"
+                android:textSize="20sp" >
+            </EditText>
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/email"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:layout_marginTop="6dip"
+            android:background="@drawable/buttonshapes"
+            android:orientation="vertical"
+            android:padding="5dp" >
 
-        <EditText
-            android:id="@+id/inscription_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textEmailAddress" />
+            <ImageView
+                android:id="@+id/emailIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="6dip"
+                android:contentDescription="@string/description_image_project"
+                android:src="@android:drawable/ic_dialog_email" />
 
-        <TextView
-            android:id="@+id/textView4"
+            <EditText
+                android:id="@+id/inscription_email"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dip"
+                android:layout_toRightOf="@+id/emailIcon"
+                android:ems="10"
+                android:gravity="left|center_vertical"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress"
+                android:textColor="#808080"
+                android:textSize="20sp" >
+            </EditText>
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/password"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:layout_marginTop="6dip"
+            android:background="@drawable/buttonshapes"
+            android:orientation="vertical"
+            android:padding="5dp" >
 
-        <EditText
-            android:id="@+id/inscription_password1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPassword" />
+            <ImageView
+                android:id="@+id/passwordIcon1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="6dip"
+                android:contentDescription="@string/description_image_project"
+                android:src="@drawable/ic_menu_login" />
 
-        <TextView
-            android:id="@+id/textView5"
+            <EditText
+                android:id="@+id/inscription_password1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dip"
+                android:layout_toRightOf="@+id/passwordIcon1"
+                android:ems="10"
+                android:gravity="left|center_vertical"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:textColor="#808080"
+                android:textSize="20sp" >
+            </EditText>
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/password"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:layout_marginTop="6dip"
+            android:background="@drawable/buttonshapes"
+            android:orientation="vertical"
+            android:padding="5dp" >
 
-        <EditText
-            android:id="@+id/inscription_password2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPassword" />
+            <ImageView
+                android:id="@+id/passwordIcon2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="6dip"
+                android:contentDescription="@string/description_image_project"
+                android:src="@drawable/ic_menu_login" />
+
+            <EditText
+                android:id="@+id/inscription_password2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dip"
+                android:layout_toRightOf="@+id/passwordIcon2"
+                android:ems="10"
+                android:gravity="left|center_vertical"
+                android:hint="Confirmation du mot de passe"
+                android:inputType="textPassword"
+                android:textColor="#808080"
+                android:textSize="20sp" >
+            </EditText>
+        </RelativeLayout>
 
         <Button
             android:id="@+id/inscription_button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="6dip"
+            android:background="@drawable/buttonshapes"
             android:gravity="center"
             android:text="@string/go_inscription" />
     </LinearLayout>

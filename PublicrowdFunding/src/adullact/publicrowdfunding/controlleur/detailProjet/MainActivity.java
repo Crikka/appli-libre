@@ -140,7 +140,6 @@ public class MainActivity extends Activity implements TabListener {
 		switch (item.getItemId()) {
 
 		case R.id.add_favorite:
-
 			PorterDuffColorFilter filter = null;
 			if (m_Is_favorite) {
 				Toast.makeText(getBaseContext(), "Projet retiré des favoris",
