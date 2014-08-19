@@ -7,8 +7,11 @@ import java.util.Date;
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.custom.CarouselAdapter;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
+import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.Project;
+import adullact.publicrowdfunding.model.local.ressource.User;
+import adullact.publicrowdfunding.model.local.utilities.Utility;
 import adullact.publicrowdfunding.model.server.event.CreateEvent;
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -43,8 +46,11 @@ public class SoumettreProjetActivity extends Activity {
 	private EditText m_edit_text_somme;
 	private Context context;
 	private TextView m_user_pseudo;
+	private int m_illustration;
 
 	private LatLng position;
+
+	private User user;
 
 	private static final int PICK_MAPS = 3;
 
@@ -67,6 +73,8 @@ public class SoumettreProjetActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.soumettre_projet);
 
+		m_illustration = 0;
+
 		context = this;
 
 		m_titre = (EditText) findViewById(R.id.titre);
@@ -75,25 +83,18 @@ public class SoumettreProjetActivity extends Activity {
 		m_localisation = (Button) findViewById(R.id.button_localisation);
 		m_edit_text_somme = (EditText) findViewById(R.id.edit_text_somme);
 		m_user_pseudo = (TextView) findViewById(R.id.utilisateur_soumission);
-		
+
 		try {
 			Account count = Account.getOwn();
 			m_user_pseudo.setText(count.getResourceId());
 		} catch (NoAccountExistsInLocal e) {
 			finish();
 		}
-		
 
 		mData.add(R.drawable.ic_launcher);
 		mData.add(R.drawable.basketball);
 		mData.add(R.drawable.roi);
-		mData.add(R.drawable.ic_launcher);
-		mData.add(R.drawable.basketball);
-		mData.add(R.drawable.roi);
-		mData.add(R.drawable.ic_launcher);
-		mData.add(R.drawable.basketball);
-		mData.add(R.drawable.roi);
-		
+
 		mAdapter = new CarouselAdapter(this);
 		mAdapter.setData(mData);
 		mCarousel = (HorizontalCarouselLayout) findViewById(R.id.carousel_layout);
@@ -102,12 +103,14 @@ public class SoumettreProjetActivity extends Activity {
 		mCarousel.setStyle(mStyle);
 		mCarousel.setAdapter(mAdapter);
 
-		  mCarousel.setOnCarouselViewChangedListener(new CarouselInterface() {
-		  
-		  @Override public void onItemChangedListener(View v, int position) {
-		  
-		  }});
-		
+		mCarousel.setOnCarouselViewChangedListener(new CarouselInterface() {
+
+			@Override
+			public void onItemChangedListener(View v, int position) {
+				m_illustration = position;
+			}
+		});
+
 		m_localisation.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -189,38 +192,80 @@ public class SoumettreProjetActivity extends Activity {
 			calendar.set(year, month, day);
 			date_fin = calendar.getTime();
 
-            Project project = new Project(); // TODO titre, description, m_somme_a_recolter, now, date_fin,
-            project.serverCreate(new CreateEvent<Project>() {
+			try {
+				Account compte = Account.getOwn();
+				compte.getUser(new WhatToDo<User>() {
 
-                @Override
-                public void errorResourceIdAlreadyUsed() {
+					@Override
+					public void hold(User resource) {
+						user = resource;
+					}
 
-                }
+					@Override
+					public void eventually() {
+						// TODO Auto-generated method stub
 
-                @Override
-                public void onCreate(Project project) {
-                    Toast.makeText(context,
-                            "Projet en attente de validation",
-                            Toast.LENGTH_SHORT).show();
-                  /* if(isAdmin()) {
-                         // On  valide ?
-                    }*/
-                }
+					}
 
-                @Override
-                public void errorNetwork() {
+				});
+			} catch (NoAccountExistsInLocal e) {
+				finish();
+			}
 
-                }
+			new Project(titre, description, user.getResourceId(), "10000",
+					Utility.stringToDateTime("2014-09-04 00:00:00"),
+					Utility.stringToDateTime("2014-10-04 00:00:00"),
+					new LatLng(position.latitude, position.longitude),
+					m_illustration).serverCreate(new CreateEvent<Project>() {
+				@Override
+				public void errorResourceIdAlreadyUsed() {
+					System.out.println("id déja utilisé");
+				}
 
-                @Override
-                public void errorAuthenticationRequired() {
-                    Toast.makeText(context, "Connexion required",
-                            Toast.LENGTH_SHORT).show();
+				@Override
+				public void onCreate(Project resource) {
+					System.out.println("Creation du compte");
+				}
 
-                    // Invite le à se reconnecté/connecté avec : retryWithAnotherAccount();
-                }
-            });
+				@Override
+				public void errorAuthenticationRequired() {
+					System.out.println("Auth required");
+				}
 
+				@Override
+				public void errorNetwork() {
+					System.out.println("network error");
+				}
+			});
+
+			/*
+			 * 
+			 * 
+			 * 
+			 * 
+			 * Project project = new Project(); // TODO titre, description,
+			 * m_somme_a_recolter, now, date_fin, project.serverCreate(new
+			 * CreateEvent<Project>() {
+			 * 
+			 * @Override public void errorResourceIdAlreadyUsed() {
+			 * 
+			 * }
+			 * 
+			 * @Override public void onCreate(Project project) {
+			 * Toast.makeText(context, "Projet en attente de validation",
+			 * Toast.LENGTH_SHORT).show(); /* if(isAdmin()) { // On valide ? } }
+			 * 
+			 * @Override public void errorNetwork() {
+			 * 
+			 * }
+			 * 
+			 * @Override public void errorAuthenticationRequired() {
+			 * Toast.makeText(context, "Connexion required",
+			 * Toast.LENGTH_SHORT).show();
+			 * 
+			 * // Invite le à se reconnecté/connecté avec :
+			 * retryWithAnotherAccount(); } });
+			 */
 			return true;
 
 		}
