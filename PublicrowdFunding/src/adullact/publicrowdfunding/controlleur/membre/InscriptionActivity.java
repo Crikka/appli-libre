@@ -127,36 +127,3 @@ public class InscriptionActivity extends Activity {
 		});
 	}
 }
-				
-		
-				/*
-				user.serverCreate(new CreateEvent<User>() {
-					@Override
-					public void errorResourceIdAlreadyUsed(String id) {
-
-					}
-
-					@Override
-					public void onCreate(User resource) {
-						account.setUser(user);
-
-							@Override
-							public void errorAuthenticationRequired() {
-
-							}
-						});
-
-					}
-
-					@Override
-					public void errorAuthenticationRequired() {
-
-					}
-				});
-
-			}
-
-		});
-*/
-			
-

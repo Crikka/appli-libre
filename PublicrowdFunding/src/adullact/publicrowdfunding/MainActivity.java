@@ -69,7 +69,7 @@ public class MainActivity extends Activity implements TabListener {
                 }
 			}
 		});
-
+		
 		m_ajouter_projet = (ImageButton) findViewById(R.id.button_soumettre_projet);
 		m_ajouter_projet.setOnClickListener(new View.OnClickListener() {
 			@Override

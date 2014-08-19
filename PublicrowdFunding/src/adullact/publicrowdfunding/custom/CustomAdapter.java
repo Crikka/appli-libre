@@ -75,11 +75,10 @@ public class CustomAdapter extends ArrayAdapter<Project> {
 		holder.temps_restant_projet_liste.setText(projet.getNumberOfDayToEnd()
 				+ " jours restants");
 
-		holder.avancement_projet_liste.setArgent(5000 * projet
-				.getPercentOfAchievement() / 100);
+		holder.avancement_projet_liste.setArgent(projet.getCurrentFunding());
 		holder.avancement_projet_liste.setProgress(projet
 				.getPercentOfAchievement());
-		holder.avancement_projet_liste.setMaxArgent(5000);
+		holder.avancement_projet_liste.setMaxArgent(projet.getRequestedFunding());
 		if (projet.getIllustration() != 0) {
 			holder.illustration.setImageResource(Utility.getDrawable(projet
 					.getIllustration()));

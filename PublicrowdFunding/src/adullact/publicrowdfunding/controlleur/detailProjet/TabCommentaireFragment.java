@@ -66,7 +66,7 @@ public class TabCommentaireFragment extends Fragment {
 					float rating, boolean fromUser) {
 				System.out.println(rating);
 				ajouterCommentaireAlert commentaireBuilder = new ajouterCommentaireAlert(
-						getActivity(), rating);
+						getActivity(), rating, projet);
 				commentaireBuilder.show();
 			}
 

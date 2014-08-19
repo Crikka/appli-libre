@@ -20,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -35,9 +36,7 @@ public class SoumettreProjetActivity extends Activity {
 	private EditText m_titre;
 	private EditText m_Description;
 	private DatePicker m_dateFin;
-	private ImageButton m_bouttonPhoto;
-	private ImageButton m_bouttonGallery;
-	private ImageButton m_localisation;
+	private Button m_localisation;
 	private EditText m_edit_text_somme;
 	private Context context;
 
@@ -71,9 +70,7 @@ public class SoumettreProjetActivity extends Activity {
 		m_titre = (EditText) findViewById(R.id.titre);
 		m_Description = (EditText) findViewById(R.id.description);
 		m_dateFin = (DatePicker) findViewById(R.id.date_de_fin);
-		m_bouttonPhoto = (ImageButton) findViewById(R.id.button_photo_camera);
-		m_bouttonGallery = (ImageButton) findViewById(R.id.button_photo_gallery);
-		m_localisation = (ImageButton) findViewById(R.id.button_localisation);
+		m_localisation = (Button) findViewById(R.id.button_localisation);
 		m_edit_text_somme = (EditText) findViewById(R.id.edit_text_somme);
 
 		mData.add(R.drawable.ic_launcher);
@@ -99,66 +96,7 @@ public class SoumettreProjetActivity extends Activity {
 		  @Override public void onItemChangedListener(View v, int position) {
 		  
 		  }});
-		 
-
-		m_bouttonPhoto.setOnClickListener(new View.OnClickListener() {
-
-			public void onClick(View v) {
-
-				Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-				intent.putExtra(MediaStore.EXTRA_OUTPUT,
-						MediaStore.Images.Media.EXTERNAL_CONTENT_URI.toString());
-
-				intent.putExtra("crop", "true");
-				intent.putExtra("aspectX", 0);
-				intent.putExtra("aspectY", 0);
-				intent.putExtra("outputX", 200);
-				intent.putExtra("outputY", 150);
-
-				try {
-
-					intent.putExtra("return-data", true);
-					startActivityForResult(intent, PICK_FROM_CAMERA);
-
-				} catch (ActivityNotFoundException e) {
-					Toast.makeText(getApplicationContext(),
-							"Une erreur s'est produite", Toast.LENGTH_SHORT)
-							.show();
-				}
-			}
-		});
-
-		m_bouttonGallery.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-
-				Intent intent = new Intent();
-
-				intent.setType("image/*");
-				intent.setAction(Intent.ACTION_GET_CONTENT);
-
-				intent.putExtra("crop", "true");
-				intent.putExtra("aspectX", 0);
-				intent.putExtra("aspectY", 0);
-				intent.putExtra("outputX", 200);
-				intent.putExtra("outputY", 150);
-
-				try {
-
-					intent.putExtra("return-data", true);
-					startActivityForResult(Intent.createChooser(intent,
-							"Complete action using"), PICK_FROM_GALLERY);
-
-				} catch (ActivityNotFoundException e) {
-					Toast.makeText(getApplicationContext(),
-							"Une erreur s'est produite", Toast.LENGTH_SHORT)
-							.show();
-				}
-			}
-		});
-
+		
 		m_localisation.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -185,25 +123,6 @@ public class SoumettreProjetActivity extends Activity {
 
 		switch (requestCode) {
 
-		/*
-		case PICK_FROM_CAMERA:
-			Bundle extras = data.getExtras();
-			if (extras != null) {
-				Bitmap photo = extras.getParcelable("data");
-				m_illustration.setImageBitmap(photo);
-
-			}
-			break;
-
-		case PICK_FROM_GALLERY:
-			Bundle extras2 = data.getExtras();
-			if (extras2 != null) {
-				Bitmap photo = extras2.getParcelable("data");
-				m_illustration.setImageBitmap(photo);
-
-			}
-			break;
-*/
 		case PICK_MAPS:
 			Bundle extras3 = data.getExtras();
 			if (extras3 != null) {
@@ -212,6 +131,7 @@ public class SoumettreProjetActivity extends Activity {
 						extras3.getDouble("longitude"));
 				Toast.makeText(getApplicationContext(),
 						"Position du projet ajouté", Toast.LENGTH_SHORT).show();
+				m_localisation.setText("Votre projet est localisé");
 			}
 			break;
 		}

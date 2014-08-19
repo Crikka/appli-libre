@@ -11,8 +11,8 @@ import android.widget.ProgressBar;
 public class CustomProgressBar extends ProgressBar {
     private String text;
     private Paint textPaint;
-    private int sommeMax = 0;
-    private int somme = 0;
+    private String sommeMax = "0";
+    private String somme = "0";
     private Rect bounds;
  
     public CustomProgressBar(Context context) {
@@ -61,13 +61,13 @@ public class CustomProgressBar extends ProgressBar {
         drawableStateChanged();
     }
     
-    public void setMaxArgent(int sommeMax){
-    	this.text = somme+"/"+sommeMax+"€";
-    	this.sommeMax = sommeMax;
+    public void setMaxArgent(String string){
+    	this.text = somme+"/"+string+"€";
+    	this.sommeMax = string;
     
     }
     
-    public void setArgent(int somme){
+    public void setArgent(String somme){
     	this.text = somme+"/"+sommeMax+"€";
     	this.somme = somme;
     

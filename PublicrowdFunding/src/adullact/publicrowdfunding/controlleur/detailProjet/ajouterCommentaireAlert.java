@@ -1,7 +1,11 @@
 package adullact.publicrowdfunding.controlleur.detailProjet;
 
 import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
+import adullact.publicrowdfunding.model.local.ressource.Commentary;
+import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
+import adullact.publicrowdfunding.model.server.event.CreateEvent;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -16,7 +20,7 @@ import android.widget.RatingBar;
 
 public class ajouterCommentaireAlert extends AlertDialog.Builder {
 
-	public ajouterCommentaireAlert(final Context context, float rating) {
+	public ajouterCommentaireAlert(final Context context,final float rating, final Project projet) {
 		super(context);
 		
 		LinearLayout linear = new LinearLayout(context);
@@ -57,7 +61,41 @@ public class ajouterCommentaireAlert extends AlertDialog.Builder {
 
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
+						String s_titre = titre.getText().toString();
+						String s_message = message.getText().toString();
 						
+						try {
+							projet.postCommentary(s_titre, s_message, (int) rating,new  CreateEvent<Commentary>(){
+
+								@Override
+								public void errorResourceIdAlreadyUsed() {
+									// TODO Auto-generated method stub
+									
+								}
+
+								@Override
+								public void onCreate(Commentary resource) {
+									// TODO Auto-generated method stub
+									
+								}
+
+								@Override
+								public void errorAuthenticationRequired() {
+									// TODO Auto-generated method stub
+									
+								}
+
+								@Override
+								public void errorNetwork() {
+									// TODO Auto-generated method stub
+									
+								}
+								
+							});
+						} catch (NoAccountExistsInLocal e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 						
 					}
 				});

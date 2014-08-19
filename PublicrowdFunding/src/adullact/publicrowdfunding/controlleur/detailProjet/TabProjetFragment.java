@@ -25,12 +25,12 @@ public class TabProjetFragment extends Fragment {
 	private TextView m_jour_restant;
 	private TextView m_utilisateur_soumission;
 	private TextView m_pourcentage_accomplish;
-	
+
 	private Button m_payer;
 	private Button m_mail;
 	private Button m_website;
 	private Button m_call;
-	
+
 	private ImageView m_illustration;
 
 	private Project projet;
@@ -53,6 +53,8 @@ public class TabProjetFragment extends Fragment {
 		android.view.ViewGroup.LayoutParams params = graph.getLayoutParams();
 		params.height = metrics.widthPixels + 100;
 		graph.setLayoutParams(params);
+		graph.setProject(projet);
+		
 
 		m_titre = (TextView) view.findViewById(R.id.titre_projet_detail);
 		m_description = (TextView) view.findViewById(R.id.detail_projet_detail);
@@ -68,16 +70,12 @@ public class TabProjetFragment extends Fragment {
 		m_pourcentage_accomplish = (TextView) view
 				.findViewById(R.id.pourcentage_accomplit);
 
-		m_mail = (Button) view
-				.findViewById(R.id.mail);
-		
-		m_website = (Button) view
-				.findViewById(R.id.website);
-		
-		m_call = (Button) view
-				.findViewById(R.id.phone);
-		
-		
+		m_mail = (Button) view.findViewById(R.id.mail);
+
+		m_website = (Button) view.findViewById(R.id.website);
+
+		m_call = (Button) view.findViewById(R.id.phone);
+
 		m_illustration = (ImageView) view.findViewById(R.id.icon);
 
 		if (projet.getIllustration() != 0) {
@@ -91,7 +89,7 @@ public class TabProjetFragment extends Fragment {
 
 			@Override
 			public void hold(User resource) {
-				m_utilisateur_soumission.setText(resource.getPseudo());
+				m_utilisateur_soumission.setText(resource.getName());
 			}
 
 			@Override
@@ -102,8 +100,9 @@ public class TabProjetFragment extends Fragment {
 
 		});
 
-		m_pourcentage_accomplish.setText(projet.getPercentOfAchievement()+"%");
-		m_current_funding.setText(projet.getCurrentFunding()+"€");
+		m_pourcentage_accomplish
+				.setText(projet.getPercentOfAchievement() + "%");
+		m_current_funding.setText(projet.getCurrentFunding() + "€");
 		projet.getCreationDate();
 		m_titre.setText(projet.getName());
 		m_description.setText(projet.getDescription());
@@ -123,6 +122,7 @@ public class TabProjetFragment extends Fragment {
 
 			}
 		});
+
 		return view;
 	}
 }

@@ -1,5 +1,12 @@
 package adullact.publicrowdfunding.controlleur.detailProjet;
 
+import java.util.ArrayList;
+
+import org.joda.time.DateTime;
+import org.joda.time.Interval;
+
+import adullact.publicrowdfunding.model.local.ressource.Project;
+import adullact.publicrowdfunding.model.local.utilities.FundingTimePeriod;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -23,6 +30,8 @@ public class GraphiqueView extends View {
 	private float positionX;
 	private float positionY;
 	private int[] avancement = new int[11];
+	private Project projet;
+	private ArrayList<FundingTimePeriod> data;
 
 	/**
 	 * @param context
@@ -43,6 +52,11 @@ public class GraphiqueView extends View {
 		super(context, attrs);
 		paint = new Paint();
 		isDrawing = false;
+	}
+
+	public void setProject(Project projet) {
+		this.projet = projet;
+		data = projet.getFundtingTimeGraphData();
 	}
 
 	@Override
@@ -75,13 +89,13 @@ public class GraphiqueView extends View {
 	 */
 	protected void onDraw(Canvas canvas) {
 
-		avancement[0] = 10;
-		avancement[1] = 15;
-		avancement[2] = 5;
-		avancement[3] = 20;
-		avancement[4] = 5;
-		avancement[5] = 5;
-		avancement[6] = 10;
+		avancement[0] = -1;
+		avancement[1] = -1;
+		avancement[2] = -1;
+		avancement[3] = -1;
+		avancement[4] = -1;
+		avancement[5] = -1;
+		avancement[6] = -1;
 		avancement[7] = -1;
 		avancement[8] = -1;
 		avancement[9] = -1;
@@ -101,7 +115,6 @@ public class GraphiqueView extends View {
 		textPaint.setColor(Color.rgb(128, 128, 128));
 		canvas.drawText("Progression du financement", xPos, yPos, textPaint);
 
-		
 		// Ajout texte 100 %
 		textPaint = new Paint();
 		xPos = (int) (6 * canvas.getWidth() / 10);
@@ -109,28 +122,51 @@ public class GraphiqueView extends View {
 		textPaint.setTextSize(20);
 		textPaint.setColor(Color.rgb(109, 195, 41));
 		canvas.drawText("100 %", xPos, yPos, textPaint);
-		
+
 		// Ajout date de début
 		textPaint = new Paint();
 		xPos = 0;
 		yPos = offset - 20;
 		textPaint.setTextSize(20);
 		textPaint.setColor(Color.rgb(160, 160, 160));
-		canvas.drawText("10/08/2014", xPos, yPos, textPaint);
+		Interval in = projet.getFundingInterval();
 		
+		DateTime dateStart = in.getStart();
+		String month = "";
+		if(dateStart.getMonthOfYear() < 10){
+			month = "0"+dateStart.getMonthOfYear();
+		}else{
+			month = ""+dateStart.getMonthOfYear();
+		}
+		
+		String monthEnd = "";
+		DateTime dateEnd = in.getEnd();
+		if(dateEnd.getMonthOfYear() < 10){
+			monthEnd = "0"+dateEnd.getMonthOfYear();
+		}else{
+			monthEnd = ""+dateEnd.getMonthOfYear();
+		}
+		
+		canvas.drawText(dateStart.getDayOfMonth() + "/" + month + "/"
+				+ dateStart.getYear(), xPos, yPos, textPaint);
+
 		// Ajout date de fin
 		textPaint = new Paint();
 		xPos = (int) (canvas.getWidth() - 120);
 		yPos = offset - 20;
 		textPaint.setTextSize(20);
 		textPaint.setColor(Color.rgb(160, 160, 160));
-		canvas.drawText("15/09/2014", xPos, yPos, textPaint);
+		canvas.drawText(dateEnd.getDayOfMonth() + "/" + monthEnd + "/"
+				+ dateEnd.getYear(), xPos, yPos, textPaint);
 
 		// Exemple de coubre
 		int pourcentageAccomplie = 0;
 		// / 100% = hauteur
 		// 30 % =
 
+	
+
+		
 		int nombreDeCarre = 10;
 		for (int i = 0; i < nombreDeCarre + 1; i++) {
 
@@ -150,7 +186,7 @@ public class GraphiqueView extends View {
 
 		for (int i = 0; i < nombreDeCarre + 1; i++) {
 
-			if(avancement[i] == -1){
+			if (avancement[i] == -1) {
 				break;
 			}
 			int newPourcentage = pourcentageAccomplie + avancement[i];
@@ -191,8 +227,8 @@ public class GraphiqueView extends View {
 		if (isDrawing) {
 			paint.setColor(Color.rgb(183, 0, 0));
 			paint.setStrokeWidth(2);
-			//canvas.drawLine(positionX, offset, positionX, largeur + offset,
-			//		paint);
+			// canvas.drawLine(positionX, offset, positionX, largeur + offset,
+			// paint);
 
 		}
 

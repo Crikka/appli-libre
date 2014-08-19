@@ -224,7 +224,6 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         this.m_requestedFunding = new BigDecimal(requestedFunding);
         this.m_currentFunding = new BigDecimal(currentFunding);
         this.m_creationDate = DateTime.parse(creationDate);
-        this.m_creationDate = DateTime.parse(creationDate);
         this.m_fundingInterval = new Interval(DateTime.parse(beginDate), DateTime.parse(endDate));
         this.m_fundingTimePeriods = new ArrayList<FundingTimePeriod>();
         this.m_position = new LatLng(latitude, longitude);
@@ -284,6 +283,10 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
     public void getUser(WhatToDo<User> userWhatToDo) {
         m_proposedBy.toResource(userWhatToDo);
     }
+    
+    public ArrayList<FundingTimePeriod> getFundtingTimeGraphData(){
+    	return this.m_fundingTimePeriods;
+    }
 
     public void getCommentaries(WhatToDo<Commentary> commentaryWhatToDo) {
         for(Cache<Commentary> commentary : m_commentaries) {
@@ -298,6 +301,10 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
     public long getNumberOfDayToEnd(){
     	return new Duration(m_creationDate,m_fundingInterval.getEnd()).getStandardDays();
     			
+    }
+    
+    public Interval getFundingInterval(){
+    	return this.m_fundingInterval;
     }
 
 	/**
