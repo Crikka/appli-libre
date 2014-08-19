@@ -172,15 +172,14 @@ public class MainActivity extends Activity implements TabListener {
 			layoutConnect.setVisibility(View.VISIBLE);
 			layoutDisconnect.setVisibility(View.GONE);
 		} catch (NoAccountExistsInLocal e1) {
-			System.out.println("Pas connecté");
 			layoutConnect.setVisibility(View.GONE);
 			layoutDisconnect.setVisibility(View.VISIBLE);
 		}
 	}
 
 	@Override
-	protected void onStart() {
-		super.onStart();
+	protected void onRestart() {
+		super.onRestart();
 		isConnect();
 
 	}

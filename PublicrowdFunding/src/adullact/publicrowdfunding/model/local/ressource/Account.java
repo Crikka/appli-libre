@@ -40,7 +40,10 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
     private void initialize() throws NoAccountExistsInLocal {
         SharedPreferences sharedPreferences = m_context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
         if(!sharedPreferences.contains(KEY_USERNAME) || !sharedPreferences.contains(KEY_USERNAME) || !sharedPreferences.contains(KEY_USERNAME)) {
-            throw new NoAccountExistsInLocal();
+        	{
+        		m_own = null;
+        		throw new NoAccountExistsInLocal();
+        	}
         }
 
         m_username = sharedPreferences.getString(KEY_USERNAME, "");
