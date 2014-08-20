@@ -11,13 +11,42 @@
         android:layout_weight="1" >
     </ListView>
 
-    <RatingBar
-        android:id="@+id/rating_bar_projet_detail"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/connect"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_weight="0"
+        android:background="@color/bleu"
+        android:gravity="center"
+        android:padding="0dp" >
+
+        <RatingBar
+            android:id="@+id/rating_bar_projet_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:stepSize="1.0" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/disconnect"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="0"
         android:gravity="center"
-        android:stepSize="1.0" />
+        android:padding="0dp" >
+
+        <Button
+            android:id="@+id/connexion"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/buttonshapes"
+            android:gravity="center"
+            android:padding="10dip"
+            android:text="Connexion / Inscription"
+            android:textColor="#808080"
+            android:textSize="25sp" />
+    </LinearLayout>
 
 </LinearLayout>

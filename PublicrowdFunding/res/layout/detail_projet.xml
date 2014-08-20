@@ -247,7 +247,7 @@
     </ScrollView>
 
     <LinearLayout
-        android:id="@+id/button_filtre"
+        android:id="@+id/connect"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0"
@@ -263,6 +263,26 @@
             android:gravity="center"
             android:padding="10dip"
             android:text="Participer"
+            android:textColor="#808080"
+            android:textSize="25sp" />
+    </LinearLayout>
+    
+        <LinearLayout
+        android:id="@+id/disconnect"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:gravity="center"
+        android:padding="0dp" >
+
+        <Button
+            android:id="@+id/connexion"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/buttonshapes"
+            android:gravity="center"
+            android:padding="10dip"
+            android:text="Connexion / Inscription"
             android:textColor="#808080"
             android:textSize="25sp" />
     </LinearLayout>

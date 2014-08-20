@@ -2,7 +2,10 @@ package adullact.publicrowdfunding.controlleur.detailProjet;
 
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.controlleur.ajouterProjet.choisirMontantDialog;
+import adullact.publicrowdfunding.controlleur.membre.ConnexionActivity;
+import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
+import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
 import adullact.publicrowdfunding.model.local.utilities.Utility;
@@ -24,7 +27,6 @@ public class TabProjetFragment extends Fragment {
 	private TextView m_titre;
 	private TextView m_description;
 	private TextView m_current_funding;
-	private TextView m_nombre_participants;
 	private TextView m_jour_restant;
 	private TextView m_utilisateur_soumission;
 	private TextView m_pourcentage_accomplish;
@@ -33,11 +35,16 @@ public class TabProjetFragment extends Fragment {
 	private Button m_mail;
 	private Button m_website;
 	private Button m_call;
+	
+	private Button m_connexion;
 
 	private ImageView m_illustration;
 
 	private Project projet;
 	private User user;
+	
+	private LinearLayout layoutConnect;
+	private LinearLayout layoutDisconnect;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,8 +53,14 @@ public class TabProjetFragment extends Fragment {
 		final View view = inflater.inflate(R.layout.detail_projet, container,
 				false);
 
+		
+		layoutConnect = (LinearLayout) view.findViewById(R.id.connect);
+		layoutDisconnect = (LinearLayout) view.findViewById(R.id.disconnect);
+
+		isConnect();
+		
 	
-		MainActivity activity = (MainActivity) getActivity();
+		final MainActivity activity = (MainActivity) getActivity();
 		projet = activity.getIdProjet();
 
 		GraphiqueView graph = (GraphiqueView) view.findViewById(R.id.graphique);
@@ -63,8 +76,6 @@ public class TabProjetFragment extends Fragment {
 		m_titre = (TextView) view.findViewById(R.id.titre_projet_detail);
 		m_description = (TextView) view.findViewById(R.id.detail_projet_detail);
 		m_payer = (Button) view.findViewById(R.id.payer);
-		m_nombre_participants = (TextView) view
-				.findViewById(R.id.nombre_participants_detail);
 		m_jour_restant = (TextView) view
 				.findViewById(R.id.nombre_jour_restant_detail);
 		m_utilisateur_soumission = (TextView) view
@@ -80,6 +91,20 @@ public class TabProjetFragment extends Fragment {
 
 		m_illustration = (ImageView) view.findViewById(R.id.icon);
 
+		
+		m_connexion = (Button) view.findViewById(R.id.connexion);
+		m_connexion.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent in = new Intent(
+						activity.getApplicationContext(),
+						ConnexionActivity.class);
+				startActivity(in);
+			}
+		});
+
+		
+		
 		if (projet.getIllustration() != 0) {
 			m_illustration.setImageResource(Utility.getDrawable(projet
 					.getIllustration()));
@@ -146,4 +171,18 @@ public class TabProjetFragment extends Fragment {
 
 		return view;
 	}
+	
+	
+	public void isConnect() {
+		try {
+			Account.getOwn();
+			layoutConnect.setVisibility(View.VISIBLE);
+			layoutDisconnect.setVisibility(View.GONE);
+		} catch (NoAccountExistsInLocal e1) {
+			layoutConnect.setVisibility(View.GONE);
+			layoutDisconnect.setVisibility(View.VISIBLE);
+		}
+	}
+	
+	
 }

@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.controlleur.membre.ConnexionActivity;
 import adullact.publicrowdfunding.custom.CommentaireAdapteur;
+import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
+import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.Commentary;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
@@ -19,6 +22,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.AdapterView.OnItemClickListener;
@@ -31,6 +36,11 @@ public class TabCommentaireFragment extends Fragment {
 
 	private Project projet;
 	private Vector<Commentary> commentaries;
+	
+	private LinearLayout layoutConnect;
+	private LinearLayout layoutDisconnect;
+	
+	private Button m_connexion;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,7 +49,27 @@ public class TabCommentaireFragment extends Fragment {
 		final View view = inflater.inflate(R.layout.detail_projet_commentaire,
 				container, false);
 
+		layoutConnect = (LinearLayout) view.findViewById(R.id.connect);
+		layoutDisconnect = (LinearLayout) view.findViewById(R.id.disconnect);
+		
+		isConnect();
+		
 		final MainActivity activity = (MainActivity) getActivity();
+		
+		m_connexion = (Button) view.findViewById(R.id.connexion);
+		m_connexion.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent in = new Intent(
+						activity.getApplicationContext(),
+						ConnexionActivity.class);
+				startActivity(in);
+			}
+		});
+		
+		
+		
+	
 		projet = activity.getIdProjet();
 
 		commentaries = new Vector<Commentary>();
@@ -111,5 +141,16 @@ public class TabCommentaireFragment extends Fragment {
 
 		return view;
 
+	}
+	
+	public void isConnect() {
+		try {
+			Account.getOwn();
+			layoutConnect.setVisibility(View.VISIBLE);
+			layoutDisconnect.setVisibility(View.GONE);
+		} catch (NoAccountExistsInLocal e1) {
+			layoutConnect.setVisibility(View.GONE);
+			layoutDisconnect.setVisibility(View.VISIBLE);
+		}
 	}
 }

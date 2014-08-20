@@ -78,7 +78,7 @@
             android:src="@android:drawable/ic_menu_preferences" />
     </LinearLayout>
     
-        <LinearLayout
+    <LinearLayout
         android:id="@+id/disconnect"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -97,5 +97,5 @@
             android:textColor="#808080"
             android:textSize="25sp" />
     </LinearLayout>
-
+    
 </LinearLayout>

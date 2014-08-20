@@ -1,8 +1,10 @@
 package adullact.publicrowdfunding.controlleur.detailProjet;
 
 import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.cache.Cache;
 import adullact.publicrowdfunding.model.local.callback.HoldToDo;
+import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
@@ -19,7 +21,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements TabListener {
@@ -34,14 +38,17 @@ public class MainActivity extends Activity implements TabListener {
 	private boolean m_Is_favorite;
 
 	private ProgressDialog mprogressDialog;
-	
+
+
+
 	FragmentTransaction fragMentTra = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.layout_detail_projet);
 
+		setContentView(R.layout.layout_detail_projet);
+		
 		String id = getIntent().getExtras().getString("key");
 		if (id == null) {
 			Toast.makeText(getApplicationContext(),
@@ -55,43 +62,45 @@ public class MainActivity extends Activity implements TabListener {
 		mprogressDialog.setTitle("Affichage du projet");
 		mprogressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 		mprogressDialog.show();
-		
-        Cache<Project> projet = new Project().getCache(id);
-        final MainActivity _this = this;
-        projet.toResource(new HoldToDo<Project>() {
-            @Override
-            public void hold(Project project) {
-                try {
-                    if(isDeleted()) {
-                        Toast.makeText(getApplicationContext(),
-                                "Aucun projet avec cet ID.", Toast.LENGTH_SHORT).show();
-                        finish();
-                    }
-                    else {
-                        _this.projet = project;
-                        rl = (FrameLayout) findViewById(R.id.tabcontent);
 
-                        ActionBar bar = getActionBar();
+		Cache<Project> projet = new Project().getCache(id);
+		final MainActivity _this = this;
+		projet.toResource(new HoldToDo<Project>() {
+			@Override
+			public void hold(Project project) {
+				try {
+					if (isDeleted()) {
+						Toast.makeText(getApplicationContext(),
+								"Aucun projet avec cet ID.", Toast.LENGTH_SHORT)
+								.show();
+						finish();
+					} else {
+						_this.projet = project;
+						rl = (FrameLayout) findViewById(R.id.tabcontent);
 
-                        bar.addTab(bar.newTab().setText("Projets").setTabListener(_this));
-                        bar.addTab(bar.newTab().setText("Commentaires").setTabListener(_this));
-                        bar.addTab(bar.newTab().setText("Localisation")
-                                .setTabListener(_this));
+						ActionBar bar = getActionBar();
 
-                        bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM
-                                | ActionBar.DISPLAY_USE_LOGO);
-                        bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-                        bar.setDisplayShowHomeEnabled(true);
-                        bar.setDisplayShowTitleEnabled(true);
-                        bar.show();
-                        mprogressDialog.dismiss();
-                    }
+						bar.addTab(bar.newTab().setText("Projets")
+								.setTabListener(_this));
+						bar.addTab(bar.newTab().setText("Commentaires")
+								.setTabListener(_this));
+						bar.addTab(bar.newTab().setText("Localisation")
+								.setTabListener(_this));
 
-                } catch (Exception e) {
-                    e.getMessage();
-                }
-            }
-        });
+						bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM
+								| ActionBar.DISPLAY_USE_LOGO);
+						bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+						bar.setDisplayShowHomeEnabled(true);
+						bar.setDisplayShowTitleEnabled(true);
+						bar.show();
+						mprogressDialog.dismiss();
+					}
+
+				} catch (Exception e) {
+					e.getMessage();
+				}
+			}
+		});
 	}
 
 	@Override
@@ -112,7 +121,6 @@ public class MainActivity extends Activity implements TabListener {
 			ft.replace(rl.getId(), fram2);
 
 		} else if (tab.getText().equals("Localisation")) {
-
 
 			fram3 = new TabMapFragment();
 			ft.replace(rl.getId(), fram3);
@@ -177,4 +185,5 @@ public class MainActivity extends Activity implements TabListener {
 		return projet;
 
 	}
+
 }

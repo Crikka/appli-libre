@@ -34,7 +34,8 @@ public class TabProjetsFinanceFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		final View view = inflater.inflate(R.layout.tab, container, false);
+		final View view = inflater.inflate(R.layout.fragment_ab, container,
+				false);
 
 		listeProjets = (ListView) view.findViewById(R.id.liste);
 		funded = new Vector<Project>();
@@ -45,6 +46,7 @@ public class TabProjetsFinanceFragment extends Fragment {
 		} catch (NoAccountExistsInLocal e) {
 			Toast.makeText(getActivity().getApplicationContext(), "Erreur",
 					Toast.LENGTH_SHORT).show();
+			getActivity().finish();
 		}
 
 		compte.getUser(new WhatToDo<User>() {
