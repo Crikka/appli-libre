@@ -305,9 +305,13 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
     	return this.m_fundingInterval;
     }
 
-    public FundingInterval getFundingTime(int index) throws IndexOutOfBoundsException {
+    public ArrayList<FundingInterval> getFundingIntervals(){
+        return this.m_fundingIntervals;
+    }
+
+    public FundingInterval getFundingIntervalAt(int index) {
         if(index < 0 || index > 9) {
-            throw new IndexOutOfBoundsException();
+            throw null;
         }
 
         return m_fundingIntervals.get(index);
