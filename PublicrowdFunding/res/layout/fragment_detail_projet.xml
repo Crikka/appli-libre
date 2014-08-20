@@ -33,6 +33,7 @@
                     android:layout_marginRight="6dip"
                     android:contentDescription="@string/description_image_project"
                     android:height="152dp"
+                    android:background="@drawable/circle"
                     android:scaleType="fitXY"
                     android:src="@drawable/ic_launcher" />
 
