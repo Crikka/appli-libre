@@ -73,6 +73,31 @@ public class SoumettreProjetActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.soumettre_projet);
 
+		
+		try {
+			Account compte = Account.getOwn();
+			compte.getUser(new WhatToDo<User>() {
+
+				@Override
+				public void hold(User resource) {
+					if(resource == null){
+						finish();
+					}
+					user = resource;
+					System.out.println(user.getResourceId());
+				}
+
+				@Override
+				public void eventually() {
+					// TODO Auto-generated method stub
+
+				}
+
+			});
+		} catch (NoAccountExistsInLocal e) {
+			finish();
+		}
+		
 		m_illustration = 0;
 
 		context = this;
@@ -192,27 +217,10 @@ public class SoumettreProjetActivity extends Activity {
 			calendar.set(year, month, day);
 			date_fin = calendar.getTime();
 
-			try {
-				Account compte = Account.getOwn();
-				compte.getUser(new WhatToDo<User>() {
-
-					@Override
-					public void hold(User resource) {
-						user = resource;
-					}
-
-					@Override
-					public void eventually() {
-						// TODO Auto-generated method stub
-
-					}
-
-				});
-			} catch (NoAccountExistsInLocal e) {
-				finish();
-			}
-
-			new Project(titre, description, user.getResourceId(), "10000",
+			new Project(titre, 
+					description, 
+					user.getResourceId(), 
+					"10000",
 					Utility.stringToDateTime("2014-09-04 00:00:00"),
 					Utility.stringToDateTime("2014-10-04 00:00:00"),
 					new LatLng(position.latitude, position.longitude),
@@ -238,34 +246,6 @@ public class SoumettreProjetActivity extends Activity {
 				}
 			});
 
-			/*
-			 * 
-			 * 
-			 * 
-			 * 
-			 * Project project = new Project(); // TODO titre, description,
-			 * m_somme_a_recolter, now, date_fin, project.serverCreate(new
-			 * CreateEvent<Project>() {
-			 * 
-			 * @Override public void errorResourceIdAlreadyUsed() {
-			 * 
-			 * }
-			 * 
-			 * @Override public void onCreate(Project project) {
-			 * Toast.makeText(context, "Projet en attente de validation",
-			 * Toast.LENGTH_SHORT).show(); /* if(isAdmin()) { // On valide ? } }
-			 * 
-			 * @Override public void errorNetwork() {
-			 * 
-			 * }
-			 * 
-			 * @Override public void errorAuthenticationRequired() {
-			 * Toast.makeText(context, "Connexion required",
-			 * Toast.LENGTH_SHORT).show();
-			 * 
-			 * // Invite le à se reconnecté/connecté avec :
-			 * retryWithAnotherAccount(); } });
-			 */
 			return true;
 
 		}
