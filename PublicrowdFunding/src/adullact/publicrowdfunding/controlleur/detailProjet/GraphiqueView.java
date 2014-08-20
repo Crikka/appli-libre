@@ -26,9 +26,8 @@ public class GraphiqueView extends View {
 	private boolean isDrawing;
 	private float positionX;
 	private float positionY;
-	private int[] avancement = new int[11];
+	// private int[] avancement = new int[11];
 	private Project projet;
-	private ArrayList<FundingInterval> data;
 
 	/**
 	 * @param context
@@ -53,7 +52,6 @@ public class GraphiqueView extends View {
 
 	public void setProject(Project projet) {
 		this.projet = projet;
-		data = projet.getFundtingTimeGraphData();
 	}
 
 	@Override
@@ -86,19 +84,20 @@ public class GraphiqueView extends View {
 	 */
 	protected void onDraw(Canvas canvas) {
 
-		avancement[0] = -1;
-		avancement[1] = -1;
-		avancement[2] = -1;
-		avancement[3] = -1;
-		avancement[4] = -1;
-		avancement[5] = -1;
-		avancement[6] = -1;
-		avancement[7] = -1;
-		avancement[8] = -1;
-		avancement[9] = -1;
-		avancement[10] = -1;
-
+		ArrayList<FundingInterval> graphData = projet.getFundingIntervals();
 		paint.setAntiAlias(true);
+		
+		
+		 System.out.println("x->"+projet.getFundingIntervalAt(0).getTotal());
+		ArrayList<FundingInterval> fundingIntervals = projet.getFundingIntervals(); // Oublie pas le s à la fin
+
+		int x = 0;
+		for(FundingInterval fundingInterval : fundingIntervals) {
+		   System.out.println("x:"+x+"->"+fundingInterval.getTotal());
+		    x++;
+		}
+		
+		
 
 		int largeur = canvas.getWidth() - 10;
 		int hauteur = largeur;
@@ -127,23 +126,23 @@ public class GraphiqueView extends View {
 		textPaint.setTextSize(20);
 		textPaint.setColor(Color.rgb(160, 160, 160));
 		Interval in = projet.getFundingInterval();
-		
+
 		DateTime dateStart = in.getStart();
 		String month = "";
-		if(dateStart.getMonthOfYear() < 10){
-			month = "0"+dateStart.getMonthOfYear();
-		}else{
-			month = ""+dateStart.getMonthOfYear();
+		if (dateStart.getMonthOfYear() < 10) {
+			month = "0" + dateStart.getMonthOfYear();
+		} else {
+			month = "" + dateStart.getMonthOfYear();
 		}
-		
+
 		String monthEnd = "";
 		DateTime dateEnd = in.getEnd();
-		if(dateEnd.getMonthOfYear() < 10){
-			monthEnd = "0"+dateEnd.getMonthOfYear();
-		}else{
-			monthEnd = ""+dateEnd.getMonthOfYear();
+		if (dateEnd.getMonthOfYear() < 10) {
+			monthEnd = "0" + dateEnd.getMonthOfYear();
+		} else {
+			monthEnd = "" + dateEnd.getMonthOfYear();
 		}
-		
+
 		canvas.drawText(dateStart.getDayOfMonth() + "/" + month + "/"
 				+ dateStart.getYear(), xPos, yPos, textPaint);
 
@@ -157,13 +156,10 @@ public class GraphiqueView extends View {
 				+ dateEnd.getYear(), xPos, yPos, textPaint);
 
 		// Exemple de coubre
-		int pourcentageAccomplie = 0;
+		long pourcentageAccomplie = 0;
 		// / 100% = hauteur
 		// 30 % =
 
-	
-
-		
 		int nombreDeCarre = 10;
 		for (int i = 0; i < nombreDeCarre + 1; i++) {
 
@@ -181,19 +177,28 @@ public class GraphiqueView extends View {
 
 		}
 
-		for (int i = 0; i < nombreDeCarre + 1; i++) {
+		for (int i = 0; i < nombreDeCarre; i++) {
 
-			if (avancement[i] == -1) {
+			System.out.println("i : "+i + " ->"+graphData.get(i).getTotal());
+			
+			
+			if (graphData.get(i).getTotal() == 0) {
 				break;
 			}
-			int newPourcentage = pourcentageAccomplie + avancement[i];
+			
+			long data = graphData.get(i).getTotal();
+			long pourcentage = data * 100 / Long.parseLong(projet.getRequestedFunding());
+			
+			long newPourcentage = pourcentageAccomplie
+					+ pourcentage;
 			if (newPourcentage > 100) {
 				newPourcentage = 100;
 			}
 
-			int yDepart = largeur - ((pourcentageAccomplie * hauteur) / 100)
+			long yDepart = largeur - ((pourcentageAccomplie * hauteur) / 100)
 					+ offset;
-			int yArrive = largeur - ((newPourcentage * hauteur) / 100) + offset;
+			long yArrive = largeur - ((newPourcentage * hauteur) / 100)
+					+ offset;
 
 			int xDepart = i * (largeur / nombreDeCarre);
 			int xArrive = (i + 1) * (largeur / nombreDeCarre);

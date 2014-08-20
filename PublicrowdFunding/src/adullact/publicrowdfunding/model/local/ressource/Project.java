@@ -283,10 +283,6 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
     public void getUser(WhatToDo<User> userWhatToDo) {
         m_proposedBy.toResource(userWhatToDo);
     }
-    
-    public ArrayList<FundingInterval> getFundtingTimeGraphData(){
-    	return this.m_fundingIntervals;
-    }
 
     public void getCommentaries(WhatToDo<Commentary> commentaryWhatToDo) {
         m_commentaries.forEach(commentaryWhatToDo);

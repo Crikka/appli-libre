@@ -116,7 +116,6 @@ public class TabProjetFragment extends Fragment {
 
 			@Override
 			public void hold(User resource) {
-				System.out.println(resource);
 				user = resource;
 				m_utilisateur_soumission.setText(resource.getPseudo());
 			}

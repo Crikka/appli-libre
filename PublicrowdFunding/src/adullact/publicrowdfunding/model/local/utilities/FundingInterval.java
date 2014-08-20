@@ -22,13 +22,13 @@ public class FundingInterval {
     }
 
     public long getTotal() {
-        BigDecimal result = new BigDecimal(0);
+        long result = 0;
 
         for(Funding funding : m_funding) {
-            result.add(funding.getValue());
+        	result += funding.getValue().longValue();
         }
-
-        return result.longValue();
+        
+        return result;
     }
 	
 	public boolean correspondsToPeriod(DateTime dateTime){
