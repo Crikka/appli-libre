@@ -1,7 +1,7 @@
 package adullact.publicrowdfunding;
 
 import java.util.ArrayList;
-
+import java.util.Vector;
 import adullact.publicrowdfunding.controlleur.ajouterProjet.SoumettreProjetActivity;
 import adullact.publicrowdfunding.controlleur.membre.ConnexionActivity;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
@@ -10,21 +10,30 @@ import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
+import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.opengl.Visibility;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
+import android.widget.SearchView.OnQueryTextListener;
 
 public class MainActivity extends Activity implements TabListener {
 
@@ -39,6 +48,10 @@ public class MainActivity extends Activity implements TabListener {
 	private Button m_connexion;
 	private LinearLayout layoutConnect;
 	private LinearLayout layoutDisconnect;
+	private SearchView searchView;
+	private SyncServerToLocal sync;
+	protected Vector<Project> projetsToDisplay;
+	private ActionBar bar;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -49,6 +62,8 @@ public class MainActivity extends Activity implements TabListener {
 		layoutConnect = (LinearLayout) findViewById(R.id.connect);
 		layoutDisconnect = (LinearLayout) findViewById(R.id.disconnect);
 
+		projetsToDisplay = new Vector<Project>();
+		
 		isConnect();
 
 		final ProgressDialog progressDialog = new ProgressDialog(this);
@@ -56,38 +71,38 @@ public class MainActivity extends Activity implements TabListener {
 		progressDialog.setTitle("Initialisation de l'application");
 		progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 		progressDialog.show();
-
-		SyncServerToLocal sync = SyncServerToLocal.getInstance();
+		
+		sync = SyncServerToLocal.getInstance();
 		final MainActivity _this = this;
 		sync.sync(new HoldAllToDo<Project>() {
 
 			@Override
 			public void holdAll(ArrayList<Project> projects) {
-				try {
-					rl = (FrameLayout) findViewById(R.id.tabcontent);
+				projetsToDisplay = new Vector<Project>(projects);
+				rl = (FrameLayout) findViewById(R.id.tabcontent);
 
-					ActionBar bar = getActionBar();
+				bar = getActionBar();
 
-					bar.addTab(bar.newTab().setText("Projets")
-							.setTabListener(_this));
-					bar.addTab(bar.newTab().setText("Favoris")
-							.setTabListener(_this));
-					bar.addTab(bar.newTab().setText("Localisation")
-							.setTabListener(_this));
+				bar.addTab(bar.newTab().setText("Projets")
+						.setTabListener(_this));
+				bar.addTab(bar.newTab().setText("Favoris")
+						.setTabListener(_this));
+				bar.addTab(bar.newTab().setText("Localisation")
+						.setTabListener(_this));
 
-					bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM
-							| ActionBar.DISPLAY_USE_LOGO);
-					bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-					bar.setDisplayShowHomeEnabled(true);
-					bar.setDisplayShowTitleEnabled(true);
-					bar.show();
-					progressDialog.dismiss();
-				} catch (Exception e) {
-					e.getMessage();
-				}
+				bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM
+						| ActionBar.DISPLAY_USE_LOGO);
+				bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+				bar.setDisplayShowHomeEnabled(true);
+				bar.setDisplayShowTitleEnabled(true);
+				bar.show();
+				progressDialog.dismiss();
+				
 			}
 		});
-
+		
+		
+		
 		m_connexion = (Button) findViewById(R.id.connexion);
 		m_connexion.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -182,6 +197,54 @@ public class MainActivity extends Activity implements TabListener {
 		super.onRestart();
 		isConnect();
 
+	}
+	
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		
+		  MenuInflater inflater = getMenuInflater();
+	        inflater.inflate(R.menu.menu_search, menu);
+	        MenuItem searchItem;
+	        searchItem = menu.findItem(R.id.SearchWords);
+	        assert searchItem != null;
+	        searchView = (SearchView) searchItem.getActionView();
+	        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+	        if(null!=searchManager ) {
+	            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+	        }
+	        searchView.setIconifiedByDefault(true);
+	        searchView.setOnQueryTextListener(new OnQueryTextListener() {
+
+	            public boolean onQueryTextSubmit(String query) {
+	            	projetsToDisplay = new Vector<Project>(sync.searchInName(query));
+	            	reLoad();
+	                return false;
+	            }
+
+	            public boolean onQueryTextChange(String newText) {
+	                if(searchView.isShown()){
+	                    
+	                }
+	                return false;
+	            }
+	        });
+	        return true;
+	}
+	
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2) 
+	public void reLoad(){
+		/*
+		String text = bar.getSelectedTab().getText().toString();
+		System.out.println(text);
+		getFragmentManager().executePendingTransactions();
+		Fragment frg = getFragmentManager().findFragmentByTag(text);
+		final FragmentTransaction ft = getFragmentManager().beginTransaction();
+		System.out.println(frg);
+		System.out.println(ft);
+		ft.detach(frg);
+		ft.attach(frg);
+		ft.commit();
+		*/
 	}
 
 }

@@ -20,38 +20,41 @@ import java.util.Vector;
 
 public class TabProjetsFragment extends Fragment {
 
-    private ListView listeProjets;
+	private ListView listeProjets;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
 
-        final View view = inflater.inflate(R.layout.fragment_liste_projet, container, false);
+		final View view = inflater.inflate(R.layout.fragment_liste_projet,
+				container, false);
 
-        listeProjets = (ListView) view.findViewById(R.id.liste);
+		listeProjets = (ListView) view.findViewById(R.id.liste);
 
 		TextView empty = (TextView) view.findViewById(R.id.empty);
 		listeProjets.setEmptyView(empty);
-        
-        ArrayAdapter<Project> adapter = new CustomAdapter(this.getActivity()
-                .getBaseContext(), R.layout.projet_adaptor, new Vector<Project>(SyncServerToLocal.getInstance().getProjects()));
 
-        listeProjets.setAdapter(adapter);
-        listeProjets.setOnItemClickListener(new OnItemClickListener() {
+		adullact.publicrowdfunding.MainActivity _this = (adullact.publicrowdfunding.MainActivity) getActivity();
 
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
+		ArrayAdapter<Project> adapter = new CustomAdapter(this.getActivity()
+				.getBaseContext(), R.layout.projet_adaptor, _this.projetsToDisplay);
 
-                Project projet = (Project) listeProjets
-                        .getItemAtPosition(position);
-                Intent in = new Intent(parent.getContext()
-                        .getApplicationContext(), MainActivity.class);
-                in.putExtra("key", projet.getResourceId());
-                startActivity(in);
-            }
-        });
+		listeProjets.setAdapter(adapter);
+		listeProjets.setOnItemClickListener(new OnItemClickListener() {
 
-        return view;
-    }
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+
+				Project projet = (Project) listeProjets
+						.getItemAtPosition(position);
+				Intent in = new Intent(parent.getContext()
+						.getApplicationContext(), MainActivity.class);
+				in.putExtra("key", projet.getResourceId());
+				startActivity(in);
+			}
+		});
+
+		return view;
+	}
 }
