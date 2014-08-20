@@ -33,6 +33,8 @@ public class CustomAdapter extends ArrayAdapter<Project> {
 		public TextView temps_restant_projet_liste;
 		public CustomProgressBar avancement_projet_liste;
 		public ImageView illustration;
+		public TextView sommeFunded;
+		public TextView sommeDemander;
 
 	}
 
@@ -54,10 +56,15 @@ public class CustomAdapter extends ArrayAdapter<Project> {
 			holder.description_projet_liste = (TextView) v
 					.findViewById(R.id.description_projet_liste);
 			holder.temps_restant_projet_liste = (TextView) v
-					.findViewById(R.id.temps_restant_projet_liste);
+					.findViewById(R.id.nombre_jour_restant_detail);
 			holder.avancement_projet_liste = (CustomProgressBar) v
 					.findViewById(R.id.avancement_projet_liste);
 			holder.illustration = (ImageView) v.findViewById(R.id.icon);
+			holder.sommeDemander =  (TextView) v
+					.findViewById(R.id.sommeeDemande);
+			
+			holder.sommeFunded =  (TextView) v
+					.findViewById(R.id.sommeFund);
 
 			v.setTag(holder);
 		} else {
@@ -68,12 +75,12 @@ public class CustomAdapter extends ArrayAdapter<Project> {
 		holder.titre_projet_liste.setText(projet.getName());
 		holder.description_projet_liste.setText(projet.getDescription());
 		holder.temps_restant_projet_liste.setText(projet.getNumberOfDayToEnd()
-				+ " jours restants");
+				+ " jours");
 
-		holder.avancement_projet_liste.setArgent(projet.getCurrentFunding());
 		holder.avancement_projet_liste.setProgress(projet
 				.getPercentOfAchievement());
-		holder.avancement_projet_liste.setMaxArgent(projet.getRequestedFunding());
+		holder.sommeDemander.setText(projet.getRequestedFunding()+"€");
+		holder.sommeFunded.setText(projet.getCurrentFunding()+"€");
 		if (projet.getIllustration() != 0) {
 			holder.illustration.setImageResource(Utility.getDrawable(projet
 					.getIllustration()));

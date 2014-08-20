@@ -27,6 +27,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +41,11 @@ public class MainActivity extends Activity implements TabListener {
 
 	protected boolean myAccount;
 
+	private TextView pseudo;
+	private TextView ville;
+	
+	private ImageView avatar;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -49,8 +55,9 @@ public class MainActivity extends Activity implements TabListener {
 
 		setContentView(R.layout.activity_main_profile);
 
-		final TextView pseudo = (TextView) findViewById(R.id.pseudo);
-		TextView ville = (TextView) findViewById(R.id.ville);
+		pseudo = (TextView) findViewById(R.id.pseudo);
+		ville = (TextView) findViewById(R.id.ville);
+		avatar = (ImageView) findViewById(R.id.avatar);
 
 		// L'utilisateur affiche son propre profile
 		if (myAccount) {
@@ -74,7 +81,12 @@ public class MainActivity extends Activity implements TabListener {
 				@Override
 				public void hold(User resource) {
 					pseudo.setText(resource.getResourceId());
-					
+					ville.setText(resource.getCity());
+					if (resource.getSexe().equals("0")) {
+						avatar.setImageResource(R.drawable.male_user_icon);
+					} else {
+						avatar.setImageResource(R.drawable.female_user_icon);
+					}
 				}
 
 				@Override
