@@ -118,6 +118,15 @@ public class Funding extends Resource<Funding, ServerFunding, ServerFunding> {
     }
     /* ---------------- */
 
+
+    public BigDecimal getValue() {
+        return m_value;
+    }
+
+    public DateTime getDate() {
+        return m_date;
+    }
+
     public void serverListerByUser(String pseudo, ListerEvent<Funding> bookmarkListerEvent) {
         HashMap<String, String> filter = new HashMap<String, String>();
         filter.put("user", pseudo);

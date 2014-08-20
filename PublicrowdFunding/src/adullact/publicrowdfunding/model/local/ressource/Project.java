@@ -2,7 +2,6 @@ package adullact.publicrowdfunding.model.local.ressource;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import org.joda.time.DateTime;
@@ -14,7 +13,7 @@ import adullact.publicrowdfunding.model.local.cache.Cache;
 import adullact.publicrowdfunding.model.local.cache.CacheSet;
 import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
-import adullact.publicrowdfunding.model.local.utilities.FundingTimePeriod;
+import adullact.publicrowdfunding.model.local.utilities.FundingInterval;
 import adullact.publicrowdfunding.model.server.entities.DetailedServerProject;
 import adullact.publicrowdfunding.model.server.entities.RowAffected;
 import adullact.publicrowdfunding.model.server.entities.ServerCommentary;
@@ -100,9 +99,13 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         this.m_validate = detailedServerProject.validate;
         this.m_illustration = detailedServerProject.illustration;
         this.m_fundingInterval = new Interval(Utility.stringToDateTime(detailedServerProject.beginDate), Utility.stringToDateTime(detailedServerProject.endDate));
-        this.m_fundingTimePeriods = new ArrayList<FundingTimePeriod>();
+        this.m_fundingIntervals = new ArrayList<FundingInterval>();
         this. m_funding = new CacheSet<Funding>();
         this.m_commentaries = new CacheSet<Commentary>();
+
+        // Now, we calculate 10 periods for graphics
+        calculatePeriods();
+        final long numberOfDayByPeriod = m_fundingInterval.toDuration().getStandardDays() / 10;
 
         for(final ServerFunding serverFunding : detailedServerProject.fundedBy) {
             final Cache<Funding> funding = new Funding().getCache(Integer.toString(serverFunding.id)).declareUpToDate();
@@ -110,6 +113,8 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
                 @Override
                 public void hold(Funding resource) {
                     resource.syncFromServer(serverFunding);
+                    long numberOfDayFromBegin = new Duration(m_fundingInterval.getStart(), resource.getDate()).getStandardDays();
+                    m_fundingIntervals.get((int) (numberOfDayFromBegin/numberOfDayByPeriod)-1).addFunding(resource);
                     m_funding.add(funding);
                 }
             });
@@ -125,9 +130,6 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
                 }
             });
         }
-
-        // Now, we calculate 10 periods for graphics
-        calculatePeriods();
 
         return this;
     }
@@ -175,7 +177,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
 	private DateTime m_creationDate;
 	private Interval m_fundingInterval;
 	private LatLng m_position;
-	private ArrayList<FundingTimePeriod> m_fundingTimePeriods;
+	private ArrayList<FundingInterval> m_fundingIntervals;
 	private boolean m_validate;
 	private int m_illustration;
 
@@ -187,7 +189,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         this.m_currentFunding = null;
         this.m_creationDate = null;
         this.m_fundingInterval = null;
-        this.m_fundingTimePeriods = null;
+        this.m_fundingIntervals = null;
         this.m_position = null;
         this.m_validate = false;
         this.m_illustration = -1;
@@ -202,7 +204,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
 		this.m_currentFunding = new BigDecimal("0");
 		this.m_creationDate = DateTime.now();
 		this.m_fundingInterval = new Interval(beginDate, endDate);
-		this.m_fundingTimePeriods = new ArrayList<FundingTimePeriod>();
+		this.m_fundingIntervals = new ArrayList<FundingInterval>();
 		this.m_position = position;
 		this.m_validate = false;
 		this.m_illustration = illustration;
@@ -223,7 +225,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         this.m_currentFunding = new BigDecimal(currentFunding);
         this.m_creationDate = DateTime.parse(creationDate);
         this.m_fundingInterval = new Interval(DateTime.parse(beginDate), DateTime.parse(endDate));
-        this.m_fundingTimePeriods = new ArrayList<FundingTimePeriod>();
+        this.m_fundingIntervals = new ArrayList<FundingInterval>();
         this.m_position = new LatLng(latitude, longitude);
         this.m_validate = validate;
         this.m_illustration = illustration;
@@ -240,10 +242,10 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         long dayByPeriod = numberOfDayBetweenStartAndEnd/numberOfPeriod;
 
         for(int i = 0; i < (numberOfPeriod-1); i++){
-            m_fundingTimePeriods.add(new FundingTimePeriod(new Interval(startDateTime, startDateTime.plusDays((int) dayByPeriod))));
+            m_fundingIntervals.add(new FundingInterval(new Interval(startDateTime, startDateTime.plusDays((int) dayByPeriod))));
             startDateTime = startDateTime.plusDays((int) dayByPeriod);
         }
-        m_fundingTimePeriods.add(new FundingTimePeriod(new Interval(startDateTime, endDateTime)));
+        m_fundingIntervals.add(new FundingInterval(new Interval(startDateTime, endDateTime)));
     }
 
 	public String getName() {
@@ -282,8 +284,8 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         m_proposedBy.toResource(userWhatToDo);
     }
     
-    public ArrayList<FundingTimePeriod> getFundtingTimeGraphData(){
-    	return this.m_fundingTimePeriods;
+    public ArrayList<FundingInterval> getFundtingTimeGraphData(){
+    	return this.m_fundingIntervals;
     }
 
     public void getCommentaries(WhatToDo<Commentary> commentaryWhatToDo) {
@@ -301,6 +303,14 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
     
     public Interval getFundingInterval(){
     	return this.m_fundingInterval;
+    }
+
+    public FundingInterval getFundingTime(int index) throws IndexOutOfBoundsException {
+        if(index < 0 || index > 9) {
+            throw new IndexOutOfBoundsException();
+        }
+
+        return m_fundingIntervals.get(index);
     }
 
 	/**

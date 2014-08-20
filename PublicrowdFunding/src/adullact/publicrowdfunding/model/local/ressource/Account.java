@@ -53,9 +53,14 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
 
     public static Account getOwn() throws NoAccountExistsInLocal {
         if(m_own == null) {
-            Account account =  new Account(PublicrowdFundingApplication.context());
-            m_own = account;
-            m_own.initialize();
+            try {
+                m_own = new Account(PublicrowdFundingApplication.context());
+                m_own.initialize();
+            }
+            catch(NoAccountExistsInLocal exception) {
+                m_own = null; // Set to null to keep own account null
+                throw exception;
+            }
         }
 
         return m_own;

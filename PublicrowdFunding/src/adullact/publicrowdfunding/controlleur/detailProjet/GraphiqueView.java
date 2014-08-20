@@ -6,19 +6,16 @@ import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
 import adullact.publicrowdfunding.model.local.ressource.Project;
-import adullact.publicrowdfunding.model.local.utilities.FundingTimePeriod;
+import adullact.publicrowdfunding.model.local.utilities.FundingInterval;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Path;
-import android.graphics.Rect;
-import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
 
 /**
  * @author Nelaupe Lucas
@@ -31,7 +28,7 @@ public class GraphiqueView extends View {
 	private float positionY;
 	private int[] avancement = new int[11];
 	private Project projet;
-	private ArrayList<FundingTimePeriod> data;
+	private ArrayList<FundingInterval> data;
 
 	/**
 	 * @param context
