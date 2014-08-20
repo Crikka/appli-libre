@@ -8,4 +8,6 @@ public class ServerUser {
     public String mail;
     public String name;
     public String firstName;
+    public String city;
+    public String sexe;
 }

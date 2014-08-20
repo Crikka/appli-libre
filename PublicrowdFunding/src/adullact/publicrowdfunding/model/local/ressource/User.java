@@ -22,6 +22,8 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
 	private String m_pseudo;
 	private String m_name;
 	private String m_firstName;
+	private String m_city;
+	private String m_sexe;
 
     /* ----- Resource ----- */
     @Override
@@ -41,7 +43,9 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
         serverUser.mail = "";
         serverUser.name = this.m_name;
         serverUser.firstName = this.m_firstName;
-
+        serverUser.city = this.m_city;
+        serverUser.sexe = this.m_sexe;
+    
         return serverUser;
     }
 
@@ -54,7 +58,9 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
         m_pseudo = serverUser.pseudo;
         m_name = serverUser.name;
         m_firstName = serverUser.firstName;
-
+        m_city = serverUser.city;
+        m_sexe = serverUser.sexe;
+        
         return this;
     }
 
@@ -96,12 +102,16 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
 		this.m_pseudo = null;
 		this.m_name = null;
 		this.m_firstName = null;
+		this.m_city = null;
+		this.m_sexe = null;
 	}
 
-    public User(String pseudo, String name, String firstName) {
+    public User(String pseudo, String name, String firstName, String city, String sexe) {
         this.m_pseudo = pseudo;
         this.m_name = name;
         this.m_firstName = firstName;
+        this.m_city = city;
+        this.m_sexe = sexe;
     }
 
 	/* Getter */
@@ -115,6 +125,14 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
 
 	public String getPseudo() {
 		return m_pseudo;
+	}
+	
+	public String getCity() {
+		return m_city;
+	}
+	
+	public String getSexe(){
+		return m_sexe;
 	}
 	
 	public void getBookmarkedProjects(final WhatToDo<Project> projectWhatToDo) {
@@ -162,6 +180,14 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
 
     public void setFirstName(String firstName) {
         m_firstName = firstName;
+    }
+    
+    public void setCity(String city){
+    	m_city = city;
+    }
+    
+    public void setSexe(String sexe){
+    	m_sexe = sexe;
     }
     /* ------- */
     

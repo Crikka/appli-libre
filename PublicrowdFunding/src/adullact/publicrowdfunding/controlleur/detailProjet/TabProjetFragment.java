@@ -30,6 +30,7 @@ public class TabProjetFragment extends Fragment {
 	private TextView m_jour_restant;
 	private TextView m_utilisateur_soumission;
 	private TextView m_pourcentage_accomplish;
+	private TextView m_utilisateur_ville;
 
 	private Button m_payer;
 	private Button m_mail;
@@ -39,6 +40,7 @@ public class TabProjetFragment extends Fragment {
 	private Button m_connexion;
 
 	private ImageView m_illustration;
+	private ImageView m_avatar;
 
 	private Project projet;
 	private User user;
@@ -81,9 +83,11 @@ public class TabProjetFragment extends Fragment {
 		m_utilisateur_soumission = (TextView) view
 				.findViewById(R.id.utilisateur_soumission);
 		m_current_funding = (TextView) view.findViewById(R.id.sommeFund);
-
 		m_pourcentage_accomplish = (TextView) view
 				.findViewById(R.id.pourcentage_accomplit);
+		m_utilisateur_ville = (TextView) view
+				.findViewById(R.id.ville);
+		
 
 		m_mail = (Button) view.findViewById(R.id.mail);
 		m_website = (Button) view.findViewById(R.id.website);
@@ -91,6 +95,7 @@ public class TabProjetFragment extends Fragment {
 
 		m_illustration = (ImageView) view.findViewById(R.id.icon);
 
+		m_avatar = (ImageView) view.findViewById(R.id.avatar);
 		
 		m_connexion = (Button) view.findViewById(R.id.connexion);
 		m_connexion.setOnClickListener(new View.OnClickListener() {
@@ -118,6 +123,14 @@ public class TabProjetFragment extends Fragment {
 			public void hold(User resource) {
 				user = resource;
 				m_utilisateur_soumission.setText(resource.getPseudo());
+				m_utilisateur_ville.setText(resource.getCity());
+				if(user.getSexe().equals("0")){
+					m_avatar.setImageResource(R.drawable.male_user_icon);
+				} else {
+					m_avatar.setImageResource(R.drawable.female_user_icon);
+				}
+			
+				
 			}
 
 			@Override

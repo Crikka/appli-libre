@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -37,6 +38,7 @@ public class CommentaireAdapteur extends ArrayAdapter<Commentary> {
 	private TextView titre;
 	private Vector<Commentary> commentaries = new Vector<Commentary>();
 	private LinearLayout layout;
+	private ImageView avatar;
 
 	public void setCommentaries(Vector<Commentary> object) {
 		commentaries = object;
@@ -70,19 +72,23 @@ public class CommentaireAdapteur extends ArrayAdapter<Commentary> {
 
 		commentaire = (TextView) row.findViewById(R.id.comment);
 		commentaire.setText(coment.getMessage());
-		
+
 		titre = (TextView) row.findViewById(R.id.titre);
 		titre.setText(coment.getTitle());
 
+		utilisateurVille = (TextView) row.findViewById(R.id.utilisateur_ville);
+
+		avatar = (ImageView) row.findViewById(R.id.avatar);
+
 		rating = (RatingBar) row.findViewById(R.id.rating);
-		rating.setRating((float)coment.getMark());
+		rating.setRating((float) coment.getMark());
 		rating.setOnTouchListener(new OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				// TODO Auto-generated method stub
 				return true;
 			}
-	    });
+		});
 		rating.setFocusable(false);
 		utilisateurName = (TextView) row.findViewById(R.id.utilisateur_name);
 		coment.getUser(new WhatToDo<User>() {
@@ -90,6 +96,12 @@ public class CommentaireAdapteur extends ArrayAdapter<Commentary> {
 			@Override
 			public void hold(User resource) {
 				utilisateurName.setText(resource.getPseudo());
+				utilisateurVille.setText(resource.getCity());
+				if (resource.getSexe().equals("0")) {
+					avatar.setImageResource(R.drawable.male_user_icon);
+				} else {
+					avatar.setImageResource(R.drawable.female_user_icon);
+				}
 			}
 
 			@Override
@@ -98,7 +110,7 @@ public class CommentaireAdapteur extends ArrayAdapter<Commentary> {
 			}
 
 		});
-		
+
 		return row;
 	}
 
