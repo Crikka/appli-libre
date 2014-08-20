@@ -26,7 +26,6 @@ public class GraphiqueView extends View {
 	private boolean isDrawing;
 	private float positionX;
 	private float positionY;
-	// private int[] avancement = new int[11];
 	private Project projet;
 
 	/**

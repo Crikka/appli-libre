@@ -127,6 +127,7 @@ public class TabProjetFragment extends Fragment {
 
 		});
 		
+		
 		LinearLayout userLayoutButton= (LinearLayout) view.findViewById(R.id.layoutUser);
 		userLayoutButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
