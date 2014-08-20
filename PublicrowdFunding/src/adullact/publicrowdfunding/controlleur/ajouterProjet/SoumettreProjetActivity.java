@@ -71,7 +71,7 @@ public class SoumettreProjetActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.soumettre_projet);
+		setContentView(R.layout.activity_add_projet);
 
 		
 		try {

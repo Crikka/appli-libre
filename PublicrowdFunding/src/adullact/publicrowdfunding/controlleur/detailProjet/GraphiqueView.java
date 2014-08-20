@@ -85,18 +85,6 @@ public class GraphiqueView extends View {
 
 		ArrayList<FundingInterval> graphData = projet.getFundingIntervals();
 		paint.setAntiAlias(true);
-		
-		
-		 System.out.println("x->"+projet.getFundingIntervalAt(0).getTotal());
-		ArrayList<FundingInterval> fundingIntervals = projet.getFundingIntervals(); // Oublie pas le s à la fin
-
-		int x = 0;
-		for(FundingInterval fundingInterval : fundingIntervals) {
-		   System.out.println("x:"+x+"->"+fundingInterval.getTotal());
-		    x++;
-		}
-		
-		
 
 		int largeur = canvas.getWidth() - 10;
 		int hauteur = largeur;

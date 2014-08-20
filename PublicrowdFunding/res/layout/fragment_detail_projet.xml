@@ -3,7 +3,6 @@
     android:id="@+id/linearLayoutDetail"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="#f0f0f0"
     android:orientation="vertical" >
 
     <ScrollView
@@ -58,8 +57,8 @@
                 android:background="@drawable/buttonshapes"
                 android:gravity="center_vertical"
                 android:padding="3dip"
-                android:textColor="#808080"
                 android:text="@string/project_description"
+                android:textColor="#808080"
                 android:textSize="20sp" />
 
             <TableLayout
@@ -229,20 +228,13 @@
                         android:gravity="right" />
                 </RelativeLayout>
             </LinearLayout>
-            
-            
-            <adullact.publicrowdfunding.controlleur.detailProjet.drawLine
-                android:id="@+id/svbar"
-                android:layout_width="wrap_content"
-                android:layout_height="6dp"
-                android:layout_marginTop="10dp" />
 
             <adullact.publicrowdfunding.controlleur.detailProjet.GraphiqueView
                 android:id="@+id/graphique"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp" />
-         
+                android:layout_marginTop="10dp"
+                android:background="@drawable/buttonshapes" />
         </LinearLayout>
     </ScrollView>
 
@@ -266,8 +258,8 @@
             android:textColor="#808080"
             android:textSize="25sp" />
     </LinearLayout>
-    
-        <LinearLayout
+
+    <LinearLayout
         android:id="@+id/disconnect"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

@@ -25,7 +25,7 @@ public class TabFavorisFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		View view = inflater.inflate(R.layout.fragment_ab, container, false);
+		View view = inflater.inflate(R.layout.fragment_liste_projet, container, false);
 
 		final ListView listv = (ListView) view.findViewById(R.id.liste);
 		
@@ -52,7 +52,7 @@ public class TabFavorisFragment extends Fragment {
 		 */
 		
 		ArrayAdapter<Project> adapter = new CustomAdapter(this.getActivity()
-				.getBaseContext(), R.layout.projet_list, new Vector<Project>());
+				.getBaseContext(), R.layout.projet_adaptor, new Vector<Project>());
 
 		listv.setAdapter(adapter);
 		listv.setOnItemClickListener(new OnItemClickListener() {

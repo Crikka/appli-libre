@@ -34,7 +34,7 @@ public class TabProjetsFinanceFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		final View view = inflater.inflate(R.layout.fragment_ab, container,
+		final View view = inflater.inflate(R.layout.fragment_liste_projet, container,
 				false);
 
 		listeProjets = (ListView) view.findViewById(R.id.liste);
@@ -72,7 +72,7 @@ public class TabProjetsFinanceFragment extends Fragment {
 		});
 
 		ArrayAdapter<Project> adapter = new CustomAdapter(this.getActivity()
-				.getBaseContext(), R.layout.projet_list, funded);
+				.getBaseContext(), R.layout.projet_adaptor, funded);
 
 		listeProjets.setAdapter(adapter);
 		listeProjets.setOnItemClickListener(new OnItemClickListener() {

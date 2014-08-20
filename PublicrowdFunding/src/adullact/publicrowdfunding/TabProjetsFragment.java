@@ -26,7 +26,7 @@ public class TabProjetsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        final View view = inflater.inflate(R.layout.fragment_ab, container, false);
+        final View view = inflater.inflate(R.layout.fragment_liste_projet, container, false);
 
         listeProjets = (ListView) view.findViewById(R.id.liste);
 
@@ -34,7 +34,7 @@ public class TabProjetsFragment extends Fragment {
 		listeProjets.setEmptyView(empty);
         
         ArrayAdapter<Project> adapter = new CustomAdapter(this.getActivity()
-                .getBaseContext(), R.layout.projet_list, new Vector<Project>(SyncServerToLocal.getInstance().getProjects()));
+                .getBaseContext(), R.layout.projet_adaptor, new Vector<Project>(SyncServerToLocal.getInstance().getProjects()));
 
         listeProjets.setAdapter(adapter);
         listeProjets.setOnItemClickListener(new OnItemClickListener() {

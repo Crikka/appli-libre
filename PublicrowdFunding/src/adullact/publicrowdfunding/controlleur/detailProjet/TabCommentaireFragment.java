@@ -46,7 +46,7 @@ public class TabCommentaireFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		final View view = inflater.inflate(R.layout.detail_projet_commentaire,
+		final View view = inflater.inflate(R.layout.fragment_list_commentaire,
 				container, false);
 
 		layoutConnect = (LinearLayout) view.findViewById(R.id.connect);

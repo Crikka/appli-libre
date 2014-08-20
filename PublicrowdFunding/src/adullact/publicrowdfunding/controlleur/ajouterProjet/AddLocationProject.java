@@ -24,7 +24,7 @@ public class AddLocationProject extends FragmentActivity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.maps);
+		setContentView(R.layout.fragment_maps);
 		InitialiseMap();
 
 		Intent data = getIntent();
