@@ -74,6 +74,7 @@ public class MainActivity extends Activity implements TabListener {
 	private ActionBar bar;
 
 	private AlertDialog dialog;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -206,7 +207,7 @@ public class MainActivity extends Activity implements TabListener {
 						}
 					}
 				});
-				
+
 				dialog = alertDialog.create();
 				dialog.show();
 
@@ -246,15 +247,14 @@ public class MainActivity extends Activity implements TabListener {
 	}
 
 	public void isConnect() {
-		layoutConnect.setVisibility(View.VISIBLE);
-		layoutDisconnect.setVisibility(View.GONE);
-		/*
-		 * 
-		 * try { Account.getOwn(); layoutConnect.setVisibility(View.VISIBLE);
-		 * layoutDisconnect.setVisibility(View.GONE); } catch
-		 * (NoAccountExistsInLocal e1) { layoutConnect.setVisibility(View.GONE);
-		 * layoutDisconnect.setVisibility(View.VISIBLE); }
-		 */
+		try {
+			Account.getOwn();
+			layoutConnect.setVisibility(View.VISIBLE);
+			layoutDisconnect.setVisibility(View.GONE);
+		} catch (NoAccountExistsInLocal e1) {
+			layoutConnect.setVisibility(View.GONE);
+			layoutDisconnect.setVisibility(View.VISIBLE);
+		}
 	}
 
 	@Override
@@ -354,7 +354,7 @@ public class MainActivity extends Activity implements TabListener {
 		});
 
 	}
-	
+
 	public void sortAlmostFunded() {
 
 		// Du plus petit au plus grand
@@ -362,7 +362,8 @@ public class MainActivity extends Activity implements TabListener {
 
 			@Override
 			public int compare(Project lhs, Project rhs) {
-				if (lhs.getPercentOfAchievement() >= rhs.getPercentOfAchievement()) {
+				if (lhs.getPercentOfAchievement() >= rhs
+						.getPercentOfAchievement()) {
 					return -1;
 				} else {
 					return 1;
