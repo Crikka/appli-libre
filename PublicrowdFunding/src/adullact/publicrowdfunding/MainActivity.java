@@ -1,9 +1,13 @@
 package adullact.publicrowdfunding;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.TreeMap;
 import java.util.Vector;
 
 import adullact.publicrowdfunding.controlleur.ajouterProjet.SoumettreProjetActivity;
+import adullact.publicrowdfunding.controlleur.ajouterProjet.choisirMontantDialog;
 import adullact.publicrowdfunding.controlleur.membre.ConnexionActivity;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
@@ -16,6 +20,8 @@ import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
@@ -25,15 +31,20 @@ import android.content.Intent;
 import android.opengl.Visibility;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.SearchView.OnCloseListener;
 import android.widget.SearchView.OnQueryTextListener;
 
@@ -44,17 +55,25 @@ public class MainActivity extends Activity implements TabListener {
 	private TabProjetsFragment fram1;
 	private TabFavorisFragment fram2;
 	private TabMapFragment fram3;
+
 	private ImageButton m_ajouter_projet;
 	private ImageButton m_mon_compte;
-	private ImageButton m_rechercher;
+	private ImageButton m_sort;
+
 	private Button m_connexion;
+
 	private LinearLayout layoutConnect;
 	private LinearLayout layoutDisconnect;
+
 	private SearchView searchView;
+
 	private SyncServerToLocal sync;
-	protected Vector<Project> projetsToDisplay;
+
+	protected ArrayList<Project> projetsToDisplay;
+
 	private ActionBar bar;
 
+	private AlertDialog dialog;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -64,7 +83,7 @@ public class MainActivity extends Activity implements TabListener {
 		layoutConnect = (LinearLayout) findViewById(R.id.connect);
 		layoutDisconnect = (LinearLayout) findViewById(R.id.disconnect);
 
-		projetsToDisplay = new Vector<Project>();
+		projetsToDisplay = new ArrayList<Project>();
 
 		isConnect();
 
@@ -80,7 +99,9 @@ public class MainActivity extends Activity implements TabListener {
 
 			@Override
 			public void holdAll(ArrayList<Project> projects) {
-				projetsToDisplay = new Vector<Project>(projects);
+
+				projetsToDisplay = projects;
+
 				rl = (FrameLayout) findViewById(R.id.tabcontent);
 
 				bar = getActionBar();
@@ -139,16 +160,59 @@ public class MainActivity extends Activity implements TabListener {
 			}
 		});
 
-		m_rechercher = (ImageButton) findViewById(R.id.button_search);
-		m_rechercher.setOnClickListener(new View.OnClickListener() {
+		m_sort = (ImageButton) findViewById(R.id.button_filtrer);
+		m_sort.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				SearchDialog alertDialogBuilder = new SearchDialog(
-						getBaseContext());
-				alertDialogBuilder.show();
+
+				String names[] = { "Les plus gros projet en premier",
+						"Le plus petit projet en premier", "Le plus avancé" };
+
+				AlertDialog.Builder alertDialog = new AlertDialog.Builder(
+						MainActivity.this);
+				LayoutInflater inflater = getLayoutInflater();
+				View convertView = (View) inflater.inflate(
+						R.layout.simple_listeview, null);
+				alertDialog.setView(convertView);
+				alertDialog.setTitle("List");
+				ListView lv = (ListView) convertView.findViewById(R.id.liste);
+				ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+						MainActivity.this, android.R.layout.simple_list_item_1,
+						names);
+				lv.setAdapter(adapter);
+				lv.setOnItemClickListener(new OnItemClickListener() {
+
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view,
+							int position, long id) {
+
+						switch (position) {
+						case 0:
+							sortBiggestProjectFirst();
+							reLoad();
+							dialog.dismiss();
+							break;
+						case 1:
+							sortBiggestProjectLast();
+							reLoad();
+							dialog.dismiss();
+							break;
+						case 2:
+							sortAlmostFunded();
+							reLoad();
+							dialog.dismiss();
+							break;
+
+						}
+					}
+				});
+				
+				dialog = alertDialog.create();
+				dialog.show();
 
 			}
 		});
+
 	}
 
 	@Override
@@ -182,14 +246,15 @@ public class MainActivity extends Activity implements TabListener {
 	}
 
 	public void isConnect() {
-		try {
-			Account.getOwn();
-			layoutConnect.setVisibility(View.VISIBLE);
-			layoutDisconnect.setVisibility(View.GONE);
-		} catch (NoAccountExistsInLocal e1) {
-			layoutConnect.setVisibility(View.GONE);
-			layoutDisconnect.setVisibility(View.VISIBLE);
-		}
+		layoutConnect.setVisibility(View.VISIBLE);
+		layoutDisconnect.setVisibility(View.GONE);
+		/*
+		 * 
+		 * try { Account.getOwn(); layoutConnect.setVisibility(View.VISIBLE);
+		 * layoutDisconnect.setVisibility(View.GONE); } catch
+		 * (NoAccountExistsInLocal e1) { layoutConnect.setVisibility(View.GONE);
+		 * layoutDisconnect.setVisibility(View.VISIBLE); }
+		 */
 	}
 
 	@Override
@@ -214,31 +279,30 @@ public class MainActivity extends Activity implements TabListener {
 					.getSearchableInfo(getComponentName()));
 		}
 		searchView.setIconifiedByDefault(true);
-		searchView.setOnCloseListener(new OnCloseListener(){
+		searchView.setOnCloseListener(new OnCloseListener() {
 
 			@Override
 			public boolean onClose() {
-				projetsToDisplay  = new Vector<Project>(sync.getProjects());
+				projetsToDisplay = new ArrayList<Project>(sync.getProjects());
 				reLoad();
 				return false;
 			}
-			
+
 		});
-		
-		
+
 		searchView.setOnQueryTextListener(new OnQueryTextListener() {
 
 			public boolean onQueryTextSubmit(String query) {
-				projetsToDisplay = new Vector<Project>(sync.searchInName(query));
+				projetsToDisplay = sync.searchInName(query);
 				reLoad();
 				return false;
 			}
 
 			public boolean onQueryTextChange(String newText) {
 				if (searchView.isShown()) {
-					
-				}else{
-				
+
+				} else {
+
 				}
 				return false;
 			}
@@ -251,8 +315,61 @@ public class MainActivity extends Activity implements TabListener {
 		ActionBar.Tab tab = bar.getSelectedTab();
 		int position = tab.getPosition();
 		bar.removeTab(tab);
-		bar.addTab(tab,position);
+		bar.addTab(tab, position);
 		bar.selectTab(tab);
+	}
+
+	public void sortBiggestProjectFirst() {
+
+		// Du plus petit au plus grand
+		Collections.sort(projetsToDisplay, new Comparator<Project>() {
+
+			@Override
+			public int compare(Project lhs, Project rhs) {
+				if (Integer.parseInt(lhs.getRequestedFunding()) >= Integer
+						.parseInt(rhs.getRequestedFunding())) {
+					return -1;
+				} else {
+					return 1;
+				}
+			}
+		});
+
+	}
+
+	public void sortBiggestProjectLast() {
+
+		// Du plus petit au plus grand
+		Collections.sort(projetsToDisplay, new Comparator<Project>() {
+
+			@Override
+			public int compare(Project lhs, Project rhs) {
+				if (Integer.parseInt(lhs.getRequestedFunding()) >= Integer
+						.parseInt(rhs.getRequestedFunding())) {
+					return 1;
+				} else {
+					return -1;
+				}
+			}
+		});
+
+	}
+	
+	public void sortAlmostFunded() {
+
+		// Du plus petit au plus grand
+		Collections.sort(projetsToDisplay, new Comparator<Project>() {
+
+			@Override
+			public int compare(Project lhs, Project rhs) {
+				if (lhs.getPercentOfAchievement() >= rhs.getPercentOfAchievement()) {
+					return -1;
+				} else {
+					return 1;
+				}
+			}
+		});
+
 	}
 
 }

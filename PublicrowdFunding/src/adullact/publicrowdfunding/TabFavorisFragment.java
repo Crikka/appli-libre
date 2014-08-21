@@ -26,7 +26,7 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class TabFavorisFragment extends Fragment {
 
-	private Vector<Project> projectToDisplay;
+	private ArrayList<Project> projectToDisplay;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,7 +36,7 @@ public class TabFavorisFragment extends Fragment {
 
 		final ListView listv = (ListView) view.findViewById(R.id.liste);
 		
-		projectToDisplay = new Vector<Project>();
+		projectToDisplay = new ArrayList<Project>();
 		
 		TextView empty = (TextView) view.findViewById(R.id.empty);
 		listv.setEmptyView(empty);
@@ -51,7 +51,7 @@ public class TabFavorisFragment extends Fragment {
 
 						@Override
 						public void holdAll(ArrayList<Project> resources) {
-							projectToDisplay = new Vector<Project>(resources);
+							projectToDisplay = resources;
 							
 						}
 

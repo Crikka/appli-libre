@@ -248,10 +248,6 @@ public class SoumettreProjetActivity extends Activity {
 			}
 			somme = m_edit_text_somme.getText().toString();
 			
-			
-			
-			
-			
 			Date now = new Date();
 
 			Date date_fin = new Date();

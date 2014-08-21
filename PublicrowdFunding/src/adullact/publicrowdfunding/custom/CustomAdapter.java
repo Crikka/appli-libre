@@ -1,5 +1,6 @@
 package adullact.publicrowdfunding.custom;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 import adullact.publicrowdfunding.R;
@@ -17,9 +18,9 @@ public class CustomAdapter extends ArrayAdapter<Project> {
 
 	Context mContext;
 	int layoutResourceId;
-	Vector<Project> data = null;
+	ArrayList<Project> data = null;
 
-	public CustomAdapter(Context context, int resource, Vector<Project> listItem) {
+	public CustomAdapter(Context context, int resource, ArrayList<Project> listItem) {
 		super(context, resource, listItem);
 		this.mContext = context;
 		this.layoutResourceId = resource;
@@ -71,7 +72,7 @@ public class CustomAdapter extends ArrayAdapter<Project> {
 			holder = (UserHolder) v.getTag();
 		}
 
-		Project projet = data.elementAt(position);
+		Project projet = data.get(position);
 		holder.titre_projet_liste.setText(projet.getName());
 		holder.description_projet_liste.setText(projet.getDescription());
 		holder.temps_restant_projet_liste.setText(projet.getNumberOfDayToEnd()

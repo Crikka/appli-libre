@@ -38,7 +38,7 @@ public class TabProjetsSoumisFragment extends Fragment {
 		listeProjets = (ListView) view.findViewById(R.id.liste);
 
 		ArrayAdapter<Project> adapter = new CustomAdapter(this.getActivity()
-				.getBaseContext(), R.layout.projet_adaptor, new Vector<Project>());
+				.getBaseContext(), R.layout.projet_adaptor, new ArrayList<Project>());
 
 
 		listeProjets.setAdapter(adapter);

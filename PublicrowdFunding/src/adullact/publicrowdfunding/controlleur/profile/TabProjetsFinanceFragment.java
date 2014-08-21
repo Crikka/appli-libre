@@ -28,7 +28,7 @@ import java.util.Vector;
 public class TabProjetsFinanceFragment extends Fragment {
 
 	private ListView listeProjets;
-	private Vector<Project> funded;
+	private ArrayList<Project> funded;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,7 +38,7 @@ public class TabProjetsFinanceFragment extends Fragment {
 				false);
 
 		listeProjets = (ListView) view.findViewById(R.id.liste);
-		funded = new Vector<Project>();
+		funded = new ArrayList<Project>();
 
 		Account compte = null;
 		try {
@@ -57,7 +57,7 @@ public class TabProjetsFinanceFragment extends Fragment {
 
 					@Override
 					public void holdAll(ArrayList<Project> resources) {
-						funded = new Vector<Project>(resources);
+						funded = resources;
 
 					}
 				});

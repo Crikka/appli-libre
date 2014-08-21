@@ -1,11 +1,11 @@
 package adullact.publicrowdfunding;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Vector;
 
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
-
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -29,7 +29,7 @@ public class TabMapFragment extends Fragment implements
 	private MapFragment fragment;
 	private FragmentManager fm;
 	private ProgressDialog mprogressDialog;
-	private Vector<Project> projets;
+	private ArrayList<Project> projets;
 	private View rootView;
 	private GoogleMap googleMap;
 	private HashMap<Marker, String> markers = new HashMap<Marker, String>();
