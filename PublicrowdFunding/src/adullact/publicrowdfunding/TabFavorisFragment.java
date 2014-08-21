@@ -1,11 +1,16 @@
 package adullact.publicrowdfunding;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 import adullact.publicrowdfunding.controlleur.detailProjet.MainActivity;
 import adullact.publicrowdfunding.custom.CustomAdapter;
+import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
+import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
+import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.Project;
+import adullact.publicrowdfunding.model.local.ressource.User;
 import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import android.app.Fragment;
 import android.content.Intent;
@@ -21,6 +26,8 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class TabFavorisFragment extends Fragment {
 
+	private Vector<Project> projectToDisplay;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -29,30 +36,45 @@ public class TabFavorisFragment extends Fragment {
 
 		final ListView listv = (ListView) view.findViewById(R.id.liste);
 		
+		projectToDisplay = new Vector<Project>();
+		
 		TextView empty = (TextView) view.findViewById(R.id.empty);
 		listv.setEmptyView(empty);
+		
+		try {
+			Account accout = Account.getOwn();
+			accout.getUser(new WhatToDo<User>(){
 
-		/*
-		adullact.publicrowdfunding.model.local.ressource.User user = 
-		user.getBookmarkedProjects(new WhatToDo<Project>(){
+				@Override
+				public void hold(User resource) {
+					resource.getBookmarkedProjects(new HoldAllToDo<Project>(){
 
-			@Override
-			public void hold(Project resource) {
-				// TODO Auto-generated method stub
+						@Override
+						public void holdAll(ArrayList<Project> resources) {
+							projectToDisplay = new Vector<Project>(resources);
+							
+						}
+
+						
+					});
+					
+				}
+
+				@Override
+				public void eventually() {
+					// TODO Auto-generated method stub
+					
+				}
 				
-			}
+			});
+		} catch (NoAccountExistsInLocal e) {
+			// TODO Auto-generated catch block
+			// Pas connecté
+		}
 
-			@Override
-			public void eventually() {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
-		 */
 		
 		ArrayAdapter<Project> adapter = new CustomAdapter(this.getActivity()
-				.getBaseContext(), R.layout.projet_adaptor, new Vector<Project>());
+				.getBaseContext(), R.layout.projet_adaptor, projectToDisplay);
 
 		listv.setAdapter(adapter);
 		listv.setOnItemClickListener(new OnItemClickListener() {

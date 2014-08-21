@@ -55,28 +55,32 @@ public class ConnexionActivity extends Activity {
 
 				String login = m_login.getText().toString();
 				String password = m_password.getText().toString();
-
-				AuthenticationRequest request = new AuthenticationRequest(
+				
+				 new AuthenticationRequest(
 						login, password, new AuthenticationEvent() {
 							@Override
 							public void errorUsernamePasswordDoesNotMatch(
 									String username, String password) {
-								Toast.makeText(context,
+								System.out
+										.println("Login ou mot de passe incorect");
+								Toast.makeText(getApplicationContext(),
 										"Login ou mot de passe incorect",
 										Toast.LENGTH_LONG).show();
 							}
 
 							@Override
 							public void onAuthentication() {
-								Toast.makeText(context, "Vous êtes connecté !",
+								Toast.makeText(getApplicationContext(),
+										"Vous êtes connecté !",
 										Toast.LENGTH_LONG).show();
 								finish();
 							}
 
 							@Override
 							public void errorNetwork() {
+								System.out.println("Erreur serveur");
 								Toast.makeText(
-										context,
+										getApplicationContext(),
 										"Connexion impossible au serveur, veuillez vérifier vos paramètres resaux.",
 										Toast.LENGTH_LONG).show();
 							}

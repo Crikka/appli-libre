@@ -41,11 +41,20 @@ public class SoumettreProjetActivity extends Activity {
 
 	private EditText m_titre;
 	private EditText m_Description;
-	private DatePicker m_dateFin;
-	private Button m_localisation;
 	private EditText m_edit_text_somme;
-	private Context context;
+	private EditText m_email;
+	private EditText m_phone;
+	private EditText m_website;
+	
 	private TextView m_user_pseudo;
+	private TextView m_user_ville;
+	
+	private DatePicker m_dateFin;
+	
+	private Button m_localisation;
+
+	private Context context;
+
 	private int m_illustration;
 
 	private LatLng position;
@@ -73,6 +82,7 @@ public class SoumettreProjetActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_projet);
 
+		
 		
 		try {
 			Account compte = Account.getOwn();
@@ -108,10 +118,33 @@ public class SoumettreProjetActivity extends Activity {
 		m_localisation = (Button) findViewById(R.id.button_localisation);
 		m_edit_text_somme = (EditText) findViewById(R.id.edit_text_somme);
 		m_user_pseudo = (TextView) findViewById(R.id.utilisateur_soumission);
+		m_user_ville = (TextView) findViewById(R.id.ville);
+		
+		m_email = (EditText) findViewById(R.id.mail);
+		m_website =  (EditText) findViewById(R.id.website);
+		m_phone =  (EditText) findViewById(R.id.phone);
 
+		m_edit_text_somme = (EditText) findViewById(R.id.edit_text_somme);
+		
+		position = new LatLng(0,0);
+		
 		try {
 			Account count = Account.getOwn();
-			m_user_pseudo.setText(count.getResourceId());
+			count.getUser(new WhatToDo<User>(){
+
+				@Override
+				public void hold(User resource) {
+					m_user_pseudo.setText(resource.getPseudo());
+					m_user_ville.setText(resource.getCity());
+				}
+
+				@Override
+				public void eventually() {
+					// TODO Auto-generated method stub
+					
+				}
+				
+			});
 		} catch (NoAccountExistsInLocal e) {
 			finish();
 		}
@@ -207,6 +240,18 @@ public class SoumettreProjetActivity extends Activity {
 			}
 			description = m_Description.getText().toString();
 
+			String somme = null;
+			if (m_edit_text_somme.length() == 0) {
+				Toast.makeText(context, "Merci de mettre la somme désiré",
+						Toast.LENGTH_SHORT).show();
+				return false;
+			}
+			somme = m_edit_text_somme.getText().toString();
+			
+			
+			
+			
+			
 			Date now = new Date();
 
 			Date date_fin = new Date();
@@ -220,28 +265,36 @@ public class SoumettreProjetActivity extends Activity {
 			new Project(titre, 
 					description, 
 					user.getResourceId(), 
-					"10000",
+					somme,
 					Utility.stringToDateTime("2014-09-04 00:00:00"),
 					Utility.stringToDateTime("2014-10-04 00:00:00"),
 					new LatLng(position.latitude, position.longitude),
-					m_illustration, "","","").serverCreate(new CreateEvent<Project>() {
+					m_illustration,
+					m_email.getText().toString(),
+					m_website.getText().toString(),
+					m_phone.getText().toString()).serverCreate(new CreateEvent<Project>() {
 				@Override
 				public void errorResourceIdAlreadyUsed() {
 					System.out.println("id déja utilisé");
+					Toast.makeText(getApplicationContext(), "Erreur interne du serveur", Toast.LENGTH_SHORT).show();
 				}
 
 				@Override
 				public void onCreate(Project resource) {
-					System.out.println("Creation du compte");
+					System.out.println("Le projet à bien était ajouté");
+					Toast.makeText(getApplicationContext(), "Le projet à bien était ajouté", Toast.LENGTH_SHORT).show();
+					finish();
 				}
 
 				@Override
 				public void errorAuthenticationRequired() {
+					Toast.makeText(getApplicationContext(), "Vous devez vous authentifier", Toast.LENGTH_SHORT).show();
 					System.out.println("Auth required");
 				}
 
 				@Override
 				public void errorNetwork() {
+					Toast.makeText(getApplicationContext(), "Probléme avec le réseau", Toast.LENGTH_SHORT).show();
 					System.out.println("network error");
 				}
 			});
