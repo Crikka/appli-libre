@@ -22,16 +22,12 @@ public class FundingInterval {
     }
 
     public long getTotal() {
-        long result = 0;
+        BigDecimal result = BigDecimal.ZERO;
 
         for(Funding funding : m_funding) {
-        	result += funding.getValue().longValue();
+            result = result.add(funding.getValue());
         }
-        return result;
+
+        return result.longValue();
     }
-  
-	
-	public boolean correspondsToPeriod(DateTime dateTime){
-		return m_interval.contains(dateTime);
-	}
 }

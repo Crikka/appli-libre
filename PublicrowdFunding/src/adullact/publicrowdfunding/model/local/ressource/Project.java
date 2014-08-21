@@ -124,7 +124,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
                 public void hold(Funding resource) {
                     resource.syncFromServer(serverFunding);
                     long numberOfDayFromBegin = new Duration(m_fundingInterval.getStart(), resource.getDate()).getStandardDays();
-                    m_fundingIntervals.get((int) (numberOfDayFromBegin/numberOfDayByPeriod)-1).addFunding(resource);
+                    m_fundingIntervals.get((int) (numberOfDayFromBegin/numberOfDayByPeriod)).addFunding(resource);
                     m_funding.add(funding);
                 }
             });
