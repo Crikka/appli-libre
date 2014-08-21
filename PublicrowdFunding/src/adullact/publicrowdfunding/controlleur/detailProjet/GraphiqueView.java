@@ -162,6 +162,7 @@ public class GraphiqueView extends View {
 
 		}
 
+		long somme = 0;
 		for (int i = 0; i < nombreDeCarre; i++) {
 
 			if (graphData.get(i).getTotal() == 0) {
@@ -169,7 +170,10 @@ public class GraphiqueView extends View {
 			}
 			
 			long data = graphData.get(i).getTotal();
-			long pourcentage = (data * 100) / Long.parseLong(projet.getRequestedFunding());
+			
+			
+			somme +=  data;
+			long pourcentage = (somme * 100) / Long.parseLong(projet.getRequestedFunding());
 			
 			System.out.println(pourcentage+"%");
 			
