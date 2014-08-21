@@ -36,7 +36,7 @@ public class TabProjetFragment extends Fragment {
 	private Button m_mail;
 	private Button m_website;
 	private Button m_call;
-	
+
 	private Button m_connexion;
 
 	private ImageView m_illustration;
@@ -44,7 +44,7 @@ public class TabProjetFragment extends Fragment {
 
 	private Project projet;
 	private User user;
-	
+
 	private LinearLayout layoutConnect;
 	private LinearLayout layoutDisconnect;
 
@@ -52,16 +52,14 @@ public class TabProjetFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		final View view = inflater.inflate(R.layout.fragment_detail_projet, container,
-				false);
+		final View view = inflater.inflate(R.layout.fragment_detail_projet,
+				container, false);
 
-		
 		layoutConnect = (LinearLayout) view.findViewById(R.id.connect);
 		layoutDisconnect = (LinearLayout) view.findViewById(R.id.disconnect);
 
 		isConnect();
-		
-	
+
 		final MainActivity activity = (MainActivity) getActivity();
 		projet = activity.getIdProjet();
 
@@ -85,9 +83,7 @@ public class TabProjetFragment extends Fragment {
 		m_current_funding = (TextView) view.findViewById(R.id.sommeFund);
 		m_pourcentage_accomplish = (TextView) view
 				.findViewById(R.id.pourcentage_accomplit);
-		m_utilisateur_ville = (TextView) view
-				.findViewById(R.id.ville);
-		
+		m_utilisateur_ville = (TextView) view.findViewById(R.id.ville);
 
 		m_mail = (Button) view.findViewById(R.id.mail);
 		m_website = (Button) view.findViewById(R.id.website);
@@ -96,27 +92,42 @@ public class TabProjetFragment extends Fragment {
 		m_illustration = (ImageView) view.findViewById(R.id.icon);
 
 		m_avatar = (ImageView) view.findViewById(R.id.avatar);
-		
+
 		m_connexion = (Button) view.findViewById(R.id.connexion);
 		m_connexion.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent in = new Intent(
-						activity.getApplicationContext(),
+				Intent in = new Intent(activity.getApplicationContext(),
 						ConnexionActivity.class);
 				startActivity(in);
 			}
 		});
 
-		
-		
 		if (projet.getIllustration() != 0) {
 			m_illustration.setImageResource(Utility.getDrawable(projet
 					.getIllustration()));
 		} else {
 			m_illustration.setImageResource(R.drawable.ic_launcher);
 		}
-		
+
+		if (projet.getEmail().length() == 0) {
+			m_mail.setVisibility(View.GONE);
+		} else {
+			m_mail.setText(projet.getEmail());
+		}
+
+		if (projet.getWebsite().length() == 0) {
+			m_website.setVisibility(View.GONE);
+		} else {
+			m_website.setText(projet.getWebsite());
+		}
+
+		if (projet.getPhone().length() == 0) {
+			m_call.setVisibility(View.GONE);
+		} else {
+			m_call.setText(projet.getPhone());
+		}
+
 		projet.getUser(new WhatToDo<User>() {
 
 			@Override
@@ -124,13 +135,12 @@ public class TabProjetFragment extends Fragment {
 				user = resource;
 				m_utilisateur_soumission.setText(resource.getPseudo());
 				m_utilisateur_ville.setText(resource.getCity());
-				if(user.getSexe().equals("0")){
+				if (user.getSexe().equals("0")) {
 					m_avatar.setImageResource(R.drawable.male_user_icon);
 				} else {
 					m_avatar.setImageResource(R.drawable.female_user_icon);
 				}
-			
-				
+
 			}
 
 			@Override
@@ -139,12 +149,12 @@ public class TabProjetFragment extends Fragment {
 			}
 
 		});
-		
-		
-		LinearLayout userLayoutButton= (LinearLayout) view.findViewById(R.id.layoutUser);
+
+		LinearLayout userLayoutButton = (LinearLayout) view
+				.findViewById(R.id.layoutUser);
 		userLayoutButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				
+
 				String id = user.getCache().getResourceId();
 				Context c = getActivity().getBaseContext();
 				Intent in = new Intent(
@@ -156,8 +166,6 @@ public class TabProjetFragment extends Fragment {
 
 			}
 		});
-		
-		
 
 		m_pourcentage_accomplish
 				.setText(projet.getPercentOfAchievement() + "%");
@@ -184,8 +192,7 @@ public class TabProjetFragment extends Fragment {
 
 		return view;
 	}
-	
-	
+
 	public void isConnect() {
 		try {
 			Account.getOwn();
@@ -196,6 +203,5 @@ public class TabProjetFragment extends Fragment {
 			layoutDisconnect.setVisibility(View.VISIBLE);
 		}
 	}
-	
-	
+
 }

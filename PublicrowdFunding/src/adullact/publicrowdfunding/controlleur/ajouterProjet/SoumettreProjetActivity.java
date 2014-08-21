@@ -224,7 +224,7 @@ public class SoumettreProjetActivity extends Activity {
 					Utility.stringToDateTime("2014-09-04 00:00:00"),
 					Utility.stringToDateTime("2014-10-04 00:00:00"),
 					new LatLng(position.latitude, position.longitude),
-					m_illustration).serverCreate(new CreateEvent<Project>() {
+					m_illustration, "","","").serverCreate(new CreateEvent<Project>() {
 				@Override
 				public void errorResourceIdAlreadyUsed() {
 					System.out.println("id déja utilisé");

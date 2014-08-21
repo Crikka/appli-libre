@@ -76,7 +76,10 @@ public class ProjectsDatabase {
                     cursor.getString(9), // end date
                     cursor.getDouble(10), // latitude
                     cursor.getDouble(11), // longitude
-                    cursor.getInt(12) // illustration
+                    cursor.getInt(12), // illustration
+                    "", // Phone website email
+                    "",
+                    ""
             );
 
             res.add(project);

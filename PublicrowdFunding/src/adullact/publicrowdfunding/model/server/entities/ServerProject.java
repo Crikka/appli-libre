@@ -21,4 +21,7 @@ public class ServerProject {
     public double latitude;
     public double longitude;
     public int illustration;
+    public String email;
+    public String website;
+    public String phone;
 }

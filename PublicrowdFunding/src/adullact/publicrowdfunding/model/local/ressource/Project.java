@@ -60,6 +60,9 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         serverProject.illustration = m_illustration;
         serverProject.beginDate = m_fundingInterval.getStart().toString();
         serverProject.endDate = m_fundingInterval.getEnd().toString();
+        serverProject.email = m_email;
+        serverProject.website = m_website;
+        serverProject.phone = m_phone;
 
         return serverProject;
     }
@@ -80,7 +83,10 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         res.m_validate = serverProject.validate;
         res.m_illustration = serverProject.illustration;
         res.m_fundingInterval = new Interval(Utility.stringToDateTime(serverProject.beginDate), Utility.stringToDateTime(serverProject.endDate));
-
+        res.m_email = serverProject.email;
+        res.m_website = serverProject.website;
+        res.m_phone = serverProject.phone;
+        
         return res;
     }
 
@@ -100,8 +106,12 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         this.m_illustration = detailedServerProject.illustration;
         this.m_fundingInterval = new Interval(Utility.stringToDateTime(detailedServerProject.beginDate), Utility.stringToDateTime(detailedServerProject.endDate));
         this.m_fundingIntervals = new ArrayList<FundingInterval>();
-        this. m_funding = new CacheSet<Funding>();
+        this.m_funding = new CacheSet<Funding>();
         this.m_commentaries = new CacheSet<Commentary>();
+        this.m_email = detailedServerProject.email;
+        this.m_website = detailedServerProject.website;
+        this.m_phone = detailedServerProject.phone;
+        
 
         // Now, we calculate 10 periods for graphics
         calculatePeriods();
@@ -180,6 +190,9 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
 	private ArrayList<FundingInterval> m_fundingIntervals;
 	private boolean m_validate;
 	private int m_illustration;
+	private String m_email;
+	private String m_website;
+	private String m_phone;
 
     public Project() {
         this.m_id = null;
@@ -193,9 +206,12 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         this.m_position = null;
         this.m_validate = false;
         this.m_illustration = -1;
+        this.m_email = null;
+        this.m_website = null;
+        this.m_phone = null;
     }
 
-    public Project(String name, String description, String proposedBy, String requestedFunding, DateTime beginDate, DateTime endDate, LatLng position, int illustration) {
+    public Project(String name, String description, String proposedBy, String requestedFunding, DateTime beginDate, DateTime endDate, LatLng position, int illustration, String email, String website, String phone) {
         this.m_id = null;
 		this.m_name = name;
 		this.m_description = description;
@@ -208,6 +224,9 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
 		this.m_position = position;
 		this.m_validate = false;
 		this.m_illustration = illustration;
+		this.m_email = email;
+		this.m_website = website;
+		this.m_phone = phone;
 		
 		// Now, we calculate 10 periods for graphics
         calculatePeriods();
@@ -216,7 +235,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
     /**
      * Reserved for local database
      */
-    public Project(Integer id, String name, String description, boolean validate, String proposedBy, String requestedFunding, String currentFunding, String creationDate, String beginDate, String endDate, Double latitude, Double longitude, Integer illustration) {
+    public Project(Integer id, String name, String description, boolean validate, String proposedBy, String requestedFunding, String currentFunding, String creationDate, String beginDate, String endDate, Double latitude, Double longitude, Integer illustration, String email, String website, String phone) {
         this.m_id = id;
         this.m_name = name;
         this.m_description = description;
@@ -229,6 +248,9 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         this.m_position = new LatLng(latitude, longitude);
         this.m_validate = validate;
         this.m_illustration = illustration;
+		this.m_email = email;
+		this.m_website = website;
+		this.m_phone = phone;
 
         // Now, we calculate 10 periods for graphics
         calculatePeriods();
@@ -311,6 +333,18 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         }
 
         return m_fundingIntervals.get(index);
+    }
+    
+    public String getEmail(){
+    	return m_email;
+    }
+    
+    public String getWebsite(){
+    	return m_website;
+    }
+    
+    public String getPhone(){
+    	return m_phone;
     }
 
 	/**
