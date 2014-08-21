@@ -36,11 +36,13 @@ public class TabCommentaireFragment extends Fragment {
 
 	private Project projet;
 	private Vector<Commentary> commentaries;
-	
+
 	private LinearLayout layoutConnect;
 	private LinearLayout layoutDisconnect;
-	
+
 	private Button m_connexion;
+
+	protected CommentaireAdapteur adapter;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,25 +53,21 @@ public class TabCommentaireFragment extends Fragment {
 
 		layoutConnect = (LinearLayout) view.findViewById(R.id.connect);
 		layoutDisconnect = (LinearLayout) view.findViewById(R.id.disconnect);
-		
+
 		isConnect();
-		
+
 		final MainActivity activity = (MainActivity) getActivity();
-		
+
 		m_connexion = (Button) view.findViewById(R.id.connexion);
 		m_connexion.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent in = new Intent(
-						activity.getApplicationContext(),
+				Intent in = new Intent(activity.getApplicationContext(),
 						ConnexionActivity.class);
 				startActivity(in);
 			}
 		});
-		
-		
-		
-	
+
 		projet = activity.getIdProjet();
 
 		commentaries = new Vector<Commentary>();
@@ -79,7 +77,7 @@ public class TabCommentaireFragment extends Fragment {
 
 		lv = (ListView) view.findViewById(R.id.commentaires);
 
-		final CommentaireAdapteur adapter = new CommentaireAdapteur(
+		adapter = new CommentaireAdapteur(
 				getActivity().getApplicationContext(),
 				R.layout.listitem_discuss);
 
@@ -92,7 +90,7 @@ public class TabCommentaireFragment extends Fragment {
 		});
 
 		adapter.setCommentaries(commentaries);
-		
+
 		lv.setAdapter(adapter);
 		lv.setOnItemClickListener(new OnItemClickListener() {
 
@@ -142,7 +140,7 @@ public class TabCommentaireFragment extends Fragment {
 		return view;
 
 	}
-	
+
 	public void isConnect() {
 		try {
 			Account.getOwn();

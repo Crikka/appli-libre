@@ -39,13 +39,16 @@ public class CommentaireAdapteur extends ArrayAdapter<Commentary> {
 	private Vector<Commentary> commentaries = new Vector<Commentary>();
 	private LinearLayout layout;
 	private ImageView avatar;
+	private CommentaireAdapteur _this;
 
 	public void setCommentaries(Vector<Commentary> object) {
 		commentaries = object;
+		_this = this;
 	}
 
 	public CommentaireAdapteur(Context context, int textViewResourceId) {
 		super(context, textViewResourceId);
+		this.notifyDataSetChanged();
 	}
 
 	public int getCount() {
@@ -102,6 +105,8 @@ public class CommentaireAdapteur extends ArrayAdapter<Commentary> {
 				} else {
 					avatar.setImageResource(R.drawable.female_user_icon);
 				}
+				_this.notifyDataSetChanged();
+				
 			}
 
 			@Override

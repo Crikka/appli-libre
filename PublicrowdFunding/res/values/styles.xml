@@ -3,7 +3,8 @@
     <color name="bleu">#90083BA6</color>
     <color name="monJaune">#ffff00A6</color>
     <color name="white">#ffffff</color>
-	<color name="background">#d0d0d0</color>
+	<color name="background">#f0f0f0</color>
+	<!--color name="background">#0d0d0d0</color-->
     
     <!--
         Base application theme, dependent on API level. This theme is replaced
