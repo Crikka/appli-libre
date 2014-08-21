@@ -162,20 +162,18 @@ public class GraphiqueView extends View {
 
 		}
 
+		int nbIteration = projet.getNbPeriod();
 		long somme = 0;
-		for (int i = 0; i < nombreDeCarre; i++) {
+		for (int i = 0; i < nbIteration; i++) {
 
-			if (graphData.get(i).getTotal() == 0) {
-			//	break;
+			if (graphData.get(i).getTotal() == -1) {
+				break;
 			}
 			
 			long data = graphData.get(i).getTotal();
 			
-			
 			somme +=  data;
 			long pourcentage = (somme * 100) / Long.parseLong(projet.getRequestedFunding());
-			
-			System.out.println(pourcentage+"%");
 			
 			long newPourcentage =  pourcentage;
 			if (newPourcentage > 100) {

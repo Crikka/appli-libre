@@ -255,6 +255,25 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         // Now, we calculate 10 periods for graphics
         calculatePeriods();
     }
+    
+    
+    // Sert pour le graphique pour couter la ligne au jour en cours et qu'elle ne continue pas dans le futur.
+    public int getNbPeriod(){
+            int numberOfPeriod = 10;
+            DateTime startDateTime = m_fundingInterval.getStart();
+            long numberOfDayBetweenStartAndEnd = m_fundingInterval.toDuration().getStandardDays();
+            long dayByPeriod = numberOfDayBetweenStartAndEnd/numberOfPeriod;
+            DateTime today = new DateTime();
+            for(int i = 0; i < (numberOfPeriod-1); i++){
+            	if(!startDateTime.isBefore(today)){
+            		return i;
+            	} else{
+            		startDateTime = startDateTime.plusDays((int) dayByPeriod);
+            	}
+            }
+            
+          return 10;
+    }
 
     private void calculatePeriods() {
         int numberOfPeriod = 10;
@@ -262,10 +281,10 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         DateTime endDateTime = m_fundingInterval.getEnd();
         long numberOfDayBetweenStartAndEnd = m_fundingInterval.toDuration().getStandardDays();
         long dayByPeriod = numberOfDayBetweenStartAndEnd/numberOfPeriod;
-
+        DateTime today = new DateTime();
         for(int i = 0; i < (numberOfPeriod-1); i++){
-            m_fundingIntervals.add(new FundingInterval(new Interval(startDateTime, startDateTime.plusDays((int) dayByPeriod))));
-            startDateTime = startDateTime.plusDays((int) dayByPeriod);
+        		m_fundingIntervals.add(new FundingInterval(new Interval(startDateTime, startDateTime.plusDays((int) dayByPeriod))));
+            	startDateTime = startDateTime.plusDays((int) dayByPeriod);
         }
         m_fundingIntervals.add(new FundingInterval(new Interval(startDateTime, endDateTime)));
     }

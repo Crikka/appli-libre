@@ -24,12 +24,9 @@ public class FundingInterval {
     public long getTotal() {
         long result = 0;
 
-        System.out.print("result=");
         for(Funding funding : m_funding) {
-        	 System.out.print(funding.getValue()+"+");
         	result += funding.getValue().longValue();
         }
-        System.out.println("="+result);
         return result;
     }
   
