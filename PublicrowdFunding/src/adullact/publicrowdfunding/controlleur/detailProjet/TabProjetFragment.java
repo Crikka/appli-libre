@@ -110,24 +110,27 @@ public class TabProjetFragment extends Fragment {
 			m_illustration.setImageResource(R.drawable.ic_launcher);
 		}
 
-		if (projet.getEmail().length() == 0) {
+		if (projet.getEmail() == null || projet.getEmail().length() == 0) {
 			m_mail.setVisibility(View.GONE);
 		} else {
 			m_mail.setText(projet.getEmail());
 		}
 
-		if (projet.getWebsite().length() == 0) {
+		if (projet.getWebsite() == null || projet.getWebsite().length() == 0) {
 			m_website.setVisibility(View.GONE);
 		} else {
 			m_website.setText(projet.getWebsite());
 		}
 
-		if (projet.getPhone().length() == 0) {
+		if (projet.getPhone() == null || projet.getPhone().length() == 0) {
 			m_call.setVisibility(View.GONE);
 		} else {
 			m_call.setText(projet.getPhone());
 		}
 
+		m_utilisateur_soumission.setText("Loading");
+		m_utilisateur_ville.setText("Loading");
+		
 		projet.getUser(new WhatToDo<User>() {
 
 			@Override

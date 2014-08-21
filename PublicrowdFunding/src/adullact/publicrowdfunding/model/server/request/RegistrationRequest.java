@@ -53,7 +53,7 @@ public class RegistrationRequest extends Request<RegistrationRequest, Registrati
                 }, new Action0() {
                     @Override
                     public void call() {
-                        System.out.println("Hello");
+
                     }
                 });
     }

@@ -41,7 +41,7 @@ public class CreateRequest<TResource extends Resource<TResource, TServerResource
                 }, new Action0() {
                     @Override
                     public void call() {
-                        System.out.println("Hello");
+
                     }
                 });
     }

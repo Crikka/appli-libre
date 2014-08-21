@@ -46,7 +46,7 @@ public class RetrieveRequest<TResource extends Resource<TResource, TServerResour
                         new Action0() {
                             @Override
                             public void call() {
-                                System.out.println("Hello");
+
                             }
                         });
     }

@@ -127,7 +127,7 @@
                 android:max="100"
                 android:layout_marginTop="10dip"
                  android:layout_marginBottom="10dip"
-                android:progress="0"
+                android:progress="100"
                 android:progressDrawable="@drawable/progressbar" />
         </TableLayout>
     </LinearLayout>

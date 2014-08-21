@@ -166,9 +166,6 @@ public class GraphiqueView extends View {
 
 		for (int i = 0; i < nombreDeCarre; i++) {
 
-			System.out.println("i : "+i + " ->"+graphData.get(i).getTotal());
-			
-			
 			if (graphData.get(i).getTotal() == 0) {
 				break;
 			}

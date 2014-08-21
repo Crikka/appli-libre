@@ -46,7 +46,9 @@ public class TabMapFragment extends Fragment implements
 
 		fragment = new MapFragment();
 		fm = getFragmentManager();
-        projets = new Vector<Project>(SyncServerToLocal.getInstance().getProjects());
+		adullact.publicrowdfunding.MainActivity _this = (adullact.publicrowdfunding.MainActivity) getActivity();
+		
+        projets =_this.projetsToDisplay;
 		FragmentTransaction ft = fm.beginTransaction();
 		ft.replace(R.id.tabcontent, fragment, "mapid").commit();
 

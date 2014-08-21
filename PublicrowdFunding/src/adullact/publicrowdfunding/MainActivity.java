@@ -2,6 +2,7 @@ package adullact.publicrowdfunding;
 
 import java.util.ArrayList;
 import java.util.Vector;
+
 import adullact.publicrowdfunding.controlleur.ajouterProjet.SoumettreProjetActivity;
 import adullact.publicrowdfunding.controlleur.membre.ConnexionActivity;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
@@ -33,6 +34,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
+import android.widget.SearchView.OnCloseListener;
 import android.widget.SearchView.OnQueryTextListener;
 
 public class MainActivity extends Activity implements TabListener {
@@ -63,7 +65,7 @@ public class MainActivity extends Activity implements TabListener {
 		layoutDisconnect = (LinearLayout) findViewById(R.id.disconnect);
 
 		projetsToDisplay = new Vector<Project>();
-		
+
 		isConnect();
 
 		final ProgressDialog progressDialog = new ProgressDialog(this);
@@ -71,7 +73,7 @@ public class MainActivity extends Activity implements TabListener {
 		progressDialog.setTitle("Initialisation de l'application");
 		progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 		progressDialog.show();
-		
+
 		sync = SyncServerToLocal.getInstance();
 		final MainActivity _this = this;
 		sync.sync(new HoldAllToDo<Project>() {
@@ -97,12 +99,10 @@ public class MainActivity extends Activity implements TabListener {
 				bar.setDisplayShowTitleEnabled(true);
 				bar.show();
 				progressDialog.dismiss();
-				
+
 			}
 		});
-		
-		
-		
+
 		m_connexion = (Button) findViewById(R.id.connexion);
 		m_connexion.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -198,53 +198,61 @@ public class MainActivity extends Activity implements TabListener {
 		isConnect();
 
 	}
-	
+
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
+
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menu_search, menu);
+		MenuItem searchItem;
+		searchItem = menu.findItem(R.id.SearchWords);
+		assert searchItem != null;
+		searchView = (SearchView) searchItem.getActionView();
+		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+		if (null != searchManager) {
+			searchView.setSearchableInfo(searchManager
+					.getSearchableInfo(getComponentName()));
+		}
+		searchView.setIconifiedByDefault(true);
+		searchView.setOnCloseListener(new OnCloseListener(){
+
+			@Override
+			public boolean onClose() {
+				projetsToDisplay  = new Vector<Project>(sync.getProjects());
+				reLoad();
+				return false;
+			}
+			
+		});
 		
-		  MenuInflater inflater = getMenuInflater();
-	        inflater.inflate(R.menu.menu_search, menu);
-	        MenuItem searchItem;
-	        searchItem = menu.findItem(R.id.SearchWords);
-	        assert searchItem != null;
-	        searchView = (SearchView) searchItem.getActionView();
-	        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-	        if(null!=searchManager ) {
-	            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-	        }
-	        searchView.setIconifiedByDefault(true);
-	        searchView.setOnQueryTextListener(new OnQueryTextListener() {
+		
+		searchView.setOnQueryTextListener(new OnQueryTextListener() {
 
-	            public boolean onQueryTextSubmit(String query) {
-	            	projetsToDisplay = new Vector<Project>(sync.searchInName(query));
-	            	reLoad();
-	                return false;
-	            }
+			public boolean onQueryTextSubmit(String query) {
+				projetsToDisplay = new Vector<Project>(sync.searchInName(query));
+				reLoad();
+				return false;
+			}
 
-	            public boolean onQueryTextChange(String newText) {
-	                if(searchView.isShown()){
-	                    
-	                }
-	                return false;
-	            }
-	        });
-	        return true;
+			public boolean onQueryTextChange(String newText) {
+				if (searchView.isShown()) {
+					
+				}else{
+				
+				}
+				return false;
+			}
+		});
+		return true;
 	}
-	
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2) 
-	public void reLoad(){
-		/*
-		String text = bar.getSelectedTab().getText().toString();
-		System.out.println(text);
-		getFragmentManager().executePendingTransactions();
-		Fragment frg = getFragmentManager().findFragmentByTag(text);
-		final FragmentTransaction ft = getFragmentManager().beginTransaction();
-		System.out.println(frg);
-		System.out.println(ft);
-		ft.detach(frg);
-		ft.attach(frg);
-		ft.commit();
-		*/
+
+	public void reLoad() {
+
+		ActionBar.Tab tab = bar.getSelectedTab();
+		int position = tab.getPosition();
+		bar.removeTab(tab);
+		bar.addTab(tab,position);
+		bar.selectTab(tab);
 	}
 
 }
