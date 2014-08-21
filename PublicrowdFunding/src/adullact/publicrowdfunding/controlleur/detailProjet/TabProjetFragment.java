@@ -31,6 +31,7 @@ public class TabProjetFragment extends Fragment {
 	private TextView m_utilisateur_soumission;
 	private TextView m_pourcentage_accomplish;
 	private TextView m_utilisateur_ville;
+	private TextView m_request_funding;
 
 	private Button m_payer;
 	private Button m_mail;
@@ -84,7 +85,10 @@ public class TabProjetFragment extends Fragment {
 		m_pourcentage_accomplish = (TextView) view
 				.findViewById(R.id.pourcentage_accomplit);
 		m_utilisateur_ville = (TextView) view.findViewById(R.id.ville);
-
+		m_request_funding = (TextView) view.findViewById(R.id.sommeRequestFund);
+		
+		
+		
 		m_mail = (Button) view.findViewById(R.id.mail);
 		m_website = (Button) view.findViewById(R.id.website);
 		m_call = (Button) view.findViewById(R.id.phone);
@@ -128,8 +132,7 @@ public class TabProjetFragment extends Fragment {
 			m_call.setText(projet.getPhone());
 		}
 
-		m_utilisateur_soumission.setText("Loading");
-		m_utilisateur_ville.setText("Loading");
+		m_request_funding.setText(projet.getRequestedFunding()+"€");
 		
 		projet.getUser(new WhatToDo<User>() {
 

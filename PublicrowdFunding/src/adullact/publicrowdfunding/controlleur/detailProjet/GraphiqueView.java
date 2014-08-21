@@ -144,8 +144,6 @@ public class GraphiqueView extends View {
 
 		// Exemple de coubre
 		long pourcentageAccomplie = 0;
-		// / 100% = hauteur
-		// 30 % =
 
 		int nombreDeCarre = 10;
 		for (int i = 0; i < nombreDeCarre + 1; i++) {
@@ -167,14 +165,15 @@ public class GraphiqueView extends View {
 		for (int i = 0; i < nombreDeCarre; i++) {
 
 			if (graphData.get(i).getTotal() == 0) {
-				break;
+			//	break;
 			}
 			
 			long data = graphData.get(i).getTotal();
-			long pourcentage = data * 100 / Long.parseLong(projet.getRequestedFunding());
+			long pourcentage = (data * 100) / Long.parseLong(projet.getRequestedFunding());
 			
-			long newPourcentage = pourcentageAccomplie
-					+ pourcentage;
+			System.out.println(pourcentage+"%");
+			
+			long newPourcentage =  pourcentage;
 			if (newPourcentage > 100) {
 				newPourcentage = 100;
 			}

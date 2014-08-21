@@ -83,6 +83,15 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/sommeRequestFund"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="XXXe"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
                         android:id="@+id/pourcentage_accomplit"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
@@ -113,6 +122,13 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="récoltés"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Demandé"
                         android:textSize="15sp" />
 
                     <TextView
@@ -233,7 +249,7 @@
                 android:id="@+id/graphique"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp" />
         </LinearLayout>
     </ScrollView>
 
