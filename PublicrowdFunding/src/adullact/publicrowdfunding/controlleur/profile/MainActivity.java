@@ -6,6 +6,7 @@ import java.util.Vector;
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.controlleur.ajouterProjet.SoumettreProjetActivity;
 import adullact.publicrowdfunding.controlleur.membre.ConnexionActivity;
+import adullact.publicrowdfunding.controlleur.preferences.preferences;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import adullact.publicrowdfunding.model.local.cache.Cache;
@@ -18,11 +19,18 @@ import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -143,6 +151,38 @@ public class MainActivity extends Activity implements TabListener {
 	@Override
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.profile, menu);
+		return super.onCreateOptionsMenu(menu);
+		/*
+		try {
+			Account.getOwn();
+			MenuInflater inflater = getMenuInflater();
+			inflater.inflate(R.menu.profile, menu);
+			return super.onCreateOptionsMenu(menu);
+		} catch (NoAccountExistsInLocal e) {
+			return super.onCreateOptionsMenu(menu);
+		}*/
+		
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		switch (item.getItemId()) {
+
+		case R.id.preferences:
+			Intent in = new Intent(
+					getBaseContext().getApplicationContext(),
+					adullact.publicrowdfunding.controlleur.preferences.MainActivity.class);
+			startActivity(in);
+			return true;
+		}
+		return false;
 	}
 
 }

@@ -9,6 +9,7 @@ import java.util.Vector;
 import adullact.publicrowdfunding.controlleur.ajouterProjet.SoumettreProjetActivity;
 import adullact.publicrowdfunding.controlleur.ajouterProjet.choisirMontantDialog;
 import adullact.publicrowdfunding.controlleur.membre.ConnexionActivity;
+import adullact.publicrowdfunding.controlleur.preferences.preferences;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
@@ -24,6 +25,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
@@ -186,7 +188,7 @@ public class MainActivity extends Activity implements TabListener {
 				startActivity(in);
 			}
 		});
-
+		
 		m_sort = (ImageButton) findViewById(R.id.button_filtrer);
 		m_sort.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -273,6 +275,9 @@ public class MainActivity extends Activity implements TabListener {
 	}
 
 	public void isConnect() {
+		layoutConnect.setVisibility(View.VISIBLE);
+		layoutDisconnect.setVisibility(View.GONE);
+		/*
 		try {
 			Account.getOwn();
 			layoutConnect.setVisibility(View.VISIBLE);
@@ -280,7 +285,7 @@ public class MainActivity extends Activity implements TabListener {
 		} catch (NoAccountExistsInLocal e1) {
 			layoutConnect.setVisibility(View.GONE);
 			layoutDisconnect.setVisibility(View.VISIBLE);
-		}
+		}*/
 	}
 
 	@Override
@@ -333,11 +338,13 @@ public class MainActivity extends Activity implements TabListener {
 				return false;
 			}
 		});
+		
+		
 		return true;
 	}
 
 	public void reLoad() {
-
+		
 		ActionBar.Tab tab = bar.getSelectedTab();
 		int position = tab.getPosition();
 		bar.removeTab(tab);

@@ -39,8 +39,6 @@ public class MainActivity extends Activity implements TabListener {
 
 	private ProgressDialog mprogressDialog;
 
-
-
 	FragmentTransaction fragMentTra = null;
 
 	@Override
