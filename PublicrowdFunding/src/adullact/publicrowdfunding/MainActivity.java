@@ -28,9 +28,12 @@ import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.opengl.Visibility;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -75,6 +78,8 @@ public class MainActivity extends Activity implements TabListener {
 
 	private AlertDialog dialog;
 
+	protected SwipeRefreshLayout swipeView;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -85,6 +90,28 @@ public class MainActivity extends Activity implements TabListener {
 		layoutDisconnect = (LinearLayout) findViewById(R.id.disconnect);
 
 		projetsToDisplay = new ArrayList<Project>();
+
+		swipeView = (SwipeRefreshLayout) findViewById(R.id.refresher);
+		swipeView.setEnabled(false);
+		swipeView.setColorScheme(android.R.color.holo_blue_dark, 
+                android.R.color.holo_green_dark, 
+                android.R.color.holo_orange_dark, 
+                android.R.color.holo_red_dark);
+
+		swipeView
+				.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+					@Override
+					public void onRefresh() {
+						swipeView.setRefreshing(true);
+						(new Handler()).postDelayed(new Runnable() {
+							@Override
+							public void run() {
+								swipeView.setRefreshing(false);
+
+							}
+						}, 3000);
+					}
+				});
 
 		isConnect();
 

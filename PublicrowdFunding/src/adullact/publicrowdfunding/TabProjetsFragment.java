@@ -7,9 +7,12 @@ import adullact.publicrowdfunding.controlleur.detailProjet.MainActivity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -34,7 +37,7 @@ public class TabProjetsFragment extends Fragment {
 		TextView empty = (TextView) view.findViewById(R.id.empty);
 		listeProjets.setEmptyView(empty);
 
-		adullact.publicrowdfunding.MainActivity _this = (adullact.publicrowdfunding.MainActivity) getActivity();
+		final adullact.publicrowdfunding.MainActivity _this = (adullact.publicrowdfunding.MainActivity) getActivity();
 
 		ArrayAdapter<Project> adapter = new CustomAdapter(this.getActivity()
 				.getBaseContext(), R.layout.projet_adaptor, _this.projetsToDisplay);
@@ -54,7 +57,24 @@ public class TabProjetsFragment extends Fragment {
 				startActivity(in);
 			}
 		});
+		
+		listeProjets.setOnScrollListener(new AbsListView.OnScrollListener() {
+	        @Override
+	        public void onScrollStateChanged(AbsListView absListView, int i) {
+	 
+	        }
+	 
+	        @Override
+	        public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+	                if (firstVisibleItem == 0)
+	                	_this.swipeView.setEnabled(true);
+	                else
+	                	_this.swipeView.setEnabled(false);
+	        }
+	    });
+	
 
 		return view;
 	}
+	
 }

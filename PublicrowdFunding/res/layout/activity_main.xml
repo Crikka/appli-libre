@@ -15,11 +15,17 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
 
-        <FrameLayout
-            android:id="@+id/tabcontent"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" >
-        </FrameLayout>
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/refresher"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <FrameLayout
+                android:id="@+id/tabcontent"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+            </FrameLayout>
+        </android.support.v4.widget.SwipeRefreshLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -68,7 +74,7 @@
             android:contentDescription="@string/description_image_button"
             android:src="@android:drawable/ic_menu_preferences" />
     </LinearLayout>
-    
+
     <LinearLayout
         android:id="@+id/disconnect"
         android:layout_width="fill_parent"
@@ -88,5 +94,5 @@
             android:textColor="#808080"
             android:textSize="25sp" />
     </LinearLayout>
-    
+
 </LinearLayout>
