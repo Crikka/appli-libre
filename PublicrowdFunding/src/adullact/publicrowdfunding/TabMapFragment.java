@@ -33,6 +33,7 @@ public class TabMapFragment extends Fragment implements
 	private View rootView;
 	private GoogleMap googleMap;
 	private HashMap<Marker, String> markers = new HashMap<Marker, String>();
+	private adullact.publicrowdfunding.MainActivity _this;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,7 +47,7 @@ public class TabMapFragment extends Fragment implements
 
 		fragment = new MapFragment();
 		fm = getFragmentManager();
-		adullact.publicrowdfunding.MainActivity _this = (adullact.publicrowdfunding.MainActivity) getActivity();
+		_this = (adullact.publicrowdfunding.MainActivity) getActivity();
 		
         projets =_this.projetsToDisplay;
 		FragmentTransaction ft = fm.beginTransaction();
@@ -95,10 +96,11 @@ public class TabMapFragment extends Fragment implements
 		String id = markers.get(marker);
 		System.out.println("test");
 		Intent intent = new Intent(
-				getActivity().getParent(),
+				_this.getApplicationContext(),
 				adullact.publicrowdfunding.controlleur.detailProjet.MainActivity.class);
 		intent.putExtra("key", id);
-		 ((MainActivity) getActivity()).startActivity(intent);
+		
+		_this.startActivity(intent);
 	}
 
 }

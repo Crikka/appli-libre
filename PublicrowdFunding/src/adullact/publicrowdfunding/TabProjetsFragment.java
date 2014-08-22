@@ -74,6 +74,7 @@ public class TabProjetsFragment extends Fragment {
 	    });
 	
 
+
 		return view;
 	}
 	

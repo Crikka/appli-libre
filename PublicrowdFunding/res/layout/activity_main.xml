@@ -89,15 +89,6 @@
             android:background="@null"
             android:contentDescription="@string/description_image_button"
             android:src="@android:drawable/ic_menu_myplaces" />
-
-        <ImageButton
-            android:id="@+id/button_parametre"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@null"
-            android:contentDescription="@string/description_image_button"
-            android:src="@android:drawable/ic_menu_preferences" />
     </LinearLayout>
 
     <LinearLayout

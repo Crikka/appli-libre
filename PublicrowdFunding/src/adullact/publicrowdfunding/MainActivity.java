@@ -275,9 +275,6 @@ public class MainActivity extends Activity implements TabListener {
 	}
 
 	public void isConnect() {
-		layoutConnect.setVisibility(View.VISIBLE);
-		layoutDisconnect.setVisibility(View.GONE);
-		/*
 		try {
 			Account.getOwn();
 			layoutConnect.setVisibility(View.VISIBLE);
@@ -285,7 +282,7 @@ public class MainActivity extends Activity implements TabListener {
 		} catch (NoAccountExistsInLocal e1) {
 			layoutConnect.setVisibility(View.GONE);
 			layoutDisconnect.setVisibility(View.VISIBLE);
-		}*/
+		}
 	}
 
 	@Override

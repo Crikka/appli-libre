@@ -51,9 +51,9 @@ public class MainActivity extends Activity implements TabListener {
 
 	private TextView pseudo;
 	private TextView ville;
-	
+
 	private ImageView avatar;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -81,10 +81,10 @@ public class MainActivity extends Activity implements TabListener {
 
 		} else {
 			// Affichage du profile de quelqu'un d'autre.
-			 String id = this.getIntent().getExtras().getString("id");
-			 
-			 Cache<User> cache = new User().getCache(id);
-			 cache.toResource(new WhatToDo<User>(){
+			String id = this.getIntent().getExtras().getString("id");
+
+			Cache<User> cache = new User().getCache(id);
+			cache.toResource(new WhatToDo<User>() {
 
 				@Override
 				public void hold(User resource) {
@@ -100,10 +100,10 @@ public class MainActivity extends Activity implements TabListener {
 				@Override
 				public void eventually() {
 					// TODO Auto-generated method stub
-					
+
 				}
-				 
-			 });
+
+			});
 		}
 
 		rl = (FrameLayout) findViewById(R.id.tabcontent);
@@ -152,22 +152,16 @@ public class MainActivity extends Activity implements TabListener {
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.profile, menu);
-		return super.onCreateOptionsMenu(menu);
-		/*
-		try {
-			Account.getOwn();
+
+		if (myAccount == true) {
 			MenuInflater inflater = getMenuInflater();
 			inflater.inflate(R.menu.profile, menu);
-			return super.onCreateOptionsMenu(menu);
-		} catch (NoAccountExistsInLocal e) {
-			return super.onCreateOptionsMenu(menu);
-		}*/
-		
+		}
+		return super.onCreateOptionsMenu(menu);
+
 	}
 
 	@Override
