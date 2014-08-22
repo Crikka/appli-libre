@@ -5,6 +5,8 @@ import java.util.Vector;
 
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.model.local.ressource.Project;
+import adullact.publicrowdfunding.model.local.utilities.Calcul;
+import adullact.publicrowdfunding.model.local.utilities.Share;
 import adullact.publicrowdfunding.model.local.utilities.Utility;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -36,6 +38,7 @@ public class CustomAdapter extends ArrayAdapter<Project> {
 		public ImageView illustration;
 		public TextView sommeFunded;
 		public TextView sommeDemander;
+		public TextView distance;
 
 	}
 
@@ -66,6 +69,8 @@ public class CustomAdapter extends ArrayAdapter<Project> {
 			
 			holder.sommeFunded =  (TextView) v
 					.findViewById(R.id.sommeFund);
+			holder.distance =  (TextView) v
+					.findViewById(R.id.distance);
 
 			v.setTag(holder);
 		} else {
@@ -88,6 +93,15 @@ public class CustomAdapter extends ArrayAdapter<Project> {
 		} else {
 			holder.illustration.setImageResource(R.drawable.ic_launcher);
 		}
+		
+		holder.distance.setVisibility(View.GONE);
+		try{
+		holder.distance.setText("Distance : "+Calcul.diplayDistance(Share.position, projet.getPosition()));
+		holder.distance.setVisibility(View.VISIBLE);
+		}catch(NullPointerException e){
+			holder.distance.setVisibility(View.GONE);
+		}
+				
 		return v;
 
 	}

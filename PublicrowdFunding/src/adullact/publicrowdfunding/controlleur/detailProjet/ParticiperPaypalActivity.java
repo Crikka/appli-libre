@@ -104,8 +104,9 @@ public class ParticiperPaypalActivity extends Activity {
 						 */
 						Toast.makeText(
 								getApplicationContext(),
-								"PaymentConfirmation info received from PayPal",
+								"Votre participation à bien était prise en compte",
 								Toast.LENGTH_LONG).show();
+						finish();
 
 					} catch (JSONException e) {
 						Toast.makeText(getApplicationContext(),

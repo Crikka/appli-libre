@@ -1,6 +1,7 @@
 package adullact.publicrowdfunding;
 
 import adullact.publicrowdfunding.custom.CustomAdapter;
+import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import adullact.publicrowdfunding.controlleur.detailProjet.MainActivity;
@@ -19,11 +20,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 public class TabProjetsFragment extends Fragment {
 
 	private ListView listeProjets;
+
+	private SwipeRefreshLayout swipeView;
+
+	private adullact.publicrowdfunding.MainActivity _this;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -32,15 +38,42 @@ public class TabProjetsFragment extends Fragment {
 		final View view = inflater.inflate(R.layout.fragment_liste_projet,
 				container, false);
 
+		_this = (adullact.publicrowdfunding.MainActivity) getActivity();
+
 		listeProjets = (ListView) view.findViewById(R.id.liste);
 
 		TextView empty = (TextView) view.findViewById(R.id.empty);
 		listeProjets.setEmptyView(empty);
 
-		final adullact.publicrowdfunding.MainActivity _this = (adullact.publicrowdfunding.MainActivity) getActivity();
+		swipeView = (SwipeRefreshLayout) view.findViewById(R.id.refresher);
+		swipeView.setEnabled(false);
+		swipeView.setColorScheme(R.color.blue, R.color.green, R.color.yellow,
+				R.color.red);
+		swipeView
+				.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+					@Override
+					public void onRefresh() {
+						swipeView.setRefreshing(true);
+						SyncServerToLocal sync = SyncServerToLocal
+								.getInstance();
+						sync.sync(new HoldAllToDo<Project>() {
+
+							@Override
+							public void holdAll(ArrayList<Project> projects) {
+								_this.projetsToDisplay = projects;
+
+								_this.reLoad();
+								swipeView.setRefreshing(false);
+							}
+						});
+
+					}
+
+				});
 
 		ArrayAdapter<Project> adapter = new CustomAdapter(this.getActivity()
-				.getBaseContext(), R.layout.projet_adaptor, _this.projetsToDisplay);
+				.getBaseContext(), R.layout.projet_adaptor,
+				_this.projetsToDisplay);
 
 		listeProjets.setAdapter(adapter);
 		listeProjets.setOnItemClickListener(new OnItemClickListener() {
@@ -57,25 +90,24 @@ public class TabProjetsFragment extends Fragment {
 				startActivity(in);
 			}
 		});
-		
-		listeProjets.setOnScrollListener(new AbsListView.OnScrollListener() {
-	        @Override
-	        public void onScrollStateChanged(AbsListView absListView, int i) {
-	 
-	        }
-	 
-	        @Override
-	        public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-	                if (firstVisibleItem == 0)
-	                	_this.swipeView.setEnabled(true);
-	                else
-	                	_this.swipeView.setEnabled(false);
-	        }
-	    });
-	
 
+		listeProjets.setOnScrollListener(new AbsListView.OnScrollListener() {
+			@Override
+			public void onScrollStateChanged(AbsListView absListView, int i) {
+
+			}
+
+			@Override
+			public void onScroll(AbsListView absListView, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+				if (firstVisibleItem == 0)
+					swipeView.setEnabled(true);
+				else
+					swipeView.setEnabled(false);
+			}
+		});
 
 		return view;
 	}
-	
+
 }

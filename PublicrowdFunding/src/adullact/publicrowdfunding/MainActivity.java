@@ -6,11 +6,14 @@ import java.util.Comparator;
 import java.util.TreeMap;
 import java.util.Vector;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import adullact.publicrowdfunding.controlleur.ajouterProjet.SoumettreProjetActivity;
 import adullact.publicrowdfunding.controlleur.ajouterProjet.choisirMontantDialog;
 import adullact.publicrowdfunding.controlleur.membre.ConnexionActivity;
 import adullact.publicrowdfunding.controlleur.preferences.preferences;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
+import adullact.publicrowdfunding.model.local.utilities.Share;
 import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.callback.HoldToDo;
@@ -32,6 +35,10 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.opengl.Visibility;
 import android.os.Build;
 import android.os.Bundle;
@@ -82,7 +89,9 @@ public class MainActivity extends Activity implements TabListener {
 
 	private AlertDialog dialog;
 
-	protected SwipeRefreshLayout swipeView;
+	private LocationManager locationManager;
+	private LocationListener locationListener;
+	private String locationProvider;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -93,32 +102,8 @@ public class MainActivity extends Activity implements TabListener {
 		layoutConnect = (LinearLayout) findViewById(R.id.connect);
 		layoutDisconnect = (LinearLayout) findViewById(R.id.disconnect);
 		layoutLoading = (LinearLayout) findViewById(R.id.loading);
-		
-		
+
 		projetsToDisplay = new ArrayList<Project>();
-
-		swipeView = (SwipeRefreshLayout) findViewById(R.id.refresher);
-		swipeView.setEnabled(false);
-		swipeView.setColorScheme(R.color.blue, R.color.green, R.color.yellow, R.color.red);
-
-		swipeView
-				.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-					@Override
-					public void onRefresh() {
-						swipeView.setRefreshing(true);
-						sync.sync(new HoldAllToDo<Project>() {
-
-							@Override
-							public void holdAll(ArrayList<Project> projects) {
-								projetsToDisplay = projects;
-								reLoad();
-								swipeView.setRefreshing(false);
-							}});
-
-						}
-						
-					
-				});
 
 		isConnect();
 
@@ -149,6 +134,7 @@ public class MainActivity extends Activity implements TabListener {
 				bar.setDisplayShowTitleEnabled(true);
 				bar.show();
 				layoutLoading.setVisibility(View.GONE);
+				geolocalisation();
 
 			}
 		});
@@ -188,7 +174,7 @@ public class MainActivity extends Activity implements TabListener {
 				startActivity(in);
 			}
 		});
-		
+
 		m_sort = (ImageButton) findViewById(R.id.button_filtrer);
 		m_sort.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -335,13 +321,12 @@ public class MainActivity extends Activity implements TabListener {
 				return false;
 			}
 		});
-		
-		
+
 		return true;
 	}
 
-	public void reLoad() {
-		
+	protected void reLoad() {
+
 		ActionBar.Tab tab = bar.getSelectedTab();
 		int position = tab.getPosition();
 		bar.removeTab(tab);
@@ -401,6 +386,70 @@ public class MainActivity extends Activity implements TabListener {
 			}
 		});
 
+	}
+
+	public void geolocalisation() {
+
+		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		
+		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+			locationProvider = LocationManager.GPS_PROVIDER;
+		}else{
+			locationProvider = LocationManager.NETWORK_PROVIDER;
+		}
+
+		locationListener = new LocationListener() {
+
+			@Override
+			public void onLocationChanged(Location location) {
+				Share.position = new LatLng(location.getLatitude(),
+						location.getLongitude());
+				reLoad();
+
+			}
+
+			@Override
+			public void onStatusChanged(String provider, int status,
+					Bundle extras) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onProviderEnabled(String provider) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onProviderDisabled(String provider) {
+				// TODO Auto-generated method stub
+
+			}
+
+		};
+
+		locationManager.requestLocationUpdates(locationProvider, 10000, 0,
+				locationListener);
+
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		locationManager.removeUpdates(locationListener);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		try{
+		locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
+		locationManager.requestLocationUpdates(locationProvider, 10000, 0,
+				locationListener);
+		}catch(Exception e){
+			// Probablement pas encore initialisé au 1er lancement de l'appli
+		}
 	}
 
 }

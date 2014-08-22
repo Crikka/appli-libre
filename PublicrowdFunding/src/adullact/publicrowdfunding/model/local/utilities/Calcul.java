@@ -4,7 +4,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 public final class Calcul {
 
-	public float distance (LatLng a, LatLng b) 
+	public static int distance (LatLng a, LatLng b) 
 	{
 	    double earthRadius = 3958.75;
 	    double latDiff = Math.toRadians(b.latitude-a.latitude);
@@ -17,6 +17,21 @@ public final class Calcul {
 
 	    int meterConversion = 1609;
 
-	    return new Float(distance * meterConversion).floatValue();
+	    return (int) (distance * meterConversion);
 	}
+	
+	public static String diplayDistance(LatLng a, LatLng b) {
+		String result = "";
+		int dist =  distance (a,b) ;
+		dist = Math.round(dist);
+		if(dist > 1000){
+			int km = Math.round(dist / 1000);
+			result = ""+km+" km ";
+		}else{
+			result = ""+dist+"mètres";
+		}
+		
+		return result;
+	}
+
 }
