@@ -391,10 +391,10 @@ public class MainActivity extends Activity implements TabListener {
 	public void geolocalisation() {
 
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		
-		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+
+		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
 			locationProvider = LocationManager.GPS_PROVIDER;
-		}else{
+		} else {
 			locationProvider = LocationManager.NETWORK_PROVIDER;
 		}
 
@@ -404,7 +404,13 @@ public class MainActivity extends Activity implements TabListener {
 			public void onLocationChanged(Location location) {
 				Share.position = new LatLng(location.getLatitude(),
 						location.getLongitude());
-				reLoad();
+				try {
+					if (getActionBar().getSelectedTab().getPosition() == 0) {
+						reLoad();
+					}
+				} catch (NullPointerException e) {
+					// 1er Initialisation
+				}
 
 			}
 
@@ -443,11 +449,12 @@ public class MainActivity extends Activity implements TabListener {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		try{
-		locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
-		locationManager.requestLocationUpdates(locationProvider, 10000, 0,
-				locationListener);
-		}catch(Exception e){
+		try {
+			locationManager = (LocationManager) this
+					.getSystemService(LOCATION_SERVICE);
+			locationManager.requestLocationUpdates(locationProvider, 10000, 0,
+					locationListener);
+		} catch (Exception e) {
 			// Probablement pas encore initialisé au 1er lancement de l'appli
 		}
 	}
