@@ -30,7 +30,6 @@ public class Utility {
 		switch (numero) {
 		case 1:
 			return R.drawable.roi;
-
 		case 2:
 			return R.drawable.basketball;
 

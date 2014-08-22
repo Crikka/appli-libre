@@ -68,6 +68,7 @@ public class MainActivity extends Activity implements TabListener {
 
 	private LinearLayout layoutConnect;
 	private LinearLayout layoutDisconnect;
+	private LinearLayout layoutLoading;
 
 	private SearchView searchView;
 
@@ -89,40 +90,35 @@ public class MainActivity extends Activity implements TabListener {
 
 		layoutConnect = (LinearLayout) findViewById(R.id.connect);
 		layoutDisconnect = (LinearLayout) findViewById(R.id.disconnect);
-
+		layoutLoading = (LinearLayout) findViewById(R.id.loading);
+		
+		
 		projetsToDisplay = new ArrayList<Project>();
 
 		swipeView = (SwipeRefreshLayout) findViewById(R.id.refresher);
 		swipeView.setEnabled(false);
-		swipeView.setColorScheme(android.R.color.holo_blue_dark, 
-                android.R.color.holo_green_dark, 
-                android.R.color.holo_orange_dark, 
-                android.R.color.holo_red_dark);
+		swipeView.setColorScheme(R.color.blue, R.color.green, R.color.yellow, R.color.red);
 
 		swipeView
 				.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 					@Override
 					public void onRefresh() {
 						swipeView.setRefreshing(true);
-						sync.sync(new HoldToDo<Project>() {
-							
+						sync.sync(new HoldAllToDo<Project>() {
+
 							@Override
-							public void hold(Project resource) {
-								projetsToDisplay.add(resource);
+							public void holdAll(ArrayList<Project> projects) {
+								projetsToDisplay = projects;
 								reLoad();
 								swipeView.setRefreshing(false);
-								
 							}});
 
-					}});
+						}
+						
+					
+				});
 
 		isConnect();
-
-		final ProgressDialog progressDialog = new ProgressDialog(this);
-		progressDialog.setMessage("Récuperation des projets...");
-		progressDialog.setTitle("Initialisation de l'application");
-		progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-		progressDialog.show();
 
 		sync = SyncServerToLocal.getInstance();
 		final MainActivity _this = this;
@@ -150,7 +146,7 @@ public class MainActivity extends Activity implements TabListener {
 				bar.setDisplayShowHomeEnabled(true);
 				bar.setDisplayShowTitleEnabled(true);
 				bar.show();
-				progressDialog.dismiss();
+				layoutLoading.setVisibility(View.GONE);
 
 			}
 		});
