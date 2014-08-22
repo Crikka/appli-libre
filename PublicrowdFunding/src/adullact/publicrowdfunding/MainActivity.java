@@ -12,6 +12,7 @@ import adullact.publicrowdfunding.controlleur.membre.ConnexionActivity;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
+import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
@@ -103,15 +104,17 @@ public class MainActivity extends Activity implements TabListener {
 					@Override
 					public void onRefresh() {
 						swipeView.setRefreshing(true);
-						(new Handler()).postDelayed(new Runnable() {
+						sync.sync(new HoldToDo<Project>() {
+							
 							@Override
-							public void run() {
+							public void hold(Project resource) {
+								projetsToDisplay.add(resource);
+								reLoad();
 								swipeView.setRefreshing(false);
+								
+							}});
 
-							}
-						}, 3000);
-					}
-				});
+					}});
 
 		isConnect();
 
