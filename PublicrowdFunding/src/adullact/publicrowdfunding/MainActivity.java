@@ -66,7 +66,6 @@ public class MainActivity extends Activity implements TabListener {
 	private FrameLayout rl;
 
 	private TabProjetsFragment fram1;
-	private TabFavorisFragment fram2;
 	private TabMapFragment fram3;
 
 	private ImageButton m_ajouter_projet;
@@ -121,8 +120,6 @@ public class MainActivity extends Activity implements TabListener {
 				bar = getActionBar();
 
 				bar.addTab(bar.newTab().setText("Projets")
-						.setTabListener(_this));
-				bar.addTab(bar.newTab().setText("Favoris")
 						.setTabListener(_this));
 				bar.addTab(bar.newTab().setText("Localisation")
 						.setTabListener(_this));
@@ -242,11 +239,6 @@ public class MainActivity extends Activity implements TabListener {
 			fram1 = new TabProjetsFragment();
 			ft.replace(rl.getId(), fram1);
 
-		} else if (tab.getText().equals("Favoris")) {
-
-			fram2 = new TabFavorisFragment();
-			ft.replace(rl.getId(), fram2);
-
 		} else if (tab.getText().equals("Localisation")) {
 
 			fram3 = new TabMapFragment();
@@ -326,12 +318,18 @@ public class MainActivity extends Activity implements TabListener {
 	}
 
 	protected void reLoad() {
-
 		ActionBar.Tab tab = bar.getSelectedTab();
 		int position = tab.getPosition();
-		bar.removeTab(tab);
-		bar.addTab(tab, position);
-		bar.selectTab(tab);
+		if(position == 0){
+		
+		fram1 = new TabProjetsFragment();
+		
+		FragmentManager fm = this.getFragmentManager();
+		FragmentTransaction ft = fm.beginTransaction();
+		ft.replace(rl.getId(), fram1);
+		ft.commit();
+		}
+
 	}
 
 	public void sortBiggestProjectFirst() {
