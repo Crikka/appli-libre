@@ -4,9 +4,13 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import adullact.publicrowdfunding.model.local.cache.Cache;
+import adullact.publicrowdfunding.model.local.cache.CacheSet;
+import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.server.entities.DetailedServerUser;
 import adullact.publicrowdfunding.model.server.entities.RowAffected;
+import adullact.publicrowdfunding.model.server.entities.ServerBookmark;
+import adullact.publicrowdfunding.model.server.entities.ServerCommentary;
 import adullact.publicrowdfunding.model.server.entities.ServerUser;
 import adullact.publicrowdfunding.model.server.entities.Service;
 import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
@@ -24,6 +28,7 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
 	private String m_firstName;
 	private String m_city;
 	private String m_sexe;
+	private CacheSet<Bookmark> m_bookmark;
 
     /* ----- Resource ----- */
     @Override
@@ -54,12 +59,13 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
         if(((m_pseudo != serverUser.pseudo) || (m_name != serverUser.name) || (m_firstName != serverUser.firstName))) {
             changed();
         }
-
+        
         m_pseudo = serverUser.pseudo;
         m_name = serverUser.name;
         m_firstName = serverUser.firstName;
         m_city = serverUser.city;
         m_sexe = serverUser.sexe;
+		m_bookmark = new CacheSet<Bookmark>();
         
         return this;
     }
@@ -68,6 +74,16 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
     public User syncFromServer(DetailedServerUser detailedServerUser) {
         makeCopyFromServer(detailedServerUser);
 
+        for(final ServerBookmark serverBookmark : detailedServerUser.bookmarkedProjects) {
+            final Cache<Bookmark> bookmarks = new Bookmark().getCache(Integer.toString(serverBookmark.id)).declareUpToDate();
+            bookmarks.toResource(new HoldToDo<Bookmark>() {
+                @Override
+                public void hold(Bookmark resource) {
+                    resource.syncFromServer(serverBookmark);
+                    m_bookmark.add(bookmarks);
+                }
+            });
+        }
         return this;
     }
 
@@ -104,6 +120,7 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
 		this.m_firstName = null;
 		this.m_city = null;
 		this.m_sexe = null;
+
 	}
 
     public User(String pseudo, String name, String firstName, String city, String sexe) {
@@ -112,6 +129,7 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
         this.m_firstName = firstName;
         this.m_city = city;
         this.m_sexe = sexe;
+
     }
 
 	/* Getter */
@@ -135,7 +153,9 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
 		return m_sexe;
 	}
 	
-	public void getBookmarkedProjects(final WhatToDo<Project> projectWhatToDo) {
+	public void getBookmarkedProjects(final WhatToDo<Bookmark> projectWhatToDo) {
+	      m_bookmark.forEach(projectWhatToDo);
+		/*
         new Bookmark().serverListerByUser(m_pseudo, new ListerEvent<Bookmark>() {
             @Override
             public void onLister(ArrayList<Bookmark> bookmarks) {
@@ -148,7 +168,7 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
             public void errorNetwork() {
 
             }
-        });
+        });*/
 	}
 
     public void getFinancedProjects(final WhatToDo<Project> projectWhatToDo) {

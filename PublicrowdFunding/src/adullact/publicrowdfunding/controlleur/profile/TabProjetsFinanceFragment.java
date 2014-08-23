@@ -28,51 +28,35 @@ import java.util.Vector;
 public class TabProjetsFinanceFragment extends Fragment {
 
 	private ListView listeProjets;
-	private ArrayList<Project> funded;
+
+	private adullact.publicrowdfunding.controlleur.profile.MainActivity _this;
+
+	private ArrayList<Project> projets;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		final View view = inflater.inflate(R.layout.fragment_liste_projet, container,
-				false);
+		final View view = inflater.inflate(R.layout.fragment_liste_projet,
+				container, false);
 
 		listeProjets = (ListView) view.findViewById(R.id.liste);
-		funded = new ArrayList<Project>();
+		projets = new ArrayList<Project>();
 
-		Account compte = null;
-		try {
-			compte = Account.getOwn();
-		} catch (NoAccountExistsInLocal e) {
-			Toast.makeText(getActivity().getApplicationContext(), "Erreur",
-					Toast.LENGTH_SHORT).show();
-			getActivity().finish();
-		}
+		_this = (adullact.publicrowdfunding.controlleur.profile.MainActivity) getActivity();
 
-		compte.getUser(new WhatToDo<User>() {
+		_this.user.getFinancedProjects(new HoldAllToDo<Project>() {
 
 			@Override
-			public void hold(User resource) {
-				resource.getFinancedProjects(new HoldAllToDo<Project>() {
-
-					@Override
-					public void holdAll(ArrayList<Project> resources) {
-						funded = resources;
-
-					}
-				});
+			public void holdAll(ArrayList<Project> resources) {
+				projets = resources;
 
 			}
 
-			@Override
-			public void eventually() {
-				// TODO Auto-generated method stub
-
-			}
 		});
 
 		ArrayAdapter<Project> adapter = new CustomAdapter(this.getActivity()
-				.getBaseContext(), R.layout.projet_adaptor, funded);
+				.getBaseContext(), R.layout.projet_adaptor, projets);
 
 		listeProjets.setAdapter(adapter);
 		listeProjets.setOnItemClickListener(new OnItemClickListener() {

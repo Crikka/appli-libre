@@ -96,7 +96,6 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         this.m_name = detailedServerProject.name;
         this.m_description = detailedServerProject.description;
         this.m_funding = new CacheSet<Funding>();
-        this.m_commentaries = new CacheSet<Commentary>();
         this.m_proposedBy = new User().getCache(detailedServerProject.proposedBy);
         this.m_requestedFunding = new BigDecimal(detailedServerProject.requestedFunding);
         this.m_currentFunding = new BigDecimal(detailedServerProject.currentFunding);

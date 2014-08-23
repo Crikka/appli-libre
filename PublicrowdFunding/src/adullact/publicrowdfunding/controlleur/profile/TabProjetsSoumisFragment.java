@@ -28,6 +28,10 @@ import java.util.Vector;
 public class TabProjetsSoumisFragment extends Fragment {
 
 	private ListView listeProjets;
+	
+	private adullact.publicrowdfunding.controlleur.profile.MainActivity _this;
+
+	private ArrayList<Project> projets;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,10 +41,26 @@ public class TabProjetsSoumisFragment extends Fragment {
 
 		listeProjets = (ListView) view.findViewById(R.id.liste);
 
+		
+		projets = new ArrayList<Project>();
+
+		_this = (adullact.publicrowdfunding.controlleur.profile.MainActivity) getActivity();
+
+		/*
+		_this.user.get(new HoldAllToDo<Project>() {
+
+			@Override
+			public void holdAll(ArrayList<Project> resources) {
+				projets = resources;
+
+			}
+
+		});
+*/
+		
 		ArrayAdapter<Project> adapter = new CustomAdapter(this.getActivity()
-				.getBaseContext(), R.layout.projet_adaptor, new ArrayList<Project>());
-
-
+				.getBaseContext(), R.layout.projet_adaptor, projets);
+		
 		listeProjets.setAdapter(adapter);
 		listeProjets.setOnItemClickListener(new OnItemClickListener() {
 

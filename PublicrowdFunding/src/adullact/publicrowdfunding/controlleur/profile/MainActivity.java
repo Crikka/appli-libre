@@ -1,40 +1,22 @@
 package adullact.publicrowdfunding.controlleur.profile;
 
-import java.util.ArrayList;
-import java.util.Vector;
-
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.controlleur.ajouterProjet.SoumettreProjetActivity;
-import adullact.publicrowdfunding.controlleur.membre.ConnexionActivity;
-import adullact.publicrowdfunding.controlleur.preferences.preferences;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
-import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import adullact.publicrowdfunding.model.local.cache.Cache;
-import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
-import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,6 +35,8 @@ public class MainActivity extends Activity implements TabListener {
 	private TextView ville;
 
 	private ImageView avatar;
+
+	protected User user;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -73,6 +57,19 @@ public class MainActivity extends Activity implements TabListener {
 			try {
 				Account compte = Account.getOwn();
 				pseudo.setText(compte.getUsername());
+				compte.getUser(new WhatToDo<User>() {
+
+					@Override
+					public void hold(User resource) {
+						user = resource;
+					}
+
+					@Override
+					public void eventually() {
+						// TODO Auto-generated method stub
+
+					}
+				});
 
 			} catch (NoAccountExistsInLocal e) {
 				Toast.makeText(getApplicationContext(),
@@ -88,6 +85,7 @@ public class MainActivity extends Activity implements TabListener {
 
 				@Override
 				public void hold(User resource) {
+					user = resource;
 					pseudo.setText(resource.getResourceId());
 					ville.setText(resource.getCity());
 					if (resource.getSexe().equals("0")) {

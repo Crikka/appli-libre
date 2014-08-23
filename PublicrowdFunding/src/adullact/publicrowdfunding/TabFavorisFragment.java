@@ -47,7 +47,8 @@ public class TabFavorisFragment extends Fragment {
 
 				@Override
 				public void hold(User resource) {
-					resource.getBookmarkedProjects(new HoldAllToDo<Project>(){
+
+					/*resource.getBookmarkedProjects(new HoldAllToDo<Project>(){
 
 						@Override
 						public void holdAll(ArrayList<Project> resources) {
@@ -56,7 +57,7 @@ public class TabFavorisFragment extends Fragment {
 						}
 
 						
-					});
+					});*/
 					
 				}
 
