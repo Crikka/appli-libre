@@ -26,30 +26,35 @@ public class ListerRequest<TResource extends Resource<TResource, TServerResource
 
     @Override
     public void execute() {
-        m_resource.methodGETAll(service(), m_filter).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<ArrayList<TServerResource>>() {
-                               @Override
-                               public void call(ArrayList<TServerResource> serverResources) {
-                                   done();
-                                   ArrayList<TResource> resources = new ArrayList<TResource>();
-                                   for (TServerResource serverResource : serverResources) {
-                                       resources.add(m_resource.makeCopyFromServer(serverResource));
-                                   }
+        m_resource.methodGETAll(service(), m_filter)
+                .subscribeOn(Schedulers.io())
+                .doOnError(new Action1<Throwable>() {
 
-                                   event().onLister(resources);
-                               }
-                           },
-                        new Action1<Throwable>() {
-                            @Override
-                            public void call(Throwable throwable) {
-                                errorHandler().manageCallback();
-                            }
-                        },
-                        new Action0() {
-                            @Override
-                            public void call() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        errorHandler().manageCallback();
+                    }
+                })
+                .map(new Func1<ArrayList<TServerResource>, ArrayList<TResource>>() {
 
-                            }
-                        });
+                    @Override
+                    public ArrayList<TResource> call(ArrayList<TServerResource> serverResources) {
+                        ArrayList<TResource> resources = new ArrayList<TResource>();
+                        for (TServerResource serverResource : serverResources) {
+                            resources.add(m_resource.makeCopyFromServer(serverResource));
+                        }
+                        return resources;
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<ArrayList<TResource>>() {
+
+                    @Override
+                    public void call(ArrayList<TResource> resources) {
+                        done();
+
+                        event().onLister(resources);
+                    }
+                });
     }
 }

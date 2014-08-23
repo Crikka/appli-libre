@@ -1,5 +1,7 @@
 package adullact.publicrowdfunding.model.server.request;
 
+import java.util.ArrayList;
+
 import adullact.publicrowdfunding.model.local.ressource.Resource;
 import adullact.publicrowdfunding.model.server.errorHandler.RetrieveErrorHandler;
 import adullact.publicrowdfunding.model.server.event.RetrieveEvent;
@@ -21,33 +23,32 @@ public class RetrieveRequest<TResource extends Resource<TResource, TServerResour
 
     @Override
     public void execute() {
-        m_resource.methodGET(service()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .onErrorReturn(new Func1<Throwable, TDetailedServerResource>() {
+        m_resource.methodGET(service())
+                .subscribeOn(Schedulers.io())
+                .doOnError(new Action1<Throwable>() {
 
                     @Override
-                    public TDetailedServerResource call(Throwable throwable) {
-                        return null;
+                    public void call(Throwable throwable) {
+                        errorHandler().manageCallback();
                     }
-
                 })
-                .subscribe(new Action1<TDetailedServerResource>() {
-                               @Override
-                               public void call(TDetailedServerResource detailedServerResources) {
-                                   m_resource.syncFromServer(detailedServerResources);
-                                   event().onRetrieve(m_resource);
-                               }
-                           },
-                        new Action1<Throwable>() {
-                            @Override
-                            public void call(Throwable throwable) {
-                                errorHandler().manageCallback();
-                            }
-                        },
-                        new Action0() {
-                            @Override
-                            public void call() {
+                .map(new Func1<TDetailedServerResource, TResource>() {
 
-                            }
-                        });
+                    @Override
+                    public TResource call(TDetailedServerResource detailedServerResource) {
+                        m_resource.syncFromServer(detailedServerResource);
+                        return m_resource;
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<TResource>() {
+
+                    @Override
+                    public void call(TResource resources) {
+                        done();
+
+                        event().onRetrieve(m_resource);
+                    }
+                });
     }
 }
