@@ -113,7 +113,7 @@ public class MainActivity extends Activity implements TabListener {
 			@Override
 			public void holdAll(ArrayList<Project> projects) {
 
-				projetsToDisplay = projects;
+				projetsToDisplay = new ArrayList<Project>(sync.getProjects());
 
 				rl = (FrameLayout) findViewById(R.id.tabcontent);
 

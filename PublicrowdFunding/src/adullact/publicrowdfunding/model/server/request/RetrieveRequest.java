@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import adullact.publicrowdfunding.model.local.ressource.Resource;
 import adullact.publicrowdfunding.model.server.errorHandler.RetrieveErrorHandler;
 import adullact.publicrowdfunding.model.server.event.RetrieveEvent;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.functions.Action1;
@@ -25,13 +26,6 @@ public class RetrieveRequest<TResource extends Resource<TResource, TServerResour
     public void execute() {
         m_resource.methodGET(service())
                 .subscribeOn(Schedulers.io())
-                .doOnError(new Action1<Throwable>() {
-
-                    @Override
-                    public void call(Throwable throwable) {
-                        errorHandler().manageCallback();
-                    }
-                })
                 .map(new Func1<TDetailedServerResource, TResource>() {
 
                     @Override
@@ -41,13 +35,23 @@ public class RetrieveRequest<TResource extends Resource<TResource, TServerResour
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<TResource>() {
+                .subscribe(new Observer<TResource>() {
 
                     @Override
-                    public void call(TResource resources) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        errorHandler().manageCallback();
+                    }
+
+                    @Override
+                    public void onNext(TResource resource) {
                         done();
 
-                        event().onRetrieve(m_resource);
+                        event().onRetrieve(resource);
                     }
                 });
     }

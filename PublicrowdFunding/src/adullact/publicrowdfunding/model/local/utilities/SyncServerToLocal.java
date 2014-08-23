@@ -10,9 +10,13 @@ import java.util.regex.Pattern;
 
 import adullact.publicrowdfunding.model.local.callback.NothingToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
+import adullact.publicrowdfunding.model.local.database.ProjectsDatabase;
 import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.server.event.ListerEvent;
+import rx.Scheduler;
+import rx.functions.Action0;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Ferrand on 19/07/2014.
@@ -27,6 +31,13 @@ public class SyncServerToLocal {
                 return project1.getResourceId().compareTo(project2.getResourceId());
             }
         });
+
+        ProjectsDatabase projectsDatabase = ProjectsDatabase.getInstance();
+        ArrayList<Project> projects = projectsDatabase.get();
+
+        for(Project project : projects) {
+            m_projects.add(project);
+        }
     }
     public static SyncServerToLocal getInstance() {
         if(m_instance == null) {
@@ -49,20 +60,39 @@ public class SyncServerToLocal {
 
     public void sync(final WhatToDo<Project> projectWhatToDo) {
         final DateTime now = DateTime.now();
+        final SyncServerToLocal _this = this;
         ListerEvent<Project> event = new ListerEvent<Project>() {
             @Override
             public void onLister(ArrayList<Project> projects) {
                 Account.getOwnOrAnonymous().setLastSync(now);
-                m_projects.addAll(projects);
+
+                final ArrayList<Project> newProjects = new ArrayList<Project>();
+                final ArrayList<Project> updatedProjects = new ArrayList<Project>();
+                final ArrayList<Project> deletedProject = new ArrayList<Project>();
+
                 for(Project project : projects) {
+                    if(project.isActive()) {
+                        if(m_projects.contains(project)) {
+                            updatedProjects.add(project);
+                        }
+                        else {
+                            newProjects.add(project);
+                        }
+                    }
+                    else {
+                        deletedProject.add(project);
+                    }
                     projectWhatToDo.hold(project);
                 }
+
+                m_projects.addAll(projects);
+                _this.syncLocalDatabase(newProjects, updatedProjects, deletedProject);
                 projectWhatToDo.eventually();
             }
 
             @Override
             public void errorNetwork() {
-
+                projectWhatToDo.eventually();
             }
         };
         if(Account.getOwnOrAnonymous().getLastSync() == null) {
@@ -71,6 +101,27 @@ public class SyncServerToLocal {
         else {
             (new Project()).serverListerToSync(event, Account.getOwnOrAnonymous().getLastSync());
         }
+    }
+
+    private void syncLocalDatabase(final ArrayList<Project> newProjects, final ArrayList<Project> updatedProjects, final ArrayList<Project> deletedProjects) {
+        Scheduler.Worker worker = Schedulers.io().createWorker();
+        worker.schedule(new Action0() {
+
+            @Override
+            public void call() {
+                ProjectsDatabase projectsDatabase = ProjectsDatabase.getInstance();
+                for(Project project : newProjects) {
+                    projectsDatabase.put(project);
+                }
+                for(Project project : updatedProjects) {
+                    projectsDatabase.update(project);
+                }
+                for(Project project : deletedProjects) {
+                    projectsDatabase.delete(project);
+                }
+            }
+
+        });
     }
 
     private interface Searcher {

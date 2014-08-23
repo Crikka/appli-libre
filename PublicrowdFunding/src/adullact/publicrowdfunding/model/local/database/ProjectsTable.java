@@ -14,6 +14,7 @@ public class ProjectsTable implements BaseColumns {
 
     /* ---- Fields ---- */
     public static final String COLUMN_NAME_ID = "id";
+    public static final String COLUMN_NAME_ACTIVE = "active";
     public static final String COLUMN_NAME_TITLE = "title";
     public static final String COLUMN_NAME_DESCRIPTION = "description";
     public static final String COLUMN_NAME_VALIDATE = "validate";
@@ -46,6 +47,7 @@ public class ProjectsTable implements BaseColumns {
             "CREATE TABLE " + TABLE_NAME + " (" +
                     _ID + " INTEGER PRIMARY KEY," +
                     COLUMN_NAME_ID + INTEGER_TYPE + NOT_NULL + COMMA +
+                    COLUMN_NAME_ACTIVE + INTEGER_TYPE + NOT_NULL + COMMA +
                     COLUMN_NAME_TITLE + TEXT_TYPE + NOT_NULL + COMMA +
                     COLUMN_NAME_DESCRIPTION + TEXT_TYPE + COMMA +
                     COLUMN_NAME_VALIDATE + NUMERIC_TYPE + NOT_NULL + COMMA +
@@ -58,7 +60,7 @@ public class ProjectsTable implements BaseColumns {
                     COLUMN_NAME_LATITUDE + NUMERIC_TYPE + NOT_NULL + COMMA +
                     COLUMN_NAME_LONGITUDE + NUMERIC_TYPE + COMMA +
                     COLUMN_NAME_ILLUSTRATION + INTEGER_TYPE + NOT_NULL + COMMA +
-                    COLUMN_NAME_CONTACT_ADDRESS + TEXT_TYPE + NOT_NULL + COMMA +
+                    COLUMN_NAME_CONTACT_ADDRESS + TEXT_TYPE  + COMMA +
                     COLUMN_NAME_CONTACT_PHONE + TEXT_TYPE + COMMA +
                     COLUMN_NAME_CONTACT_WEBSITE + TEXT_TYPE +
                     ")";

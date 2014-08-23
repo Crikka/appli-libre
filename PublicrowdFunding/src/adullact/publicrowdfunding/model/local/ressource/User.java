@@ -58,24 +58,33 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
 
     @Override
     public User makeCopyFromServer(ServerUser serverUser) {
-        if(((m_pseudo != serverUser.pseudo) || (m_name != serverUser.name) || (m_firstName != serverUser.firstName))) {
+        User user = new User();
+        if(((user.m_pseudo != serverUser.pseudo) || (user.m_name != serverUser.name) || (user.m_firstName != serverUser.firstName))) {
             changed();
         }
-        
-        m_pseudo = serverUser.pseudo;
-        m_name = serverUser.name;
-        m_firstName = serverUser.firstName;
-        m_city = serverUser.city;
-        m_sexe = serverUser.sexe;
-		m_bookmark = new CacheSet<Bookmark>();
-		m_funding = new CacheSet<Funding>();
-        
-        return this;
+
+        user.m_pseudo = serverUser.pseudo;
+        user.m_name = serverUser.name;
+        user.m_firstName = serverUser.firstName;
+        user.m_city = serverUser.city;
+        user.m_sexe = serverUser.sexe;
+        user.m_bookmark = new CacheSet<Bookmark>();
+
+        return user;
     }
 
     @Override
     public User syncFromServer(DetailedServerUser detailedServerUser) {
-        makeCopyFromServer(detailedServerUser);
+        if(((this.m_pseudo != detailedServerUser.pseudo) || (this.m_name != detailedServerUser.name) || (this.m_firstName != detailedServerUser.firstName))) {
+            changed();
+        }
+
+        this.m_pseudo = detailedServerUser.pseudo;
+        this.m_name = detailedServerUser.name;
+        this.m_firstName = detailedServerUser.firstName;
+        this.m_city = detailedServerUser.city;
+        this.m_sexe = detailedServerUser.sexe;
+        this.m_bookmark = new CacheSet<Bookmark>();
 
         for(final ServerBookmark serverBookmark : detailedServerUser.bookmarkedProjects) {
             final Cache<Bookmark> bookmarks = new Bookmark().getCache(Integer.toString(serverBookmark.id)).declareUpToDate();
@@ -87,20 +96,6 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
                 }
             });
         }
-        
-        for(final ServerFunding serverFunding : detailedServerUser.fundedProjects) {
-            final Cache<Funding> fundings = new Funding().getCache(Integer.toString(serverFunding.id)).declareUpToDate();
-            fundings.toResource(new HoldToDo<Funding>() {
-                @Override
-                public void hold(Funding resource) {
-                    resource.syncFromServer(serverFunding);
-                    m_funding.add(fundings);
-                }
-            });
-        }
-        
-        
-        
         return this;
     }
 
