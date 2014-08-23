@@ -37,7 +37,7 @@ public class TabProjetsFinanceFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		final View view = inflater.inflate(R.layout.fragment_liste_projet,
+		final View view = inflater.inflate(R.layout.fragment_liste_projet_no_refresh,
 				container, false);
 
 		listeProjets = (ListView) view.findViewById(R.id.liste);

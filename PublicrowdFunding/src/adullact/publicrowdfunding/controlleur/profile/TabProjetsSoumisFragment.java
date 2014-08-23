@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -37,10 +38,12 @@ public class TabProjetsSoumisFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		final View view = inflater.inflate(R.layout.fragment_liste_projet, container, false);
+		final View view = inflater.inflate(R.layout.fragment_liste_projet_no_refresh, container, false);
 
 		listeProjets = (ListView) view.findViewById(R.id.liste);
 
+		TextView empty = (TextView) view.findViewById(R.id.empty);
+		listeProjets.setEmptyView(empty);
 		
 		projets = new ArrayList<Project>();
 

@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class TabFavorisFragment extends Fragment {
@@ -28,18 +29,21 @@ public class TabFavorisFragment extends Fragment {
 	private adullact.publicrowdfunding.controlleur.profile.MainActivity _this;
 
 	private ArrayList<Bookmark> bookmarks;
-	
+
 	private ArrayList<Project> projets;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		View view = inflater.inflate(R.layout.fragment_liste_projet, container,
-				false);
+		View view = inflater.inflate(R.layout.fragment_liste_projet_no_refresh,
+				container, false);
 
 		listeProjets = (ListView) view.findViewById(R.id.liste);
 
+		TextView empty = (TextView) view.findViewById(R.id.empty);
+		listeProjets.setEmptyView(empty);
+		
 		projets = new ArrayList<Project>();
 		bookmarks = new ArrayList<Bookmark>();
 
@@ -54,24 +58,24 @@ public class TabFavorisFragment extends Fragment {
 			}
 
 		});
-		
-		for(Bookmark bookmark : bookmarks){
-			bookmark.getProject(new WhatToDo<Project>(){
+
+		for (Bookmark bookmark : bookmarks) {
+			bookmark.getProject(new WhatToDo<Project>() {
 
 				@Override
 				public void hold(Project resource) {
 					projets.add(resource);
-					
+
 				}
 
 				@Override
 				public void eventually() {
 					// TODO Auto-generated method stub
-					
+
 				}
-				
+
 			});
-			
+
 		}
 
 		ArrayAdapter<Project> adapter = new CustomAdapter(this.getActivity()
