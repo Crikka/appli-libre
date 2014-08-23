@@ -34,6 +34,8 @@ public class TabProjetsFinanceFragment extends Fragment {
 
 	private ArrayList<Funding> funding;
 	private ArrayList<Project> projets;
+	
+	private ArrayAdapter<Project> adapter;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,6 +47,11 @@ public class TabProjetsFinanceFragment extends Fragment {
 		listeProjets = (ListView) view.findViewById(R.id.liste);
 		projets = new ArrayList<Project>();
 
+		adapter = new CustomAdapter(this.getActivity()
+				.getBaseContext(), R.layout.projet_adaptor, projets);
+
+		listeProjets.setAdapter(adapter);
+		
 		_this = (adullact.publicrowdfunding.controlleur.profile.MainActivity) getActivity();
 
 		_this.user.getFundingProjects(new HoldAllToDo<Funding>() {
@@ -63,6 +70,7 @@ public class TabProjetsFinanceFragment extends Fragment {
 				@Override
 				public void hold(Project resource) {
 					projets.add(resource);
+					adapter.notifyDataSetChanged();
 					
 				}
 
@@ -75,10 +83,7 @@ public class TabProjetsFinanceFragment extends Fragment {
 			});
 		}
 
-		ArrayAdapter<Project> adapter = new CustomAdapter(this.getActivity()
-				.getBaseContext(), R.layout.projet_adaptor, projets);
 
-		listeProjets.setAdapter(adapter);
 		listeProjets.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override

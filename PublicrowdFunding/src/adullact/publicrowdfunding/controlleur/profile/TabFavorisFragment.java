@@ -31,6 +31,8 @@ public class TabFavorisFragment extends Fragment {
 	private ArrayList<Bookmark> bookmarks;
 
 	private ArrayList<Project> projets;
+	
+	private ArrayAdapter<Project> adapter;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,6 +49,11 @@ public class TabFavorisFragment extends Fragment {
 		projets = new ArrayList<Project>();
 		bookmarks = new ArrayList<Bookmark>();
 
+		adapter = new CustomAdapter(this.getActivity()
+				.getBaseContext(), R.layout.projet_adaptor, projets);
+
+		listeProjets.setAdapter(adapter);
+		
 		_this = (adullact.publicrowdfunding.controlleur.profile.MainActivity) getActivity();
 
 		_this.user.getBookmarkedProjects(new HoldAllToDo<Bookmark>() {
@@ -65,6 +72,7 @@ public class TabFavorisFragment extends Fragment {
 				@Override
 				public void hold(Project resource) {
 					projets.add(resource);
+					adapter.notifyDataSetChanged();
 
 				}
 
@@ -78,10 +86,7 @@ public class TabFavorisFragment extends Fragment {
 
 		}
 
-		ArrayAdapter<Project> adapter = new CustomAdapter(this.getActivity()
-				.getBaseContext(), R.layout.projet_adaptor, projets);
-
-		listeProjets.setAdapter(adapter);
+	
 		listeProjets.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
