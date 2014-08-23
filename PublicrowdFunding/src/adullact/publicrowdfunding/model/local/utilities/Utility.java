@@ -32,6 +32,10 @@ public class Utility {
 			return R.drawable.roi;
 		case 2:
 			return R.drawable.basketball;
+		case 3:
+			return R.drawable.plante;
+		case 4:
+			return R.drawable.fete;
 
 		default:
 			return R.drawable.ic_launcher;
