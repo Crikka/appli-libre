@@ -71,6 +71,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
     public Project makeCopyFromServer(ServerProject serverProject) {
         Project res = new Project();
         res.m_id = serverProject.id;
+        res.m_active = true; // TODO
         res.m_name = serverProject.name;
         res.m_description = serverProject.description;
         res.m_funding = new CacheSet<Funding>();
@@ -93,9 +94,11 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
     @Override
     public Project syncFromServer(DetailedServerProject detailedServerProject) {
         this.m_id = detailedServerProject.id;
+        this.m_active = true; // TODO
         this.m_name = detailedServerProject.name;
         this.m_description = detailedServerProject.description;
         this.m_funding = new CacheSet<Funding>();
+        this.m_commentaries = new CacheSet<Commentary>();
         this.m_proposedBy = new User().getCache(detailedServerProject.proposedBy);
         this.m_requestedFunding = new BigDecimal(detailedServerProject.requestedFunding);
         this.m_currentFunding = new BigDecimal(detailedServerProject.currentFunding);
@@ -105,8 +108,6 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         this.m_illustration = detailedServerProject.illustration;
         this.m_fundingInterval = new Interval(Utility.stringToDateTime(detailedServerProject.beginDate), Utility.stringToDateTime(detailedServerProject.endDate));
         this.m_fundingIntervals = new ArrayList<FundingInterval>();
-        this.m_funding = new CacheSet<Funding>();
-        this.m_commentaries = new CacheSet<Commentary>();
         this.m_email = detailedServerProject.email;
         this.m_website = detailedServerProject.website;
         this.m_phone = detailedServerProject.phone;
@@ -176,6 +177,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
     /* -------------------- */
 
 	private Integer m_id;
+    private boolean m_active;
 	private String m_name;
 	private String m_description;
     private Cache<User> m_proposedBy;
@@ -234,15 +236,16 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
     /**
      * Reserved for local database
      */
-    public Project(Integer id, String name, String description, boolean validate, String proposedBy, String requestedFunding, String currentFunding, String creationDate, String beginDate, String endDate, Double latitude, Double longitude, Integer illustration, String email, String website, String phone) {
+    public Project(Integer id, boolean active, String name, String description, boolean validate, String proposedBy, String requestedFunding, String currentFunding, String creationDate, String beginDate, String endDate, Double latitude, Double longitude, Integer illustration, String email, String website, String phone) {
         this.m_id = id;
+        this.m_active = active;
         this.m_name = name;
         this.m_description = description;
         this.m_proposedBy = new User().getCache(proposedBy);
         this.m_requestedFunding = new BigDecimal(requestedFunding);
         this.m_currentFunding = new BigDecimal(currentFunding);
-        this.m_creationDate = DateTime.parse(creationDate);
-        this.m_fundingInterval = new Interval(DateTime.parse(beginDate), DateTime.parse(endDate));
+        this.m_creationDate = Utility.stringToDateTime(creationDate);
+        this.m_fundingInterval = new Interval(Utility.stringToDateTime(beginDate), Utility.stringToDateTime(endDate));
         this.m_fundingIntervals = new ArrayList<FundingInterval>();
         this.m_position = new LatLng(latitude, longitude);
         this.m_validate = validate;
@@ -316,12 +319,20 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         return m_validate;
     }
 
+    public boolean isActive() {
+        return m_active;
+    }
+
     public int getIllustration(){
         return this.m_illustration;
     }
 
     public void getUser(WhatToDo<User> userWhatToDo) {
         m_proposedBy.toResource(userWhatToDo);
+    }
+
+    public Cache<User> getUser() {
+        return m_proposedBy;
     }
 
     public void getCommentaries(WhatToDo<Commentary> commentaryWhatToDo) {

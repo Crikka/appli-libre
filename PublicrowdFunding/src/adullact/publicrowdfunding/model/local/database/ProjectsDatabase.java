@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 
 import adullact.publicrowdfunding.model.local.ressource.Project;
+import adullact.publicrowdfunding.model.local.utilities.Utility;
 
 /**
  * Created by Ferrand on 20/07/2014.
@@ -14,7 +15,7 @@ import adullact.publicrowdfunding.model.local.ressource.Project;
 public class ProjectsDatabase {
     /* --- Singleton --- */
     private static ProjectsDatabase m_instance = null;
-    private static ProjectsDatabase getInstance() {
+    public static ProjectsDatabase getInstance() {
         if(m_instance == null) {
             m_instance = new ProjectsDatabase();
         }
@@ -36,6 +37,7 @@ public class ProjectsDatabase {
         // you will actually use after this query.
         String[] projection = {
                 ProjectsTable.COLUMN_NAME_ID,
+                ProjectsTable.COLUMN_NAME_ACTIVE,
                 ProjectsTable.COLUMN_NAME_TITLE,
                 ProjectsTable.COLUMN_NAME_DESCRIPTION,
                 ProjectsTable.COLUMN_NAME_VALIDATE,
@@ -43,14 +45,15 @@ public class ProjectsDatabase {
                 ProjectsTable.COLUMN_NAME_REQUESTED_FUNDING,
                 ProjectsTable.COLUMN_NAME_CURRENT_FUNDING,
                 ProjectsTable.COLUMN_NAME_CREATION_DATE,
-                ProjectsTable.COLUMN_NAME_DESCRIPTION,
                 ProjectsTable.COLUMN_NAME_BEGIN_DATE,
                 ProjectsTable.COLUMN_NAME_END_DATE,
                 ProjectsTable.COLUMN_NAME_LATITUDE,
                 ProjectsTable.COLUMN_NAME_LONGITUDE,
+                ProjectsTable.COLUMN_NAME_ILLUSTRATION,
                 ProjectsTable.COLUMN_NAME_CONTACT_ADDRESS,
+                ProjectsTable.COLUMN_NAME_CONTACT_PHONE,
                 ProjectsTable.COLUMN_NAME_CONTACT_WEBSITE
-                };
+        };
 
         Cursor cursor = db.query(
                 ProjectsTable.TABLE_NAME,  // The table to query
@@ -65,21 +68,22 @@ public class ProjectsDatabase {
         while (cursor.moveToNext()) {
             Project project = new Project(
                     cursor.getInt(0), // id
-                    cursor.getString(1), // title
-                    cursor.getString(2), // description
-                    cursor.getInt(3) == 0 ? false : true, // validate
-                    cursor.getString(4), // proposed by
-                    cursor.getString(5), // requested funding
-                    cursor.getString(6), // current funding
-                    cursor.getString(7), // creation date
-                    cursor.getString(8), // begin date
-                    cursor.getString(9), // end date
-                    cursor.getDouble(10), // latitude
-                    cursor.getDouble(11), // longitude
-                    cursor.getInt(12), // illustration
-                    "", // Phone website email
-                    "",
-                    ""
+                    cursor.getInt(1) == 0 ? false : true, // validate
+                    cursor.getString(2), // title
+                    cursor.getString(3), // description
+                    cursor.getInt(4) == 0 ? false : true, // validate
+                    cursor.getString(5), // proposed by
+                    cursor.getString(6), // requested funding
+                    cursor.getString(7), // current funding
+                    cursor.getString(8), // creation date
+                    cursor.getString(9), // begin date
+                    cursor.getString(10), // end date
+                    cursor.getDouble(11), // latitude
+                    cursor.getDouble(12), // longitude
+                    cursor.getInt(13), // illustration
+                    cursor.getString(14), // email
+                    cursor.getString(15), // phone
+                    cursor.getString(16) // website
             );
 
             res.add(project);
@@ -95,37 +99,61 @@ public class ProjectsDatabase {
         SQLiteDatabase db = m_helper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-       /* values.put(ProjectsTable.COLUMN_NAME_ENTRY_ID, id);
-        values.put(ProjectsTable.COLUMN_NAME_TITLE, title);
-        values.put(ProjectsTable.COLUMN_NAME_CONTENT, content);*/
+        values.put(ProjectsTable.COLUMN_NAME_ID, project.getResourceId());
+        values.put(ProjectsTable.COLUMN_NAME_ACTIVE, project.isActive() == false ? 0 : 1);
+        values.put(ProjectsTable.COLUMN_NAME_TITLE, project.getName());
+        values.put(ProjectsTable.COLUMN_NAME_DESCRIPTION, project.getDescription());
+        values.put(ProjectsTable.COLUMN_NAME_VALIDATE, project.isValidate() == false ? 0 : 1);
+        values.put(ProjectsTable.COLUMN_NAME_PROPOSED_BY, project.getUser().getResourceId());
+        values.put(ProjectsTable.COLUMN_NAME_REQUESTED_FUNDING, project.getRequestedFunding());
+        values.put(ProjectsTable.COLUMN_NAME_CURRENT_FUNDING, project.getCurrentFunding());
+        values.put(ProjectsTable.COLUMN_NAME_CREATION_DATE, Utility.DateTimeToString(project.getCreationDate()));
+        values.put(ProjectsTable.COLUMN_NAME_BEGIN_DATE, Utility.DateTimeToString(project.getFundingInterval().getStart()));
+        values.put(ProjectsTable.COLUMN_NAME_END_DATE, Utility.DateTimeToString(project.getFundingInterval().getEnd()));
+        values.put(ProjectsTable.COLUMN_NAME_LATITUDE, project.getPosition().latitude);
+        values.put(ProjectsTable.COLUMN_NAME_LONGITUDE, project.getPosition().longitude);
+        values.put(ProjectsTable.COLUMN_NAME_ILLUSTRATION, project.getIllustration());
+        values.put(ProjectsTable.COLUMN_NAME_CONTACT_ADDRESS, project.getEmail());
+        values.put(ProjectsTable.COLUMN_NAME_CONTACT_PHONE, project.getPhone());
+        values.put(ProjectsTable.COLUMN_NAME_CONTACT_WEBSITE, project.getWebsite());
 
         db.insert(ProjectsTable.TABLE_NAME, null, values);
     }
 
     public void update(Project project) {
-        /*SQLiteDatabase db = m_helper.getReadableDatabase();
+        SQLiteDatabase db = m_helper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(FeedEntry.COLUMN_NAME_TITLE, title);
+        values.put(ProjectsTable.COLUMN_NAME_ACTIVE, project.isActive() == false ? 0 : 1);
+        values.put(ProjectsTable.COLUMN_NAME_TITLE, project.getName());
+        values.put(ProjectsTable.COLUMN_NAME_DESCRIPTION, project.getDescription());
+        values.put(ProjectsTable.COLUMN_NAME_VALIDATE, project.isValidate() == false ? 0 : 1);
+        values.put(ProjectsTable.COLUMN_NAME_PROPOSED_BY, project.getUser().getResourceId());
+        values.put(ProjectsTable.COLUMN_NAME_REQUESTED_FUNDING, project.getRequestedFunding());
+        values.put(ProjectsTable.COLUMN_NAME_CURRENT_FUNDING, project.getCurrentFunding());
+        values.put(ProjectsTable.COLUMN_NAME_CREATION_DATE, Utility.DateTimeToString(project.getCreationDate()));
+        values.put(ProjectsTable.COLUMN_NAME_BEGIN_DATE, Utility.DateTimeToString(project.getFundingInterval().getStart()));
+        values.put(ProjectsTable.COLUMN_NAME_END_DATE, Utility.DateTimeToString(project.getFundingInterval().getEnd()));
+        values.put(ProjectsTable.COLUMN_NAME_LATITUDE, project.getPosition().latitude);
+        values.put(ProjectsTable.COLUMN_NAME_LONGITUDE, project.getPosition().longitude);
+        values.put(ProjectsTable.COLUMN_NAME_ILLUSTRATION, project.getIllustration());
+        values.put(ProjectsTable.COLUMN_NAME_CONTACT_ADDRESS, project.getEmail());
+        values.put(ProjectsTable.COLUMN_NAME_CONTACT_PHONE, project.getPhone());
+        values.put(ProjectsTable.COLUMN_NAME_CONTACT_WEBSITE, project.getWebsite());
 
-// Which row to update, based on the ID
-        String selection = FeedEntry.COLUMN_NAME_ENTRY_ID + " LIKE ?";
-        String[] selectionArgs = { String.valueOf(rowId) };
+        String selection = ProjectsTable.COLUMN_NAME_ID;
+        String[] selectionArgs = {project.getResourceId()};
 
-        int count = db.update(
-                FeedReaderDbHelper.FeedEntry.TABLE_NAME,
-                values,
-                selection,
-                selectionArgs);*/
+        db.update(ProjectsTable.TABLE_NAME, values, selection, selectionArgs);
     }
 
     public void delete(Project project) {
-        /*// Define 'where' part of query.
-        String selection = FeedEntry.COLUMN_NAME_ENTRY_ID + " LIKE ?";
-        // Specify arguments in placeholder order.
-        String[] selectionArgs = {String.valueOf(rowId)};
-// Issue SQL statement.
-        db.delete(table_name, selection, selectionArgs);*/
+        SQLiteDatabase db = m_helper.getWritableDatabase();
+
+        String selection = ProjectsTable.COLUMN_NAME_ID;
+        String[] selectionArgs = {project.getResourceId()};
+
+        db.delete(ProjectsTable.TABLE_NAME, selection, selectionArgs);
     }
 
 }

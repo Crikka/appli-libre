@@ -8,9 +8,4 @@ import adullact.publicrowdfunding.model.server.event.RetrieveEvent;
 public class RetrieveErrorHandler<TResource extends Resource<TResource, ?, ?>>
         extends ErrorHandler<RetrieveRequest<TResource,?,?>,RetrieveEvent<TResource>,RetrieveErrorHandler<TResource>> {
 
-    @Override
-    public Throwable handleError(RetrofitError error) {
-        System.out.println(error.getMessage());
-        return null;
-    }
 }

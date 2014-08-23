@@ -28,12 +28,6 @@ extends ServerObject<TRequest, TEvent, TErrorHandler> implements retrofit.ErrorH
     @Override
     public Throwable handleError(RetrofitError error) {
         m_networkError = error.isNetworkError();
-        Log.i("Triumvirat", error.getMessage());
-        try {
-            Log.i("Triumvirat", streamToString(error.getResponse().getBody().in()));
-        } catch (IOException e) {
-            Log.i("Triumvirat", "AHHHHHHHHHHHHHHHHHHHHHHHHH");
-        }
         return error;
     }
 
