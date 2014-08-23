@@ -10,12 +10,9 @@ import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.server.entities.DetailedServerUser;
 import adullact.publicrowdfunding.model.server.entities.RowAffected;
 import adullact.publicrowdfunding.model.server.entities.ServerBookmark;
-import adullact.publicrowdfunding.model.server.entities.ServerCommentary;
-import adullact.publicrowdfunding.model.server.entities.ServerFunding;
 import adullact.publicrowdfunding.model.server.entities.ServerUser;
 import adullact.publicrowdfunding.model.server.entities.Service;
 import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
-import adullact.publicrowdfunding.model.server.event.ListerEvent;
 import rx.Observable;
 
 /**
@@ -28,7 +25,7 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
 	private String m_name;
 	private String m_firstName;
 	private String m_city;
-	private String m_sexe;
+	private String m_gender;
 	private CacheSet<Bookmark> m_bookmark;
 	private CacheSet<Funding> m_funding;
 
@@ -51,7 +48,7 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
         serverUser.name = this.m_name;
         serverUser.firstName = this.m_firstName;
         serverUser.city = this.m_city;
-        serverUser.sexe = this.m_sexe;
+        serverUser.sexe = this.m_gender;
     
         return serverUser;
     }
@@ -59,7 +56,7 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
     @Override
     public User makeCopyFromServer(ServerUser serverUser) {
         User user = new User();
-        if(((user.m_pseudo != serverUser.pseudo) || (user.m_name != serverUser.name) || (user.m_firstName != serverUser.firstName))) {
+        if((!(user.m_pseudo.equals(serverUser.pseudo)) || !(user.m_name.equals(serverUser.name)) || !user.m_firstName.equals(serverUser.firstName))) {
             changed();
         }
 
@@ -67,7 +64,7 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
         user.m_name = serverUser.name;
         user.m_firstName = serverUser.firstName;
         user.m_city = serverUser.city;
-        user.m_sexe = serverUser.sexe;
+        user.m_gender = serverUser.sexe;
         user.m_bookmark = new CacheSet<Bookmark>();
 
         return user;
@@ -75,7 +72,7 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
 
     @Override
     public User syncFromServer(DetailedServerUser detailedServerUser) {
-        if(((this.m_pseudo != detailedServerUser.pseudo) || (this.m_name != detailedServerUser.name) || (this.m_firstName != detailedServerUser.firstName))) {
+        if((!(m_pseudo.equals(detailedServerUser.pseudo)) || !(m_name.equals(detailedServerUser.name)) || !m_firstName.equals(detailedServerUser.firstName))) {
             changed();
         }
 
@@ -83,7 +80,7 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
         this.m_name = detailedServerUser.name;
         this.m_firstName = detailedServerUser.firstName;
         this.m_city = detailedServerUser.city;
-        this.m_sexe = detailedServerUser.sexe;
+        this.m_gender = detailedServerUser.sexe;
         this.m_bookmark = new CacheSet<Bookmark>();
 
         for(final ServerBookmark serverBookmark : detailedServerUser.bookmarkedProjects) {
@@ -131,7 +128,7 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
 		this.m_name = null;
 		this.m_firstName = null;
 		this.m_city = null;
-		this.m_sexe = null;
+		this.m_gender = null;
 
 	}
 
@@ -140,7 +137,7 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
         this.m_name = name;
         this.m_firstName = firstName;
         this.m_city = city;
-        this.m_sexe = sexe;
+        this.m_gender = sexe;
 
     }
 
@@ -161,50 +158,17 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
 		return m_city;
 	}
 	
-	public String getSexe(){
-		return m_sexe;
+	public String getGender(){
+		return m_gender;
 	}
 	
 	public void getBookmarkedProjects(final WhatToDo<Bookmark> projectWhatToDo) {
 	      m_bookmark.forEach(projectWhatToDo);
-		/*
-        new Bookmark().serverListerByUser(m_pseudo, new ListerEvent<Bookmark>() {
-            @Override
-            public void onLister(ArrayList<Bookmark> bookmarks) {
-                for (Bookmark bookmark : bookmarks) {
-                    bookmark.getProject(projectWhatToDo);
-                }
-            }
-
-            @Override
-            public void errorNetwork() {
-
-            }
-        });*/
 	}
 	
 	public void getFundingProjects(final WhatToDo<Funding> projectWhatToDo) {
-	      m_funding.forEach(projectWhatToDo);
-	}
-	      
-	/*
-    public void getFinancedProjects(final WhatToDo<Project> projectWhatToDo) {
-        new Funding().serverListerByUser(m_pseudo, new ListerEvent<Funding>() {
-            @Override
-            public void onLister(ArrayList<Funding> funding) {
-                for (Funding fund : funding) {
-                    fund.getProject(projectWhatToDo);
-                }
-            }
-
-            @Override
-            public void errorNetwork() {
-
-            }
-        });
+        m_funding.forEach(projectWhatToDo);
     }
-    */
-	/* ------ */
 
 
 	/* Setters */
@@ -224,8 +188,8 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
     	m_city = city;
     }
     
-    public void setSexe(String sexe){
-    	m_sexe = sexe;
+    public void setGender(String gender){
+    	m_gender = gender;
     }
     /* ------- */
     

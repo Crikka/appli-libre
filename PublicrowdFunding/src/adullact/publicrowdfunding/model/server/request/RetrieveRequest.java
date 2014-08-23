@@ -35,23 +35,17 @@ public class RetrieveRequest<TResource extends Resource<TResource, TServerResour
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<TResource>() {
-
+                .subscribe(new Action1<TResource>() {
                     @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable throwable) {
-                        errorHandler().manageCallback();
-                    }
-
-                    @Override
-                    public void onNext(TResource resource) {
+                    public void call(TResource resource) {
                         done();
 
                         event().onRetrieve(resource);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        errorHandler().manageCallback();
                     }
                 });
     }

@@ -88,7 +88,7 @@ public class MainActivity extends Activity implements TabListener {
 					user = resource;
 					pseudo.setText(resource.getResourceId());
 					ville.setText(resource.getCity());
-					if (resource.getSexe().equals("0")) {
+					if (resource.getGender().equals("0")) {
 						avatar.setImageResource(R.drawable.male_user_icon);
 					} else {
 						avatar.setImageResource(R.drawable.female_user_icon);

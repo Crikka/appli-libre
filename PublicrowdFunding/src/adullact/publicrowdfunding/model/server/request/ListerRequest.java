@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import adullact.publicrowdfunding.model.local.ressource.Resource;
+import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.functions.Func1;
+import rx.observables.ConnectableObservable;
 import rx.schedulers.Schedulers;
 import adullact.publicrowdfunding.model.server.errorHandler.ListerErrorHandler;
 import adullact.publicrowdfunding.model.server.event.ListerEvent;
@@ -41,23 +43,17 @@ public class ListerRequest<TResource extends Resource<TResource, TServerResource
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ArrayList<TResource>>() {
-
+                .subscribe(new Action1<ArrayList<TResource>>() {
                     @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable throwable) {
-                        errorHandler().manageCallback();
-                    }
-
-                    @Override
-                    public void onNext(ArrayList<TResource> resources) {
+                    public void call(ArrayList<TResource> resources) {
                         done();
 
                         event().onLister(resources);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        errorHandler().manageCallback();
                     }
                 });
     }

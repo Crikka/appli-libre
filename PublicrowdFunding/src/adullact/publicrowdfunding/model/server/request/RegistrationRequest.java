@@ -7,6 +7,7 @@ import adullact.publicrowdfunding.model.server.errorHandler.CreateErrorHandler;
 import adullact.publicrowdfunding.model.server.errorHandler.RegistrationErrorHandler;
 import adullact.publicrowdfunding.model.server.event.CreateEvent;
 import adullact.publicrowdfunding.model.server.event.RegistrationEvent;
+import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.functions.Action1;
@@ -49,11 +50,6 @@ public class RegistrationRequest extends Request<RegistrationRequest, Registrati
                     @Override
                     public void call(Throwable throwable) {
                         errorHandler().manageCallback();
-                    }
-                }, new Action0() {
-                    @Override
-                    public void call() {
-
                     }
                 });
     }

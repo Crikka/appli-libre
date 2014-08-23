@@ -17,8 +17,24 @@ public abstract class CanI {
         }
     }
 
-    public boolean modify(User user) {
-        return true;
+    public void modify(User user) {
+        Account account = Account.getOwnOrAnonymous();
+        if(account.isAdmin() || account.getPseudo().equals(user.getPseudo())) {
+            yes();
+        }
+        else {
+            no();
+        }
+    }
+
+    public void modify(Project project) {
+        Account account = Account.getOwnOrAnonymous();
+        if(account.isAdmin() || account.getPseudo().equals(project.getUser().getResourceId())) {
+            yes();
+        }
+        else {
+            no();
+        }
     }
 
     protected abstract void yes();

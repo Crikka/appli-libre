@@ -1,18 +1,14 @@
 package adullact.publicrowdfunding.custom;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Vector;
 
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.model.local.cache.Cache;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Commentary;
 import adullact.publicrowdfunding.model.local.ressource.User;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -100,7 +96,7 @@ public class CommentaireAdapteur extends ArrayAdapter<Commentary> {
 			public void hold(User resource) {
 				utilisateurName.setText(resource.getPseudo());
 				utilisateurVille.setText(resource.getCity());
-				if (resource.getSexe().equals("0")) {
+				if (resource.getGender().equals("0")) {
 					avatar.setImageResource(R.drawable.male_user_icon);
 				} else {
 					avatar.setImageResource(R.drawable.female_user_icon);

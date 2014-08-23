@@ -141,7 +141,7 @@ public class TabProjetFragment extends Fragment {
 				user = resource;
 				m_utilisateur_soumission.setText(resource.getPseudo());
 				m_utilisateur_ville.setText(resource.getCity());
-				if (user.getSexe().equals("0")) {
+				if (user.getGender().equals("0")) {
 					m_avatar.setImageResource(R.drawable.male_user_icon);
 				} else {
 					m_avatar.setImageResource(R.drawable.female_user_icon);
