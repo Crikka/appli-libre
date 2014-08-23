@@ -5,6 +5,7 @@ import adullact.publicrowdfunding.custom.CustomAdapter;
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
+import adullact.publicrowdfunding.model.local.ressource.Funding;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
 import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
@@ -31,6 +32,7 @@ public class TabProjetsFinanceFragment extends Fragment {
 
 	private adullact.publicrowdfunding.controlleur.profile.MainActivity _this;
 
+	private ArrayList<Funding> funding;
 	private ArrayList<Project> projets;
 
 	@Override
@@ -45,15 +47,33 @@ public class TabProjetsFinanceFragment extends Fragment {
 
 		_this = (adullact.publicrowdfunding.controlleur.profile.MainActivity) getActivity();
 
-		_this.user.getFinancedProjects(new HoldAllToDo<Project>() {
+		_this.user.getFundingProjects(new HoldAllToDo<Funding>() {
 
 			@Override
-			public void holdAll(ArrayList<Project> resources) {
-				projets = resources;
+			public void holdAll(ArrayList<Funding> resources) {
+				funding = resources;
 
 			}
 
 		});
+		
+		for(Funding funds : funding){
+			funds.getProject(new WhatToDo<Project>(){
+
+				@Override
+				public void hold(Project resource) {
+					projets.add(resource);
+					
+				}
+
+				@Override
+				public void eventually() {
+					// TODO Auto-generated method stub
+					
+				}
+				
+			});
+		}
 
 		ArrayAdapter<Project> adapter = new CustomAdapter(this.getActivity()
 				.getBaseContext(), R.layout.projet_adaptor, projets);

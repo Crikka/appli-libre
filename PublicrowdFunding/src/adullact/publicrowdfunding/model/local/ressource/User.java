@@ -11,6 +11,7 @@ import adullact.publicrowdfunding.model.server.entities.DetailedServerUser;
 import adullact.publicrowdfunding.model.server.entities.RowAffected;
 import adullact.publicrowdfunding.model.server.entities.ServerBookmark;
 import adullact.publicrowdfunding.model.server.entities.ServerCommentary;
+import adullact.publicrowdfunding.model.server.entities.ServerFunding;
 import adullact.publicrowdfunding.model.server.entities.ServerUser;
 import adullact.publicrowdfunding.model.server.entities.Service;
 import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
@@ -29,6 +30,7 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
 	private String m_city;
 	private String m_sexe;
 	private CacheSet<Bookmark> m_bookmark;
+	private CacheSet<Funding> m_funding;
 
     /* ----- Resource ----- */
     @Override
@@ -66,6 +68,7 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
         m_city = serverUser.city;
         m_sexe = serverUser.sexe;
 		m_bookmark = new CacheSet<Bookmark>();
+		m_funding = new CacheSet<Funding>();
         
         return this;
     }
@@ -84,6 +87,20 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
                 }
             });
         }
+        
+        for(final ServerFunding serverFunding : detailedServerUser.fundedProjects) {
+            final Cache<Funding> fundings = new Funding().getCache(Integer.toString(serverFunding.id)).declareUpToDate();
+            fundings.toResource(new HoldToDo<Funding>() {
+                @Override
+                public void hold(Funding resource) {
+                    resource.syncFromServer(serverFunding);
+                    m_funding.add(fundings);
+                }
+            });
+        }
+        
+        
+        
         return this;
     }
 
@@ -170,7 +187,12 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
             }
         });*/
 	}
-
+	
+	public void getFundingProjects(final WhatToDo<Funding> projectWhatToDo) {
+	      m_funding.forEach(projectWhatToDo);
+	}
+	      
+	/*
     public void getFinancedProjects(final WhatToDo<Project> projectWhatToDo) {
         new Funding().serverListerByUser(m_pseudo, new ListerEvent<Funding>() {
             @Override
@@ -186,6 +208,7 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
             }
         });
     }
+    */
 	/* ------ */
 
 
