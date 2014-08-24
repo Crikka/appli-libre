@@ -26,7 +26,7 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
 	private String m_firstName;
 	private String m_city;
 	private String m_gender;
-	private CacheSet<Bookmark> m_bookmark;
+	private CacheSet<Bookmark> m_bookmarks;
 	private CacheSet<Funding> m_funding;
 
     /* ----- Resource ----- */
@@ -56,8 +56,13 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
     @Override
     public User makeCopyFromServer(ServerUser serverUser) {
         User user = new User();
-        if((!(user.m_pseudo.equals(serverUser.pseudo)) || !(user.m_name.equals(serverUser.name)) || !user.m_firstName.equals(serverUser.firstName))) {
+        if(user.m_pseudo == null || user.m_name == null || user.m_firstName == null) {
             changed();
+        }
+        else {
+            if((!(user.m_pseudo.equals(serverUser.pseudo)) || !(user.m_name.equals(serverUser.name)) || !user.m_firstName.equals(serverUser.firstName))) {
+                changed();
+            }
         }
 
         user.m_pseudo = serverUser.pseudo;
@@ -65,15 +70,20 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
         user.m_firstName = serverUser.firstName;
         user.m_city = serverUser.city;
         user.m_gender = serverUser.sexe;
-        user.m_bookmark = new CacheSet<Bookmark>();
+        user.m_bookmarks = new CacheSet<Bookmark>();
 
         return user;
     }
 
     @Override
     public User syncFromServer(DetailedServerUser detailedServerUser) {
-        if((!(m_pseudo.equals(detailedServerUser.pseudo)) || !(m_name.equals(detailedServerUser.name)) || !m_firstName.equals(detailedServerUser.firstName))) {
+        if(m_pseudo == null || m_name == null || m_firstName == null) {
             changed();
+        }
+        else {
+            if((!(m_pseudo.equals(detailedServerUser.pseudo)) || !(m_name.equals(detailedServerUser.name)) || !m_firstName.equals(detailedServerUser.firstName))) {
+                changed();
+            }
         }
 
         this.m_pseudo = detailedServerUser.pseudo;
@@ -81,7 +91,7 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
         this.m_firstName = detailedServerUser.firstName;
         this.m_city = detailedServerUser.city;
         this.m_gender = detailedServerUser.sexe;
-        this.m_bookmark = new CacheSet<Bookmark>();
+        this.m_bookmarks = new CacheSet<Bookmark>();
 
         for(final ServerBookmark serverBookmark : detailedServerUser.bookmarkedProjects) {
             final Cache<Bookmark> bookmarks = new Bookmark().getCache(Integer.toString(serverBookmark.id)).declareUpToDate();
@@ -89,7 +99,7 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
                 @Override
                 public void hold(Bookmark resource) {
                     resource.syncFromServer(serverBookmark);
-                    m_bookmark.add(bookmarks);
+                    m_bookmarks.add(bookmarks);
                 }
             });
         }
@@ -163,7 +173,7 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
 	}
 	
 	public void getBookmarkedProjects(final WhatToDo<Bookmark> projectWhatToDo) {
-	      m_bookmark.forEach(projectWhatToDo);
+	      m_bookmarks.forEach(projectWhatToDo);
 	}
 	
 	public void getFundingProjects(final WhatToDo<Funding> projectWhatToDo) {
