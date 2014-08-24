@@ -12,6 +12,9 @@ import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.Bookmark;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
+import adullact.publicrowdfunding.model.local.utilities.CanI;
+import adullact.publicrowdfunding.model.server.event.CreateEvent;
+import adullact.publicrowdfunding.model.server.event.DeleteEvent;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
@@ -158,27 +161,118 @@ public class MainActivity extends Activity implements TabListener {
 		switch (item.getItemId()) {
 
 		case R.id.add_favorite:
-
+			System.out.println("Ajout au favoris");
 			try {
 				Account account = Account.getOwn();
 				account.getUser(new WhatToDo<User>() {
 
 					@Override
 					public void hold(User resource) {
-						
+						System.out.println("récupération de l'utilisateur ok");
+						System.out.println("favorite ?" + m_Is_favorite);
 						if (m_Is_favorite) {
+							resource.removeBookmark(projet,
+									new DeleteEvent<Bookmark>() {
+
+										@Override
+										public void errorResourceIdDoesNotExist() {
+											Toast.makeText(
+													getBaseContext(),
+													"Une erreur s'est produite",
+													Toast.LENGTH_SHORT).show();
+
+										}
+
+										@Override
+										public void onDelete(Bookmark resource) {
+											Toast.makeText(
+													getBaseContext(),
+													"Projet retiré des favoris",
+													Toast.LENGTH_SHORT).show();
+											m_Is_favorite = false;
+											setColorStar(m_Is_favorite);
+
+										}
+
+										@Override
+										public void errorAdministratorRequired() {
+											Toast.makeText(
+													getBaseContext(),
+													"Une erreur s'est produite",
+													Toast.LENGTH_SHORT).show();
+
+										}
+
+										@Override
+										public void errorAuthenticationRequired() {
+											Toast.makeText(
+													getBaseContext(),
+													"Une erreur s'est produite",
+													Toast.LENGTH_SHORT).show();
+
+										}
+
+										@Override
+										public void errorNetwork() {
+											Toast.makeText(
+													getBaseContext(),
+													"Une erreur s'est produite",
+													Toast.LENGTH_SHORT).show();
+
+										}
+
+									});
+
 							Toast.makeText(getBaseContext(),
 									"Projet retiré des favoris",
 									Toast.LENGTH_SHORT).show();
 						} else {
-							Toast.makeText(getBaseContext(),
-									"Projet ajouté aux favoris",
-									Toast.LENGTH_SHORT).show();
+							System.out.println("On l'ajoute");
+							resource.addBookmark(projet,
+									new CreateEvent<Bookmark>() {
+
+										@Override
+										public void errorResourceIdAlreadyUsed() {
+											Toast.makeText(
+													getBaseContext(),
+													"Une erreur s'est produite",
+													Toast.LENGTH_SHORT).show();
+										}
+
+										@Override
+										public void onCreate(Bookmark resource) {
+											System.out
+													.println("Bookmark Ajouté !");
+											Toast.makeText(
+													getBaseContext(),
+													"Projet ajouté aux favoris",
+													Toast.LENGTH_SHORT).show();
+											m_Is_favorite = true;
+											setColorStar(m_Is_favorite);
+
+										}
+
+										@Override
+										public void errorAuthenticationRequired() {
+											Toast.makeText(
+													getBaseContext(),
+													"Une erreur s'est produite",
+													Toast.LENGTH_SHORT).show();
+										}
+
+										@Override
+										public void errorNetwork() {
+											Toast.makeText(
+													getBaseContext(),
+													"Une erreur s'est produite",
+													Toast.LENGTH_SHORT).show();
+
+										}
+
+									});
 
 						}
 
-						m_Is_favorite = !m_Is_favorite;
-						setColorStar(m_Is_favorite);
 					}
 
 					@Override
@@ -242,53 +336,37 @@ public class MainActivity extends Activity implements TabListener {
 	}
 
 	public void setBookmarked() {
+
 		/*
-		try {
-			Account account = Account.getOwn();
-			account.getUser(new WhatToDo<User>() {
-
-				@Override
-				public void hold(User resource) {
-					resource.getBookmarkedProjects(new HoldAllToDo<Bookmark>() {
-
-						@Override
-						public void holdAll(ArrayList<Bookmark> resources) {
-
-							for (Bookmark bookmark : resources) {
-								bookmark.getProject(new WhatToDo<Project>() {
-
-									@Override
-									public void hold(Project resource) {
-										if (resource.getResourceId() == projet
-												.getResourceId()) {
-											// Enfin !! oui le projet est dans
-											// les favoris
-											setColorStar(true);
-										}
-
-									}
-
-									@Override
-									public void eventually() {
-										// TODO Auto-generated method stub
-
-									}
-								});
-							}
-						}
-					});
-				}
-
-				@Override
-				public void eventually() {
-					// TODO Auto-generated method stub
-
-				}
-
-			});
-		} catch (NoAccountExistsInLocal e) {
-			System.out.println("l'utilisateur n'est pas connecté");
-		}
-*/
+		 * try { Account account = Account.getOwn(); account.getUser(new
+		 * WhatToDo<User>() {
+		 * 
+		 * @Override public void hold(User resource) {
+		 * resource.getBookmarkedProjects(new HoldAllToDo<Bookmark>() {
+		 * 
+		 * @Override public void holdAll(ArrayList<Bookmark> resources) {
+		 * 
+		 * for (Bookmark bookmark : resources) { bookmark.getProject(new
+		 * WhatToDo<Project>() {
+		 * 
+		 * @Override public void hold(Project resource) { if
+		 * (resource.getResourceId() == projet .getResourceId()) { // Enfin !!
+		 * oui le projet est dans // les favoris setColorStar(true); }
+		 * 
+		 * }
+		 * 
+		 * @Override public void eventually() { // TODO Auto-generated method
+		 * stub
+		 * 
+		 * } }); } } }); }
+		 * 
+		 * @Override public void eventually() { // TODO Auto-generated method
+		 * stub
+		 * 
+		 * }
+		 * 
+		 * }); } catch (NoAccountExistsInLocal e) {
+		 * System.out.println("l'utilisateur n'est pas connecté"); }
+		 */
 	}
 }
