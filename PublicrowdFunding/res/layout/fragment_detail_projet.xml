@@ -54,12 +54,11 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dip"
-                android:background="@drawable/buttonshapes"
                 android:gravity="center_vertical"
                 android:padding="3dip"
                 android:text="@string/project_description"
                 android:textColor="#808080"
-                android:textSize="20sp" />
+                android:textSize="15sp" />
 
             <TableLayout
                 android:id="@+id/tableLayout1"

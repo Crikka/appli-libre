@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class TabProjetFragment extends Fragment {
 
@@ -86,9 +87,7 @@ public class TabProjetFragment extends Fragment {
 				.findViewById(R.id.pourcentage_accomplit);
 		m_utilisateur_ville = (TextView) view.findViewById(R.id.ville);
 		m_request_funding = (TextView) view.findViewById(R.id.sommeRequestFund);
-		
-		
-		
+
 		m_mail = (Button) view.findViewById(R.id.mail);
 		m_website = (Button) view.findViewById(R.id.website);
 		m_call = (Button) view.findViewById(R.id.phone);
@@ -132,8 +131,8 @@ public class TabProjetFragment extends Fragment {
 			m_call.setText(projet.getPhone());
 		}
 
-		m_request_funding.setText(projet.getRequestedFunding()+"€");
-		
+		m_request_funding.setText(projet.getRequestedFunding() + "€");
+
 		projet.getUser(new WhatToDo<User>() {
 
 			@Override
@@ -161,15 +160,20 @@ public class TabProjetFragment extends Fragment {
 		userLayoutButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 
-				String id = user.getCache().getResourceId();
-				Context c = getActivity().getBaseContext();
-				Intent in = new Intent(
-						c,
-						adullact.publicrowdfunding.controlleur.profile.MainActivity.class);
-				in.putExtra("myCount", false);
-				in.putExtra("id", id);
-				startActivity(in);
+				try {
+					String id = user.getCache().getResourceId();
+					Context c = getActivity().getBaseContext();
+					Intent in = new Intent(
+							c,
+							adullact.publicrowdfunding.controlleur.profile.MainActivity.class);
+					in.putExtra("myCount", false);
+					in.putExtra("id", id);
+					startActivity(in);
 
+				} catch (NullPointerException e) {
+					Toast.makeText(getActivity(), "Une erreur s'est produite",
+							Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
 
