@@ -14,6 +14,7 @@ public class UpdateErrorHandler<TResource extends Resource<TResource, ?, ?>>
     @Override
     public void manageCallback() {
         super.manageCallback();
+
         if(m_resourceIdDoesNotExist) {
             event().errorResourceIdDoesNotExist();
         }

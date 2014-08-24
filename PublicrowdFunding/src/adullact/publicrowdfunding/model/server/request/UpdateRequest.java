@@ -34,11 +34,6 @@ public class UpdateRequest<TResource extends Resource<TResource, TServerResource
                     public void call(Throwable throwable) {
                         errorHandler().manageCallback();
                     }
-                }, new Action0() {
-                    @Override
-                    public void call() {
-
-                    }
                 });
     }
 
