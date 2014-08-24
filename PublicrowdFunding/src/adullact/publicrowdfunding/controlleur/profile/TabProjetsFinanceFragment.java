@@ -4,13 +4,10 @@ import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.custom.CustomAdapter;
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
-import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.Funding;
 import adullact.publicrowdfunding.model.local.ressource.Project;
-import adullact.publicrowdfunding.model.local.ressource.User;
-import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import adullact.publicrowdfunding.controlleur.detailProjet.MainActivity;
-import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
+
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,10 +18,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Vector;
 
 public class TabProjetsFinanceFragment extends Fragment {
 
@@ -54,15 +49,15 @@ public class TabProjetsFinanceFragment extends Fragment {
 		
 		_this = (adullact.publicrowdfunding.controlleur.profile.MainActivity) getActivity();
 
-		_this.user.getFundingProjects(new HoldAllToDo<Funding>() {
+		_this.user.getFunding(new HoldAllToDo<Funding>() {
 
-			@Override
-			public void holdAll(ArrayList<Funding> resources) {
-				funding = resources;
+            @Override
+            public void holdAll(ArrayList<Funding> resources) {
+                funding = resources;
 
-			}
+            }
 
-		});
+        });
 		
 		for(Funding funds : funding){
 			funds.getProject(new WhatToDo<Project>(){

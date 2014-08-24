@@ -2,9 +2,11 @@ package adullact.publicrowdfunding.model.local.ressource;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.TreeSet;
 
 import adullact.publicrowdfunding.model.local.cache.Cache;
 import adullact.publicrowdfunding.model.local.cache.CacheSet;
+import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.server.entities.DetailedServerUser;
@@ -13,21 +15,23 @@ import adullact.publicrowdfunding.model.server.entities.ServerBookmark;
 import adullact.publicrowdfunding.model.server.entities.ServerUser;
 import adullact.publicrowdfunding.model.server.entities.Service;
 import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
+import adullact.publicrowdfunding.model.server.event.CreateEvent;
+import adullact.publicrowdfunding.model.server.event.DeleteEvent;
 import rx.Observable;
 
 /**
- * 
+ *
  * @author Ferrand
- * 
+ *
  */
 public class User extends Resource<User, ServerUser, DetailedServerUser> {
-	private String m_pseudo;
-	private String m_name;
-	private String m_firstName;
-	private String m_city;
-	private String m_gender;
-	private CacheSet<Bookmark> m_bookmarks;
-	private CacheSet<Funding> m_funding;
+    private String m_pseudo;
+    private String m_name;
+    private String m_firstName;
+    private String m_city;
+    private String m_gender;
+    private CacheSet<Bookmark> m_bookmarks;
+    private CacheSet<Funding> m_funding;
 
     /* ----- Resource ----- */
     @Override
@@ -49,7 +53,7 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
         serverUser.firstName = this.m_firstName;
         serverUser.city = this.m_city;
         serverUser.sexe = this.m_gender;
-    
+
         return serverUser;
     }
 
@@ -132,15 +136,15 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
         return service.deleteUser(getResourceId());
     }
     /* -------------------- */
-	
-	public User() {
-		this.m_pseudo = null;
-		this.m_name = null;
-		this.m_firstName = null;
-		this.m_city = null;
-		this.m_gender = null;
 
-	}
+    public User() {
+        this.m_pseudo = null;
+        this.m_name = null;
+        this.m_firstName = null;
+        this.m_city = null;
+        this.m_gender = null;
+
+    }
 
     public User(String pseudo, String name, String firstName, String city, String sexe) {
         this.m_pseudo = pseudo;
@@ -151,37 +155,131 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
 
     }
 
-	/* Getter */
-	public String getName() {
-		return m_name;
-	}
+    /* Getter */
+    public String getName() {
+        return m_name;
+    }
 
-	public String getFirstName() {
-		return m_firstName;
-	}
+    public String getFirstName() {
+        return m_firstName;
+    }
 
-	public String getPseudo() {
-		return m_pseudo;
-	}
-	
-	public String getCity() {
-		return m_city;
-	}
-	
-	public String getGender(){
-		return m_gender;
-	}
-	
-	public void getBookmarkedProjects(final WhatToDo<Bookmark> projectWhatToDo) {
-	      m_bookmarks.forEach(projectWhatToDo);
-	}
-	
-	public void getFundingProjects(final WhatToDo<Funding> projectWhatToDo) {
+    public String getPseudo() {
+        return m_pseudo;
+    }
+
+    public String getCity() {
+        return m_city;
+    }
+
+    public String getGender(){
+        return m_gender;
+    }
+
+    public void getBookmarked(final WhatToDo<Bookmark> projectWhatToDo) {
+        m_bookmarks.forEach(projectWhatToDo);
+    }
+
+    public void getFunding(final WhatToDo<Funding> projectWhatToDo) {
         m_funding.forEach(projectWhatToDo);
     }
 
+    public void addBookmark(Project project, final CreateEvent<Bookmark> bookmarkCreateEvent) {
+        new Bookmark(this, project).serverCreate(new CreateEvent<Bookmark>() {
+            @Override
+            public void errorResourceIdAlreadyUsed() {
+                bookmarkCreateEvent.errorResourceIdAlreadyUsed();
+            }
 
-	/* Setters */
+            @Override
+            public void onCreate(Bookmark resource) {
+                m_bookmarks.add(resource);
+                bookmarkCreateEvent.onCreate(resource);
+            }
+
+            @Override
+            public void errorAuthenticationRequired() {
+                bookmarkCreateEvent.errorAuthenticationRequired();
+            }
+
+            @Override
+            public void errorNetwork() {
+                bookmarkCreateEvent.errorNetwork();
+            }
+        });
+    }
+
+    public void removeBookmark(final Project project, final DeleteEvent<Bookmark> bookmarkDeleteEvent) {
+        final User _this = this;
+        m_bookmarks.forEach(new HoldToDo<Bookmark>() {
+
+            @Override
+            public void hold(Bookmark bookmark) {
+                if(bookmark.getProject().getResourceId().equals(project.getResourceId())) {
+                    m_bookmarks.stopForEach();
+                    bookmark.serverDelete(new DeleteEvent<Bookmark>() {
+                        @Override
+                        public void errorResourceIdDoesNotExist() {
+                            bookmarkDeleteEvent.errorResourceIdDoesNotExist();
+                        }
+
+                        @Override
+                        public void onDelete(Bookmark resource) {
+                            m_bookmarks.remove(resource);
+                            bookmarkDeleteEvent.onDelete(resource);
+                        }
+
+                        @Override
+                        public void errorAdministratorRequired() {
+                            bookmarkDeleteEvent.errorAdministratorRequired();
+                        }
+
+                        @Override
+                        public void errorAuthenticationRequired() {
+                            bookmarkDeleteEvent.errorAdministratorRequired();
+                        }
+
+                        @Override
+                        public void errorNetwork() {
+                            bookmarkDeleteEvent.errorNetwork();
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    public void getBookmarkedProjects(final WhatToDo<Project> projectWhatToDo) {
+        m_bookmarks.forEach(new HoldAllToDo<Bookmark>() {
+
+            @Override
+            public void holdAll(ArrayList<Bookmark> bookmarks) {
+                CacheSet<Project> projects = new CacheSet<Project>();
+                for(Bookmark bookmark : bookmarks) {
+                    projects.add(bookmark.getProject());
+                }
+
+                projects.forEach(projectWhatToDo);
+            }
+        });
+    }
+
+    public void getFundedProjects(final WhatToDo<Project> projectWhatToDo) {
+        m_funding.forEach(new HoldAllToDo<Funding>() {
+
+            @Override
+            public void holdAll(ArrayList<Funding> funding) {
+                CacheSet<Project> projects = new CacheSet<Project>();
+                for(Funding fund : funding) {
+                    projects.add(fund.getProject());
+                }
+
+                projects.forEach(projectWhatToDo);
+            }
+        });
+    }
+
+    /* Setters */
     public void setPseudo(String pseudo) {
         m_pseudo = pseudo;
     }
@@ -193,19 +291,19 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
     public void setFirstName(String firstName) {
         m_firstName = firstName;
     }
-    
+
     public void setCity(String city){
-    	m_city = city;
+        m_city = city;
     }
-    
+
     public void setGender(String gender){
-    	m_gender = gender;
+        m_gender = gender;
     }
     /* ------- */
-    
+
     public String toString(){
-    	return "Pseudo:"+m_pseudo+
-    			"Name:"+m_name+
-    			"First Name:"+m_firstName;
+        return "Pseudo:"+m_pseudo+
+                "Name:"+m_name+
+                "First Name:"+m_firstName;
     }
 }

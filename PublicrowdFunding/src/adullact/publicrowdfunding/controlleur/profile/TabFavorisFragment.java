@@ -9,7 +9,7 @@ import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Bookmark;
 import adullact.publicrowdfunding.model.local.ressource.Project;
-import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
+
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -56,15 +56,15 @@ public class TabFavorisFragment extends Fragment {
 		
 		_this = (adullact.publicrowdfunding.controlleur.profile.MainActivity) getActivity();
 
-		_this.user.getBookmarkedProjects(new HoldAllToDo<Bookmark>() {
+		_this.user.getBookmarked(new HoldAllToDo<Bookmark>() {
 
-			@Override
-			public void holdAll(ArrayList<Bookmark> resources) {
-				bookmarks = resources;
+            @Override
+            public void holdAll(ArrayList<Bookmark> resources) {
+                bookmarks = resources;
 
-			}
+            }
 
-		});
+        });
 
 		for (Bookmark bookmark : bookmarks) {
 			bookmark.getProject(new WhatToDo<Project>() {

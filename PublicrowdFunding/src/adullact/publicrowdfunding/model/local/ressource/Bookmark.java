@@ -63,6 +63,14 @@ public class Bookmark extends Resource<Bookmark, ServerBookmark, ServerBookmark>
         m_project.toResource(projectWhatToDo);
     }
 
+    public Cache<User> getUser() {
+        return m_user;
+    }
+
+    public Cache<Project> getProject() {
+        return m_project;
+    }
+
     /* --- Resource --- */
     @Override
     public String getResourceId() {

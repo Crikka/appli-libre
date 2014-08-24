@@ -42,6 +42,9 @@ public class Funding extends Resource<Funding, ServerFunding, ServerFunding> {
         m_to.toResource(projectWhatToDo);
     }
 
+    public Cache<Project> getProject() {
+        return m_to;
+    }
 
     /* --- Resource --- */
     @Override
