@@ -213,6 +213,11 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
         m_user.toResource(userWhatToDo);
     }
 
+    public Cache<User> getUser() {
+        return m_user;
+    }
+
+
     public void save() {
         SharedPreferences sharedPreferences = m_context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
 
