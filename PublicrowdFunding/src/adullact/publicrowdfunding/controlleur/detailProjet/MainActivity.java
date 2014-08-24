@@ -1,11 +1,17 @@
 package adullact.publicrowdfunding.controlleur.detailProjet;
 
+import java.util.ArrayList;
+
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.cache.Cache;
+import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.callback.HoldToDo;
+import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
+import adullact.publicrowdfunding.model.local.ressource.Bookmark;
 import adullact.publicrowdfunding.model.local.ressource.Project;
+import adullact.publicrowdfunding.model.local.ressource.User;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
@@ -29,7 +35,9 @@ import android.widget.Toast;
 public class MainActivity extends Activity implements TabListener {
 
 	private Project projet;
+
 	private FrameLayout rl;
+
 	private TabProjetFragment fram1;
 	private TabCommentaireFragment fram2;
 	private TabMapFragment fram3;
@@ -46,7 +54,7 @@ public class MainActivity extends Activity implements TabListener {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_detail_projet);
-		
+
 		String id = getIntent().getExtras().getString("key");
 		if (id == null) {
 			Toast.makeText(getApplicationContext(),
@@ -62,7 +70,7 @@ public class MainActivity extends Activity implements TabListener {
 		mprogressDialog.show();
 
 		Cache<Project> projet = new Project().getCache(id);
-		
+
 		final MainActivity _this = this;
 		projet.toResource(new HoldToDo<Project>() {
 			@Override
@@ -92,7 +100,9 @@ public class MainActivity extends Activity implements TabListener {
 						bar.setDisplayShowHomeEnabled(true);
 						bar.setDisplayShowTitleEnabled(true);
 						bar.show();
+						setBookmarked();
 						mprogressDialog.dismiss();
+
 					}
 
 				} catch (Exception e) {
@@ -134,10 +144,11 @@ public class MainActivity extends Activity implements TabListener {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu items for use in the action bar
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.detail_projet, menu);
-		m_favorite = menu.getItem(1).getIcon();
+		if (isConnect()) {
+			MenuInflater inflater = getMenuInflater();
+			inflater.inflate(R.menu.detail_projet, menu);
+			m_favorite = menu.getItem(1).getIcon();
+		}
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -147,22 +158,40 @@ public class MainActivity extends Activity implements TabListener {
 		switch (item.getItemId()) {
 
 		case R.id.add_favorite:
-			PorterDuffColorFilter filter = null;
-			if (m_Is_favorite) {
-				Toast.makeText(getBaseContext(), "Projet retiré des favoris",
-						Toast.LENGTH_SHORT).show();
-				filter = new PorterDuffColorFilter(Color.TRANSPARENT,
-						PorterDuff.Mode.SRC_ATOP);
-			} else {
-				Toast.makeText(getBaseContext(), "Projet ajouté aux favoris",
-						Toast.LENGTH_SHORT).show();
 
-				filter = new PorterDuffColorFilter(
-						Color.parseColor("#aaf0f000"), PorterDuff.Mode.SRC_ATOP);
+			try {
+				Account account = Account.getOwn();
+				account.getUser(new WhatToDo<User>() {
 
+					@Override
+					public void hold(User resource) {
+
+						if (m_Is_favorite) {
+							Toast.makeText(getBaseContext(),
+									"Projet retiré des favoris",
+									Toast.LENGTH_SHORT).show();
+						} else {
+							Toast.makeText(getBaseContext(),
+									"Projet ajouté aux favoris",
+									Toast.LENGTH_SHORT).show();
+
+						}
+
+						m_Is_favorite = !m_Is_favorite;
+						setColorStar(m_Is_favorite);
+					}
+
+					@Override
+					public void eventually() {
+						// TODO Auto-generated method stub
+
+					}
+
+				});
+			} catch (NoAccountExistsInLocal e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			m_Is_favorite = !m_Is_favorite;
-			m_favorite.setColorFilter(filter);
 			return true;
 
 		case R.id.Share:
@@ -185,4 +214,80 @@ public class MainActivity extends Activity implements TabListener {
 
 	}
 
+	public boolean isConnect() {
+		try {
+			Account.getOwn();
+			return true;
+		} catch (NoAccountExistsInLocal e) {
+			return false;
+		}
+
+	}
+
+	public void setColorStar(boolean status) {
+
+		PorterDuffColorFilter filter = null;
+		if (!status) {
+			// Color initial
+			filter = new PorterDuffColorFilter(Color.TRANSPARENT,
+					PorterDuff.Mode.SRC_ATOP);
+		} else {
+			// Couleur jaune
+
+			filter = new PorterDuffColorFilter(Color.parseColor("#aaf0f000"),
+					PorterDuff.Mode.SRC_ATOP);
+
+		}
+		m_favorite.setColorFilter(filter);
+	}
+
+	public void setBookmarked() {
+		try {
+			Account account = Account.getOwn();
+			account.getUser(new WhatToDo<User>() {
+
+				@Override
+				public void hold(User resource) {
+					resource.getBookmarkedProjects(new HoldAllToDo<Bookmark>() {
+
+						@Override
+						public void holdAll(ArrayList<Bookmark> resources) {
+
+							for (Bookmark bookmark : resources) {
+								bookmark.getProject(new WhatToDo<Project>() {
+
+									@Override
+									public void hold(Project resource) {
+										if (resource.getResourceId() == projet
+												.getResourceId()) {
+											// Enfin !! oui le projet est dans
+											// les favoris
+											setColorStar(true);
+										}
+
+									}
+
+									@Override
+									public void eventually() {
+										// TODO Auto-generated method stub
+
+									}
+								});
+							}
+						}
+					});
+				}
+
+				@Override
+				public void eventually() {
+					// TODO Auto-generated method stub
+
+				}
+
+			});
+		} catch (NoAccountExistsInLocal e) {
+			System.out.println("l'utilisateur n'est pas connecté");
+		}
+
+	}
 }
