@@ -28,7 +28,7 @@ public final class Calcul {
 			int km = Math.round(dist / 1000);
 			result = ""+km+" km ";
 		}else{
-			result = ""+dist+"mètres";
+			result = ""+dist+" mètres";
 		}
 		
 		return result;
