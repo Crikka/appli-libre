@@ -9,6 +9,7 @@ import java.util.Date;
  */
 public class ServerProject {
     public int id;
+    public boolean active;
     public String proposedBy;
     public boolean validate;
     public String name;

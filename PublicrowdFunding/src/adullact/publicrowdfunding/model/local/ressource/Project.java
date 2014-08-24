@@ -48,6 +48,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
     public ServerProject toServerResource() {
         ServerProject serverProject = new ServerProject();
         serverProject.id = m_id == null ? -1 : m_id;
+        serverProject.active = m_active;
         serverProject.name = m_name;
         serverProject.description = m_description;
         serverProject.proposedBy = m_proposedBy.getResourceId() ;
@@ -71,7 +72,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
     public Project makeCopyFromServer(ServerProject serverProject) {
         Project res = new Project();
         res.m_id = serverProject.id;
-        res.m_active = true; // TODO
+        res.m_active = serverProject.active;
         res.m_name = serverProject.name;
         res.m_description = serverProject.description;
         res.m_funding = new CacheSet<Funding>();
@@ -94,7 +95,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
     @Override
     public Project syncFromServer(DetailedServerProject detailedServerProject) {
         this.m_id = detailedServerProject.id;
-        this.m_active = true; // TODO
+        this.m_active = detailedServerProject.active;
         this.m_name = detailedServerProject.name;
         this.m_description = detailedServerProject.description;
         this.m_funding = new CacheSet<Funding>();
