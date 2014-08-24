@@ -28,10 +28,8 @@ public class TabFavorisFragment extends Fragment {
 
 	private adullact.publicrowdfunding.controlleur.profile.MainActivity _this;
 
-	private ArrayList<Bookmark> bookmarks;
-
 	private ArrayList<Project> projets;
-	
+
 	private ArrayAdapter<Project> adapter;
 
 	@Override
@@ -45,48 +43,29 @@ public class TabFavorisFragment extends Fragment {
 
 		TextView empty = (TextView) view.findViewById(R.id.empty);
 		listeProjets.setEmptyView(empty);
-		
-		projets = new ArrayList<Project>();
-		bookmarks = new ArrayList<Bookmark>();
 
-		adapter = new CustomAdapter(this.getActivity()
-				.getBaseContext(), R.layout.projet_adaptor, projets);
+		projets = new ArrayList<Project>();
+
+		adapter = new CustomAdapter(this.getActivity().getBaseContext(),
+				R.layout.projet_adaptor, projets);
 
 		listeProjets.setAdapter(adapter);
-		
+
 		_this = (adullact.publicrowdfunding.controlleur.profile.MainActivity) getActivity();
 
-		_this.user.getBookmarked(new HoldAllToDo<Bookmark>() {
+		_this.user.getBookmarkedProjects(new HoldAllToDo<Project>() {
 
-            @Override
-            public void holdAll(ArrayList<Bookmark> resources) {
-                bookmarks = resources;
+			@Override
+			public void holdAll(ArrayList<Project> resources) {
+				System.out.println("Récupération des bookmark");
+				System.out.println("Taille : "+resources.size());
+				projets = resources;
+				adapter.notifyDataSetChanged();
 
-            }
+			}
 
-        });
+		});
 
-		for (Bookmark bookmark : bookmarks) {
-			bookmark.getProject(new WhatToDo<Project>() {
-
-				@Override
-				public void hold(Project resource) {
-					projets.add(resource);
-					adapter.notifyDataSetChanged();
-
-				}
-
-				@Override
-				public void eventually() {
-					// TODO Auto-generated method stub
-
-				}
-
-			});
-
-		}
-
-	
 		listeProjets.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override

@@ -29,55 +29,35 @@ public class TabProjetsFinanceFragment extends Fragment {
 
 	private ArrayList<Funding> funding;
 	private ArrayList<Project> projets;
-	
+
 	private ArrayAdapter<Project> adapter;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		final View view = inflater.inflate(R.layout.fragment_liste_projet_no_refresh,
-				container, false);
+		final View view = inflater.inflate(
+				R.layout.fragment_liste_projet_no_refresh, container, false);
 
 		listeProjets = (ListView) view.findViewById(R.id.liste);
 		projets = new ArrayList<Project>();
 
-		adapter = new CustomAdapter(this.getActivity()
-				.getBaseContext(), R.layout.projet_adaptor, projets);
+		adapter = new CustomAdapter(this.getActivity().getBaseContext(),
+				R.layout.projet_adaptor, projets);
 
 		listeProjets.setAdapter(adapter);
-		
+
 		_this = (adullact.publicrowdfunding.controlleur.profile.MainActivity) getActivity();
 
-		_this.user.getFunding(new HoldAllToDo<Funding>() {
+		_this.user.getFundedProjects(new HoldAllToDo<Project>() {
 
-            @Override
-            public void holdAll(ArrayList<Funding> resources) {
-                funding = resources;
+			@Override
+			public void holdAll(ArrayList<Project> resources) {
+				projets = resources;
+				adapter.notifyDataSetChanged();
+			}
 
-            }
-
-        });
-		
-		for(Funding funds : funding){
-			funds.getProject(new WhatToDo<Project>(){
-
-				@Override
-				public void hold(Project resource) {
-					projets.add(resource);
-					adapter.notifyDataSetChanged();
-					
-				}
-
-				@Override
-				public void eventually() {
-					// TODO Auto-generated method stub
-					
-				}
-				
-			});
-		}
-
+		});
 
 		listeProjets.setOnItemClickListener(new OnItemClickListener() {
 

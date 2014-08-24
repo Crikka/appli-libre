@@ -165,7 +165,7 @@ public class MainActivity extends Activity implements TabListener {
 
 					@Override
 					public void hold(User resource) {
-
+						
 						if (m_Is_favorite) {
 							Toast.makeText(getBaseContext(),
 									"Projet retiré des favoris",
@@ -242,6 +242,7 @@ public class MainActivity extends Activity implements TabListener {
 	}
 
 	public void setBookmarked() {
+		/*
 		try {
 			Account account = Account.getOwn();
 			account.getUser(new WhatToDo<User>() {
@@ -288,6 +289,6 @@ public class MainActivity extends Activity implements TabListener {
 		} catch (NoAccountExistsInLocal e) {
 			System.out.println("l'utilisateur n'est pas connecté");
 		}
-
+*/
 	}
 }
