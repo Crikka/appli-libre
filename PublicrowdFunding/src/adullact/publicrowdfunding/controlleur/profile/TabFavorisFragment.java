@@ -60,6 +60,9 @@ public class TabFavorisFragment extends Fragment {
 				System.out.println("Récupération des bookmark");
 				System.out.println("Taille : "+resources.size());
 				projets = resources;
+				adapter = new CustomAdapter(getActivity().getBaseContext(),
+						R.layout.projet_adaptor, projets);
+				listeProjets.setAdapter(adapter);
 				adapter.notifyDataSetChanged();
 
 			}
