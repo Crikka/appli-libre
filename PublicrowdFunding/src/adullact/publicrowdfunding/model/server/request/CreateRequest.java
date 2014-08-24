@@ -24,8 +24,7 @@ public class CreateRequest<TResource extends Resource<TResource, TServerResource
 
     @Override
     public void execute() {
-        m_resource.methodPOST(service()).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        m_resource.methodPOST(service()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<RowAffected>() {
                     @Override
                     public void call(RowAffected response) {
@@ -37,11 +36,6 @@ public class CreateRequest<TResource extends Resource<TResource, TServerResource
                     @Override
                     public void call(Throwable throwable) {
                         errorHandler().manageCallback();
-                    }
-                }, new Action0() {
-                    @Override
-                    public void call() {
-
                     }
                 });
     }

@@ -89,7 +89,7 @@ public class Bookmark extends Resource<Bookmark, ServerBookmark, ServerBookmark>
     @Override
     public ServerBookmark toServerResource() {
         ServerBookmark serverBookmark = new ServerBookmark();
-        serverBookmark.id = m_id;
+        serverBookmark.id = m_id == null ? -1 : m_id;
         serverBookmark.username = m_user.getResourceId();
         serverBookmark.projectID = m_project.getResourceId();
         serverBookmark.creationDate = Utility.DateTimeToString(m_creationDate);
