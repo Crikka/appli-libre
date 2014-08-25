@@ -16,7 +16,7 @@ public class DeleteRequest<TResource extends Resource<TResource, TServerResource
         extends AdministratorRequest<DeleteRequest<TResource, ?, ?>, DeleteEvent<TResource>, DeleteErrorHandler<TResource>>  {
     private TResource m_resource;
 
-    public DeleteRequest(TResource resource, DeleteEvent event) {
+    public DeleteRequest(TResource resource, DeleteEvent<TResource> event) {
         super(event, new DeleteErrorHandler<TResource>());
 
         this.m_resource = resource;
