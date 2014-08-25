@@ -149,10 +149,12 @@ public class SoumettreProjetActivity extends Activity {
 			finish();
 		}
 
-		mData.add(R.drawable.ic_launcher);
-		mData.add(R.drawable.basketball);
 		mData.add(R.drawable.roi);
-
+		mData.add(R.drawable.basketball);
+		mData.add(R.drawable.plante);
+		mData.add(R.drawable.fete);
+		mData.add(R.drawable.ic_launcher);
+		
 		mAdapter = new CarouselAdapter(this);
 		mAdapter.setData(mData);
 		mCarousel = (HorizontalCarouselLayout) findViewById(R.id.carousel_layout);
