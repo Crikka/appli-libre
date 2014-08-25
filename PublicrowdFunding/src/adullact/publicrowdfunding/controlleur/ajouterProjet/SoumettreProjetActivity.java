@@ -148,12 +148,12 @@ public class SoumettreProjetActivity extends Activity {
 		} catch (NoAccountExistsInLocal e) {
 			finish();
 		}
-
+		
+		mData.add(R.drawable.ic_launcher);
 		mData.add(R.drawable.roi);
 		mData.add(R.drawable.basketball);
 		mData.add(R.drawable.plante);
 		mData.add(R.drawable.fete);
-		mData.add(R.drawable.ic_launcher);
 		
 		mAdapter = new CarouselAdapter(this);
 		mAdapter.setData(mData);
@@ -254,18 +254,28 @@ public class SoumettreProjetActivity extends Activity {
 
 			Date date_fin = new Date();
 			int day = m_dateFin.getDayOfMonth();
-			int month = m_dateFin.getMonth();
+			int month = m_dateFin.getMonth() + 1;
 			int year = m_dateFin.getYear();
 			Calendar calendar = Calendar.getInstance();
 			calendar.set(year, month, day);
 			date_fin = calendar.getTime();
-
+			
+			String Stryear = ""+year;
+			String StrMonth = null;
+			if(month < 10){
+				StrMonth = "0"+month;
+			}else{
+				StrMonth = ""+month;
+			}
+			
+			String StrDay = ""+day;
+			
 			new Project(titre, 
 					description, 
 					user.getResourceId(), 
 					somme,
-					Utility.stringToDateTime("2014-09-04 00:00:00"),
-					Utility.stringToDateTime("2014-10-04 00:00:00"),
+					Utility.stringToDateTime(Stryear+"-"+StrMonth+"-"+StrDay+" 00:00:00"),
+					Utility.stringToDateTime(Stryear+"-"+StrMonth+"-"+StrDay+" 00:00:00"),
 					new LatLng(position.latitude, position.longitude),
 					m_illustration,
 					m_email.getText().toString(),
