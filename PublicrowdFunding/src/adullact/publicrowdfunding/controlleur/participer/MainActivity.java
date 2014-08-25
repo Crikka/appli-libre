@@ -2,6 +2,8 @@ package adullact.publicrowdfunding.controlleur.participer;
 
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
+import adullact.publicrowdfunding.model.local.cache.Cache;
+import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.ressource.Funding;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.server.event.CreateEvent;
@@ -16,8 +18,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
-
-	private adullact.publicrowdfunding.controlleur.detailProjet.MainActivity _parent;
 
 	private Context context;
 
@@ -34,12 +34,25 @@ public class MainActivity extends Activity {
 		context = this;
 
 		try {
-			_parent = (adullact.publicrowdfunding.controlleur.detailProjet.MainActivity) this
-					.getParent();
 
-			System.out.println(_parent);
+			String StridProject = null;
+			StridProject = this.getIntent().getExtras().getString("projectId");
+			if (StridProject == null) {
+				Toast.makeText(getApplicationContext(),
+						"Impossible de récupérer l'ID du projet",
+						Toast.LENGTH_SHORT).show();
+				finish();
+			}
 
-			projetCurrent = _parent.getCurrentProject();
+			Cache<Project> projetCache = new Project().getCache(StridProject);
+
+			projetCache.toResource(new HoldToDo<Project>() {
+				@Override
+				public void hold(Project project) {
+					projetCurrent = project;
+				}
+			});
+
 		} catch (Exception e) {
 			Toast.makeText(context, "Une erreur s'est produite",
 					Toast.LENGTH_SHORT).show();
@@ -81,7 +94,6 @@ public class MainActivity extends Activity {
 					System.out.println("Funding crée : " + resource);
 					Toast.makeText(context, "Participation prise en compte",
 							Toast.LENGTH_SHORT).show();
-
 					finish();
 				}
 
@@ -89,7 +101,6 @@ public class MainActivity extends Activity {
 				public void errorAuthenticationRequired() {
 					Toast.makeText(context, "Une erreur s'est produite",
 							Toast.LENGTH_SHORT).show();
-
 					finish();
 				}
 
@@ -97,7 +108,6 @@ public class MainActivity extends Activity {
 				public void errorNetwork() {
 					Toast.makeText(context, "Une erreur s'est produite",
 							Toast.LENGTH_SHORT).show();
-
 					finish();
 				}
 
@@ -106,14 +116,20 @@ public class MainActivity extends Activity {
 			Toast.makeText(context, "Une erreur s'est produite",
 					Toast.LENGTH_SHORT).show();
 			e1.printStackTrace();
-			Intent returnIntent = new Intent();
-			setResult(RESULT_CANCELED, returnIntent);
 			finish();
 		}
 
 	}
 
 	public void launchPaypal() {
+		
+		if(projetCurrent == null){
+			Toast.makeText(context, "Impossible de récupérer le projet",
+					Toast.LENGTH_SHORT).show();
+			finish();
+		}
+		
+		
 		Intent in = new Intent(context, ParticiperPaypalActivity.class);
 
 		int somme = 0;

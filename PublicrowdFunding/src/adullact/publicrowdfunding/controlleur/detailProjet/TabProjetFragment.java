@@ -202,7 +202,7 @@ public class TabProjetFragment extends Fragment {
 				Intent in = new Intent(
 						_this,
 						adullact.publicrowdfunding.controlleur.participer.MainActivity.class);
-
+				in.putExtra("projectId", projet.getResourceId());
 				_this.startActivity(in);
 
 			}
