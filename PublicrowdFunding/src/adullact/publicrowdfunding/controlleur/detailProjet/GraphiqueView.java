@@ -82,11 +82,11 @@ public class GraphiqueView extends View {
 	 * Draw
 	 */
 	protected void onDraw(Canvas canvas) {
-	
+
 		int largeur = canvas.getWidth() - 10;
 		int hauteur = largeur;
 		int offset = 100; // décalement vertical
-		
+
 		int nombreDeCarre = 10;
 		for (int i = 0; i < nombreDeCarre + 1; i++) {
 
@@ -103,18 +103,16 @@ public class GraphiqueView extends View {
 					* (largeur / nombreDeCarre), largeur + offset, paint);
 
 		}
-		
 
 		ArrayList<FundingInterval> graphData = new ArrayList<FundingInterval>();
-		if(projet == null){
+		if (projet == null) {
 			return;
 		}
 		graphData = projet.getFundingIntervals();
 		paint.setAntiAlias(true);
 
 		Paint textPaint = new Paint();
-		
-		
+
 		int xPos = (int) (canvas.getWidth() / 2);
 		int yPos = offset / 2;
 		textPaint.setTextAlign(Align.CENTER);
@@ -169,8 +167,6 @@ public class GraphiqueView extends View {
 		// Exemple de coubre
 		long pourcentageAccomplie = 0;
 
-
-
 		int nbIteration = projet.getNbPeriod();
 		long somme = 0;
 		for (int i = 0; i < nbIteration; i++) {
@@ -178,13 +174,18 @@ public class GraphiqueView extends View {
 			if (graphData.get(i).getTotal() == -1) {
 				break;
 			}
-			
+
 			long data = graphData.get(i).getTotal();
-			
-			somme +=  data;
-			long pourcentage = (somme * 100) / Long.parseLong(projet.getRequestedFunding());
-			
-			long newPourcentage =  pourcentage;
+
+			somme += data;
+			long pourcentage = 0;
+			try {
+				pourcentage = (somme * 100)
+						/ Long.parseLong(projet.getRequestedFunding());
+			} catch (ArithmeticException e) {
+				e.printStackTrace();
+			}
+			long newPourcentage = pourcentage;
 			if (newPourcentage > 100) {
 				newPourcentage = 100;
 			}

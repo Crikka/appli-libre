@@ -381,7 +381,12 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
 	 * @return percent of achievement, may be upper than 100.
 	 */
 	public int getPercentOfAchievement() {
+		try{
 		return ((m_currentFunding.divide(m_requestedFunding)).multiply(BigDecimal.TEN).multiply(BigDecimal.TEN)).intValue();
+		}catch(ArithmeticException e){
+			e.printStackTrace();
+			return 0;
+		}
 	}
 
 	/**
