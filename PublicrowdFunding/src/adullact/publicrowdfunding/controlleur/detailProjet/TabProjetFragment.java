@@ -2,15 +2,12 @@ package adullact.publicrowdfunding.controlleur.detailProjet;
 
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.controlleur.membre.ConnexionActivity;
-import adullact.publicrowdfunding.controlleur.participer.ParticiperPaypalActivity;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
-import adullact.publicrowdfunding.model.local.ressource.Funding;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
 import adullact.publicrowdfunding.model.local.utilities.Utility;
-import adullact.publicrowdfunding.model.server.event.CreateEvent;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;

@@ -4,9 +4,6 @@ import java.math.BigDecimal;
 
 import org.json.JSONException;
 
-import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
-import adullact.publicrowdfunding.model.local.ressource.Funding;
-import adullact.publicrowdfunding.model.server.event.CreateEvent;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;

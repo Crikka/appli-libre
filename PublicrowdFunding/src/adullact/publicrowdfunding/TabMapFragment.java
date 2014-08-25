@@ -2,10 +2,8 @@ package adullact.publicrowdfunding;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Vector;
 
 import adullact.publicrowdfunding.model.local.ressource.Project;
-import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;

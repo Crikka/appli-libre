@@ -5,10 +5,7 @@ import java.util.ArrayList;
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.controlleur.detailProjet.MainActivity;
 import adullact.publicrowdfunding.custom.CustomAdapter;
-import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.callback.HoldToDo;
-import adullact.publicrowdfunding.model.local.callback.WhatToDo;
-import adullact.publicrowdfunding.model.local.ressource.Bookmark;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import android.app.Fragment;
 import android.content.Intent;
@@ -17,10 +14,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 
 public class TabFavorisFragment extends Fragment {
 

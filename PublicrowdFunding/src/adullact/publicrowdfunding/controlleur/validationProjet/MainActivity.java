@@ -1,19 +1,17 @@
-package adullact.publicrowdfunding;
+package adullact.publicrowdfunding.controlleur.validationProjet;
 
 import java.util.ArrayList;
 
-import adullact.publicrowdfunding.controlleur.detailProjet.MainActivity;
+import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.custom.CustomAdapter;
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
-import android.app.Fragment;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -21,29 +19,50 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class TabProjetsFragment extends Fragment {
+public class MainActivity extends Activity {
+
+	private ArrayList<Project> projetsToDisplay;
 
 	private ListView listeProjets;
 
 	private SwipeRefreshLayout swipeView;
 
-	private adullact.publicrowdfunding.MainActivity _this;
+	private MainActivity context;
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 
-		final View view = inflater.inflate(R.layout.fragment_liste_projet,
-				container, false);
+		setContentView(R.layout.fragment_liste_projet);
 
-		_this = (adullact.publicrowdfunding.MainActivity) getActivity();
+		projetsToDisplay = new ArrayList<Project>();
 
-		listeProjets = (ListView) view.findViewById(R.id.liste);
+		context = this;
 
-		TextView empty = (TextView) view.findViewById(R.id.empty);
+		final SyncServerToLocal sync = SyncServerToLocal.getInstance();
+		sync.sync(new HoldAllToDo<Project>() {
+
+			@Override
+			public void holdAll(ArrayList<Project> projects) {
+
+				ArrayList<Project> allSync = new ArrayList<Project>(sync
+						.getProjects());
+
+				for (Project projet : allSync) {
+					if (!projet.isValidate()) {
+						projetsToDisplay.add(projet);
+					}
+				}
+			}
+
+		});
+
+		listeProjets = (ListView) findViewById(R.id.liste);
+
+		TextView empty = (TextView) findViewById(R.id.empty);
 		listeProjets.setEmptyView(empty);
 
-		swipeView = (SwipeRefreshLayout) view.findViewById(R.id.refresher);
+		swipeView = (SwipeRefreshLayout) findViewById(R.id.refresher);
 		swipeView.setEnabled(false);
 		swipeView.setColorScheme(R.color.blue, R.color.green, R.color.yellow,
 				R.color.red);
@@ -58,10 +77,15 @@ public class TabProjetsFragment extends Fragment {
 
 							@Override
 							public void holdAll(ArrayList<Project> projects) {
-								_this.projetsToDisplay = projects;
+								projetsToDisplay = new ArrayList<Project>();
 
-								_this.reLoad();
+								for (Project projet : projects) {
+									if (!projet.isValidate()) {
+										projetsToDisplay.add(projet);
+									}
+								}
 								swipeView.setRefreshing(false);
+								context.recreate();
 							}
 						});
 
@@ -69,9 +93,8 @@ public class TabProjetsFragment extends Fragment {
 
 				});
 
-		ArrayAdapter<Project> adapter = new CustomAdapter(this.getActivity()
-				.getBaseContext(), R.layout.projet_adaptor,
-				_this.projetsToDisplay);
+		ArrayAdapter<Project> adapter = new CustomAdapter(this,
+				R.layout.projet_adaptor, projetsToDisplay);
 
 		listeProjets.setAdapter(adapter);
 		listeProjets.setOnItemClickListener(new OnItemClickListener() {
@@ -105,7 +128,6 @@ public class TabProjetsFragment extends Fragment {
 			}
 		});
 
-		return view;
 	}
 
 }

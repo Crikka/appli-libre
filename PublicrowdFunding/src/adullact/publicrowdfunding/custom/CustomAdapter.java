@@ -1,7 +1,6 @@
 package adullact.publicrowdfunding.custom;
 
 import java.util.ArrayList;
-import java.util.Vector;
 
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.model.local.ressource.Project;

@@ -4,16 +4,19 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
-import com.google.android.gms.maps.model.LatLng;
+
+import rx.Observable;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.cache.Cache;
 import adullact.publicrowdfunding.model.local.cache.CacheSet;
 import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.utilities.FundingInterval;
+import adullact.publicrowdfunding.model.local.utilities.Utility;
 import adullact.publicrowdfunding.model.server.entities.DetailedServerProject;
 import adullact.publicrowdfunding.model.server.entities.RowAffected;
 import adullact.publicrowdfunding.model.server.entities.ServerCommentary;
@@ -24,8 +27,8 @@ import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
 import adullact.publicrowdfunding.model.server.event.CreateEvent;
 import adullact.publicrowdfunding.model.server.event.ListerEvent;
 import adullact.publicrowdfunding.model.server.request.ListerRequest;
-import adullact.publicrowdfunding.model.local.utilities.Utility;
-import rx.Observable;
+
+import com.google.android.gms.maps.model.LatLng;
 
 public class Project extends Resource<Project, ServerProject, DetailedServerProject> {
 

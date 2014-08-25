@@ -1,13 +1,12 @@
 package adullact.publicrowdfunding.controlleur.profile;
 
+import java.util.ArrayList;
+
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.custom.CustomAdapter;
-import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
-import adullact.publicrowdfunding.model.local.callback.HoldToDo;
-import adullact.publicrowdfunding.model.local.callback.WhatToDo;
-import adullact.publicrowdfunding.model.local.ressource.Funding;
-import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.controlleur.detailProjet.MainActivity;
+import adullact.publicrowdfunding.custom.CustomAdapter;
+import adullact.publicrowdfunding.model.local.callback.HoldToDo;
+import adullact.publicrowdfunding.model.local.ressource.Project;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,8 +18,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import java.util.ArrayList;
 
 public class TabProjetsFinanceFragment extends Fragment {
 

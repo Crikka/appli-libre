@@ -3,7 +3,6 @@ package adullact.publicrowdfunding.model.server.errorHandler;
 import adullact.publicrowdfunding.model.server.entities.ServerRegistrationResponse;
 import adullact.publicrowdfunding.model.server.event.RegistrationEvent;
 import adullact.publicrowdfunding.model.server.request.RegistrationRequest;
-import retrofit.RetrofitError;
 
 /**
  * Created by Ferrand on 16/08/2014.

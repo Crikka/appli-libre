@@ -1,16 +1,9 @@
 package adullact.publicrowdfunding;
 
-import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.controlleur.participer.ParticiperPaypalActivity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.SeekBar;
-import android.widget.TextView;
 
 public class sortByDialog extends AlertDialog {
 

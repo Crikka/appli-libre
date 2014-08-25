@@ -2,8 +2,8 @@ package adullact.publicrowdfunding.model.local.ressource;
 
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.TreeSet;
 
+import rx.Observable;
 import adullact.publicrowdfunding.model.local.cache.Cache;
 import adullact.publicrowdfunding.model.local.cache.CacheSet;
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
@@ -13,13 +13,11 @@ import adullact.publicrowdfunding.model.server.entities.DetailedServerUser;
 import adullact.publicrowdfunding.model.server.entities.RowAffected;
 import adullact.publicrowdfunding.model.server.entities.ServerBookmark;
 import adullact.publicrowdfunding.model.server.entities.ServerFunding;
-import adullact.publicrowdfunding.model.server.entities.ServerProject;
 import adullact.publicrowdfunding.model.server.entities.ServerUser;
 import adullact.publicrowdfunding.model.server.entities.Service;
 import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
 import adullact.publicrowdfunding.model.server.event.CreateEvent;
 import adullact.publicrowdfunding.model.server.event.DeleteEvent;
-import rx.Observable;
 
 /**
  *

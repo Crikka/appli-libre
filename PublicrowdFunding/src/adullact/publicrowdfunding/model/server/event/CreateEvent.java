@@ -2,7 +2,6 @@ package adullact.publicrowdfunding.model.server.event;
 
 import adullact.publicrowdfunding.model.local.ressource.Resource;
 import adullact.publicrowdfunding.model.server.errorHandler.CreateErrorHandler;
-import adullact.publicrowdfunding.model.server.request.AuthenticationRequest;
 import adullact.publicrowdfunding.model.server.request.CreateRequest;
 
 public abstract class CreateEvent<TResource extends Resource<TResource, ?, ?>>

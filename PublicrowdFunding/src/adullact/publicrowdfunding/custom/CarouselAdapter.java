@@ -2,7 +2,6 @@ package adullact.publicrowdfunding.custom;
 
 import java.util.ArrayList;
 
-import adullact.publicrowdfunding.R;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;

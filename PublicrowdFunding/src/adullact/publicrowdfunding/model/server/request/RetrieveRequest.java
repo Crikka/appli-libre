@@ -1,16 +1,12 @@
 package adullact.publicrowdfunding.model.server.request;
 
-import java.util.ArrayList;
-
-import adullact.publicrowdfunding.model.local.ressource.Resource;
-import adullact.publicrowdfunding.model.server.errorHandler.RetrieveErrorHandler;
-import adullact.publicrowdfunding.model.server.event.RetrieveEvent;
-import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
+import adullact.publicrowdfunding.model.local.ressource.Resource;
+import adullact.publicrowdfunding.model.server.errorHandler.RetrieveErrorHandler;
+import adullact.publicrowdfunding.model.server.event.RetrieveEvent;
 
 public class RetrieveRequest<TResource extends Resource<TResource, TServerResource, TDetailedServerResource>, TServerResource, TDetailedServerResource extends TServerResource>
         extends Request<RetrieveRequest<TResource,?,?>,RetrieveEvent<TResource>,RetrieveErrorHandler<TResource>> {

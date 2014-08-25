@@ -1,7 +1,5 @@
 package adullact.publicrowdfunding.model.server.event;
 
-import android.util.Log;
-
 import adullact.publicrowdfunding.model.server.ServerObject;
 import adullact.publicrowdfunding.model.server.errorHandler.ErrorHandler;
 import adullact.publicrowdfunding.model.server.request.Request;

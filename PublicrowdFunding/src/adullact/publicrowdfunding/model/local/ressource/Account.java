@@ -1,13 +1,5 @@
 package adullact.publicrowdfunding.model.local.ressource;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-
-import org.joda.time.DateTime;
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Map;
@@ -17,19 +9,20 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.joda.time.DateTime;
+
+import rx.Observable;
 import adullact.publicrowdfunding.PublicrowdFundingApplication;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.cache.Cache;
-import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.utilities.Utility;
 import adullact.publicrowdfunding.model.server.entities.RowAffected;
 import adullact.publicrowdfunding.model.server.entities.ServerAccount;
 import adullact.publicrowdfunding.model.server.entities.Service;
 import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
-import adullact.publicrowdfunding.model.server.event.CreateEvent;
-import adullact.publicrowdfunding.model.server.request.CreateRequest;
-import rx.Observable;
+import android.content.Context;
+import android.content.SharedPreferences;
 
 /**
  * Created by Ferrand on 16/07/2014.

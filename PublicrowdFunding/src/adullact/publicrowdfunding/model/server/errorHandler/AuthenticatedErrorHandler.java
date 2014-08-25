@@ -1,8 +1,8 @@
 package adullact.publicrowdfunding.model.server.errorHandler;
 
+import retrofit.RetrofitError;
 import adullact.publicrowdfunding.model.server.event.AuthenticatedEvent;
 import adullact.publicrowdfunding.model.server.request.AuthenticatedRequest;
-import retrofit.RetrofitError;
 
 public abstract class AuthenticatedErrorHandler
 <TRequest extends AuthenticatedRequest<TRequest, TEvent, TErrorHandler>,

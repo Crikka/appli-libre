@@ -1,7 +1,5 @@
 package adullact.publicrowdfunding.model.local.callback;
 
-import java.util.ArrayList;
-
 import adullact.publicrowdfunding.model.local.ressource.Resource;
 
 /**

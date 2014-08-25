@@ -1,29 +1,11 @@
 package adullact.publicrowdfunding.model.server.request;
 
-import android.util.Log;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Map;
-
-import com.squareup.okhttp.OkHttpClient;
-
-import adullact.publicrowdfunding.model.server.entities.Service;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import adullact.publicrowdfunding.model.server.ServerObject;
+import adullact.publicrowdfunding.model.server.entities.Service;
 import adullact.publicrowdfunding.model.server.errorHandler.ErrorHandler;
 import adullact.publicrowdfunding.model.server.event.Event;
-import retrofit.client.OkClient;
-import retrofit.client.Response;
-import retrofit.http.Body;
-import retrofit.http.DELETE;
-import retrofit.http.GET;
-import retrofit.http.POST;
-import retrofit.http.PUT;
-import retrofit.http.Path;
-import retrofit.http.QueryMap;
-import rx.Observable;
 
 /**
  * 

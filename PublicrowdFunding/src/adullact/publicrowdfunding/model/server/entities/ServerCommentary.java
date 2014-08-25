@@ -1,6 +1,5 @@
 package adullact.publicrowdfunding.model.server.entities;
 
-import org.joda.time.DateTime;
 
 /**
  * Created by Ferrand on 21/07/2014.

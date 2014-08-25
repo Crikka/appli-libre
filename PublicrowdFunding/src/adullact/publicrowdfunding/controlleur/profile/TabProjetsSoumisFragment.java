@@ -1,15 +1,11 @@
 package adullact.publicrowdfunding.controlleur.profile;
 
+import java.util.ArrayList;
+
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.custom.CustomAdapter;
-import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
-import adullact.publicrowdfunding.model.local.callback.WhatToDo;
-import adullact.publicrowdfunding.model.local.ressource.Account;
-import adullact.publicrowdfunding.model.local.ressource.Project;
-import adullact.publicrowdfunding.model.local.ressource.User;
-import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import adullact.publicrowdfunding.controlleur.detailProjet.MainActivity;
-import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
+import adullact.publicrowdfunding.custom.CustomAdapter;
+import adullact.publicrowdfunding.model.local.ressource.Project;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,10 +17,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.Vector;
 
 public class TabProjetsSoumisFragment extends Fragment {
 

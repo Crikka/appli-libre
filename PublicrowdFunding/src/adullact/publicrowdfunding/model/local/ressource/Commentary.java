@@ -1,18 +1,18 @@
 package adullact.publicrowdfunding.model.local.ressource;
 
-import org.joda.time.DateTime;
-
 import java.util.ArrayList;
 import java.util.Map;
 
+import org.joda.time.DateTime;
+
+import rx.Observable;
 import adullact.publicrowdfunding.model.local.cache.Cache;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
+import adullact.publicrowdfunding.model.local.utilities.Utility;
 import adullact.publicrowdfunding.model.server.entities.RowAffected;
 import adullact.publicrowdfunding.model.server.entities.ServerCommentary;
 import adullact.publicrowdfunding.model.server.entities.Service;
 import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
-import adullact.publicrowdfunding.model.local.utilities.Utility;
-import rx.Observable;
 
 public class Commentary extends Resource<Commentary, ServerCommentary, ServerCommentary>{
 

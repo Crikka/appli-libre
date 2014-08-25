@@ -1,7 +1,6 @@
 package adullact.publicrowdfunding.controlleur.preferences;
 
 import adullact.publicrowdfunding.R;
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;

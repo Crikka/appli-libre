@@ -3,52 +3,36 @@ package adullact.publicrowdfunding;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.TreeMap;
-import java.util.Vector;
-
-import com.google.android.gms.maps.model.LatLng;
 
 import adullact.publicrowdfunding.controlleur.ajouterProjet.SoumettreProjetActivity;
 import adullact.publicrowdfunding.controlleur.membre.ConnexionActivity;
-import adullact.publicrowdfunding.controlleur.preferences.preferences;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
-import adullact.publicrowdfunding.model.local.utilities.Share;
-import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
-import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.Project;
-import adullact.publicrowdfunding.model.local.ressource.User;
-import android.annotation.TargetApi;
+import adullact.publicrowdfunding.model.local.utilities.Share;
+import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.opengl.Visibility;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -56,9 +40,10 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.SearchView.OnCloseListener;
 import android.widget.SearchView.OnQueryTextListener;
+
+import com.google.android.gms.maps.model.LatLng;
 
 public class MainActivity extends Activity implements TabListener {
 
@@ -70,6 +55,7 @@ public class MainActivity extends Activity implements TabListener {
 	private ImageButton m_ajouter_projet;
 	private ImageButton m_mon_compte;
 	private ImageButton m_sort;
+	private ImageButton m_valider_projet;
 
 	private Button m_connexion;
 
@@ -112,7 +98,14 @@ public class MainActivity extends Activity implements TabListener {
 			@Override
 			public void holdAll(ArrayList<Project> projects) {
 
-				projetsToDisplay = new ArrayList<Project>(sync.getProjects());
+				ArrayList<Project> allSync = new ArrayList<Project>(sync
+						.getProjects());
+
+				for (Project projet : allSync) {
+					if (projet.isValidate()) {
+						projetsToDisplay.add(projet);
+					}
+				}
 
 				rl = (FrameLayout) findViewById(R.id.tabcontent);
 
@@ -167,6 +160,18 @@ public class MainActivity extends Activity implements TabListener {
 						getBaseContext().getApplicationContext(),
 						adullact.publicrowdfunding.controlleur.profile.MainActivity.class);
 				in.putExtra("myCount", true);
+				startActivity(in);
+			}
+		});
+
+		m_valider_projet = (ImageButton) findViewById(R.id.button_valider_projet);
+
+		m_valider_projet.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent in = new Intent(
+						getBaseContext().getApplicationContext(),
+						adullact.publicrowdfunding.controlleur.validationProjet.MainActivity.class);
 				startActivity(in);
 			}
 		});
@@ -319,14 +324,14 @@ public class MainActivity extends Activity implements TabListener {
 	protected void reLoad() {
 		ActionBar.Tab tab = bar.getSelectedTab();
 		int position = tab.getPosition();
-		if(position == 0){
-		
-		fram1 = new TabProjetsFragment();
-		
-		FragmentManager fm = this.getFragmentManager();
-		FragmentTransaction ft = fm.beginTransaction();
-		ft.replace(rl.getId(), fram1);
-		ft.commit();
+		if (position == 0) {
+
+			fram1 = new TabProjetsFragment();
+
+			FragmentManager fm = this.getFragmentManager();
+			FragmentTransaction ft = fm.beginTransaction();
+			ft.replace(rl.getId(), fram1);
+			ft.commit();
 		}
 
 	}
@@ -440,9 +445,9 @@ public class MainActivity extends Activity implements TabListener {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		try{
-		locationManager.removeUpdates(locationListener);
-		}catch(Exception e){
+		try {
+			locationManager.removeUpdates(locationListener);
+		} catch (Exception e) {
 			System.out.println("Erreur 1");
 		}
 	}

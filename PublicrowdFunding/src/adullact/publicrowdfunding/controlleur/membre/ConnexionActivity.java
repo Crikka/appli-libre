@@ -1,11 +1,8 @@
 package adullact.publicrowdfunding.controlleur.membre;
 
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.server.event.AuthenticationEvent;
-import adullact.publicrowdfunding.model.server.event.RetrieveEvent;
 import adullact.publicrowdfunding.model.server.request.AuthenticationRequest;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;

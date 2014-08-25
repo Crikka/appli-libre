@@ -1,16 +1,7 @@
 package adullact.publicrowdfunding.model.server.request;
 
-import adullact.publicrowdfunding.model.local.callback.HoldToDo;
-import adullact.publicrowdfunding.model.local.callback.NothingToDo;
-import adullact.publicrowdfunding.model.local.ressource.Account;
-import adullact.publicrowdfunding.model.local.ressource.User;
-import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
 import adullact.publicrowdfunding.model.server.errorHandler.AuthenticationErrorHandler;
 import adullact.publicrowdfunding.model.server.event.AuthenticationEvent;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by Ferrand on 26/07/2014.

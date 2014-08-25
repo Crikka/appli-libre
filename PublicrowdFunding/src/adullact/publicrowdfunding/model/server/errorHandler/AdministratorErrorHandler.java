@@ -1,13 +1,8 @@
 package adullact.publicrowdfunding.model.server.errorHandler;
 
-import android.util.Log;
-
-import java.io.IOException;
-
+import retrofit.RetrofitError;
 import adullact.publicrowdfunding.model.server.event.AdministratorEvent;
 import adullact.publicrowdfunding.model.server.request.AdministratorRequest;
-import adullact.publicrowdfunding.model.server.request.AuthenticatedRequest;
-import retrofit.RetrofitError;
 
 /**
  * Created by Ferrand on 15/08/2014.

@@ -1,9 +1,9 @@
 package adullact.publicrowdfunding.model.local.cache;
 
+import java.util.Comparator;
+
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
-
-import java.util.Comparator;
 
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Resource;

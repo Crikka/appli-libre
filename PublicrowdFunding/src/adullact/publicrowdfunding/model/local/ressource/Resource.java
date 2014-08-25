@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import rx.Observable;
 import adullact.publicrowdfunding.model.local.cache.Cache;
-import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.server.entities.RowAffected;
 import adullact.publicrowdfunding.model.server.entities.Service;
 import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
@@ -19,11 +19,6 @@ import adullact.publicrowdfunding.model.server.request.DeleteRequest;
 import adullact.publicrowdfunding.model.server.request.ListerRequest;
 import adullact.publicrowdfunding.model.server.request.RetrieveRequest;
 import adullact.publicrowdfunding.model.server.request.UpdateRequest;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by Ferrand on 18/07/2014.

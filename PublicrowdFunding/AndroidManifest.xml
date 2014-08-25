@@ -59,6 +59,10 @@
             android:label="@string/app_name" >
         </activity>
         <activity
+            android:name="adullact.publicrowdfunding.controlleur.validationProjet.MainActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
             android:name="adullact.publicrowdfunding.controlleur.detailProjet.MainActivity"
             android:label="@string/app_name" >
         </activity>

@@ -1,7 +1,5 @@
 package adullact.publicrowdfunding.model.server.event;
 
-import java.util.ArrayList;
-
 import adullact.publicrowdfunding.model.server.errorHandler.RegistrationErrorHandler;
 import adullact.publicrowdfunding.model.server.request.RegistrationRequest;
 
