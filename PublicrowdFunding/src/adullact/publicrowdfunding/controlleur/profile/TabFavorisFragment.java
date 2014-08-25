@@ -6,10 +6,10 @@ import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.controlleur.detailProjet.MainActivity;
 import adullact.publicrowdfunding.custom.CustomAdapter;
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
+import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Bookmark;
 import adullact.publicrowdfunding.model.local.ressource.Project;
-
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -53,16 +53,12 @@ public class TabFavorisFragment extends Fragment {
 
 		_this = (adullact.publicrowdfunding.controlleur.profile.MainActivity) getActivity();
 
-		_this.user.getBookmarkedProjects(new HoldAllToDo<Project>() {
+		_this.user.getBookmarkedProjects(new HoldToDo<Project>() {
 
 			@Override
-			public void holdAll(ArrayList<Project> resources) {
-				System.out.println("Récupération des bookmark");
-				System.out.println("Taille : "+resources.size());
-				projets = resources;
-				adapter = new CustomAdapter(getActivity().getBaseContext(),
-						R.layout.projet_adaptor, projets);
-				listeProjets.setAdapter(adapter);
+			public void hold(Project resources) {
+				
+				projets.add(resources);
 				adapter.notifyDataSetChanged();
 
 			}

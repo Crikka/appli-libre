@@ -3,11 +3,11 @@ package adullact.publicrowdfunding.controlleur.profile;
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.custom.CustomAdapter;
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
+import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Funding;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.controlleur.detailProjet.MainActivity;
-
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -27,19 +28,22 @@ public class TabProjetsFinanceFragment extends Fragment {
 
 	private adullact.publicrowdfunding.controlleur.profile.MainActivity _this;
 
-	private ArrayList<Funding> funding;
 	private ArrayList<Project> projets;
 
 	private ArrayAdapter<Project> adapter;
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+	public View onCreateView(LayoutInflater inflater, final ViewGroup container,
 			Bundle savedInstanceState) {
 
 		final View view = inflater.inflate(
 				R.layout.fragment_liste_projet_no_refresh, container, false);
 
 		listeProjets = (ListView) view.findViewById(R.id.liste);
+
+		TextView empty = (TextView) view.findViewById(R.id.empty);
+		listeProjets.setEmptyView(empty);
+		
 		projets = new ArrayList<Project>();
 
 		adapter = new CustomAdapter(this.getActivity().getBaseContext(),
@@ -49,13 +53,16 @@ public class TabProjetsFinanceFragment extends Fragment {
 
 		_this = (adullact.publicrowdfunding.controlleur.profile.MainActivity) getActivity();
 
-		_this.user.getFundedProjects(new HoldAllToDo<Project>() {
+		_this.user.getFundedProjects(new HoldToDo<Project>() {
 
 			@Override
-			public void holdAll(ArrayList<Project> resources) {
-				projets = resources;
+			public void hold(Project resources) {
+				
+				projets.add(resources);
 				adapter.notifyDataSetChanged();
 			}
+
+
 
 		});
 

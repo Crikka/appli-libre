@@ -12,6 +12,8 @@ import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.server.entities.DetailedServerUser;
 import adullact.publicrowdfunding.model.server.entities.RowAffected;
 import adullact.publicrowdfunding.model.server.entities.ServerBookmark;
+import adullact.publicrowdfunding.model.server.entities.ServerFunding;
+import adullact.publicrowdfunding.model.server.entities.ServerProject;
 import adullact.publicrowdfunding.model.server.entities.ServerUser;
 import adullact.publicrowdfunding.model.server.entities.Service;
 import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
@@ -75,6 +77,7 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
         user.m_city = serverUser.city;
         user.m_gender = serverUser.sexe;
         user.m_bookmarks = new CacheSet<Bookmark>();
+        user.m_funding = new CacheSet<Funding>();
 
         return user;
     }
@@ -95,6 +98,7 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
         this.m_firstName = detailedServerUser.firstName;
         this.m_city = detailedServerUser.city;
         this.m_gender = detailedServerUser.sexe;
+        
         this.m_bookmarks = new CacheSet<Bookmark>();
 
         for(final ServerBookmark serverBookmark : detailedServerUser.bookmarkedProjects) {
@@ -107,6 +111,35 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
                 }
             });
         }
+        
+        this.m_funding = new CacheSet<Funding>();
+
+        for(final ServerFunding serverFunding : detailedServerUser.fundedProjects) {
+            final Cache<Funding> funded = new Funding().getCache(Integer.toString(serverFunding.id)).declareUpToDate();
+            funded.toResource(new HoldToDo<Funding>() {
+                @Override
+                public void hold(Funding resource) {
+                    resource.syncFromServer(serverFunding);
+                    m_funding.add(funded);
+                }
+            });
+        }
+        
+        /*
+        this.m_projects = new CacheSet<Project>();
+
+        for(final ServerProject serverProjects : detailedServerUser.projects) {
+            final Cache<Project> projects = new Project().getCache(Integer.toString(serverProjects.id)).declareUpToDate();
+            projects.toResource(new HoldToDo<Project>() {
+                @Override
+                public void hold(Project resource) {
+                    resource.syncFromServer(serverProjects);
+                    m_projects.add(projects);
+                }
+            });
+        }
+        */ 
+        
         return this;
     }
 
