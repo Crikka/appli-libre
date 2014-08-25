@@ -48,22 +48,6 @@
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyCZq_GRRjpnie92npZYaxhTY0j4JYCMbBE" />
-
-        
-        
-        
-        <activity
-        android:name=".B"
-        android:label="B"
-        
-        <!-- Parent activity meta-data to support 4.0 and lower -->
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value="com.example.app_name.A" />
-    </activity>
-        
-        
-        
         
         
         <activity
