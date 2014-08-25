@@ -42,7 +42,7 @@ public class MainActivity extends Activity implements TabListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		boolean myAccount = this.getIntent().getExtras()
+		myAccount = this.getIntent().getExtras()
 				.getBoolean("myCount", false);
 
 		setContentView(R.layout.activity_main_profile);
@@ -150,10 +150,10 @@ public class MainActivity extends Activity implements TabListener {
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 
 	}
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-
 		if (myAccount == true) {
 			MenuInflater inflater = getMenuInflater();
 			inflater.inflate(R.menu.profile, menu);
