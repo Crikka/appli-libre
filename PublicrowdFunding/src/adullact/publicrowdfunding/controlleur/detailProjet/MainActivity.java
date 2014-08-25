@@ -10,6 +10,7 @@ import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.Bookmark;
+import adullact.publicrowdfunding.model.local.ressource.Funding;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
 import adullact.publicrowdfunding.model.local.utilities.CanI;
@@ -37,7 +38,7 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity implements TabListener {
 
-	private Project projet;
+	protected Project projet;
 
 	private FrameLayout rl;
 
@@ -57,7 +58,9 @@ public class MainActivity extends Activity implements TabListener {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_detail_projet);
-
+		
+		
+		
 		String id = getIntent().getExtras().getString("key");
 		if (id == null) {
 			Toast.makeText(getApplicationContext(),
@@ -105,7 +108,6 @@ public class MainActivity extends Activity implements TabListener {
 						bar.show();
 						setBookmarked();
 						mprogressDialog.dismiss();
-
 					}
 
 				} catch (Exception e) {

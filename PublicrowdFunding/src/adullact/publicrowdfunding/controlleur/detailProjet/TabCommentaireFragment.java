@@ -14,6 +14,7 @@ import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.Commentary;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
+import adullact.publicrowdfunding.model.server.event.UpdateEvent;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -34,7 +35,6 @@ public class TabCommentaireFragment extends Fragment {
 	private RatingBar m_notation;
 	private ListView lv;
 
-	private Project projet;
 	private Vector<Commentary> commentaries;
 
 	private LinearLayout layoutConnect;
@@ -43,6 +43,8 @@ public class TabCommentaireFragment extends Fragment {
 	private Button m_connexion;
 
 	protected CommentaireAdapteur adapter;
+	
+	private MainActivity _this;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,19 +58,17 @@ public class TabCommentaireFragment extends Fragment {
 
 		isConnect();
 
-		final MainActivity activity = (MainActivity) getActivity();
+		 _this = (MainActivity) getActivity();
 
 		m_connexion = (Button) view.findViewById(R.id.connexion);
 		m_connexion.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent in = new Intent(activity.getApplicationContext(),
+				Intent in = new Intent(_this.getApplicationContext(),
 						ConnexionActivity.class);
 				startActivity(in);
 			}
 		});
-
-		projet = activity.getIdProjet();
 
 		commentaries = new Vector<Commentary>();
 
@@ -81,7 +81,7 @@ public class TabCommentaireFragment extends Fragment {
 				getActivity().getApplicationContext(),
 				R.layout.listitem_discuss);
 
-		projet.getCommentaries(new HoldAllToDo<Commentary>() {
+		_this.projet.getCommentaries(new HoldAllToDo<Commentary>() {
 
 			@Override
 			public void holdAll(ArrayList<Commentary> resources) {
@@ -103,7 +103,7 @@ public class TabCommentaireFragment extends Fragment {
 
 					@Override
 					public void hold(User resource) {
-						Context c = activity.getBaseContext();
+						Context c = _this.getBaseContext();
 						Intent in = new Intent(
 								c,
 								adullact.publicrowdfunding.controlleur.profile.MainActivity.class);
@@ -131,12 +131,46 @@ public class TabCommentaireFragment extends Fragment {
 							float rating, boolean fromUser) {
 						System.out.println(rating);
 						ajouterCommentaireAlert commentaireBuilder = new ajouterCommentaireAlert(
-								getActivity(), rating, projet);
+								getActivity(), rating, _this.projet);
 						commentaireBuilder.show();
+						
+						
+						_this.projet.serverUpdate(new UpdateEvent<Project>(){
+
+							@Override
+							public void onUpdate(Project resource) {
+								_this.projet = resource;
+								_this.recreate();
+								
+							}
+
+							@Override
+							public void errorResourceIdDoesNotExist() {
+								// TODO Auto-generated method stub
+								
+							}
+
+							@Override
+							public void errorAdministratorRequired() {
+								// TODO Auto-generated method stub
+								
+							}
+
+							@Override
+							public void errorAuthenticationRequired() {
+								// TODO Auto-generated method stub
+								
+							}
+
+							@Override
+							public void errorNetwork() {
+								// TODO Auto-generated method stub
+								
+							}
+							
+						});
 					}
-
 				});
-
 		return view;
 
 	}

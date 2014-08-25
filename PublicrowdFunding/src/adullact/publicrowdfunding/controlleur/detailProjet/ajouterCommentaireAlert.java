@@ -6,6 +6,7 @@ import adullact.publicrowdfunding.model.local.ressource.Commentary;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import adullact.publicrowdfunding.model.server.event.CreateEvent;
+import adullact.publicrowdfunding.model.server.event.UpdateEvent;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,6 +18,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.Toast;
 
 public class ajouterCommentaireAlert extends AlertDialog.Builder {
 
@@ -69,31 +71,30 @@ public class ajouterCommentaireAlert extends AlertDialog.Builder {
 
 								@Override
 								public void errorResourceIdAlreadyUsed() {
-									// TODO Auto-generated method stub
-									
+									Toast.makeText(getContext(), "Une erreur s'est produite", Toast.LENGTH_SHORT).show();									
 								}
 
 								@Override
 								public void onCreate(Commentary resource) {
-									// TODO Auto-generated method stub
+									Toast.makeText(getContext(), "Commentaire ajouté !", Toast.LENGTH_SHORT).show();									
 									
 								}
-
+								
 								@Override
 								public void errorAuthenticationRequired() {
-									// TODO Auto-generated method stub
+									Toast.makeText(getContext(), "Une erreur s'est produite", Toast.LENGTH_SHORT).show();									
 									
 								}
 
 								@Override
 								public void errorNetwork() {
-									// TODO Auto-generated method stub
+									Toast.makeText(getContext(), "Une erreur s'est produite", Toast.LENGTH_SHORT).show();									
 									
 								}
 								
 							});
 						} catch (NoAccountExistsInLocal e) {
-							// TODO Auto-generated catch block
+							Toast.makeText(getContext(), "Une erreur s'est produite", Toast.LENGTH_SHORT).show();									
 							e.printStackTrace();
 						}
 						
