@@ -38,14 +38,17 @@ public class MainActivity extends Activity implements TabListener {
 
 	protected User user;
 
+	private boolean doRefresh;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		myAccount = this.getIntent().getExtras()
-				.getBoolean("myCount", false);
+		myAccount = this.getIntent().getExtras().getBoolean("myCount", false);
 
 		setContentView(R.layout.activity_main_profile);
+
+		doRefresh = false;
 
 		pseudo = (TextView) findViewById(R.id.pseudo);
 		ville = (TextView) findViewById(R.id.ville);
@@ -56,12 +59,12 @@ public class MainActivity extends Activity implements TabListener {
 
 			try {
 				Account compte = Account.getOwn();
-				pseudo.setText(compte.getUsername());
 				compte.getUser(new WhatToDo<User>() {
 
 					@Override
 					public void hold(User resource) {
 						user = resource;
+						updateProfile();
 					}
 
 					@Override
@@ -86,13 +89,7 @@ public class MainActivity extends Activity implements TabListener {
 				@Override
 				public void hold(User resource) {
 					user = resource;
-					pseudo.setText(resource.getResourceId());
-					ville.setText(resource.getCity());
-					if (resource.getGender().equals("0")) {
-						avatar.setImageResource(R.drawable.male_user_icon);
-					} else {
-						avatar.setImageResource(R.drawable.female_user_icon);
-					}
+					updateProfile();
 				}
 
 				@Override
@@ -102,6 +99,8 @@ public class MainActivity extends Activity implements TabListener {
 				}
 
 			});
+
+			
 		}
 
 		rl = (FrameLayout) findViewById(R.id.tabcontent);
@@ -150,7 +149,6 @@ public class MainActivity extends Activity implements TabListener {
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 
 	}
-	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -175,6 +173,34 @@ public class MainActivity extends Activity implements TabListener {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		// Un peux brutal.
+		if (doRefresh) {
+			this.recreate();
+		}
+
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		doRefresh = true;
+
+	}
+	
+	public void updateProfile(){
+		pseudo.setText(user.getResourceId());
+		ville.setText(user.getCity());
+		if (user.getGender().equals("0")) {
+			avatar.setImageResource(R.drawable.male_user_icon);
+		} else {
+			avatar.setImageResource(R.drawable.female_user_icon);
+		}	
+	
 	}
 
 }

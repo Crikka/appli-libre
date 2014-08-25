@@ -32,6 +32,7 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
     private String m_firstName;
     private String m_city;
     private String m_gender;
+ //   private String m_email;
     private CacheSet<Bookmark> m_bookmarks;
     private CacheSet<Funding> m_funding;
 
@@ -50,7 +51,6 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
     public ServerUser toServerResource() {
         ServerUser serverUser = new ServerUser();
         serverUser.pseudo = getResourceId();
-        serverUser.mail = "";
         serverUser.name = this.m_name;
         serverUser.firstName = this.m_firstName;
         serverUser.city = this.m_city;
@@ -97,6 +97,7 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
         this.m_name = detailedServerUser.name;
         this.m_firstName = detailedServerUser.firstName;
         this.m_city = detailedServerUser.city;
+        //this.m_email = detailedServerUser.mail;
         this.m_gender = detailedServerUser.sexe;
         
         this.m_bookmarks = new CacheSet<Bookmark>();
@@ -179,12 +180,13 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
 
     }
 
-    public User(String pseudo, String name, String firstName, String city, String sexe) {
+    public User(String pseudo, String name, String firstName, String city, String sexe, String email) {
         this.m_pseudo = pseudo;
         this.m_name = name;
         this.m_firstName = firstName;
         this.m_city = city;
         this.m_gender = sexe;
+       // this.m_email = email;
 
     }
 
@@ -204,7 +206,12 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
     public String getCity() {
         return m_city;
     }
-
+    
+    /*
+    public String getEmail() {
+    	return m_email;
+    }
+*/
     public String getGender(){
         return m_gender;
     }
@@ -332,6 +339,12 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
     public void setGender(String gender){
         m_gender = gender;
     }
+    
+    /*
+    public void setEmail(String email){
+    	m_email = email;
+    }*/
+    
     /* ------- */
 
     public String toString(){

@@ -112,6 +112,18 @@ public class preferences extends PreferenceFragment {
 				return true;
 			}
 		});
+		
+		email.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+			public boolean onPreferenceChange(Preference preference,
+					Object newValue) {
+				String value = (String) newValue;
+				System.out.println("L'émail à change : " + value);
+				//user.setEmail(value);
+				update();
+				return true;
+			}
+		});
+
 
 	}
 
