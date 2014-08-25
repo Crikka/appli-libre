@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 public class ajouterCommentaireAlert extends AlertDialog.Builder {
 
+	
 	public ajouterCommentaireAlert(final Context context,final float rating, final Project projet) {
 		super(context);
 		
@@ -71,30 +72,30 @@ public class ajouterCommentaireAlert extends AlertDialog.Builder {
 
 								@Override
 								public void errorResourceIdAlreadyUsed() {
-									Toast.makeText(getContext(), "Une erreur s'est produite", Toast.LENGTH_SHORT).show();									
+									Toast.makeText(context, "Une erreur s'est produite", Toast.LENGTH_SHORT).show();									
 								}
 
 								@Override
 								public void onCreate(Commentary resource) {
-									Toast.makeText(getContext(), "Commentaire ajouté !", Toast.LENGTH_SHORT).show();									
+									Toast.makeText(context, "Commentaire ajouté !", Toast.LENGTH_SHORT).show();									
 									
 								}
 								
 								@Override
 								public void errorAuthenticationRequired() {
-									Toast.makeText(getContext(), "Une erreur s'est produite", Toast.LENGTH_SHORT).show();									
+									Toast.makeText(context, "Une erreur s'est produite", Toast.LENGTH_SHORT).show();									
 									
 								}
 
 								@Override
 								public void errorNetwork() {
-									Toast.makeText(getContext(), "Une erreur s'est produite", Toast.LENGTH_SHORT).show();									
+									Toast.makeText(context, "Une erreur s'est produite", Toast.LENGTH_SHORT).show();									
 									
 								}
 								
 							});
 						} catch (NoAccountExistsInLocal e) {
-							Toast.makeText(getContext(), "Une erreur s'est produite", Toast.LENGTH_SHORT).show();									
+							Toast.makeText(context, "Une erreur s'est produite", Toast.LENGTH_SHORT).show();									
 							e.printStackTrace();
 						}
 						

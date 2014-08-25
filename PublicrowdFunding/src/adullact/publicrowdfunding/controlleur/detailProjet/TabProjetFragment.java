@@ -1,8 +1,8 @@
 package adullact.publicrowdfunding.controlleur.detailProjet;
 
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.controlleur.ajouterProjet.choisirMontantDialog;
 import adullact.publicrowdfunding.controlleur.membre.ConnexionActivity;
+import adullact.publicrowdfunding.controlleur.participer.ParticiperPaypalActivity;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
@@ -51,7 +51,7 @@ public class TabProjetFragment extends Fragment {
 
 	private LinearLayout layoutConnect;
 	private LinearLayout layoutDisconnect;
-	
+
 	private MainActivity _this;
 
 	@Override
@@ -67,7 +67,7 @@ public class TabProjetFragment extends Fragment {
 		isConnect();
 
 		_this = (MainActivity) getActivity();
-		projet = _this.getIdProjet();
+		projet = _this.projetCurrent;
 
 		GraphiqueView graph = (GraphiqueView) view.findViewById(R.id.graphique);
 		DisplayMetrics metrics = new DisplayMetrics();
@@ -197,13 +197,16 @@ public class TabProjetFragment extends Fragment {
 		m_payer.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 
-				choisirMontantDialog alertDialogBuilder = new choisirMontantDialog(
-						getActivity());
-				alertDialogBuilder.show();
+				// Start Activity payer
+
+				Intent in = new Intent(
+						_this,
+						adullact.publicrowdfunding.controlleur.participer.MainActivity.class);
+
+				_this.startActivity(in);
 
 			}
 		});
-		financer();
 		return view;
 	}
 
@@ -217,45 +220,5 @@ public class TabProjetFragment extends Fragment {
 			layoutDisconnect.setVisibility(View.VISIBLE);
 		}
 	}
-	
-	
-	
-	public void financer(){
-		System.out.println("lancement test financement");
-		try {
-			projet.finance("10", new CreateEvent<Funding>(){
-
-				
-				@Override
-				public void errorResourceIdAlreadyUsed() {
-					Toast.makeText(_this, "Une erreur s'est produite", Toast.LENGTH_SHORT).show();
-					
-				}
-
-				@Override
-				public void onCreate(Funding resource) {
-					Toast.makeText(_this, "Participation prise en compte", Toast.LENGTH_SHORT).show();
-					
-				}
-
-				@Override
-				public void errorAuthenticationRequired() {
-					Toast.makeText(_this, "Une erreur s'est produite", Toast.LENGTH_SHORT).show();
-					
-				}
-
-				@Override
-				public void errorNetwork() {
-				Toast.makeText(_this, "Une erreur s'est produite", Toast.LENGTH_SHORT).show();
-					
-				}
-				
-			});
-		} catch (NoAccountExistsInLocal e1) {
-			Toast.makeText(_this, "Une erreur s'est produite", Toast.LENGTH_SHORT).show();
-			e1.printStackTrace();
-		}
-	}
-		
 
 }

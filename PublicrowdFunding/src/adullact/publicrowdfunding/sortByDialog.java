@@ -1,7 +1,7 @@
 package adullact.publicrowdfunding;
 
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.controlleur.detailProjet.ParticiperPaypalActivity;
+import adullact.publicrowdfunding.controlleur.participer.ParticiperPaypalActivity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;

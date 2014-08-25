@@ -9,7 +9,6 @@ import java.util.Vector;
 import com.google.android.gms.maps.model.LatLng;
 
 import adullact.publicrowdfunding.controlleur.ajouterProjet.SoumettreProjetActivity;
-import adullact.publicrowdfunding.controlleur.ajouterProjet.choisirMontantDialog;
 import adullact.publicrowdfunding.controlleur.membre.ConnexionActivity;
 import adullact.publicrowdfunding.controlleur.preferences.preferences;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
@@ -441,7 +440,11 @@ public class MainActivity extends Activity implements TabListener {
 	@Override
 	protected void onPause() {
 		super.onPause();
+		try{
 		locationManager.removeUpdates(locationListener);
+		}catch(Exception e){
+			System.out.println("Erreur 1");
+		}
 	}
 
 	@Override
@@ -453,7 +456,7 @@ public class MainActivity extends Activity implements TabListener {
 			locationManager.requestLocationUpdates(locationProvider, 10000, 0,
 					locationListener);
 		} catch (Exception e) {
-			// Probablement pas encore initialisé au 1er lancement de l'appli
+			System.out.println("Erreur 2");
 		}
 	}
 

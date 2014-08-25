@@ -1,9 +1,12 @@
-package adullact.publicrowdfunding.controlleur.detailProjet;
+package adullact.publicrowdfunding.controlleur.participer;
 
 import java.math.BigDecimal;
 
 import org.json.JSONException;
 
+import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
+import adullact.publicrowdfunding.model.local.ressource.Funding;
+import adullact.publicrowdfunding.model.server.event.CreateEvent;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -27,9 +30,9 @@ public class ParticiperPaypalActivity extends Activity {
 	private static final String TAG = "paymentExample";
 
 	private static final String CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_NO_NETWORK;
-	private static final String CONFIG_CLIENT_ID = "credential from developer.paypal.com";
-	private static final int REQUEST_CODE_PAYMENT = 1;
-	private static final int REQUEST_CODE_FUTURE_PAYMENT = 2;
+	private static final String CONFIG_CLIENT_ID = "";
+	private static final int REQUEST_CODE_PAYMENT = 5;
+	private static final int REQUEST_CODE_FUTURE_PAYMENT = 6;
 
 	private static PayPalConfiguration config = new PayPalConfiguration()
 			.environment(CONFIG_ENVIRONMENT).clientId(CONFIG_CLIENT_ID)
@@ -80,6 +83,7 @@ public class ParticiperPaypalActivity extends Activity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		System.out.println("Result : "+requestCode);
 		if (requestCode == REQUEST_CODE_PAYMENT) {
 			if (resultCode == Activity.RESULT_OK) {
 				PaymentConfirmation confirm = data
@@ -102,27 +106,29 @@ public class ParticiperPaypalActivity extends Activity {
 						 * .com/paypal/rest-api-sdk-python/tree/master
 						 * /samples/mobile_backend
 						 */
-						Toast.makeText(
-								getApplicationContext(),
-								"Votre participation à bien était prise en compte",
-								Toast.LENGTH_LONG).show();
+						
+						System.out.println("Tout est ok");
+						
+						Intent returnIntent = new Intent();
+						setResult(RESULT_OK,returnIntent);
 						finish();
 
 					} catch (JSONException e) {
-						Toast.makeText(getApplicationContext(),
-								"Une erreur s'est produite", Toast.LENGTH_SHORT)
-								.show();
+						System.out.println("JSON error 2");
+						Intent returnIntent = new Intent();
+						setResult(RESULT_CANCELED, returnIntent);
 						finish();
 					}
 				}
 			} else if (resultCode == Activity.RESULT_CANCELED) {
-				Toast.makeText(getApplicationContext(),
-						"Vous avez annulé le payement", Toast.LENGTH_SHORT)
-						.show();
+				System.out.println("annulation");
+				Intent returnIntent = new Intent();
+				setResult(RESULT_CANCELED, returnIntent);
 				finish();
 			} else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
-				Toast.makeText(getApplicationContext(),
-						"Une erreur s'est produite", Toast.LENGTH_SHORT).show();
+				System.out.println("Extra invalid 2");
+				Intent returnIntent = new Intent();
+				setResult(RESULT_CANCELED, returnIntent);
 				finish();
 			}
 
@@ -144,19 +150,21 @@ public class ParticiperPaypalActivity extends Activity {
 								Toast.LENGTH_LONG).show();
 
 					} catch (JSONException e) {
-						Toast.makeText(getApplicationContext(),
-								"Une erreur s'est produite", Toast.LENGTH_SHORT)
-								.show();
+						System.out.println("JSON Exception");
+						Intent returnIntent = new Intent();
+						setResult(RESULT_CANCELED, returnIntent);
+						finish();
 					}
 				}
 			} else if (resultCode == Activity.RESULT_CANCELED) {
-				Toast.makeText(getApplicationContext(),
-						"Vous avez annulé le payement", Toast.LENGTH_SHORT)
-						.show();
+				System.out.println("canceled");
+				Intent returnIntent = new Intent();
+				setResult(RESULT_CANCELED, returnIntent);
 				finish();
 			} else if (resultCode == PayPalFuturePaymentActivity.RESULT_EXTRAS_INVALID) {
-				Toast.makeText(getApplicationContext(),
-						"Une erreur s'est produite", Toast.LENGTH_SHORT).show();
+				System.out.println("Extra invalid");
+				Intent returnIntent = new Intent();
+				setResult(RESULT_CANCELED, returnIntent);
 				finish();
 			}
 		}
@@ -198,4 +206,5 @@ public class ParticiperPaypalActivity extends Activity {
 		stopService(new Intent(this, PayPalService.class));
 		super.onDestroy();
 	}
+
 }

@@ -394,7 +394,51 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
 	 * @brief Add value to current funding.
 	 */
 	public void finance(final String value, final CreateEvent<Funding> fundingCreateEvent) throws NoAccountExistsInLocal  {
-		m_currentFunding = m_currentFunding.add(new BigDecimal(value));
+		// m_currentFunding = m_currentFunding.add(new BigDecimal(value));
+		
+		// Et on appel le serveur aussis ^^
+		
+		
+		 Account account = Account.getOwn();
+	        final Project _this = this;
+	        account.getUser(new HoldToDo<User>() {
+	            @Override
+	            public void hold(User resource) {
+	                new Funding(resource, _this, "", value).serverCreate(new CreateEvent<Funding>() {
+
+						@Override
+						public void errorResourceIdAlreadyUsed() {
+							fundingCreateEvent.errorResourceIdAlreadyUsed();
+							
+						}
+
+						@Override
+						public void onCreate(Funding resource) {
+							m_currentFunding = m_currentFunding.add(new BigDecimal(value));
+							fundingCreateEvent.onCreate(resource);
+							
+						}
+
+						@Override
+						public void errorAuthenticationRequired() {
+							fundingCreateEvent.errorAuthenticationRequired();
+							
+						}
+
+						@Override
+						public void errorNetwork() {
+							fundingCreateEvent.errorNetwork();
+							
+						}
+	                   
+	                });
+	            }
+	        });
+	            
+		
+		
+		
+		
 	}
 
     public void postCommentary(final String title, final String text, final double mark, final CreateEvent<Commentary> commentaryCreateEvent) throws NoAccountExistsInLocal {

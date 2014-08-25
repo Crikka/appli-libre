@@ -112,6 +112,7 @@ public class Funding extends Resource<Funding, ServerFunding, ServerFunding> {
 
     @Override
     public Observable<RowAffected> methodPOST(Service service) {
+    	System.out.println("appel de la méthode post");
         return service.createFunding(toServerResource());
     }
 

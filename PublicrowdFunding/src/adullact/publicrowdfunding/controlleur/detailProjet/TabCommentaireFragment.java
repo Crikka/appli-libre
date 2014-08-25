@@ -27,6 +27,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.RatingBar.OnRatingBarChangeListener;
 
@@ -43,7 +44,7 @@ public class TabCommentaireFragment extends Fragment {
 	private Button m_connexion;
 
 	protected CommentaireAdapteur adapter;
-	
+
 	private MainActivity _this;
 
 	@Override
@@ -58,7 +59,7 @@ public class TabCommentaireFragment extends Fragment {
 
 		isConnect();
 
-		 _this = (MainActivity) getActivity();
+		_this = (MainActivity) getActivity();
 
 		m_connexion = (Button) view.findViewById(R.id.connexion);
 		m_connexion.setOnClickListener(new View.OnClickListener() {
@@ -81,7 +82,10 @@ public class TabCommentaireFragment extends Fragment {
 				getActivity().getApplicationContext(),
 				R.layout.listitem_discuss);
 
-		_this.projet.getCommentaries(new HoldAllToDo<Commentary>() {
+		TextView empty = (TextView) view.findViewById(R.id.empty);
+		lv.setEmptyView(empty);
+
+		_this.projetCurrent.getCommentaries(new HoldAllToDo<Commentary>() {
 
 			@Override
 			public void holdAll(ArrayList<Commentary> resources) {
@@ -131,43 +135,42 @@ public class TabCommentaireFragment extends Fragment {
 							float rating, boolean fromUser) {
 						System.out.println(rating);
 						ajouterCommentaireAlert commentaireBuilder = new ajouterCommentaireAlert(
-								getActivity(), rating, _this.projet);
+								getActivity(), rating, _this.projetCurrent);
 						commentaireBuilder.show();
-						
-						
-						_this.projet.serverUpdate(new UpdateEvent<Project>(){
+
+						_this.projetCurrent.serverUpdate(new UpdateEvent<Project>() {
 
 							@Override
 							public void onUpdate(Project resource) {
-								_this.projet = resource;
+								_this.projetCurrent = resource;
 								_this.recreate();
-								
+
 							}
 
 							@Override
 							public void errorResourceIdDoesNotExist() {
 								// TODO Auto-generated method stub
-								
+
 							}
 
 							@Override
 							public void errorAdministratorRequired() {
 								// TODO Auto-generated method stub
-								
+
 							}
 
 							@Override
 							public void errorAuthenticationRequired() {
 								// TODO Auto-generated method stub
-								
+
 							}
 
 							@Override
 							public void errorNetwork() {
 								// TODO Auto-generated method stub
-								
+
 							}
-							
+
 						});
 					}
 				});

@@ -24,10 +24,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class TabMapFragment extends Fragment {
 
-	private Project projet;
 	private MapFragment fragment;
 	private FragmentManager fm;
 	private ProgressDialog mprogressDialog;
+	
+	private MainActivity _this;
 
 	View rootView;
 	GoogleMap googleMap;
@@ -51,8 +52,7 @@ public class TabMapFragment extends Fragment {
 		FragmentTransaction ft = fm.beginTransaction();
 		ft.replace(R.id.tabcontent, fragment, "mapid").commit();
 
-		MainActivity activity = (MainActivity) getActivity();
-		projet = activity.getIdProjet();
+		_this = (MainActivity) getActivity();
 
 		rootView = inflater.inflate(R.layout.tab_maps, container, false);
 
@@ -79,14 +79,14 @@ public class TabMapFragment extends Fragment {
 				if (googleMap != null) {
 
 					MarkerOptions marker = new MarkerOptions();
-					marker.position(projet.getPosition());
-					marker.snippet(projet.getDescription());
+					marker.position(_this.projetCurrent.getPosition());
+					marker.snippet(_this.projetCurrent.getDescription());
 					googleMap.addMarker(marker);
 					handler.removeCallbacksAndMessages(null);
 					mprogressDialog.dismiss();
-					CameraUpdate center = CameraUpdateFactory.newLatLng(projet
+					CameraUpdate center = CameraUpdateFactory.newLatLng(_this.projetCurrent
 							.getPosition());
-					CameraUpdate zoom = CameraUpdateFactory.zoomTo(5);
+					CameraUpdate zoom = CameraUpdateFactory.zoomTo(9);
 					googleMap.moveCamera(center);
 					googleMap.animateCamera(zoom);
 

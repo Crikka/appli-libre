@@ -22,6 +22,7 @@ import android.app.ActionBar.TabListener;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -38,7 +39,7 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity implements TabListener {
 
-	protected Project projet;
+	protected Project projetCurrent;
 
 	private FrameLayout rl;
 
@@ -52,14 +53,20 @@ public class MainActivity extends Activity implements TabListener {
 	private ProgressDialog mprogressDialog;
 
 	FragmentTransaction fragMentTra = null;
+	
+	private MainActivity _this;
+	
+	private boolean doRefresh;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_detail_projet);
+
+		doRefresh = false;
 		
-		
+		_this = this;
 		
 		String id = getIntent().getExtras().getString("key");
 		if (id == null) {
@@ -77,7 +84,7 @@ public class MainActivity extends Activity implements TabListener {
 
 		Cache<Project> projet = new Project().getCache(id);
 
-		final MainActivity _this = this;
+
 		projet.toResource(new HoldToDo<Project>() {
 			@Override
 			public void hold(Project project) {
@@ -88,7 +95,7 @@ public class MainActivity extends Activity implements TabListener {
 								.show();
 						finish();
 					} else {
-						_this.projet = project;
+						projetCurrent = project;
 						rl = (FrameLayout) findViewById(R.id.tabcontent);
 
 						ActionBar bar = getActionBar();
@@ -173,7 +180,7 @@ public class MainActivity extends Activity implements TabListener {
 						System.out.println("récupération de l'utilisateur ok");
 						System.out.println("favorite ?" + m_Is_favorite);
 						if (m_Is_favorite) {
-							resource.removeBookmark(projet,
+							resource.removeBookmark(projetCurrent,
 									new DeleteEvent<Bookmark>() {
 
 										@Override
@@ -230,7 +237,7 @@ public class MainActivity extends Activity implements TabListener {
 									Toast.LENGTH_SHORT).show();
 						} else {
 							System.out.println("On l'ajoute");
-							resource.addBookmark(projet,
+							resource.addBookmark(projetCurrent,
 									new CreateEvent<Bookmark>() {
 
 										@Override
@@ -305,11 +312,6 @@ public class MainActivity extends Activity implements TabListener {
 		return false;
 	}
 
-	public Project getIdProjet() {
-		return projet;
-
-	}
-
 	public boolean isConnect() {
 		try {
 			Account.getOwn();
@@ -336,6 +338,8 @@ public class MainActivity extends Activity implements TabListener {
 		}
 		m_favorite.setColorFilter(filter);
 	}
+	
+	
 
 	public void setBookmarked() {
 
@@ -371,4 +375,29 @@ public class MainActivity extends Activity implements TabListener {
 		 * System.out.println("l'utilisateur n'est pas connecté"); }
 		 */
 	}
+
+	public Project getCurrentProject() {
+		return projetCurrent;
+	}
+
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		// Un peux brutal.
+		if (doRefresh) {
+			this.recreate();
+		}
+
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		doRefresh = true;
+
+	}
+	
+	
+	
 }
