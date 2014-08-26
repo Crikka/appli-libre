@@ -70,14 +70,6 @@ public class MainActivity extends Activity implements TabListener {
 					Toast.LENGTH_SHORT).show();
 			finish();
 		}
-
-		/*
-		mprogressDialog = new ProgressDialog(this);
-		mprogressDialog.setMessage("Chargement en cours...");
-		mprogressDialog.setTitle("Affichage du projet");
-		mprogressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-		mprogressDialog.show();
-*/
 		
 		Cache<Project> projet = new Project().getCache(id);
 
@@ -109,7 +101,6 @@ public class MainActivity extends Activity implements TabListener {
 						bar.setDisplayShowHomeEnabled(true);
 						bar.setDisplayShowTitleEnabled(true);
 						bar.show();
-						setBookmarked();
 					}
 
 				} catch (Exception e) {
@@ -117,6 +108,7 @@ public class MainActivity extends Activity implements TabListener {
 				}
 			}
 		});
+
 	}
 
 	@Override
@@ -155,6 +147,7 @@ public class MainActivity extends Activity implements TabListener {
 			MenuInflater inflater = getMenuInflater();
 			inflater.inflate(R.menu.detail_projet, menu);
 			m_favorite = menu.getItem(1).getIcon();
+			setBookmarked();
 		}
 		return super.onCreateOptionsMenu(menu);
 	}
@@ -339,6 +332,7 @@ public class MainActivity extends Activity implements TabListener {
 
 	public void setBookmarked() {
 
+		try{
 		new CanI() {
 			@Override
 			protected void yes() {
@@ -353,7 +347,9 @@ public class MainActivity extends Activity implements TabListener {
 			}
 
 		}.bookmark(projetCurrent);
-
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 
 	public Project getCurrentProject() {
@@ -368,13 +364,14 @@ public class MainActivity extends Activity implements TabListener {
 			this.recreate();
 		}
 
+
 	}
 
 	@Override
 	public void onPause() {
 		super.onPause();
-		doRefresh = true;
-
+		//doRefresh = true;
+		finish();
 	}
 
 	public void refresh() {

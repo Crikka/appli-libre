@@ -15,9 +15,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -77,6 +80,11 @@ public class TabMapFragment extends Fragment implements
 
 					googleMap.setOnInfoWindowClickListener(TabMapFragment.this);
 					googleMap.setMyLocationEnabled(true);
+					LatLng Montpellier = new LatLng(43.652400,3.761380);
+					CameraUpdate center = CameraUpdateFactory.newLatLng(Montpellier);
+					CameraUpdate zoom = CameraUpdateFactory.zoomTo(9);
+					googleMap.moveCamera(center);
+					googleMap.animateCamera(zoom);
 					mprogressDialog.dismiss();
 				}
 

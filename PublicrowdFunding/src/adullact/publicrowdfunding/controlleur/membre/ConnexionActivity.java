@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class ConnexionActivity extends Activity {
@@ -19,6 +20,8 @@ public class ConnexionActivity extends Activity {
 	private Button m_buttonValider;
 	private Button m_buttonInscription;
 	private Context context;
+
+	private LinearLayout loading;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,9 @@ public class ConnexionActivity extends Activity {
 
 		m_buttonValider = (Button) findViewById(R.id.valider_connexion);
 		m_buttonInscription = (Button) findViewById(R.id.inscription_button);
+
+		loading = (LinearLayout) findViewById(R.id.loading);
+		loading.setVisibility(View.GONE);
 
 		m_buttonValider.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -50,19 +56,21 @@ public class ConnexionActivity extends Activity {
 					return;
 				}
 
+				loading.setVisibility(View.VISIBLE);
 				String login = m_login.getText().toString();
 				String password = m_password.getText().toString();
-				
-				 new AuthenticationRequest(
-						login, password, new AuthenticationEvent() {
+
+				new AuthenticationRequest(login, password,
+						new AuthenticationEvent() {
 							@Override
 							public void errorUsernamePasswordDoesNotMatch(
 									String username, String password) {
 								System.out
 										.println("Login ou mot de passe incorect");
-								Toast.makeText(getApplicationContext(),
+								Toast.makeText(context,
 										"Login ou mot de passe incorect",
 										Toast.LENGTH_LONG).show();
+								loading.setVisibility(View.GONE);
 							}
 
 							@Override
@@ -80,6 +88,7 @@ public class ConnexionActivity extends Activity {
 										getApplicationContext(),
 										"Connexion impossible au serveur, veuillez vérifier vos paramètres resaux.",
 										Toast.LENGTH_LONG).show();
+								loading.setVisibility(View.GONE);
 							}
 						}).execute();
 			}
@@ -104,13 +113,12 @@ public class ConnexionActivity extends Activity {
 
 		if (requestCode == 1) {
 			if (resultCode == RESULT_OK) {
-				Toast.makeText(getApplicationContext(), "Incription validé",
-						Toast.LENGTH_LONG).show();
 				finish();
 			}
 			if (resultCode == RESULT_CANCELED) {
+				/*
 				Toast.makeText(getApplicationContext(), "Inscription refusé",
-						Toast.LENGTH_LONG).show();
+						Toast.LENGTH_LONG).show();*/
 			}
 		}
 	}

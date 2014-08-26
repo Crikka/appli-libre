@@ -35,7 +35,7 @@ public class AuthenticationRequest extends AuthenticatedRequest<AuthenticationRe
 
                     @Override
                     public SimpleServerResponse call(Throwable throwable) {
-                    	   errorHandler().manageCallback();
+                    	   event().errorUsernamePasswordDoesNotMatch(m_login, m_password);
 						return null;
                     }
 
@@ -45,11 +45,11 @@ public class AuthenticationRequest extends AuthenticatedRequest<AuthenticationRe
                     @Override
                     public void call(SimpleServerResponse response) {
                         if(response == null) {
-                            errorHandler().manageCallback();
+                        	   event().errorUsernamePasswordDoesNotMatch(m_login, m_password);
                             return;
                         }
 
-                        Account account = new Account(username(), password(), "");
+                        Account account = new Account(m_login, m_password, m_login);
                        
                         int code = 0;
                         try{

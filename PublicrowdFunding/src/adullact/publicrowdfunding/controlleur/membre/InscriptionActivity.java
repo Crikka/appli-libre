@@ -5,11 +5,13 @@ import adullact.publicrowdfunding.model.server.event.RegistrationEvent;
 import adullact.publicrowdfunding.model.server.request.RegistrationRequest;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class InscriptionActivity extends Activity {
@@ -18,18 +20,26 @@ public class InscriptionActivity extends Activity {
 	private EditText m_password1;
 	private EditText m_password2;
 	private Button m_button;
-	private ProgressDialog mProgressDialog;
+	
+	private LinearLayout loading;
+	
+	private Context context;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.inscription);
 
+		context = this;
+		
 		m_login = (EditText) findViewById(R.id.inscription_login);
 		m_password1 = (EditText) findViewById(R.id.inscription_password1);
 		m_password2 = (EditText) findViewById(R.id.inscription_password2);
 		m_button = (Button) findViewById(R.id.inscription_button);
 
+		loading = (LinearLayout) findViewById(R.id.loading);
+		loading.setVisibility(View.GONE);
+		
 		String login = getIntent().getExtras().getString("login");
 		m_login.setText(login);
 
@@ -65,11 +75,11 @@ public class InscriptionActivity extends Activity {
 					return;
 				}
 
+				loading.setVisibility(View.VISIBLE);
+				
 				String username = m_login.getText().toString();
 				String password = m_password1.getText().toString();
 
-				mProgressDialog = ProgressDialog.show(InscriptionActivity.this,
-						"Chargement", "Inscription en cours ...", true);
 
 				// Je differencie compte (username + password) et user
 				// maintenant, je te divise ta requête
@@ -77,7 +87,7 @@ public class InscriptionActivity extends Activity {
                 new RegistrationRequest(username, password, username, new RegistrationEvent() {
                     @Override
                     public void onRegister() {
-                            mProgressDialog.dismiss();
+                    	Toast.makeText(context, "Bienvenue "+m_login, Toast.LENGTH_SHORT).show();
                         Intent returnIntent = new Intent();
                         setResult(RESULT_OK, returnIntent);
                         finish();
@@ -85,26 +95,20 @@ public class InscriptionActivity extends Activity {
 
                     @Override
                     public void errorUsernameAlreadyUsed() {
-                        mProgressDialog.dismiss();
-                        Intent returnIntent = new Intent();
-                        setResult(RESULT_CANCELED, returnIntent);
-                        finish();
+                    	loading.setVisibility(View.GONE);
+                        Toast.makeText(context, "Username déjà pris", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void errorPseudoAlreadyUsed() {
-                        mProgressDialog.dismiss();
-                        Intent returnIntent = new Intent();
-                        setResult(RESULT_CANCELED, returnIntent);
-                        finish();
+                    	loading.setVisibility(View.GONE);
+                        Toast.makeText(context, "Username déjà pris", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void errorNetwork() {
-                        mProgressDialog.dismiss();
-                        Intent returnIntent = new Intent();
-                        setResult(RESULT_CANCELED, returnIntent);
-                        finish();
+                    	loading.setVisibility(View.GONE);
+                        Toast.makeText(context, "Probléme de connection", Toast.LENGTH_SHORT).show();
                     }
                 }).execute();
 			}
