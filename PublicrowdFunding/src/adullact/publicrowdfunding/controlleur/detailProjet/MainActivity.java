@@ -71,12 +71,14 @@ public class MainActivity extends Activity implements TabListener {
 			finish();
 		}
 
+		/*
 		mprogressDialog = new ProgressDialog(this);
 		mprogressDialog.setMessage("Chargement en cours...");
 		mprogressDialog.setTitle("Affichage du projet");
 		mprogressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 		mprogressDialog.show();
-
+*/
+		
 		Cache<Project> projet = new Project().getCache(id);
 
 		projet.toResource(new HoldToDo<Project>() {
@@ -108,7 +110,6 @@ public class MainActivity extends Activity implements TabListener {
 						bar.setDisplayShowTitleEnabled(true);
 						bar.show();
 						setBookmarked();
-						mprogressDialog.dismiss();
 					}
 
 				} catch (Exception e) {
