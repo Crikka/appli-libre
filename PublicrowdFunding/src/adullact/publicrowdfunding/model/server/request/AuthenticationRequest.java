@@ -24,69 +24,32 @@ public class AuthenticationRequest extends AuthenticatedRequest<AuthenticationRe
 
         this.m_login = username;
         this.m_password = password;
-        
     }
 
     @Override
     public void execute() {
-    	System.out.println("execution");
-       service().authenticate(m_login, m_password).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .onErrorReturn(new Func1<Throwable, SimpleServerResponse>() {
-
-                    @Override
-                    public SimpleServerResponse call(Throwable throwable) {
-                    	   event().errorUsernamePasswordDoesNotMatch(m_login, m_password);
-						return null;
-                    }
-
-                })
+       service().authenticate().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<SimpleServerResponse>() {
 
                     @Override
                     public void call(SimpleServerResponse response) {
-                        if(response == null) {
-                        	   event().errorUsernamePasswordDoesNotMatch(m_login, m_password);
-                            return;
-                        }
-
                         Account account = new Account(m_login, m_password, m_login);
-                       
-                        int code = 0;
-                        try{
-                        	code = Integer.parseInt(response.code);
-                        }catch(Exception e){
-                        	e.printStackTrace();
-                        }
-                        
-                       
-                        switch(code) {
-                            case 0:
-                                account.setOwn();
-                                account.getUser(new HoldToDo<User>() {
-                                                    @Override
-                                                    public void hold(User resource) {
-                                                    	done();
-                                                        event().onAuthentication();
-                                                       
-                                                        
-                                                    }
-                                                });
-                                break;
+
+                        switch (Integer.parseInt(response.code)) {
+                            case 2: // Admin
+                                account.setAdmin();
                             case 1:
-                            	// Admin
-                            	 account.setOwn();
-                            	 account.setAdmin();
-                            	 
-                                 account.getUser(new HoldToDo<User>() {
-                                                     @Override
-                                                     public void hold(User resource) {
-                                                    	 done();
-                                                         event().onAuthentication();
-                                                        
-                                                     }
-                                                 });
+                                account.setOwn();
+                                event().onAuthentication();
                                 break;
+                            case 0: // error
+                                event().errorUsernamePasswordDoesNotMatch(m_login, m_password);
                         }
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        errorHandler().manageCallback();
                     }
                 });
     }

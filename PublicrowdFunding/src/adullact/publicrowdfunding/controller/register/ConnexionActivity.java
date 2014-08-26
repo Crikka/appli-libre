@@ -1,6 +1,10 @@
 package adullact.publicrowdfunding.controller.register;
 
 import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
+import adullact.publicrowdfunding.model.local.callback.HoldToDo;
+import adullact.publicrowdfunding.model.local.ressource.Account;
+import adullact.publicrowdfunding.model.local.ressource.User;
 import adullact.publicrowdfunding.model.server.event.AuthenticationEvent;
 import adullact.publicrowdfunding.model.server.request.AuthenticationRequest;
 import android.app.Activity;
@@ -22,8 +26,9 @@ public class ConnexionActivity extends Activity {
 	private Context context;
 
 	private LinearLayout loading;
+    private LinearLayout loadingPersonnelInfo;
 
-	@Override
+    @Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_authetificate);
@@ -38,6 +43,9 @@ public class ConnexionActivity extends Activity {
 
 		loading = (LinearLayout) findViewById(R.id.loading);
 		loading.setVisibility(View.GONE);
+
+        loadingPersonnelInfo = (LinearLayout) findViewById(R.id.loadingLoadingInfo);
+        loadingPersonnelInfo.setVisibility(View.GONE);
 
 		m_buttonValider.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -75,10 +83,20 @@ public class ConnexionActivity extends Activity {
 
 							@Override
 							public void onAuthentication() {
-								Toast.makeText(getApplicationContext(),
-										"Vous êtes connecté !",
-										Toast.LENGTH_LONG).show();
-								finish();
+                                try {
+                                    loading.setVisibility(View.GONE);
+                                    loadingPersonnelInfo.setVisibility(View.VISIBLE);
+                                    Account.getOwn().getUser(new HoldToDo<User>() {
+                                        @Override
+                                        public void hold(User resource) {
+                                            Toast.makeText(context, "Bienvenue " + resource.getPseudo() + "!", Toast.LENGTH_LONG).show();
+                                            finish();
+                                        }
+                                    });
+                                } catch (NoAccountExistsInLocal noAccountExistsInLocal) {
+                                    finish();
+
+                                }
 							}
 
 							@Override
