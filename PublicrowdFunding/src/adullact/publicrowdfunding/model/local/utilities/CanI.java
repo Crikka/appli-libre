@@ -13,7 +13,7 @@ import adullact.publicrowdfunding.model.local.ressource.User;
 public abstract class CanI {
     public void validate(Project project) {
         try {
-            Account account = Account.getOwn();
+            Account.getOwn();
             if(Account.getOwnOrAnonymous().isAdmin()){
                 yes();
             }

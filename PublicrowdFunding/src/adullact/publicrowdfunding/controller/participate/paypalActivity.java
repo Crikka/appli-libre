@@ -1,4 +1,4 @@
-package adullact.publicrowdfunding.controlleur.participer;
+package adullact.publicrowdfunding.controller.participate;
 
 import java.math.BigDecimal;
 
@@ -20,7 +20,7 @@ import com.paypal.android.sdk.payments.PayPalService;
 import com.paypal.android.sdk.payments.PaymentActivity;
 import com.paypal.android.sdk.payments.PaymentConfirmation;
 
-public class ParticiperPaypalActivity extends Activity {
+public class paypalActivity extends Activity {
 
 	private int participation;
 
@@ -59,7 +59,7 @@ public class ParticiperPaypalActivity extends Activity {
 		/* Paypal */
 
 		PayPalPayment thingToBuy = getSommeParticipations(PayPalPayment.PAYMENT_INTENT_SALE);
-		Intent intent = new Intent(ParticiperPaypalActivity.this,
+		Intent intent = new Intent(paypalActivity.this,
 				PaymentActivity.class);
 		intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
 		startActivityForResult(intent, REQUEST_CODE_PAYMENT);
@@ -72,7 +72,7 @@ public class ParticiperPaypalActivity extends Activity {
 	}
 
 	public void onFuturePaymentPressed(View pressed) {
-		Intent intent = new Intent(ParticiperPaypalActivity.this,
+		Intent intent = new Intent(paypalActivity.this,
 				PayPalFuturePaymentActivity.class);
 
 		startActivityForResult(intent, REQUEST_CODE_FUTURE_PAYMENT);

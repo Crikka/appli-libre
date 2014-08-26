@@ -1,9 +1,9 @@
-package adullact.publicrowdfunding.controlleur.profile;
+package adullact.publicrowdfunding.controller.profile;
 
 import java.util.ArrayList;
 
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.controlleur.detailProjet.MainActivity;
+import adullact.publicrowdfunding.controller.detailProject.MainActivity;
 import adullact.publicrowdfunding.custom.CustomAdapter;
 import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.ressource.Project;
@@ -19,11 +19,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class TabProjetsFinanceFragment extends Fragment {
+public class TabFinancedProjectFragment extends Fragment {
 
 	private ListView listeProjets;
 
-	private adullact.publicrowdfunding.controlleur.profile.MainActivity _this;
+	private adullact.publicrowdfunding.controller.profile.MainActivity _this;
 
 	private ArrayList<Project> projets;
 
@@ -48,7 +48,7 @@ public class TabProjetsFinanceFragment extends Fragment {
 
 		listeProjets.setAdapter(adapter);
 
-		_this = (adullact.publicrowdfunding.controlleur.profile.MainActivity) getActivity();
+		_this = (adullact.publicrowdfunding.controller.profile.MainActivity) getActivity();
 
 		refresh();
 		

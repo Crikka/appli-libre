@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Loading" />
+            android:text="@string/loading" />
     </LinearLayout>
     
     <ScrollView
@@ -131,7 +131,7 @@
                     android:layout_toRightOf="@+id/passwordIcon2"
                     android:ems="10"
                     android:gravity="left|center_vertical"
-                    android:hint="Confirmation du mot de passe"
+                    android:hint="@string/confirmation_mdp"
                     android:inputType="textPassword"
                     android:textColor="#808080"
                     android:textSize="20sp" >

@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import adullact.publicrowdfunding.controlleur.ajouterProjet.SoumettreProjetActivity;
-import adullact.publicrowdfunding.controlleur.membre.ConnexionActivity;
+import adullact.publicrowdfunding.controller.register.ConnexionActivity;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
@@ -39,6 +38,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.SearchView.OnCloseListener;
 import android.widget.SearchView.OnQueryTextListener;
@@ -49,7 +49,7 @@ public class MainActivity extends Activity implements TabListener {
 
 	private FrameLayout rl;
 
-	private TabProjetsFragment fram1;
+	private TabProjectsFragment fram1;
 	private TabMapFragment fram3;
 
 	private ImageButton m_ajouter_projet;
@@ -59,7 +59,7 @@ public class MainActivity extends Activity implements TabListener {
 
 	private Button m_connexion;
 
-	private LinearLayout layoutConnect;
+	private RelativeLayout layoutConnect;
 	private LinearLayout layoutDisconnect;
 	private LinearLayout layoutLoading;
 
@@ -83,7 +83,7 @@ public class MainActivity extends Activity implements TabListener {
 
 		setContentView(R.layout.activity_main);
 
-		layoutConnect = (LinearLayout) findViewById(R.id.connect);
+		layoutConnect = (RelativeLayout) findViewById(R.id.connect);
 		layoutDisconnect = (LinearLayout) findViewById(R.id.disconnect);
 		layoutLoading = (LinearLayout) findViewById(R.id.loading);
 
@@ -101,7 +101,6 @@ public class MainActivity extends Activity implements TabListener {
 				ArrayList<Project> allSync = new ArrayList<Project>(sync
 						.getProjects());
 				projetsToDisplay = allSync;
-				System.out.println("Taille : " + allSync.size());
 
 				for (Project projet : allSync) {
 					System.out.println("Projet : " + projet.getName()
@@ -148,7 +147,7 @@ public class MainActivity extends Activity implements TabListener {
 
 				Intent in = new Intent(
 						getBaseContext().getApplicationContext(),
-						SoumettreProjetActivity.class);
+						adullact.publicrowdfunding.controller.addProject.MainActivity.class);
 				startActivity(in);
 
 			}
@@ -160,7 +159,7 @@ public class MainActivity extends Activity implements TabListener {
 			public void onClick(View v) {
 				Intent in = new Intent(
 						getBaseContext().getApplicationContext(),
-						adullact.publicrowdfunding.controlleur.profile.MainActivity.class);
+						adullact.publicrowdfunding.controller.profile.MainActivity.class);
 				in.putExtra("myCount", true);
 				startActivity(in);
 			}
@@ -173,7 +172,7 @@ public class MainActivity extends Activity implements TabListener {
 			public void onClick(View v) {
 				Intent in = new Intent(
 						getBaseContext().getApplicationContext(),
-						adullact.publicrowdfunding.controlleur.validationProjet.MainActivity.class);
+						adullact.publicrowdfunding.controller.validateProject.MainActivity.class);
 				startActivity(in);
 			}
 		});
@@ -242,7 +241,7 @@ public class MainActivity extends Activity implements TabListener {
 
 		if (tab.getText().equals("Projets")) {
 
-			fram1 = new TabProjetsFragment();
+			fram1 = new TabProjectsFragment();
 			ft.replace(rl.getId(), fram1);
 
 		} else if (tab.getText().equals("Localisation")) {
@@ -328,7 +327,7 @@ public class MainActivity extends Activity implements TabListener {
 		int position = tab.getPosition();
 		if (position == 0) {
 
-			fram1 = new TabProjetsFragment();
+			fram1 = new TabProjectsFragment();
 
 			FragmentManager fm = this.getFragmentManager();
 			FragmentTransaction ft = fm.beginTransaction();

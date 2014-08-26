@@ -1,4 +1,4 @@
-package adullact.publicrowdfunding.controlleur.membre;
+package adullact.publicrowdfunding.controller.register;
 
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.model.server.event.AuthenticationEvent;
@@ -101,7 +101,7 @@ public class ConnexionActivity extends Activity {
 				String login = m_login.getText().toString();
 
 				Intent in = new Intent(getBaseContext(),
-						InscriptionActivity.class);
+						registerActivity.class);
 				in.putExtra("login", login);
 				startActivityForResult(in, 1);
 

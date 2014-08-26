@@ -1,4 +1,4 @@
-package adullact.publicrowdfunding.controlleur.participer;
+package adullact.publicrowdfunding.controller.participate;
 
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
@@ -137,7 +137,7 @@ public class MainActivity extends Activity {
 		}
 		
 		
-		Intent in = new Intent(context, ParticiperPaypalActivity.class);
+		Intent in = new Intent(context, paypalActivity.class);
 
 		int somme = 0;
 

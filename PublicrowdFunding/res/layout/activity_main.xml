@@ -4,6 +4,7 @@
     android:background="@color/background"
     android:orientation="vertical" >
 
+    <!--
     <LinearLayout
         android:id="@+id/loading"
         android:layout_width="match_parent"
@@ -22,8 +23,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Loading" />
+            android:text="@string/loading" />
     </LinearLayout>
+    -->
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -43,7 +45,7 @@
         </FrameLayout>
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/connect"
         android:layout_width="fill_parent"
         android:layout_height="50dip"
@@ -57,7 +59,7 @@
             android:id="@+id/button_filtrer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginLeft="20dip"
             android:background="@null"
             android:contentDescription="@string/description_image_button"
             android:src="@android:drawable/ic_menu_sort_by_size" />
@@ -66,7 +68,8 @@
             android:id="@+id/button_soumettre_projet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginLeft="20dip"
+            android:layout_toRightOf="@+id/button_filtrer"
             android:background="@null"
             android:contentDescription="@string/description_image_button"
             android:src="@android:drawable/ic_menu_add" />
@@ -75,7 +78,8 @@
             android:id="@+id/button_mon_compte"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginLeft="20dip"
+            android:layout_toRightOf="@+id/button_soumettre_projet"
             android:background="@null"
             android:contentDescription="@string/description_image_button"
             android:src="@android:drawable/ic_menu_myplaces" />
@@ -84,11 +88,12 @@
             android:id="@+id/button_valider_projet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginLeft="20dip"
+            android:layout_toRightOf="@+id/button_mon_compte"
             android:background="@null"
             android:contentDescription="@string/description_image_button"
             android:src="@drawable/ic_menu_mark" />
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/disconnect"
@@ -96,7 +101,7 @@
         android:layout_height="50dip"
         android:layout_weight="0"
         android:gravity="center"
-        android:padding="0dp" >
+        android:layout_margin="5dp" >
 
         <Button
             android:id="@+id/connexion"
@@ -105,7 +110,7 @@
             android:background="@drawable/buttonshapes"
             android:gravity="center"
             android:padding="10dip"
-            android:text="Connexion / Inscription"
+            android:text="@string/login_or_register"
             android:textColor="#808080"
             android:textSize="25sp" />
     </LinearLayout>

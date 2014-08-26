@@ -244,7 +244,7 @@
                 </RelativeLayout>
             </LinearLayout>
 
-            <adullact.publicrowdfunding.controlleur.detailProjet.GraphiqueView
+            <adullact.publicrowdfunding.controller.detailProject.GraphiqueView
                 android:id="@+id/graphique"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"

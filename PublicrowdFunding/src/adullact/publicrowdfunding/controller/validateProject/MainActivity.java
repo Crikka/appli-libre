@@ -1,4 +1,4 @@
-package adullact.publicrowdfunding.controlleur.validationProjet;
+package adullact.publicrowdfunding.controller.validateProject;
 
 import java.util.ArrayList;
 

@@ -3,7 +3,6 @@ package adullact.publicrowdfunding.custom;
 import java.util.ArrayList;
 
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.model.local.ressource.Commentary;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.utilities.Calcul;
 import adullact.publicrowdfunding.model.local.utilities.Share;

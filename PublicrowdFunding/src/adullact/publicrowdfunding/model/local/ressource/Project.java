@@ -214,6 +214,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         this.m_email = null;
         this.m_website = null;
         this.m_phone = null;
+        this.m_active = false;
     }
 
     public Project(String name, String description, String proposedBy, String requestedFunding, DateTime beginDate, DateTime endDate, LatLng position, int illustration, String email, String website, String phone, boolean validate) {
@@ -287,7 +288,6 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         DateTime endDateTime = m_fundingInterval.getEnd();
         long numberOfDayBetweenStartAndEnd = m_fundingInterval.toDuration().getStandardDays();
         long dayByPeriod = numberOfDayBetweenStartAndEnd/numberOfPeriod;
-        DateTime today = new DateTime();
         for(int i = 0; i < (numberOfPeriod-1); i++){
         		m_fundingIntervals.add(new FundingInterval(new Interval(startDateTime, startDateTime.plusDays((int) dayByPeriod))));
             	startDateTime = startDateTime.plusDays((int) dayByPeriod);

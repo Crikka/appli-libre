@@ -264,7 +264,7 @@
                 android:orientation="horizontal"
                 android:padding="5dp" >
 
-                <adullact.publicrowdfunding.controlleur.detailProjet.GraphiqueView
+                <adullact.publicrowdfunding.controller.detailProject.GraphiqueView
                     android:id="@+id/graphique"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

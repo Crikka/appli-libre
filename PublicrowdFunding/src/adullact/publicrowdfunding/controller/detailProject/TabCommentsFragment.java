@@ -1,32 +1,28 @@
-package adullact.publicrowdfunding.controlleur.detailProjet;
+package adullact.publicrowdfunding.controller.detailProject;
 
 import java.util.ArrayList;
 import java.util.Vector;
 
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.controlleur.membre.ConnexionActivity;
+import adullact.publicrowdfunding.controller.register.ConnexionActivity;
 import adullact.publicrowdfunding.custom.CommentaireAdapteur;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.Commentary;
-import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
-import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
-import adullact.publicrowdfunding.model.server.event.UpdateEvent;
 import android.app.Fragment;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -34,7 +30,7 @@ import android.widget.RatingBar;
 import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.TextView;
 
-public class TabCommentaireFragment extends Fragment {
+public class TabCommentsFragment extends Fragment {
 
 	private RatingBar m_notation;
 	private ListView lv;
@@ -129,7 +125,7 @@ public class TabCommentaireFragment extends Fragment {
 						Context c = _this.getBaseContext();
 						Intent in = new Intent(
 								c,
-								adullact.publicrowdfunding.controlleur.profile.MainActivity.class);
+								adullact.publicrowdfunding.controller.profile.MainActivity.class);
 						in.putExtra("myCount", false);
 						in.putExtra("id", resource.getResourceId());
 						startActivity(in);
@@ -154,7 +150,7 @@ public class TabCommentaireFragment extends Fragment {
 							float rating, boolean fromUser) {
 
 						System.out.println(rating);
-						ajouterCommentaireAlert commentaireBuilder = new ajouterCommentaireAlert(
+						addCommentAlert commentaireBuilder = new addCommentAlert(
 								getActivity(), rating, _this.projetCurrent);
 						commentaireBuilder.show();
 

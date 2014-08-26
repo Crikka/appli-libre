@@ -1,4 +1,4 @@
-package adullact.publicrowdfunding.controlleur.detailProjet;
+package adullact.publicrowdfunding.controller.detailProject;
 
 import java.util.ArrayList;
 
@@ -14,7 +14,6 @@ import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Path;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
 import android.view.View;
 
 /**
@@ -22,11 +21,10 @@ import android.view.View;
  */
 public class GraphiqueView extends View {
 
-	private final Paint paint;
-	private boolean isDrawing;
-	private float positionX;
-	private float positionY;
+	private Paint paint;
 	private Project projet;
+	private ArrayList<FundingInterval> graphData;
+	private Path path;
 
 	/**
 	 * @param context
@@ -35,6 +33,8 @@ public class GraphiqueView extends View {
 	public GraphiqueView(Context context) {
 		super(context);
 		paint = new Paint();
+		path = new Path();
+		graphData = new ArrayList<FundingInterval>();
 	}
 
 	/**
@@ -46,36 +46,12 @@ public class GraphiqueView extends View {
 	public GraphiqueView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		paint = new Paint();
-		isDrawing = false;
+		graphData = new ArrayList<FundingInterval>();
+		path = new Path();
 	}
 
 	public void setProject(Project projet) {
 		this.projet = projet;
-	}
-
-	@Override
-	public boolean onTouchEvent(MotionEvent event) {
-
-		switch (event.getAction()) {
-		case MotionEvent.ACTION_DOWN:
-			isDrawing = true;
-			positionX = event.getX();
-			positionY = event.getY();
-			invalidate();
-			break;
-		case MotionEvent.ACTION_MOVE:
-			isDrawing = true;
-			positionX = event.getX();
-			positionY = event.getY();
-			invalidate();
-			break;
-		case MotionEvent.ACTION_UP:
-			isDrawing = false;
-			invalidate();
-			break;
-		}
-		return true;
-
 	}
 
 	/**
@@ -103,37 +79,37 @@ public class GraphiqueView extends View {
 					* (largeur / nombreDeCarre), largeur + offset, paint);
 
 		}
-
-		ArrayList<FundingInterval> graphData = new ArrayList<FundingInterval>();
+		
 		if (projet == null) {
 			return;
 		}
+		
 		graphData = projet.getFundingIntervals();
-		paint.setAntiAlias(true);
 
-		Paint textPaint = new Paint();
 
+		paint.reset();
 		int xPos = (int) (canvas.getWidth() / 2);
 		int yPos = offset / 2;
-		textPaint.setTextAlign(Align.CENTER);
-		textPaint.setTextSize(40);
-		textPaint.setColor(Color.rgb(128, 128, 128));
-		canvas.drawText("Progression du financement", xPos, yPos, textPaint);
+		paint.setTextAlign(Align.CENTER);
+		paint.setTextSize(40);
+		paint.setColor(Color.rgb(128, 128, 128));
+		canvas.drawText("Progression du financement", xPos, yPos, paint);
 
+		paint.reset();
 		// Ajout texte 100 %
-		textPaint = new Paint();
 		xPos = (int) (6 * canvas.getWidth() / 10);
 		yPos = offset - 20;
-		textPaint.setTextSize(20);
-		textPaint.setColor(Color.rgb(109, 195, 41));
-		canvas.drawText("100 %", xPos, yPos, textPaint);
+		paint.setTextSize(20);
+		paint.setColor(Color.rgb(109, 195, 41));
+		canvas.drawText("100 %", xPos, yPos, paint);
 
+		
+		paint.reset();
 		// Ajout date de début
-		textPaint = new Paint();
 		xPos = 0;
 		yPos = offset - 20;
-		textPaint.setTextSize(20);
-		textPaint.setColor(Color.rgb(160, 160, 160));
+		paint.setTextSize(20);
+		paint.setColor(Color.rgb(160, 160, 160));
 		Interval in = projet.getFundingInterval();
 
 		DateTime dateStart = in.getStart();
@@ -153,16 +129,16 @@ public class GraphiqueView extends View {
 		}
 
 		canvas.drawText(dateStart.getDayOfMonth() + "/" + month + "/"
-				+ dateStart.getYear(), xPos, yPos, textPaint);
+				+ dateStart.getYear(), xPos, yPos, paint);
 
+		paint.reset();
 		// Ajout date de fin
-		textPaint = new Paint();
 		xPos = (int) (canvas.getWidth() - 120);
 		yPos = offset - 20;
-		textPaint.setTextSize(20);
-		textPaint.setColor(Color.rgb(160, 160, 160));
+		paint.setTextSize(20);
+		paint.setColor(Color.rgb(160, 160, 160));
 		canvas.drawText(dateEnd.getDayOfMonth() + "/" + monthEnd + "/"
-				+ dateEnd.getYear(), xPos, yPos, textPaint);
+				+ dateEnd.getYear(), xPos, yPos, paint);
 
 		// Exemple de coubre
 		long pourcentageAccomplie = 0;
@@ -201,8 +177,10 @@ public class GraphiqueView extends View {
 				break;
 			}
 
+			paint.reset();
 			paint.setColor(Color.argb(150, 131, 182, 255));
-			Path path = new Path();
+			
+			path.reset();
 			path.setFillType(Path.FillType.EVEN_ODD);
 			path.moveTo(xDepart, yDepart);
 			path.lineTo(xArrive, yArrive);
@@ -214,19 +192,12 @@ public class GraphiqueView extends View {
 			canvas.drawPath(path, paint);
 
 			// La ligne
+			paint.reset();
 			paint.setColor(Color.rgb(183, 0, 0));
 			paint.setStrokeWidth(2);
 			canvas.drawLine(xDepart, yDepart, xArrive, yArrive, paint);
 
 			pourcentageAccomplie = newPourcentage;
-		}
-
-		if (isDrawing) {
-			paint.setColor(Color.rgb(183, 0, 0));
-			paint.setStrokeWidth(2);
-			// canvas.drawLine(positionX, offset, positionX, largeur + offset,
-			// paint);
-
 		}
 
 	}

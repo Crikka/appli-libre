@@ -27,5 +27,10 @@
     <string name="recolter">récoltés</string>
     <string name="site_web">Site internet</string>
     <string name="telephone">Numéro de téléphone</string>
+    <string name="confirmation_mdp">Confirmation du mot de passe</string>
+    <string name="loading">Chargement</string>
+    <string name="no_project">Aucun projet</string>
+    <string name="no_commentary">Aucun commentaire</string>
+    <string name="login_or_register">Connexion / Inscription</string>
 
 </resources>

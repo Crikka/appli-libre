@@ -1,10 +1,9 @@
-package adullact.publicrowdfunding.controlleur.membre;
+package adullact.publicrowdfunding.controller.register;
 
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.model.server.event.RegistrationEvent;
 import adullact.publicrowdfunding.model.server.request.RegistrationRequest;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,7 +13,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-public class InscriptionActivity extends Activity {
+public class registerActivity extends Activity {
 
 	private EditText m_login;
 	private EditText m_password1;

@@ -103,7 +103,7 @@ public class TabMapFragment extends Fragment implements
 		System.out.println("test");
 		Intent intent = new Intent(
 				_this.getApplicationContext(),
-				adullact.publicrowdfunding.controlleur.detailProjet.MainActivity.class);
+				adullact.publicrowdfunding.controller.detailProject.MainActivity.class);
 		intent.putExtra("key", id);
 		
 		_this.startActivity(intent);

@@ -51,7 +51,7 @@
         
         
         <activity
-            android:name="adullact.publicrowdfunding.controlleur.participer.MainActivity"
+            android:name="adullact.publicrowdfunding.controller.participate.MainActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
@@ -59,47 +59,47 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.controlleur.validationProjet.MainActivity"
+            android:name="adullact.publicrowdfunding.controller.validateProject.MainActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.controlleur.detailProjet.MainActivity"
+            android:name="adullact.publicrowdfunding.controller.detailProject.MainActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.controlleur.profile.MainActivity"
+            android:name="adullact.publicrowdfunding.controller.profile.MainActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.controlleur.ajouterProjet.AddLocationProject"
+            android:name="adullact.publicrowdfunding.controller.addProject.AddLocationProject"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.controlleur.ajouterProjet.SoumettreProjetActivity"
+            android:name="adullact.publicrowdfunding.controller.addProject.MainActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.controlleur.preferences.MainActivity"
+            android:name="adullact.publicrowdfunding.controller.preferences.MainActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.controlleur.detailProjet.TabMapFragment"
+            android:name="adullact.publicrowdfunding.controller.detailProject.TabMapFragment"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.controlleur.membre.InscriptionActivity"
+            android:name="adullact.publicrowdfunding.controller.register.registerActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.controlleur.detailProjet.TabProjetFragment"
+            android:name="adullact.publicrowdfunding.controller.detailProject.TabProjectFragment"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.controlleur.detailProjet.TabCommentaireFragment"
+            android:name="adullact.publicrowdfunding.controller.detailProject.TabCommentsFragment"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.controlleur.membre.ConnexionActivity"
+            android:name="adullact.publicrowdfunding.controller.register.ConnexionActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
@@ -115,11 +115,11 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.TabProjetsFragment"
+            android:name="adullact.publicrowdfunding.TabProjectsFragment"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.controlleur.participer.ParticiperPaypalActivity"
+            android:name="adullact.publicrowdfunding.controller.participate.paypalActivity"
             android:label="@string/app_name" >
         </activity>
         <activity

@@ -16,7 +16,6 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -33,7 +32,6 @@ public class CommentaireAdapteur extends ArrayAdapter<Commentary> {
 	private RatingBar rating;
 	private TextView titre;
 	private Vector<Commentary> commentaries = new Vector<Commentary>();
-	private LinearLayout layout;
 	private ImageView avatar;
 	private CommentaireAdapteur _this;
 
@@ -64,8 +62,6 @@ public class CommentaireAdapteur extends ArrayAdapter<Commentary> {
 					Context.LAYOUT_INFLATER_SERVICE);
 			row = inflater.inflate(R.layout.listitem_discuss, parent, false);
 		}
-
-		layout = (LinearLayout) row.findViewById(R.id.wrapper);
 
 		Commentary coment = getItem(position);
 

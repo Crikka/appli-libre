@@ -1,4 +1,4 @@
-package adullact.publicrowdfunding.controlleur.profile;
+package adullact.publicrowdfunding.controller.profile;
 
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
@@ -25,9 +25,9 @@ public class MainActivity extends Activity implements TabListener {
 
 	private FrameLayout rl;
 
-	private TabProjetsSoumisFragment fram1;
-	private TabFavorisFragment fram2;
-	private TabProjetsFinanceFragment fram3;
+	private TabSubmitProjectFragment fram1;
+	private TabBookmarkFragment fram2;
+	private TabFinancedProjectFragment fram3;
 
 	protected boolean myAccount;
 
@@ -129,17 +129,17 @@ public class MainActivity extends Activity implements TabListener {
 
 		if (tab.getText().equals("Projets")) {
 
-			fram1 = new TabProjetsSoumisFragment();
+			fram1 = new TabSubmitProjectFragment();
 			ft.replace(rl.getId(), fram1);
 
 		} else if (tab.getText().equals("Favoris")) {
 
-			fram2 = new TabFavorisFragment();
+			fram2 = new TabBookmarkFragment();
 			ft.replace(rl.getId(), fram2);
 
 		} else if (tab.getText().equals("Financé")) {
 
-			fram3 = new TabProjetsFinanceFragment();
+			fram3 = new TabFinancedProjectFragment();
 			ft.replace(rl.getId(), fram3);
 
 		}
@@ -168,7 +168,7 @@ public class MainActivity extends Activity implements TabListener {
 		case R.id.preferences:
 			Intent in = new Intent(
 					getBaseContext().getApplicationContext(),
-					adullact.publicrowdfunding.controlleur.preferences.MainActivity.class);
+					adullact.publicrowdfunding.controller.preferences.MainActivity.class);
 			startActivity(in);
 			return true;
 		}

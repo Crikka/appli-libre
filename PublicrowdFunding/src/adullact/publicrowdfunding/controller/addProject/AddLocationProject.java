@@ -1,4 +1,4 @@
-package adullact.publicrowdfunding.controlleur.ajouterProjet;
+package adullact.publicrowdfunding.controller.addProject;
 
 import adullact.publicrowdfunding.R;
 import android.content.Intent;

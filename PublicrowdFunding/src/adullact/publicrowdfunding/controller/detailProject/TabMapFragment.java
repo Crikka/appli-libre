@@ -1,4 +1,4 @@
-package adullact.publicrowdfunding.controlleur.detailProjet;
+package adullact.publicrowdfunding.controller.detailProject;
 
 import adullact.publicrowdfunding.R;
 import android.app.Fragment;

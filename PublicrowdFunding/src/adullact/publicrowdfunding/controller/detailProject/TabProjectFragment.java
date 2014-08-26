@@ -1,7 +1,7 @@
-package adullact.publicrowdfunding.controlleur.detailProjet;
+package adullact.publicrowdfunding.controller.detailProject;
 
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.controlleur.membre.ConnexionActivity;
+import adullact.publicrowdfunding.controller.register.ConnexionActivity;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
@@ -22,7 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class TabProjetFragment extends Fragment {
+public class TabProjectFragment extends Fragment {
 
 	private TextView m_titre;
 	private TextView m_description;
@@ -166,7 +166,7 @@ public class TabProjetFragment extends Fragment {
 					Context c = getActivity().getBaseContext();
 					Intent in = new Intent(
 							c,
-							adullact.publicrowdfunding.controlleur.profile.MainActivity.class);
+							adullact.publicrowdfunding.controller.profile.MainActivity.class);
 					in.putExtra("myCount", false);
 					in.putExtra("id", id);
 					startActivity(in);
@@ -198,7 +198,7 @@ public class TabProjetFragment extends Fragment {
 
 				Intent in = new Intent(
 						_this,
-						adullact.publicrowdfunding.controlleur.participer.MainActivity.class);
+						adullact.publicrowdfunding.controller.participate.MainActivity.class);
 				in.putExtra("projectId", projet.getResourceId());
 				_this.startActivity(in);
 

@@ -1,9 +1,8 @@
-package adullact.publicrowdfunding.controlleur.detailProjet;
+package adullact.publicrowdfunding.controller.detailProject;
 
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.cache.Cache;
-import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
@@ -11,7 +10,6 @@ import adullact.publicrowdfunding.model.local.ressource.Bookmark;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
 import adullact.publicrowdfunding.model.local.utilities.CanI;
-import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import adullact.publicrowdfunding.model.server.event.CreateEvent;
 import adullact.publicrowdfunding.model.server.event.DeleteEvent;
 import android.app.ActionBar;
@@ -19,7 +17,6 @@ import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
 import android.app.Activity;
 import android.app.FragmentTransaction;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -38,14 +35,12 @@ public class MainActivity extends Activity implements TabListener {
 
 	private FrameLayout rl;
 
-	private TabProjetFragment fram1;
-	private TabCommentaireFragment fram2;
+	private TabProjectFragment fram1;
+	private TabCommentsFragment fram2;
 	private TabMapFragment fram3;
 
 	private Drawable m_favorite;
 	private boolean m_Is_favorite;
-
-	private ProgressDialog mprogressDialog;
 
 	FragmentTransaction fragMentTra = null;
 
@@ -120,12 +115,12 @@ public class MainActivity extends Activity implements TabListener {
 
 		if (tab.getText().equals("Projets")) {
 
-			fram1 = new TabProjetFragment();
+			fram1 = new TabProjectFragment();
 			ft.replace(rl.getId(), fram1);
 
 		} else if (tab.getText().equals("Commentaires")) {
 
-			fram2 = new TabCommentaireFragment();
+			fram2 = new TabCommentsFragment();
 			ft.replace(rl.getId(), fram2);
 
 		} else if (tab.getText().equals("Localisation")) {

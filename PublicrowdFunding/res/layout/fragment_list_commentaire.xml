@@ -9,7 +9,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="center"
-        android:text="Aucun commentaire" />
+        android:text="@string/no_commentary" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/refresher"
@@ -59,7 +59,7 @@
             android:background="@drawable/buttonshapes"
             android:gravity="center"
             android:padding="10dip"
-            android:text="Connexion / Inscription"
+            android:text="@string/login_or_register"
             android:textColor="#808080"
             android:textSize="25sp" />
     </LinearLayout>

@@ -8,6 +8,7 @@ import org.joda.time.Interval;
 import adullact.publicrowdfunding.model.local.ressource.Funding;
 
 public class FundingInterval {
+	
 	private Interval m_interval;
 	private ArrayList<Funding> m_funding;
 	
@@ -28,5 +29,9 @@ public class FundingInterval {
         }
 
         return result.longValue();
+    }
+    
+    public Interval getInterval(){
+    	return this.m_interval;
     }
 }

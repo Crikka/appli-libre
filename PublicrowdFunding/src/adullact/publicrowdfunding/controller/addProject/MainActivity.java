@@ -1,8 +1,7 @@
-package adullact.publicrowdfunding.controlleur.ajouterProjet;
+package adullact.publicrowdfunding.controller.addProject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.custom.CarouselAdapter;
@@ -34,7 +33,7 @@ import com.touchmenotapps.carousel.simple.HorizontalCarouselLayout;
 import com.touchmenotapps.carousel.simple.HorizontalCarouselLayout.CarouselInterface;
 import com.touchmenotapps.carousel.simple.HorizontalCarouselStyle;
 
-public class SoumettreProjetActivity extends Activity {
+public class MainActivity extends Activity {
 
 	private EditText m_titre;
 	private EditText m_Description;
@@ -259,16 +258,12 @@ public class SoumettreProjetActivity extends Activity {
 				return false;
 			}
 
-			Date now = new Date();
-
-			Date date_fin = new Date();
 			int day = m_dateFin.getDayOfMonth();
 			int month = m_dateFin.getMonth() + 1;
 			int year = m_dateFin.getYear();
 			Calendar calendar = Calendar.getInstance();
 			calendar.set(year, month, day);
-			date_fin = calendar.getTime();
-
+	
 			String Stryear = "" + year;
 			String StrMonth = null;
 			if (month < 10) {

@@ -2,7 +2,7 @@ package adullact.publicrowdfunding;
 
 import java.util.ArrayList;
 
-import adullact.publicrowdfunding.controlleur.detailProjet.MainActivity;
+import adullact.publicrowdfunding.controller.detailProject.MainActivity;
 import adullact.publicrowdfunding.custom.CustomAdapter;
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.ressource.Project;
@@ -21,15 +21,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class TabProjetsFragment extends Fragment {
+public class TabProjectsFragment extends Fragment {
 
 	private ListView listeProjets;
 
 	private SwipeRefreshLayout swipeView;
 
 	private adullact.publicrowdfunding.MainActivity _this;
-	
-	private String id;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -1,4 +1,4 @@
-package adullact.publicrowdfunding.controlleur.detailProjet;
+package adullact.publicrowdfunding.controller.detailProject;
 
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
@@ -18,10 +18,10 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
-public class ajouterCommentaireAlert extends AlertDialog.Builder {
+public class addCommentAlert extends AlertDialog.Builder {
 
 	
-	public ajouterCommentaireAlert(final Context context,final float rating, final Project projet) {
+	public addCommentAlert(final Context context,final float rating, final Project projet) {
 		super(context);
 		
 		LinearLayout linear = new LinearLayout(context);

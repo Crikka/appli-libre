@@ -1,4 +1,4 @@
-package adullact.publicrowdfunding.controlleur.preferences;
+package adullact.publicrowdfunding.controller.preferences;
 
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
@@ -18,7 +18,7 @@ import android.preference.SwitchPreference;
 import android.widget.Toast;
 
 @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-public class preferences extends PreferenceFragment {
+public class preferencesFragment extends PreferenceFragment {
 
 	private User user;
 

@@ -55,7 +55,7 @@ public interface Service {
     Observable<DetailedServerProject> detailProject(@Path("projectID") String projectID);
     @GET("/project/")
     Observable<ArrayList<ServerProject>> listProjects(@QueryMap Map<String, String> filter);
-    @POST("/project/")
+    @POST("/projec/")
     Observable<RowAffected> createProject(@Body ServerProject serverProject);
     @PUT("/project/{projectID}")
     Observable<SimpleServerResponse> modifyProject(@Path("projectID") String projectID, @Body ServerProject serverProject);

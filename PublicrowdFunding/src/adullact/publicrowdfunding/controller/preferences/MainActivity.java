@@ -1,4 +1,4 @@
-package adullact.publicrowdfunding.controlleur.preferences;
+package adullact.publicrowdfunding.controller.preferences;
 
 import adullact.publicrowdfunding.R;
 import android.app.Activity;
@@ -15,7 +15,7 @@ public class MainActivity extends Activity {
 
 		setContentView(R.layout.preferences_activity);
 
-		Fragment fragment = new preferences();
+		Fragment fragment = new preferencesFragment();
 
 		FragmentManager fm = getFragmentManager();
 		FragmentTransaction transaction = fm.beginTransaction();
