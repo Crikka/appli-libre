@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +50,10 @@ public class TabProjectFragment extends Fragment {
 	private LinearLayout layoutConnect;
 	private LinearLayout layoutDisconnect;
 
+	private RelativeLayout layout_website;
+	private RelativeLayout layout_call;
+	private RelativeLayout layout_mail;
+
 	private MainActivity _this;
 
 	@Override
@@ -61,6 +66,10 @@ public class TabProjectFragment extends Fragment {
 		layoutConnect = (LinearLayout) view.findViewById(R.id.connect);
 		layoutDisconnect = (LinearLayout) view.findViewById(R.id.disconnect);
 
+		layout_website = (RelativeLayout) view
+				.findViewById(R.id.layout_website);
+		layout_call = (RelativeLayout) view.findViewById(R.id.layout_call);
+		layout_mail = (RelativeLayout) view.findViewById(R.id.layout_mail);
 		isConnect();
 
 		_this = (MainActivity) getActivity();
@@ -115,19 +124,19 @@ public class TabProjectFragment extends Fragment {
 		}
 
 		if (projet.getEmail() == null || projet.getEmail().length() == 0) {
-			m_mail.setVisibility(View.GONE);
+			layout_mail.setVisibility(View.GONE);
 		} else {
 			m_mail.setText(projet.getEmail());
 		}
 
 		if (projet.getWebsite() == null || projet.getWebsite().length() == 0) {
-			m_website.setVisibility(View.GONE);
+			layout_website.setVisibility(View.GONE);
 		} else {
 			m_website.setText(projet.getWebsite());
 		}
 
 		if (projet.getPhone() == null || projet.getPhone().length() == 0) {
-			m_call.setVisibility(View.GONE);
+			layout_call.setVisibility(View.GONE);
 		} else {
 			m_call.setText(projet.getPhone());
 		}

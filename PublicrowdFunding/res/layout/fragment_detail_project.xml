@@ -144,6 +144,7 @@
             </TableLayout>
 
             <RelativeLayout
+                android:id="@+id/layout_mail"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dip"
@@ -169,6 +170,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/layout_website"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dip"
@@ -194,6 +196,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/layout_call"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dip"
