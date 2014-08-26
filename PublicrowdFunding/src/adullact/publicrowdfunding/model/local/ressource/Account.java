@@ -209,6 +209,10 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
     public Cache<User> getUser() {
         return m_user;
     }
+    
+    public void setAdmin(){
+    	m_administrator = true;
+    }
 
 
     public void save() {

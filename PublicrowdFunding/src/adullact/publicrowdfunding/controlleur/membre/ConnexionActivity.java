@@ -81,7 +81,7 @@ public class ConnexionActivity extends Activity {
 										"Connexion impossible au serveur, veuillez vérifier vos paramètres resaux.",
 										Toast.LENGTH_LONG).show();
 							}
-						});
+						}).execute();
 			}
 		});
 

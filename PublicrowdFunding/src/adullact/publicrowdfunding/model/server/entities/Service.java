@@ -19,8 +19,9 @@ import rx.Observable;
  */
 public interface Service {
     // Check
-    @GET("/authentication/")
-    Observable<SimpleServerResponse> authenticate();
+	@FormUrlEncoded
+    @POST("/authentication/")
+    Observable<SimpleServerResponse> authenticate(@Field("username") String username, @Field("password") String password);
     @FormUrlEncoded
     @POST("/registration/")
     Observable<ServerRegistrationResponse> register(@Field("username") String username, @Field("password") String password, @Field("pseudo") String pseudo);
