@@ -49,19 +49,19 @@ public class MainActivity extends Activity implements TabListener {
 
 	private FrameLayout rl;
 
-	private TabProjectsFragment fram1;
-	private TabMapFragment fram3;
+	private TabProjectsFragment m_tab_projects_fragment;
+	private TabMapFragment m_tab_map_fragment;
 
-	private ImageButton m_ajouter_projet;
-	private ImageButton m_mon_compte;
-	private ImageButton m_sort;
-	private ImageButton m_valider_projet;
+	private ImageButton m_button_add_projet;
+	private ImageButton m_button_account;
+	private ImageButton m_button_sort;
+	private ImageButton m_button_validate_projects;
 
-	private Button m_connexion;
+	private Button m_button_authentificate;
 
-	private RelativeLayout layoutConnect;
-	private LinearLayout layoutDisconnect;
-	private LinearLayout layoutLoading;
+	private RelativeLayout m_layout_connect;
+	private LinearLayout m_layout_disconnect;
+	private LinearLayout m_layout_loading;
 
 	private SearchView searchView;
 
@@ -69,7 +69,7 @@ public class MainActivity extends Activity implements TabListener {
 
 	protected ArrayList<Project> projetsToDisplay;
 
-	private ActionBar bar;
+	private ActionBar m_actionbar;
 
 	private AlertDialog dialog;
 
@@ -83,9 +83,9 @@ public class MainActivity extends Activity implements TabListener {
 
 		setContentView(R.layout.activity_main);
 
-		layoutConnect = (RelativeLayout) findViewById(R.id.connect);
-		layoutDisconnect = (LinearLayout) findViewById(R.id.disconnect);
-		layoutLoading = (LinearLayout) findViewById(R.id.loading);
+		m_layout_connect = (RelativeLayout) findViewById(R.id.connect);
+		m_layout_disconnect = (LinearLayout) findViewById(R.id.disconnect);
+		m_layout_loading = (LinearLayout) findViewById(R.id.loading);
 
 		projetsToDisplay = new ArrayList<Project>();
 
@@ -110,27 +110,27 @@ public class MainActivity extends Activity implements TabListener {
 
 				rl = (FrameLayout) findViewById(R.id.tabcontent);
 
-				bar = getActionBar();
+				m_actionbar = getActionBar();
 
-				bar.addTab(bar.newTab().setText("Projets")
+				m_actionbar.addTab(m_actionbar.newTab().setText("Projets")
 						.setTabListener(_this));
-				bar.addTab(bar.newTab().setText("Localisation")
+				m_actionbar.addTab(m_actionbar.newTab().setText("Localisation")
 						.setTabListener(_this));
 
-				bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM
+				m_actionbar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM
 						| ActionBar.DISPLAY_USE_LOGO);
-				bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-				bar.setDisplayShowHomeEnabled(true);
-				bar.setDisplayShowTitleEnabled(true);
-				bar.show();
-				layoutLoading.setVisibility(View.GONE);
+				m_actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+				m_actionbar.setDisplayShowHomeEnabled(true);
+				m_actionbar.setDisplayShowTitleEnabled(true);
+				m_actionbar.show();
+				m_layout_loading.setVisibility(View.GONE);
 				geolocalisation();
 
 			}
 		});
 
-		m_connexion = (Button) findViewById(R.id.connexion);
-		m_connexion.setOnClickListener(new View.OnClickListener() {
+		m_button_authentificate = (Button) findViewById(R.id.connexion);
+		m_button_authentificate.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Intent in = new Intent(
@@ -140,8 +140,8 @@ public class MainActivity extends Activity implements TabListener {
 			}
 		});
 
-		m_ajouter_projet = (ImageButton) findViewById(R.id.button_soumettre_projet);
-		m_ajouter_projet.setOnClickListener(new View.OnClickListener() {
+		m_button_add_projet = (ImageButton) findViewById(R.id.button_soumettre_projet);
+		m_button_add_projet.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 
@@ -153,8 +153,8 @@ public class MainActivity extends Activity implements TabListener {
 			}
 		});
 
-		m_mon_compte = (ImageButton) findViewById(R.id.button_mon_compte);
-		m_mon_compte.setOnClickListener(new View.OnClickListener() {
+		m_button_account = (ImageButton) findViewById(R.id.button_mon_compte);
+		m_button_account.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Intent in = new Intent(
@@ -165,9 +165,9 @@ public class MainActivity extends Activity implements TabListener {
 			}
 		});
 
-		m_valider_projet = (ImageButton) findViewById(R.id.button_valider_projet);
+		m_button_validate_projects = (ImageButton) findViewById(R.id.button_valider_projet);
 
-		m_valider_projet.setOnClickListener(new View.OnClickListener() {
+		m_button_validate_projects.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Intent in = new Intent(
@@ -177,8 +177,8 @@ public class MainActivity extends Activity implements TabListener {
 			}
 		});
 
-		m_sort = (ImageButton) findViewById(R.id.button_filtrer);
-		m_sort.setOnClickListener(new View.OnClickListener() {
+		m_button_sort = (ImageButton) findViewById(R.id.button_filtrer);
+		m_button_sort.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 
@@ -241,13 +241,13 @@ public class MainActivity extends Activity implements TabListener {
 
 		if (tab.getText().equals("Projets")) {
 
-			fram1 = new TabProjectsFragment();
-			ft.replace(rl.getId(), fram1);
+			m_tab_projects_fragment = new TabProjectsFragment();
+			ft.replace(rl.getId(), m_tab_projects_fragment);
 
 		} else if (tab.getText().equals("Localisation")) {
 
-			fram3 = new TabMapFragment();
-			ft.replace(rl.getId(), fram3);
+			m_tab_map_fragment = new TabMapFragment();
+			ft.replace(rl.getId(), m_tab_map_fragment);
 
 		}
 	}
@@ -260,11 +260,11 @@ public class MainActivity extends Activity implements TabListener {
 	public void isConnect() {
 		try {
 			Account.getOwn();
-			layoutConnect.setVisibility(View.VISIBLE);
-			layoutDisconnect.setVisibility(View.GONE);
+			m_layout_connect.setVisibility(View.VISIBLE);
+			m_layout_disconnect.setVisibility(View.GONE);
 		} catch (NoAccountExistsInLocal e1) {
-			layoutConnect.setVisibility(View.GONE);
-			layoutDisconnect.setVisibility(View.VISIBLE);
+			m_layout_connect.setVisibility(View.GONE);
+			m_layout_disconnect.setVisibility(View.VISIBLE);
 		}
 	}
 
@@ -323,15 +323,15 @@ public class MainActivity extends Activity implements TabListener {
 	}
 
 	protected void reLoad() {
-		ActionBar.Tab tab = bar.getSelectedTab();
+		ActionBar.Tab tab = m_actionbar.getSelectedTab();
 		int position = tab.getPosition();
 		if (position == 0) {
 
-			fram1 = new TabProjectsFragment();
+			m_tab_projects_fragment = new TabProjectsFragment();
 
 			FragmentManager fm = this.getFragmentManager();
 			FragmentTransaction ft = fm.beginTransaction();
-			ft.replace(rl.getId(), fram1);
+			ft.replace(rl.getId(), m_tab_projects_fragment);
 			ft.commit();
 		}
 

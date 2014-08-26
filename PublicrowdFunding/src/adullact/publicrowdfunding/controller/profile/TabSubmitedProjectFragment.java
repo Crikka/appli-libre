@@ -18,7 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class TabSubmitProjectFragment extends Fragment {
+public class TabSubmitedProjectFragment extends Fragment {
 
 	private ListView listeProjets;
 	
