@@ -3,12 +3,14 @@ package adullact.publicrowdfunding.controlleur.detailProjet;
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.cache.Cache;
+import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.Bookmark;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
+import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import adullact.publicrowdfunding.model.server.event.CreateEvent;
 import adullact.publicrowdfunding.model.server.event.DeleteEvent;
 import android.app.ActionBar;
@@ -388,6 +390,19 @@ public class MainActivity extends Activity implements TabListener {
 		super.onPause();
 		doRefresh = true;
 
+	}
+	
+	
+	public void refresh(){
+		Cache<Project> projet = new Project().getCache(projetCurrent.getResourceId());
+
+		projet.toResource(new HoldToDo<Project>() {
+			@Override
+			public void hold(Project project) {
+				projetCurrent = project;
+	
+			}
+		});
 	}
 	
 	

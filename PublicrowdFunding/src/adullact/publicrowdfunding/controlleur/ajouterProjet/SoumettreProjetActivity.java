@@ -286,7 +286,7 @@ public class SoumettreProjetActivity extends Activity {
 							+ StrDay + " 00:00:00"), new LatLng(
 							position.latitude, position.longitude),
 					m_illustration, m_email.getText().toString(), m_website
-							.getText().toString(), m_phone.getText().toString())
+							.getText().toString(), m_phone.getText().toString(), false)
 					.serverCreate(new CreateEvent<Project>() {
 						@Override
 						public void errorResourceIdAlreadyUsed() {

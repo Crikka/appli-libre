@@ -216,7 +216,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         this.m_phone = null;
     }
 
-    public Project(String name, String description, String proposedBy, String requestedFunding, DateTime beginDate, DateTime endDate, LatLng position, int illustration, String email, String website, String phone) {
+    public Project(String name, String description, String proposedBy, String requestedFunding, DateTime beginDate, DateTime endDate, LatLng position, int illustration, String email, String website, String phone, boolean validate) {
         this.m_id = null;
 		this.m_name = name;
 		this.m_description = description;
@@ -227,7 +227,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
 		this.m_fundingInterval = new Interval(beginDate, endDate);
 		this.m_fundingIntervals = new ArrayList<FundingInterval>();
 		this.m_position = position;
-		this.m_validate = false;
+		this.m_validate = validate;
 		this.m_illustration = illustration;
 		this.m_email = email;
 		this.m_website = website;
@@ -241,7 +241,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
      * Reserved for local database
      */
     public Project(Integer id, boolean active, String name, String description, boolean validate, String proposedBy, String requestedFunding, String currentFunding, String creationDate, String beginDate, String endDate, Double latitude, Double longitude, Integer illustration, String email, String website, String phone) {
-        this.m_id = id;
+    	this.m_id = id;
         this.m_active = active;
         this.m_name = name;
         this.m_description = description;

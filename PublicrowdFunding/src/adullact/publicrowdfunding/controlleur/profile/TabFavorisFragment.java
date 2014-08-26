@@ -28,40 +28,33 @@ public class TabFavorisFragment extends Fragment {
 	private ArrayList<Project> projets;
 
 	private ArrayAdapter<Project> adapter;
+	
+	private View view;
+	
+	private TextView empty;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		View view = inflater.inflate(R.layout.fragment_liste_projet_no_refresh,
+		view = inflater.inflate(R.layout.fragment_liste_projet_no_refresh,
 				container, false);
 
 		listeProjets = (ListView) view.findViewById(R.id.liste);
 
-		TextView empty = (TextView) view.findViewById(R.id.empty);
+		empty = (TextView) view.findViewById(R.id.empty);
 		listeProjets.setEmptyView(empty);
 
 		projets = new ArrayList<Project>();
 
 		adapter = new CustomAdapter(this.getActivity().getBaseContext(),
 				R.layout.projet_adaptor, projets);
-
 		listeProjets.setAdapter(adapter);
 
 		_this = (adullact.publicrowdfunding.controlleur.profile.MainActivity) getActivity();
-
-		_this.user.getBookmarkedProjects(new HoldToDo<Project>() {
-
-			@Override
-			public void hold(Project resources) {
-				
-				projets.add(resources);
-				adapter.notifyDataSetChanged();
-
-			}
-
-		});
-
+		
+		refresh();
+		
 		listeProjets.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -78,6 +71,22 @@ public class TabFavorisFragment extends Fragment {
 		});
 
 		return view;
+	}
+	
+	public void refresh(){
+		_this.user.getBookmarkedProjects(new HoldToDo<Project>() {
+
+			@Override
+			public void hold(Project resources) {
+				
+				adapter.add(resources);
+				adapter.notifyDataSetChanged();
+				
+
+			}
+
+		});
+	
 	}
 
 }

@@ -13,16 +13,20 @@ import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.Commentary;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
+import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import adullact.publicrowdfunding.model.server.event.UpdateEvent;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -45,6 +49,8 @@ public class TabCommentaireFragment extends Fragment {
 	protected CommentaireAdapteur adapter;
 
 	private MainActivity _this;
+
+	private SwipeRefreshLayout swipeView;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,6 +76,20 @@ public class TabCommentaireFragment extends Fragment {
 			}
 		});
 
+		swipeView = (SwipeRefreshLayout) view.findViewById(R.id.refresher);
+		swipeView.setEnabled(false);
+		swipeView.setColorScheme(R.color.blue, R.color.green, R.color.yellow,
+				R.color.red);
+		swipeView
+				.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+					@Override
+					public void onRefresh() {
+						refresh();
+
+					}
+
+				});
+
 		commentaries = new Vector<Commentary>();
 
 		m_notation = (RatingBar) view
@@ -80,7 +100,7 @@ public class TabCommentaireFragment extends Fragment {
 		adapter = new CommentaireAdapteur(
 				getActivity().getApplicationContext(),
 				R.layout.listitem_discuss);
-
+		
 		TextView empty = (TextView) view.findViewById(R.id.empty);
 		lv.setEmptyView(empty);
 
@@ -132,47 +152,31 @@ public class TabCommentaireFragment extends Fragment {
 					@Override
 					public void onRatingChanged(RatingBar ratingBar,
 							float rating, boolean fromUser) {
+
 						System.out.println(rating);
 						ajouterCommentaireAlert commentaireBuilder = new ajouterCommentaireAlert(
 								getActivity(), rating, _this.projetCurrent);
 						commentaireBuilder.show();
 
-						_this.projetCurrent.serverUpdate(new UpdateEvent<Project>() {
-
-							@Override
-							public void onUpdate(Project resource) {
-								_this.projetCurrent = resource;
-								_this.recreate();
-
-							}
-
-							@Override
-							public void errorResourceIdDoesNotExist() {
-								// TODO Auto-generated method stub
-
-							}
-
-							@Override
-							public void errorAdministratorRequired() {
-								// TODO Auto-generated method stub
-
-							}
-
-							@Override
-							public void errorAuthenticationRequired() {
-								// TODO Auto-generated method stub
-
-							}
-
-							@Override
-							public void errorNetwork() {
-								// TODO Auto-generated method stub
-
-							}
-
-						});
 					}
 				});
+
+		lv.setOnScrollListener(new AbsListView.OnScrollListener() {
+			@Override
+			public void onScrollStateChanged(AbsListView absListView, int i) {
+
+			}
+
+			@Override
+			public void onScroll(AbsListView absListView, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+				if (firstVisibleItem == 0)
+					swipeView.setEnabled(true);
+				else
+					swipeView.setEnabled(false);
+			}
+		});
+
 		return view;
 
 	}
@@ -187,4 +191,10 @@ public class TabCommentaireFragment extends Fragment {
 			layoutDisconnect.setVisibility(View.VISIBLE);
 		}
 	}
+
+	public void refresh() {
+		_this.refresh();
+		adapter.notifyDataSetChanged();
+	}
+
 }

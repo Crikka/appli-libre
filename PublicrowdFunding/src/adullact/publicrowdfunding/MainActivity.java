@@ -100,11 +100,13 @@ public class MainActivity extends Activity implements TabListener {
 
 				ArrayList<Project> allSync = new ArrayList<Project>(sync
 						.getProjects());
+				projetsToDisplay = allSync;
+				System.out.println("Taille : " + allSync.size());
 
 				for (Project projet : allSync) {
-					if (projet.isValidate()) {
-						projetsToDisplay.add(projet);
-					}
+					System.out.println("Projet : " + projet.getName()
+							+ " validate ?" + projet.isValidate());
+
 				}
 
 				rl = (FrameLayout) findViewById(R.id.tabcontent);

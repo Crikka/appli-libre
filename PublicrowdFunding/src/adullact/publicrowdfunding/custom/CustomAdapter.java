@@ -19,13 +19,19 @@ public class CustomAdapter extends ArrayAdapter<Project> {
 
 	Context mContext;
 	int layoutResourceId;
-	ArrayList<Project> data = null;
+	ArrayList<Project> data;
 
 	public CustomAdapter(Context context, int resource, ArrayList<Project> listItem) {
 		super(context, resource, listItem);
 		this.mContext = context;
 		this.layoutResourceId = resource;
 		this.data = listItem;
+	}
+	
+	public void add(Project projet){
+		this.data.add(projet);
+		this.notifyDataSetInvalidated();
+		this.clear();
 	}
 
 	private static class UserHolder {

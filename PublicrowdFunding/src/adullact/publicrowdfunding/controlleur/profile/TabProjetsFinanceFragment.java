@@ -50,19 +50,8 @@ public class TabProjetsFinanceFragment extends Fragment {
 
 		_this = (adullact.publicrowdfunding.controlleur.profile.MainActivity) getActivity();
 
-		_this.user.getFundedProjects(new HoldToDo<Project>() {
-
-			@Override
-			public void hold(Project resources) {
-				
-				projets.add(resources);
-				adapter.notifyDataSetChanged();
-			}
-
-
-
-		});
-
+		refresh();
+		
 		listeProjets.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -77,7 +66,22 @@ public class TabProjetsFinanceFragment extends Fragment {
 				startActivity(in);
 			}
 		});
-
 		return view;
+	}
+	
+
+	public void refresh(){
+		_this.user.getFundedProjects(new HoldToDo<Project>() {
+
+			@Override
+			public void hold(Project resources) {
+				
+				projets.add(resources);
+				adapter.notifyDataSetChanged();
+			}
+
+
+
+		});
 	}
 }

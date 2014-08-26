@@ -28,6 +28,8 @@ public class TabProjetsFragment extends Fragment {
 	private SwipeRefreshLayout swipeView;
 
 	private adullact.publicrowdfunding.MainActivity _this;
+	
+	private String id;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -107,5 +109,6 @@ public class TabProjetsFragment extends Fragment {
 
 		return view;
 	}
+	
 
 }
