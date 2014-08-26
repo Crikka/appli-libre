@@ -78,9 +78,10 @@ public class TabFavorisFragment extends Fragment {
 
 			@Override
 			public void hold(Project resources) {
-				
-				adapter.add(resources);
+				System.out.println("fav refresh view");
+				projets.add(resources);
 				adapter.notifyDataSetChanged();
+				System.out.println("taile : "+adapter.getCount());
 				
 
 			}

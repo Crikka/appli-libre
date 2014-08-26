@@ -25,17 +25,20 @@ public class DeleteRequest<TResource extends Resource<TResource, TServerResource
                 .subscribe(new Action1<SimpleServerResponse>() {
                     @Override
                     public void call(SimpleServerResponse response) {
+                    	System.out.println("execution suppression 1");
                         done();
                         event().onDelete(m_resource);
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
+                    	System.out.println("execution suppression 2");
                         errorHandler().manageCallback();
                     }
                 }, new Action0() {
                     @Override
                     public void call() {
+                    	System.out.println("execution suppression 3");
 
                     }
                 });

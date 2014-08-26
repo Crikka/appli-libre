@@ -123,22 +123,6 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
                 }
             });
         }
-        
-        /*
-        this.m_projects = new CacheSet<Project>();
-
-        for(final ServerProject serverProjects : detailedServerUser.projects) {
-            final Cache<Project> projects = new Project().getCache(Integer.toString(serverProjects.id)).declareUpToDate();
-            projects.toResource(new HoldToDo<Project>() {
-                @Override
-                public void hold(Project resource) {
-                    resource.syncFromServer(serverProjects);
-                    m_projects.add(projects);
-                }
-            });
-        }
-        */ 
-        
         return this;
     }
 
@@ -248,11 +232,13 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
     }
 
     public void removeBookmark(final Project project, final DeleteEvent<Bookmark> bookmarkDeleteEvent) {
-        final User _this = this;
+    	System.out.println("remove bookmark"+m_bookmarks.toString());
+    	System.out.println("project id : "+project.getResourceId());
         m_bookmarks.forEach(new HoldToDo<Bookmark>() {
 
             @Override
             public void hold(Bookmark bookmark) {
+            	System.out.println("Loop : id "+bookmark.getProject().getResourceId());
                 if(bookmark.getProject().getResourceId().equals(project.getResourceId())) {
                     m_bookmarks.stopForEach();
                     bookmark.serverDelete(new DeleteEvent<Bookmark>() {
@@ -263,6 +249,7 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
 
                         @Override
                         public void onDelete(Bookmark resource) {
+                        	System.out.println("On supprime le bookmark depuis user");
                             m_bookmarks.remove(resource);
                             bookmarkDeleteEvent.onDelete(resource);
                         }

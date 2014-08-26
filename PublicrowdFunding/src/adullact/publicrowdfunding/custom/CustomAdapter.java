@@ -3,6 +3,7 @@ package adullact.publicrowdfunding.custom;
 import java.util.ArrayList;
 
 import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.model.local.ressource.Commentary;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.utilities.Calcul;
 import adullact.publicrowdfunding.model.local.utilities.Share;
@@ -27,12 +28,6 @@ public class CustomAdapter extends ArrayAdapter<Project> {
 		this.layoutResourceId = resource;
 		this.data = listItem;
 	}
-	
-	public void add(Project projet){
-		this.data.add(projet);
-		this.notifyDataSetInvalidated();
-		this.clear();
-	}
 
 	private static class UserHolder {
 
@@ -52,6 +47,10 @@ public class CustomAdapter extends ArrayAdapter<Project> {
         // TODO Auto-generated method stub
         return data.size();
     }
+	
+	public Project getItem(int index) {
+		return this.data.get(index);
+	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {

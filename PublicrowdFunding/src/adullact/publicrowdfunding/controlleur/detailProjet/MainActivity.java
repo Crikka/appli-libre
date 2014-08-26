@@ -10,6 +10,7 @@ import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.Bookmark;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
+import adullact.publicrowdfunding.model.local.utilities.CanI;
 import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import adullact.publicrowdfunding.model.server.event.CreateEvent;
 import adullact.publicrowdfunding.model.server.event.DeleteEvent;
@@ -47,9 +48,9 @@ public class MainActivity extends Activity implements TabListener {
 	private ProgressDialog mprogressDialog;
 
 	FragmentTransaction fragMentTra = null;
-	
+
 	private MainActivity _this;
-	
+
 	private boolean doRefresh;
 
 	@Override
@@ -59,9 +60,9 @@ public class MainActivity extends Activity implements TabListener {
 		setContentView(R.layout.activity_detail_projet);
 
 		doRefresh = false;
-		
+
 		_this = this;
-		
+
 		String id = getIntent().getExtras().getString("key");
 		if (id == null) {
 			Toast.makeText(getApplicationContext(),
@@ -77,7 +78,6 @@ public class MainActivity extends Activity implements TabListener {
 		mprogressDialog.show();
 
 		Cache<Project> projet = new Project().getCache(id);
-
 
 		projet.toResource(new HoldToDo<Project>() {
 			@Override
@@ -179,6 +179,7 @@ public class MainActivity extends Activity implements TabListener {
 
 										@Override
 										public void errorResourceIdDoesNotExist() {
+											System.out.println("error 1");
 											Toast.makeText(
 													getBaseContext(),
 													"Une erreur s'est produite",
@@ -188,17 +189,20 @@ public class MainActivity extends Activity implements TabListener {
 
 										@Override
 										public void onDelete(Bookmark resource) {
+											System.out
+													.println("projet retiré !");
 											Toast.makeText(
 													getBaseContext(),
 													"Projet retiré des favoris",
 													Toast.LENGTH_SHORT).show();
 											m_Is_favorite = false;
-											setColorStar(m_Is_favorite);
+											changeColorStar();
 
 										}
 
 										@Override
 										public void errorAdministratorRequired() {
+											System.out.println("error 2");
 											Toast.makeText(
 													getBaseContext(),
 													"Une erreur s'est produite",
@@ -208,6 +212,7 @@ public class MainActivity extends Activity implements TabListener {
 
 										@Override
 										public void errorAuthenticationRequired() {
+											System.out.println("error 3");
 											Toast.makeText(
 													getBaseContext(),
 													"Une erreur s'est produite",
@@ -217,6 +222,7 @@ public class MainActivity extends Activity implements TabListener {
 
 										@Override
 										public void errorNetwork() {
+											System.out.println("error 4");
 											Toast.makeText(
 													getBaseContext(),
 													"Une erreur s'est produite",
@@ -226,9 +232,6 @@ public class MainActivity extends Activity implements TabListener {
 
 									});
 
-							Toast.makeText(getBaseContext(),
-									"Projet retiré des favoris",
-									Toast.LENGTH_SHORT).show();
 						} else {
 							System.out.println("On l'ajoute");
 							resource.addBookmark(projetCurrent,
@@ -251,7 +254,7 @@ public class MainActivity extends Activity implements TabListener {
 													"Projet ajouté aux favoris",
 													Toast.LENGTH_SHORT).show();
 											m_Is_favorite = true;
-											setColorStar(m_Is_favorite);
+											changeColorStar();
 
 										}
 
@@ -316,10 +319,10 @@ public class MainActivity extends Activity implements TabListener {
 
 	}
 
-	public void setColorStar(boolean status) {
+	public void changeColorStar() {
 
 		PorterDuffColorFilter filter = null;
-		if (!status) {
+		if (!m_Is_favorite) {
 			// Color initial
 			filter = new PorterDuffColorFilter(Color.TRANSPARENT,
 					PorterDuff.Mode.SRC_ATOP);
@@ -332,49 +335,30 @@ public class MainActivity extends Activity implements TabListener {
 		}
 		m_favorite.setColorFilter(filter);
 	}
-	
-	
 
 	public void setBookmarked() {
 
-		/*
-		 * try { Account account = Account.getOwn(); account.getUser(new
-		 * WhatToDo<User>() {
-		 * 
-		 * @Override public void hold(User resource) {
-		 * resource.getBookmarkedProjects(new HoldAllToDo<Bookmark>() {
-		 * 
-		 * @Override public void holdAll(ArrayList<Bookmark> resources) {
-		 * 
-		 * for (Bookmark bookmark : resources) { bookmark.getProject(new
-		 * WhatToDo<Project>() {
-		 * 
-		 * @Override public void hold(Project resource) { if
-		 * (resource.getResourceId() == projet .getResourceId()) { // Enfin !!
-		 * oui le projet est dans // les favoris setColorStar(true); }
-		 * 
-		 * }
-		 * 
-		 * @Override public void eventually() { // TODO Auto-generated method
-		 * stub
-		 * 
-		 * } }); } } }); }
-		 * 
-		 * @Override public void eventually() { // TODO Auto-generated method
-		 * stub
-		 * 
-		 * }
-		 * 
-		 * }); } catch (NoAccountExistsInLocal e) {
-		 * System.out.println("l'utilisateur n'est pas connecté"); }
-		 */
+		new CanI() {
+			@Override
+			protected void yes() {
+				m_Is_favorite = false;
+				changeColorStar();
+			}
+
+			@Override
+			protected void no() {
+				m_Is_favorite = true;
+				changeColorStar();
+			}
+
+		}.bookmark(projetCurrent);
+
 	}
 
 	public Project getCurrentProject() {
 		return projetCurrent;
 	}
 
-	
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -391,20 +375,18 @@ public class MainActivity extends Activity implements TabListener {
 		doRefresh = true;
 
 	}
-	
-	
-	public void refresh(){
-		Cache<Project> projet = new Project().getCache(projetCurrent.getResourceId());
+
+	public void refresh() {
+		Cache<Project> projet = new Project().getCache(projetCurrent
+				.getResourceId());
 
 		projet.toResource(new HoldToDo<Project>() {
 			@Override
 			public void hold(Project project) {
 				projetCurrent = project;
-	
+
 			}
 		});
 	}
-	
-	
-	
+
 }

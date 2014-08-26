@@ -26,13 +26,16 @@ public class MainActivity extends Activity {
 	private Button valider;
 
 	private Project projetCurrent;
+	
+	private String StrSomme;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		context = this;
-
+		StrSomme = null;
+		
 		try {
 
 			String StridProject = null;
@@ -77,13 +80,14 @@ public class MainActivity extends Activity {
 		});
 	}
 
-	public void financer() {
+	public void financer(String somme) {
 
 		try {
-			projetCurrent.finance("10", new CreateEvent<Funding>() {
+			projetCurrent.finance(somme, new CreateEvent<Funding>() {
 
 				@Override
 				public void errorResourceIdAlreadyUsed() {
+					System.out.println("erreur 1");
 					Toast.makeText(context, "Une erreur s'est produite",
 							Toast.LENGTH_SHORT).show();
 					finish();
@@ -99,6 +103,7 @@ public class MainActivity extends Activity {
 
 				@Override
 				public void errorAuthenticationRequired() {
+					System.out.println("erreur 2");
 					Toast.makeText(context, "Une erreur s'est produite",
 							Toast.LENGTH_SHORT).show();
 					finish();
@@ -106,6 +111,7 @@ public class MainActivity extends Activity {
 
 				@Override
 				public void errorNetwork() {
+					System.out.println("erreur 3");
 					Toast.makeText(context, "Une erreur s'est produite",
 							Toast.LENGTH_SHORT).show();
 					finish();
@@ -113,6 +119,7 @@ public class MainActivity extends Activity {
 
 			});
 		} catch (NoAccountExistsInLocal e1) {
+			System.out.println("erreur 4");
 			Toast.makeText(context, "Une erreur s'est produite",
 					Toast.LENGTH_SHORT).show();
 			e1.printStackTrace();
@@ -136,6 +143,7 @@ public class MainActivity extends Activity {
 
 		try {
 			somme = Integer.parseInt(participation.getText().toString());
+			StrSomme = participation.getText().toString();
 		} catch (Exception e) {
 			Toast.makeText(context, "Le montant est invalide",
 					Toast.LENGTH_SHORT).show();
@@ -154,10 +162,11 @@ public class MainActivity extends Activity {
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+		System.out.println("result code : "+requestCode + " result : "+resultCode);
 		if (requestCode == 1) {
 			if (resultCode == RESULT_OK) {
-				financer();
+				System.out.println("insert dans la base de donnée");
+				financer(StrSomme);
 			}
 			if (resultCode == RESULT_CANCELED) {
 				Toast.makeText(context, "Impossible d'éffectuer le payement",

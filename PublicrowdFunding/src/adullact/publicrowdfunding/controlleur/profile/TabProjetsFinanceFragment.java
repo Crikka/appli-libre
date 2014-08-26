@@ -75,9 +75,9 @@ public class TabProjetsFinanceFragment extends Fragment {
 
 			@Override
 			public void hold(Project resources) {
-				
 				projets.add(resources);
 				adapter.notifyDataSetChanged();
+				System.out.println("taile : "+adapter.getCount());
 			}
 
 
