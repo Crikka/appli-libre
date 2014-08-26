@@ -167,15 +167,16 @@ public class MainActivity extends Activity implements TabListener {
 
 		m_button_validate_projects = (ImageButton) findViewById(R.id.button_valider_projet);
 
-		m_button_validate_projects.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent in = new Intent(
-						getBaseContext().getApplicationContext(),
-						adullact.publicrowdfunding.controller.validateProject.MainActivity.class);
-				startActivity(in);
-			}
-		});
+		m_button_validate_projects
+				.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						Intent in = new Intent(
+								getBaseContext().getApplicationContext(),
+								adullact.publicrowdfunding.controller.validateProject.MainActivity.class);
+						startActivity(in);
+					}
+				});
 
 		m_button_sort = (ImageButton) findViewById(R.id.button_filtrer);
 		m_button_sort.setOnClickListener(new View.OnClickListener() {
@@ -188,8 +189,8 @@ public class MainActivity extends Activity implements TabListener {
 				AlertDialog.Builder alertDialog = new AlertDialog.Builder(
 						MainActivity.this);
 				LayoutInflater inflater = getLayoutInflater();
-				View convertView = (View) inflater.inflate(
-						R.layout.simple_listeview, null);
+				View convertView = (View) inflater.inflate(R.layout.listeview,
+						null);
 				alertDialog.setView(convertView);
 				alertDialog.setTitle("List");
 				ListView lv = (ListView) convertView.findViewById(R.id.liste);

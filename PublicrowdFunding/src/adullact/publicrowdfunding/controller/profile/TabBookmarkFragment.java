@@ -37,7 +37,7 @@ public class TabBookmarkFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		view = inflater.inflate(R.layout.fragment_liste_projet_no_refresh,
+		view = inflater.inflate(R.layout.fragment_list_project_no_refresh,
 				container, false);
 
 		listeProjets = (ListView) view.findViewById(R.id.liste);
@@ -48,7 +48,7 @@ public class TabBookmarkFragment extends Fragment {
 		projets = new ArrayList<Project>();
 
 		adapter = new CustomAdapter(this.getActivity().getBaseContext(),
-				R.layout.projet_adaptor, projets);
+				R.layout.adaptor_project, projets);
 		listeProjets.setAdapter(adapter);
 
 		_this = (adullact.publicrowdfunding.controller.profile.MainActivity) getActivity();

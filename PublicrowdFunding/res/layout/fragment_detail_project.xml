@@ -57,7 +57,6 @@
                 android:gravity="center_vertical"
                 android:padding="3dip"
                 android:text="@string/project_description"
-                android:textColor="#808080"
                 android:textSize="15sp" />
 
             <TableLayout
@@ -77,7 +76,6 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="XXXe"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
@@ -86,7 +84,6 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="XXXe"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
@@ -95,7 +92,6 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="XXX"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
@@ -104,7 +100,6 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="XXX jours"
                         android:textSize="15sp"
                         android:textStyle="bold" />
                 </TableRow>
@@ -120,14 +115,14 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="récoltés"
+                        android:text="@string/funded"
                         android:textSize="15sp" />
 
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Demandé"
+                        android:text="@string/ask"
                         android:textSize="15sp" />
 
                     <TextView
@@ -135,7 +130,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="accompli"
+                        android:text="@string/accomplish"
                         android:textSize="15sp" />
 
                     <TextView
@@ -143,52 +138,91 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="restant"
+                        android:text="@string/remain"
                         android:textSize="15sp" />
                 </TableRow>
             </TableLayout>
 
-            <Button
-                android:id="@+id/mail"
+            <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="3dip"
-                android:layout_marginTop="6dip"
-                android:background="@drawable/buttonshapes"
-                android:drawableLeft="@android:drawable/ic_menu_send"
-                android:gravity="left|center_vertical"
-                android:text="Envoyer un email"
-                android:textColor="#808080"
-                android:textSize="20sp" />
+                android:layout_marginTop="10dip"
+                android:background="@drawable/buttonshapes" >
 
-            <Button
-                android:id="@+id/website"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="3dip"
-                android:background="@drawable/buttonshapes"
-                android:drawableLeft="@drawable/ic_menu_attachment"
-                android:gravity="left|center_vertical"
-                android:text="Aller sur le site web"
-                android:textColor="#808080"
-                android:textSize="20sp" />
+                <Button
+                    android:id="@+id/mail"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:drawableLeft="@android:drawable/ic_menu_send"
+                    android:gravity="left|center_vertical"
+                    android:textSize="15sp" />
 
-            <Button
-                android:id="@+id/phone"
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/arrow"
+                    android:contentDescription="@string/description_image_project"
+                    android:gravity="right" />
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="6dip"
-                android:background="@drawable/buttonshapes"
-                android:drawableLeft="@android:drawable/ic_menu_call"
-                android:gravity="left|center_vertical"
-                android:text="Apeller"
-                android:textColor="#808080"
-                android:textSize="20sp" />
+                android:layout_marginTop="10dip"
+                android:background="@drawable/buttonshapes" >
+
+                <Button
+                    android:id="@+id/website"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:drawableLeft="@drawable/ic_menu_attachment"
+                    android:gravity="left|center_vertical"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/arrow"
+                    android:contentDescription="@string/description_image_project"
+                    android:gravity="right" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:background="@drawable/buttonshapes" >
+
+                <Button
+                    android:id="@+id/phone"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:drawableLeft="@android:drawable/ic_menu_call"
+                    android:gravity="left|center_vertical"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/arrow"
+                    android:contentDescription="@string/description_image_project"
+                    android:gravity="right" />
+            </RelativeLayout>
 
             <LinearLayout
                 android:id="@+id/layoutUser"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
                 android:orientation="horizontal"
                 android:padding="5dp" >
 
@@ -218,7 +252,6 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="XXX"
                             android:textSize="20sp"
                             android:textStyle="bold" />
 
@@ -228,7 +261,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:paddingBottom="5dip"
-                            android:text="XXX"
                             android:textSize="15sp" />
                     </LinearLayout>
 
@@ -255,10 +287,10 @@
     <LinearLayout
         android:id="@+id/connect"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dip"
+        android:layout_margin="5dp"
         android:layout_weight="0"
-        android:gravity="center"
-        android:padding="0dp" >
+        android:gravity="center" >
 
         <Button
             android:id="@+id/payer"
@@ -268,7 +300,7 @@
             android:drawableLeft="@drawable/paypal"
             android:gravity="center"
             android:padding="10dip"
-            android:text="Contribuer"
+            android:text="@string/contribute"
             android:textColor="#808080"
             android:textSize="25sp" />
     </LinearLayout>
@@ -276,10 +308,10 @@
     <LinearLayout
         android:id="@+id/disconnect"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dip"
+        android:layout_margin="5dp"
         android:layout_weight="0"
-        android:gravity="center"
-        android:padding="0dp" >
+        android:gravity="center" >
 
         <Button
             android:id="@+id/connexion"
@@ -288,7 +320,7 @@
             android:background="@drawable/buttonshapes"
             android:gravity="center"
             android:padding="10dip"
-            android:text="Connexion / Inscription"
+            android:text="@string/login_or_register"
             android:textColor="#808080"
             android:textSize="25sp" />
     </LinearLayout>

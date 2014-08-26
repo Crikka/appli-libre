@@ -55,7 +55,7 @@ public class TabProjectFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		final View view = inflater.inflate(R.layout.fragment_detail_projet,
+		final View view = inflater.inflate(R.layout.fragment_detail_project,
 				container, false);
 
 		layoutConnect = (LinearLayout) view.findViewById(R.id.connect);

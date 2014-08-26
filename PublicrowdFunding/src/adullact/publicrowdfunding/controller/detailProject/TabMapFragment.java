@@ -49,7 +49,7 @@ public class TabMapFragment extends Fragment {
 
 		_this = (MainActivity) getActivity();
 
-		rootView = inflater.inflate(R.layout.tab_maps, container, false);
+		rootView = inflater.inflate(R.layout.activity_maps, container, false);
 
 		final Handler handler = new Handler();
 

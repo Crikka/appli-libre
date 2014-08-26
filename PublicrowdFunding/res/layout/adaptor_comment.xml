@@ -38,7 +38,6 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="XXX"
                     android:textColor="@android:color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -49,7 +48,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:paddingBottom="5dip"
-                    android:text="XXX"
                     android:textColor="@android:color/black"
                     android:textSize="15sp" />
             </LinearLayout>
@@ -93,7 +91,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:paddingLeft="10dip"
-                android:text="TITRE DU COMMENTAIRE"
                 android:textColor="@android:color/primary_text_light"
                 android:textStyle="bold" />
 
@@ -116,7 +113,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:paddingLeft="10dip"
-            android:text="Commentaire"
             android:textColor="@android:color/primary_text_light" />
     </LinearLayout>
 

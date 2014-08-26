@@ -52,7 +52,7 @@ public class MainActivity extends Activity implements TabListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.activity_detail_projet);
+		setContentView(R.layout.activity_detail_project);
 
 		doRefresh = false;
 

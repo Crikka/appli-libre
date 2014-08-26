@@ -34,7 +34,7 @@ public class TabFinancedProjectFragment extends Fragment {
 			Bundle savedInstanceState) {
 
 		final View view = inflater.inflate(
-				R.layout.fragment_liste_projet_no_refresh, container, false);
+				R.layout.fragment_list_project_no_refresh, container, false);
 
 		listeProjets = (ListView) view.findViewById(R.id.liste);
 
@@ -44,7 +44,7 @@ public class TabFinancedProjectFragment extends Fragment {
 		projets = new ArrayList<Project>();
 
 		adapter = new CustomAdapter(this.getActivity().getBaseContext(),
-				R.layout.projet_adaptor, projets);
+				R.layout.adaptor_project, projets);
 
 		listeProjets.setAdapter(adapter);
 

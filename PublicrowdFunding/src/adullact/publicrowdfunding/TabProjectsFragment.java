@@ -70,7 +70,7 @@ public class TabProjectsFragment extends Fragment {
 				});
 
 		ArrayAdapter<Project> adapter = new CustomAdapter(this.getActivity()
-				.getBaseContext(), R.layout.projet_adaptor,
+				.getBaseContext(), R.layout.adaptor_project,
 				_this.projetsToDisplay);
 
 		listeProjets.setAdapter(adapter);

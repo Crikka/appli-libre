@@ -94,7 +94,7 @@ public class MainActivity extends Activity {
 				});
 
 		ArrayAdapter<Project> adapter = new CustomAdapter(this,
-				R.layout.projet_adaptor, projetsToDisplay);
+				R.layout.adaptor_project, projetsToDisplay);
 
 		listeProjets.setAdapter(adapter);
 		listeProjets.setOnItemClickListener(new OnItemClickListener() {

@@ -66,7 +66,7 @@ public class MainActivity extends Activity {
 			finish();
 		}
 
-		setContentView(R.layout.participer);
+		setContentView(R.layout.activity_participate);
 
 		participation = (EditText) findViewById(R.id.participation);
 		valider = (Button) findViewById(R.id.valider);

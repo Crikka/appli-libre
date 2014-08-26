@@ -30,7 +30,7 @@ public class TabSubmitedProjectFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		final View view = inflater.inflate(R.layout.fragment_liste_projet_no_refresh, container, false);
+		final View view = inflater.inflate(R.layout.fragment_list_project_no_refresh, container, false);
 
 		listeProjets = (ListView) view.findViewById(R.id.liste);
 
@@ -54,7 +54,7 @@ public class TabSubmitedProjectFragment extends Fragment {
 */
 		
 		ArrayAdapter<Project> adapter = new CustomAdapter(this.getActivity()
-				.getBaseContext(), R.layout.projet_adaptor, projets);
+				.getBaseContext(), R.layout.adaptor_project, projets);
 		
 		listeProjets.setAdapter(adapter);
 		listeProjets.setOnItemClickListener(new OnItemClickListener() {

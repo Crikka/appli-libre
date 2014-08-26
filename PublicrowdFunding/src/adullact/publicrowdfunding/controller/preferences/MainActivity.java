@@ -13,7 +13,7 @@ public class MainActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.preferences_activity);
+		setContentView(R.layout.activity_preferences);
 
 		Fragment fragment = new preferencesFragment();
 

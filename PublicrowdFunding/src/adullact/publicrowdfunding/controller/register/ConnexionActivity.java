@@ -26,7 +26,7 @@ public class ConnexionActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.connexion);
+		setContentView(R.layout.activity_authetificate);
 
 		context = this;
 

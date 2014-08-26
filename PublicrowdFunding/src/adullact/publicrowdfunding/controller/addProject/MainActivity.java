@@ -76,7 +76,7 @@ public class MainActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_add_projet);
+		setContentView(R.layout.activity_add_project);
 
 		try {
 			Account compte = Account.getOwn();

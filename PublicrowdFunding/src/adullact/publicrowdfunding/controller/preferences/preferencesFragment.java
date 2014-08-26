@@ -26,7 +26,7 @@ public class preferencesFragment extends PreferenceFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		addPreferencesFromResource(R.layout.preferences);
+		addPreferencesFromResource(R.layout.fragment_preferences);
 
 		/*
 		 * Utilisateur

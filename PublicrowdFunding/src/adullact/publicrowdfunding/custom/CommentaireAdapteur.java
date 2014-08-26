@@ -60,7 +60,7 @@ public class CommentaireAdapteur extends ArrayAdapter<Commentary> {
 		if (row == null) {
 			inflater = (LayoutInflater) this.getContext().getSystemService(
 					Context.LAYOUT_INFLATER_SERVICE);
-			row = inflater.inflate(R.layout.listitem_discuss, parent, false);
+			row = inflater.inflate(R.layout.adaptor_comment, parent, false);
 		}
 
 		Commentary coment = getItem(position);

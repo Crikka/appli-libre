@@ -54,7 +54,7 @@ public class TabMapFragment extends Fragment implements
 		FragmentTransaction ft = fm.beginTransaction();
 		ft.replace(R.id.tabcontent, fragment, "mapid").commit();
 
-		rootView = inflater.inflate(R.layout.tab_maps, container, false);
+		rootView = inflater.inflate(R.layout.activity_maps, container, false);
 
 		final Handler handler = new Handler();
 		handler.postDelayed(new Runnable() {

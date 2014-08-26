@@ -52,7 +52,7 @@ public class TabCommentsFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		final View view = inflater.inflate(R.layout.fragment_list_commentaire,
+		final View view = inflater.inflate(R.layout.fragment_list_comments,
 				container, false);
 
 		layoutConnect = (LinearLayout) view.findViewById(R.id.connect);
@@ -95,7 +95,7 @@ public class TabCommentsFragment extends Fragment {
 
 		adapter = new CommentaireAdapteur(
 				getActivity().getApplicationContext(),
-				R.layout.listitem_discuss);
+				R.layout.adaptor_comment);
 		
 		TextView empty = (TextView) view.findViewById(R.id.empty);
 		lv.setEmptyView(empty);

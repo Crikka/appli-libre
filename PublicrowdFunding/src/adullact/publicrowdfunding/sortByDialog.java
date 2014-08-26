@@ -10,7 +10,7 @@ public class sortByDialog extends AlertDialog {
 	public sortByDialog(final Context context) {
 		super(context);
 
-		this.setContentView(R.layout.simple_listeview);
+		this.setContentView(R.layout.listeview);
 		
 		ListView list = (ListView) findViewById(R.id.liste);
 

@@ -32,5 +32,11 @@
     <string name="no_project">Aucun projet</string>
     <string name="no_commentary">Aucun commentaire</string>
     <string name="login_or_register">Connexion / Inscription</string>
+    <string name="remain">Restant</string>
+    <string name="accomplish">Accompli</string>
+    <string name="ask">Demandé</string>
+    <string name="funded">Récoltés</string>
+    <string name="contribute">Contribuer</string>
+     <string name="amount_contribute">Montant en euro</string>
 
 </resources>
