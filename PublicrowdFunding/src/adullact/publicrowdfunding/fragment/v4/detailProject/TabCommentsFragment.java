@@ -1,20 +1,25 @@
-package adullact.publicrowdfunding.controller.detailProject;
+package adullact.publicrowdfunding.fragment.v4.detailProject;
 
 import java.util.ArrayList;
 import java.util.Vector;
 
 import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.controller.detailProject.addCommentAlert;
 import adullact.publicrowdfunding.custom.CommentaireAdapteur;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
+import adullact.publicrowdfunding.model.local.cache.Cache;
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
+import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.Commentary;
+import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.PagerTabStrip;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,32 +48,45 @@ public class TabCommentsFragment extends Fragment {
 
 	protected CommentaireAdapteur adapter;
 
-	private MainActivity _this;
-
 	private SwipeRefreshLayout swipeView;
+
+	private Project projetCurrent;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
+		System.out.println("Load Comment Fragment");
+		
 		final View view = inflater.inflate(R.layout.fragment_list_comments,
 				container, false);
-
+		
 		layoutConnect = (LinearLayout) view.findViewById(R.id.connect);
 		layoutDisconnect = (LinearLayout) view.findViewById(R.id.disconnect);
 
 		isConnect();
 
-		_this = (MainActivity) getActivity();
+		Bundle bundle = this.getArguments();
+		if (bundle != null) {
+			String idProject = bundle.getString("idProject");
+			Cache<Project> projet = new Project().getCache(idProject).forceRetrieve();
+			projet.toResource(new HoldToDo<Project>() {
+				@Override
+				public void hold(Project project) {
+					projetCurrent = project;
+					displayInfo();
+				}
+			});
+		}
 
 		m_connexion = (Button) view.findViewById(R.id.connexion);
 		m_connexion.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				/*
-				Intent in = new Intent(_this.getApplicationContext(),
-						ConnexionActivity.class);
-				startActivity(in);*/
+				 * Intent in = new Intent(_this.getApplicationContext(),
+				 * ConnexionActivity.class); startActivity(in);
+				 */
 			}
 		});
 
@@ -80,7 +98,7 @@ public class TabCommentsFragment extends Fragment {
 				.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 					@Override
 					public void onRefresh() {
-						refresh();
+						// refresh();
 
 					}
 
@@ -94,68 +112,10 @@ public class TabCommentsFragment extends Fragment {
 		lv = (ListView) view.findViewById(R.id.commentaires);
 
 		adapter = new CommentaireAdapteur(
-				getActivity().getApplicationContext(),
-				R.layout.adaptor_comment);
-		
+				getActivity().getApplicationContext(), R.layout.adaptor_comment);
+
 		TextView empty = (TextView) view.findViewById(R.id.empty);
 		lv.setEmptyView(empty);
-
-		_this.projetCurrent.getCommentaries(new HoldAllToDo<Commentary>() {
-
-			@Override
-			public void holdAll(ArrayList<Commentary> resources) {
-				commentaries = new Vector<Commentary>(resources);
-			}
-		});
-
-		adapter.setCommentaries(commentaries);
-
-		lv.setAdapter(adapter);
-		lv.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-
-				Commentary com = commentaries.get(position);
-				com.getUser(new WhatToDo<User>() {
-
-					@Override
-					public void hold(User resource) {
-						Context c = _this.getBaseContext();
-						Intent in = new Intent(
-								c,
-								adullact.publicrowdfunding.controller.profile.MainActivity.class);
-						in.putExtra("myCount", false);
-						in.putExtra("id", resource.getResourceId());
-						startActivity(in);
-
-					}
-
-					@Override
-					public void eventually() {
-						// TODO Auto-generated method stub
-
-					}
-				});
-
-			}
-		});
-
-		m_notation
-				.setOnRatingBarChangeListener(new OnRatingBarChangeListener() {
-
-					@Override
-					public void onRatingChanged(RatingBar ratingBar,
-							float rating, boolean fromUser) {
-
-						System.out.println(rating);
-						addCommentAlert commentaireBuilder = new addCommentAlert(
-								getActivity(), rating, _this.projetCurrent);
-						commentaireBuilder.show();
-
-					}
-				});
 
 		lv.setOnScrollListener(new AbsListView.OnScrollListener() {
 			@Override
@@ -188,9 +148,68 @@ public class TabCommentsFragment extends Fragment {
 		}
 	}
 
-	public void refresh() {
-		_this.refresh();
-		adapter.notifyDataSetChanged();
+	/*
+	 * public void refresh() { _this.refresh(); adapter.notifyDataSetChanged();
+	 * }
+	 */
+
+	public void displayInfo() {
+		projetCurrent.getCommentaries(new HoldAllToDo<Commentary>() {
+
+			@Override
+			public void holdAll(ArrayList<Commentary> resources) {
+				commentaries = new Vector<Commentary>(resources);
+			}
+		});
+
+		adapter.setCommentaries(commentaries);
+
+		lv.setAdapter(adapter);
+		lv.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+
+				Commentary com = commentaries.get(position);
+				com.getUser(new WhatToDo<User>() {
+
+					@Override
+					public void hold(User resource) {
+						Context c = getActivity();
+						Intent in = new Intent(
+								c,
+								adullact.publicrowdfunding.controller.profile.MainActivity.class);
+						in.putExtra("myCount", false);
+						in.putExtra("id", resource.getResourceId());
+						startActivity(in);
+
+					}
+
+					@Override
+					public void eventually() {
+						// TODO Auto-generated method stub
+
+					}
+				});
+
+			}
+		});
+
+		m_notation
+				.setOnRatingBarChangeListener(new OnRatingBarChangeListener() {
+
+					@Override
+					public void onRatingChanged(RatingBar ratingBar,
+							float rating, boolean fromUser) {
+
+						System.out.println(rating);
+						addCommentAlert commentaireBuilder = new addCommentAlert(
+								getActivity(), rating, projetCurrent);
+						commentaireBuilder.show();
+
+					}
+				});
 	}
 
 }

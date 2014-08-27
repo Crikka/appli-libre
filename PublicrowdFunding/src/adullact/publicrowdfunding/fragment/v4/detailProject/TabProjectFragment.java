@@ -1,17 +1,19 @@
-package adullact.publicrowdfunding.controller.detailProject;
+package adullact.publicrowdfunding.fragment.v4.detailProject;
 
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
+import adullact.publicrowdfunding.model.local.cache.Cache;
+import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
 import adullact.publicrowdfunding.model.local.utilities.Share;
 import adullact.publicrowdfunding.model.local.utilities.Utility;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,7 +44,7 @@ public class TabProjectFragment extends Fragment {
 	private ImageView m_illustration;
 	private ImageView m_avatar;
 
-	private Project projet;
+	private Project projetToDisplay;
 	private User user;
 
 	private LinearLayout layoutConnect;
@@ -51,27 +53,26 @@ public class TabProjectFragment extends Fragment {
 	private RelativeLayout layout_call;
 	private RelativeLayout layout_mail;
 
-	private MainActivity _this;
+	private GraphiqueView graph;
+
+	private View view;
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-		final View view = inflater.inflate(R.layout.fragment_detail_project,
-				container, false);
-
+		System.out.println("Load Project Fragment");
+		
+		view = inflater.inflate(R.layout.fragment_detail_project, container,
+				false);
+		
 		layoutConnect = (LinearLayout) view.findViewById(R.id.connect);
 
 		layout_website = (RelativeLayout) view
 				.findViewById(R.id.layout_website);
 		layout_call = (RelativeLayout) view.findViewById(R.id.layout_call);
 		layout_mail = (RelativeLayout) view.findViewById(R.id.layout_mail);
-		isConnect();
 
-		_this = (MainActivity) getActivity();
-		projet = _this.projetCurrent;
-
-		GraphiqueView graph = (GraphiqueView) view.findViewById(R.id.graphique);
+		graph = (GraphiqueView) view.findViewById(R.id.graphique);
 		DisplayMetrics metrics = new DisplayMetrics();
 		getActivity().getWindowManager().getDefaultDisplay()
 				.getMetrics(metrics);
@@ -79,7 +80,6 @@ public class TabProjectFragment extends Fragment {
 		android.view.ViewGroup.LayoutParams params = graph.getLayoutParams();
 		params.height = metrics.widthPixels + 100;
 		graph.setLayoutParams(params);
-		graph.setProject(projet);
 
 		m_titre = (TextView) view.findViewById(R.id.titre_projet_detail);
 		m_description = (TextView) view.findViewById(R.id.detail_projet_detail);
@@ -99,48 +99,86 @@ public class TabProjectFragment extends Fragment {
 		m_call = (Button) view.findViewById(R.id.phone);
 
 		m_illustration = (ImageView) view.findViewById(R.id.icon);
+		
+		isConnect();
 
-		if (projet.getIllustration() != 0) {
-			m_illustration.setImageResource(Utility.getDrawable(projet
+		Bundle bundle = this.getArguments();
+		if (bundle != null) {
+			String idProject = bundle.getString("idProject");
+			System.out.println("Affichage du projet : " + idProject);
+			Cache<Project> projet = new Project().getCache(idProject).forceRetrieve();
+			projet.toResource(new HoldToDo<Project>() {
+				@Override
+				public void hold(Project project) {
+					projetToDisplay = project;
+					graph.setProject(projetToDisplay);
+					graph.invalidate();
+					displayInfo();
+				}
+			});
+		}else{
+			getActivity().finish();
+		}
+
+		return view;
+	}
+
+	public void isConnect() {
+		try {
+			Account.getOwn();
+			layoutConnect.setVisibility(View.VISIBLE);
+		} catch (NoAccountExistsInLocal e1) {
+			layoutConnect.setVisibility(View.GONE);
+		}
+	}
+
+	public void displayInfo() {
+		if (projetToDisplay.getIllustration() != 0) {
+			m_illustration.setImageResource(Utility.getDrawable(projetToDisplay
 					.getIllustration()));
 		} else {
 			m_illustration.setImageResource(R.drawable.ic_launcher);
 		}
 
-		if (projet.getEmail() == null || projet.getEmail().length() == 0) {
+		if (projetToDisplay.getEmail() == null
+				|| projetToDisplay.getEmail().length() == 0) {
 			layout_mail.setVisibility(View.GONE);
 		} else {
-			m_mail.setText(projet.getEmail());
+			m_mail.setText(projetToDisplay.getEmail());
 		}
 
-		if (projet.getWebsite() == null || projet.getWebsite().length() == 0) {
+		if (projetToDisplay.getWebsite() == null
+				|| projetToDisplay.getWebsite().length() == 0) {
 			layout_website.setVisibility(View.GONE);
 		} else {
-			m_website.setText(projet.getWebsite());
+			m_website.setText(projetToDisplay.getWebsite());
 		}
 
-		if (projet.getPhone() == null || projet.getPhone().length() == 0) {
+		if (projetToDisplay.getPhone() == null
+				|| projetToDisplay.getPhone().length() == 0) {
 			layout_call.setVisibility(View.GONE);
 		} else {
-			m_call.setText(projet.getPhone());
+			m_call.setText(projetToDisplay.getPhone());
 		}
 
-		m_request_funding.setText(projet.getRequestedFunding() + "€");
+		m_request_funding.setText(projetToDisplay.getRequestedFunding() + "€");
 
-		projet.getUser(new WhatToDo<User>() {
+		projetToDisplay.getUser(new WhatToDo<User>() {
 
 			@Override
 			public void hold(User resource) {
-				try{
-				user = resource;
-				m_utilisateur_soumission.setText(Share.formatString(resource.getPseudo()));
-				m_utilisateur_ville.setText(Share.formatString(resource.getCity()));
-				if (user.getGender().equals("0")) {
-					m_avatar.setImageResource(R.drawable.male_user_icon);
-				} else {
-					m_avatar.setImageResource(R.drawable.female_user_icon);
-				}
-				}catch(Exception e){
+				try {
+					user = resource;
+					m_utilisateur_soumission.setText(Share
+							.formatString(resource.getPseudo()));
+					m_utilisateur_ville.setText(Share.formatString(resource
+							.getCity()));
+					if (user.getGender().equals("0")) {
+						m_avatar.setImageResource(R.drawable.male_user_icon);
+					} else {
+						m_avatar.setImageResource(R.drawable.female_user_icon);
+					}
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 
@@ -175,17 +213,18 @@ public class TabProjectFragment extends Fragment {
 			}
 		});
 
-		m_pourcentage_accomplish
-				.setText(projet.getPercentOfAchievement() + "%");
-		m_current_funding.setText(projet.getCurrentFunding() + "€");
-		projet.getCreationDate();
-		m_titre.setText(projet.getName());
-		m_description.setText(projet.getDescription());
-		if (projet.getNumberOfDayToEnd() > 1) {
-			m_jour_restant
-					.setText("" + projet.getNumberOfDayToEnd() + " jours");
+		m_pourcentage_accomplish.setText(projetToDisplay
+				.getPercentOfAchievement() + "%");
+		m_current_funding.setText(projetToDisplay.getCurrentFunding() + "€");
+		projetToDisplay.getCreationDate();
+		m_titre.setText(projetToDisplay.getName());
+		m_description.setText(projetToDisplay.getDescription());
+		if (projetToDisplay.getNumberOfDayToEnd() > 1) {
+			m_jour_restant.setText("" + projetToDisplay.getNumberOfDayToEnd()
+					+ " jours");
 		} else {
-			m_jour_restant.setText("" + projet.getNumberOfDayToEnd() + " jour");
+			m_jour_restant.setText("" + projetToDisplay.getNumberOfDayToEnd()
+					+ " jour");
 		}
 
 		m_payer.setOnClickListener(new View.OnClickListener() {
@@ -193,24 +232,17 @@ public class TabProjectFragment extends Fragment {
 
 				// Start Activity payer
 
-				Intent in = new Intent(
-						_this,
-						adullact.publicrowdfunding.controller.participate.MainActivity.class);
-				in.putExtra("projectId", projet.getResourceId());
-				_this.startActivity(in);
+				/*
+				 * Intent in = new Intent( getActivity(),
+				 * adullact.publicrowdfunding
+				 * .controller.participate.MainActivity.class);
+				 * in.putExtra("projectId", projet.getResourceId());
+				 * getActivit.startActivity(in);
+				 */
 
 			}
 		});
-		return view;
-	}
-
-	public void isConnect() {
-		try {
-			Account.getOwn();
-			layoutConnect.setVisibility(View.VISIBLE);
-		} catch (NoAccountExistsInLocal e1) {
-			layoutConnect.setVisibility(View.GONE);
-		}
+		view.invalidate();
 	}
 
 }

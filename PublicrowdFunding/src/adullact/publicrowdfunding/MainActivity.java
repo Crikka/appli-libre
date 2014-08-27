@@ -1,12 +1,9 @@
 package adullact.publicrowdfunding;
 
 import java.util.ArrayList;
-import java.util.Locale;
-
-import com.google.android.gms.maps.model.LatLng;
 
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
-import adullact.publicrowdfunding.fragment.register.connexionFragment;
+import adullact.publicrowdfunding.fragment.v4.register.connexionFragment;
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
@@ -14,11 +11,9 @@ import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
 import adullact.publicrowdfunding.model.local.utilities.Share;
 import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
-import android.app.Activity;
+import adullact.publicrowdfunding.model.local.utilities.sortProjects;
+import android.app.ActionBar;
 import android.app.AlertDialog;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -28,30 +23,30 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.view.GravityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.SearchView.OnCloseListener;
 import android.widget.SearchView.OnQueryTextListener;
+import android.widget.TextView;
 
-public class MainActivity extends Activity {
+import com.google.android.gms.maps.model.LatLng;
+
+public class MainActivity extends FragmentActivity {
 
 	private DrawerLayout mDrawerLayout;
 	private LinearLayout mDrawerList;
@@ -60,7 +55,6 @@ public class MainActivity extends Activity {
 
 	private Button m_button_add_projet;
 	private LinearLayout m_button_account;
-	private Button m_button_sort;
 	private Button m_button_validate_projects;
 	private Button m_button_authentificate;
 	private Button m_button_map_projects;
@@ -175,14 +169,18 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 
-				FragmentTransaction ft = getFragmentManager()
+				FragmentTransaction ft = getSupportFragmentManager()
 						.beginTransaction();
-				ft.setCustomAnimations(R.anim.enter, R.anim.exit);
+				// ft.setCustomAnimations(R.anim.enter, R.anim.exit);
 				Fragment fragment = new connexionFragment();
 				ft.replace(R.id.content_frame, fragment);
 				ft.commit();
 
 				mDrawerLayout.closeDrawer(mDrawerList);
+
+				_this.getActionBar().removeAllTabs();
+				_this.getActionBar().setNavigationMode(
+						ActionBar.NAVIGATION_MODE_STANDARD);
 			}
 		});
 
@@ -196,6 +194,10 @@ public class MainActivity extends Activity {
 						adullact.publicrowdfunding.controller.addProject.MainActivity.class);
 
 				startActivity(in);
+
+				_this.getActionBar().removeAllTabs();
+				_this.getActionBar().setNavigationMode(
+						ActionBar.NAVIGATION_MODE_STANDARD);
 
 			}
 		});
@@ -233,9 +235,9 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 
-				FragmentTransaction ft = getFragmentManager()
+				FragmentTransaction ft = getSupportFragmentManager()
 						.beginTransaction();
-				ft.setCustomAnimations(R.anim.enter, R.anim.exit);
+				//ft.setCustomAnimations(R.anim.enter, R.anim.exit);
 				Fragment fragment = new TabMapFragment();
 
 				ft.replace(R.id.content_frame, fragment);
@@ -250,6 +252,9 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				launchDefaultFragment();
+				_this.getActionBar().removeAllTabs();
+				_this.getActionBar().setNavigationMode(
+						ActionBar.NAVIGATION_MODE_STANDARD);
 
 			}
 		});
@@ -332,8 +337,8 @@ public class MainActivity extends Activity {
 
 	public void launchDefaultFragment() {
 
-		FragmentTransaction ft = getFragmentManager().beginTransaction();
-		ft.setCustomAnimations(R.anim.enter, R.anim.exit);
+		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		// ft.setCustomAnimations(R.anim.enter, R.anim.exit);
 		Fragment fragment = new ProjectsFragment();
 
 		ft.replace(R.id.content_frame, fragment, "allProjectFragment");
@@ -368,12 +373,11 @@ public class MainActivity extends Activity {
 				Share.position = new LatLng(location.getLatitude(),
 						location.getLongitude());
 				try {
-					Fragment myFragment = (Fragment) getFragmentManager()
-							.findFragmentByTag("allProjectFragment");
-					if (myFragment.isVisible()) {
-						launchDefaultFragment();
-					}
-
+					/*
+					 * Fragment myFragment = (Fragment) getFragmentManager()
+					 * .findFragmentByTag("allProjectFragment"); if
+					 * (myFragment.isVisible()) { launchDefaultFragment(); }
+					 */
 				} catch (NullPointerException e) {
 					// 1er Initialisation
 				}
@@ -506,9 +510,8 @@ public class MainActivity extends Activity {
 				ArrayList<Project> allSync = new ArrayList<Project>(sync
 						.getProjects());
 				p_project_displayed = allSync;
-				
+
 				launchDefaultFragment();
-				
 
 			}
 		});

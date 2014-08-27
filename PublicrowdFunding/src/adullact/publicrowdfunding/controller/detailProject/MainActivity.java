@@ -2,6 +2,9 @@ package adullact.publicrowdfunding.controller.detailProject;
 
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
+import adullact.publicrowdfunding.fragment.v4.detailProject.TabCommentsFragment;
+import adullact.publicrowdfunding.fragment.v4.detailProject.TabMapFragment;
+import adullact.publicrowdfunding.fragment.v4.detailProject.TabProjectFragment;
 import adullact.publicrowdfunding.model.local.cache.Cache;
 import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
@@ -116,18 +119,19 @@ public class MainActivity extends Activity implements TabListener {
 		if (tab.getText().equals("Projets")) {
 
 			fram1 = new TabProjectFragment();
-			ft.replace(rl.getId(), fram1);
+			//ft.replace(rl.getId(), fram1);
 
 		} else if (tab.getText().equals("Commentaires")) {
 
+			/*
 			fram2 = new TabCommentsFragment();
 			ft.replace(rl.getId(), fram2);
-
+*/
 		} else if (tab.getText().equals("Localisation")) {
-
+/*
 			fram3 = new TabMapFragment();
 			ft.replace(rl.getId(), fram3);
-
+*/
 		}
 	}
 
@@ -136,167 +140,7 @@ public class MainActivity extends Activity implements TabListener {
 
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		if (isConnect()) {
-			MenuInflater inflater = getMenuInflater();
-			inflater.inflate(R.menu.detail_projet, menu);
-			m_favorite = menu.getItem(1).getIcon();
-			setBookmarked();
-		}
-		return super.onCreateOptionsMenu(menu);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-
-		switch (item.getItemId()) {
-
-		case R.id.add_favorite:
-			System.out.println("Ajout au favoris");
-			try {
-				Account account = Account.getOwn();
-				account.getUser(new WhatToDo<User>() {
-
-					@Override
-					public void hold(User resource) {
-						System.out.println("récupération de l'utilisateur ok");
-						System.out.println("favorite ?" + m_Is_favorite);
-						if (m_Is_favorite) {
-							resource.removeBookmark(projetCurrent,
-									new DeleteEvent<Bookmark>() {
-
-										@Override
-										public void errorResourceIdDoesNotExist() {
-											System.out.println("error 1");
-											Toast.makeText(
-													getBaseContext(),
-													"Une erreur s'est produite",
-													Toast.LENGTH_SHORT).show();
-
-										}
-
-										@Override
-										public void onDelete(Bookmark resource) {
-											System.out
-													.println("projet retiré !");
-											Toast.makeText(
-													getBaseContext(),
-													"Projet retiré des favoris",
-													Toast.LENGTH_SHORT).show();
-											m_Is_favorite = false;
-											changeColorStar();
-
-										}
-
-										@Override
-										public void errorAdministratorRequired() {
-											System.out.println("error 2");
-											Toast.makeText(
-													getBaseContext(),
-													"Une erreur s'est produite",
-													Toast.LENGTH_SHORT).show();
-
-										}
-
-										@Override
-										public void errorAuthenticationRequired() {
-											System.out.println("error 3");
-											Toast.makeText(
-													getBaseContext(),
-													"Une erreur s'est produite",
-													Toast.LENGTH_SHORT).show();
-
-										}
-
-										@Override
-										public void errorNetwork() {
-											System.out.println("error 4");
-											Toast.makeText(
-													getBaseContext(),
-													"Une erreur s'est produite",
-													Toast.LENGTH_SHORT).show();
-
-										}
-
-									});
-
-						} else {
-							System.out.println("On l'ajoute");
-							resource.addBookmark(projetCurrent,
-									new CreateEvent<Bookmark>() {
-
-										@Override
-										public void errorResourceIdAlreadyUsed() {
-											Toast.makeText(
-													getBaseContext(),
-													"Une erreur s'est produite",
-													Toast.LENGTH_SHORT).show();
-										}
-
-										@Override
-										public void onCreate(Bookmark resource) {
-											System.out
-													.println("Bookmark Ajouté !");
-											Toast.makeText(
-													getBaseContext(),
-													"Projet ajouté aux favoris",
-													Toast.LENGTH_SHORT).show();
-											m_Is_favorite = true;
-											changeColorStar();
-
-										}
-
-										@Override
-										public void errorAuthenticationRequired() {
-											Toast.makeText(
-													getBaseContext(),
-													"Une erreur s'est produite",
-													Toast.LENGTH_SHORT).show();
-										}
-
-										@Override
-										public void errorNetwork() {
-											Toast.makeText(
-													getBaseContext(),
-													"Une erreur s'est produite",
-													Toast.LENGTH_SHORT).show();
-
-										}
-
-									});
-
-						}
-
-					}
-
-					@Override
-					public void eventually() {
-						// TODO Auto-generated method stub
-
-					}
-
-				});
-			} catch (NoAccountExistsInLocal e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return true;
-
-		case R.id.Share:
-			Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
-			emailIntent.setType("text/plain");
-			emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,
-					"Financement participatif");
-			emailIntent
-					.putExtra(android.content.Intent.EXTRA_TEXT,
-							"J'aime le projet venez le financer. (via PublicrowdFunding)");
-			startActivity(emailIntent);
-			return true;
-
-		}
-		return false;
-	}
+	
 
 	public boolean isConnect() {
 		try {

@@ -1,4 +1,4 @@
-package adullact.publicrowdfunding.fragment.register;
+package adullact.publicrowdfunding.fragment.v4.register;
 
 import adullact.publicrowdfunding.MainActivity;
 import adullact.publicrowdfunding.ProjectsFragment;
@@ -11,11 +11,11 @@ import adullact.publicrowdfunding.model.server.event.AuthenticationEvent;
 import adullact.publicrowdfunding.model.server.event.RegistrationEvent;
 import adullact.publicrowdfunding.model.server.request.AuthenticationRequest;
 import adullact.publicrowdfunding.model.server.request.RegistrationRequest;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -108,7 +108,7 @@ public class registerFragement extends Fragment {
                     	Toast.makeText(context, "Bienvenue "+m_login.getText().toString(), Toast.LENGTH_SHORT).show();
                     	
                     	FragmentTransaction ft = getFragmentManager().beginTransaction();
-                		ft.setCustomAnimations(R.anim.enter, R.anim.exit);
+                		//ft.setCustomAnimations(R.anim.enter, R.anim.exit);
                 		Fragment fragment = new ProjectsFragment();
 
                 		ft.replace(R.id.content_frame, fragment);
@@ -151,7 +151,7 @@ public class registerFragement extends Fragment {
 		        {
 		        	System.out.println("back");
                 	FragmentTransaction ft = getFragmentManager().beginTransaction();
-            		ft.setCustomAnimations(R.anim.enter, R.anim.exit);
+            		//ft.setCustomAnimations(R.anim.enter, R.anim.exit);
             		Fragment fragment = new connexionFragment();
 
             		ft.replace(R.id.content_frame, fragment);

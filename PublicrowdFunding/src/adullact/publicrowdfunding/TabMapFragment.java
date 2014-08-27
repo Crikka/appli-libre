@@ -6,14 +6,14 @@ import java.util.HashMap;
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +22,7 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
-import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -30,7 +30,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class TabMapFragment extends Fragment implements
 		OnInfoWindowClickListener {
 
-	private MapFragment fragment;
+	private SupportMapFragment fragment;
 	private FragmentManager fm;
 	private ProgressDialog mprogressDialog;
 	private ArrayList<Project> projets;
@@ -52,7 +52,7 @@ public class TabMapFragment extends Fragment implements
 		mprogressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 		mprogressDialog.show();
 
-		fragment = new MapFragment();
+		fragment = new SupportMapFragment();
 		fm = getFragmentManager();
 		
 		context = this.getActivity();
@@ -77,7 +77,7 @@ public class TabMapFragment extends Fragment implements
 			@Override
 			public void run() {
 
-				googleMap = ((MapFragment) fm.findFragmentByTag("mapid"))
+				googleMap = ((SupportMapFragment) fm.findFragmentByTag("mapid"))
 						.getMap();
 
 				if (googleMap != null) {

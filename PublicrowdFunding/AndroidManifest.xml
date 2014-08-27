@@ -79,23 +79,23 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.controller.detailProject.TabMapFragment"
+            android:name="adullact.publicrowdfunding.fragment.v4.detailProject.TabMapFragment"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.fragment.register.registerActivity"
+            android:name="adullact.publicrowdfunding.fragment.v4.register.registerActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.controller.detailProject.TabProjectFragment"
+            android:name="adullact.publicrowdfunding.fragment.v4.detailProject.TabProjectFragment"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.controller.detailProject.TabCommentsFragment"
+            android:name="adullact.publicrowdfunding.fragment.v4.detailProject.TabCommentsFragment"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.fragment.register.ConnexionActivity"
+            android:name="adullact.publicrowdfunding.fragment.v4.register.ConnexionActivity"
             android:label="@string/app_name" >
         </activity>
         <activity

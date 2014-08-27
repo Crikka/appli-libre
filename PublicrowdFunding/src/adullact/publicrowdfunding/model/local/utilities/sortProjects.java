@@ -1,4 +1,4 @@
-package adullact.publicrowdfunding;
+package adullact.publicrowdfunding.model.local.utilities;
 
 import java.util.ArrayList;
 import java.util.Collections;
