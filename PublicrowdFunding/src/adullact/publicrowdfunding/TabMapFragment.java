@@ -21,13 +21,14 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class TabMapFragment extends Fragment implements
-		OnInfoWindowClickListener {
+		OnMarkerClickListener {
 
 	private SupportMapFragment fragment;
 	private FragmentManager fm;
@@ -41,6 +42,8 @@ public class TabMapFragment extends Fragment implements
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
+		rootView = inflater.inflate(R.layout.activity_maps, container, false);
+		
 		projets = new ArrayList<Project> ();
 		
 		mprogressDialog = new ProgressDialog(getActivity());
@@ -61,10 +64,9 @@ public class TabMapFragment extends Fragment implements
 			}
 		});
 		
+		
 		FragmentTransaction ft = fm.beginTransaction();
-		ft.replace(R.id.content_frame, fragment, "mapid").commit();
-
-		rootView = inflater.inflate(R.layout.activity_maps, container, false);
+		ft.replace(R.id.mapView, fragment, "mapid").commit();
 
 		final Handler handler = new Handler();
 		handler.postDelayed(new Runnable() {
@@ -76,6 +78,7 @@ public class TabMapFragment extends Fragment implements
 						.getMap();
 
 				if (googleMap != null) {
+					System.out.println(projets.size());
 					for (Project proj : projets) {
 						MarkerOptions marker = new MarkerOptions();
 						marker.position(proj.getPosition());
@@ -87,7 +90,7 @@ public class TabMapFragment extends Fragment implements
 
 					handler.removeCallbacksAndMessages(null);
 
-					googleMap.setOnInfoWindowClickListener(TabMapFragment.this);
+					googleMap.setOnMarkerClickListener(TabMapFragment.this);
 					googleMap.setMyLocationEnabled(true);
 					LatLng Montpellier = new LatLng(43.652400,3.761380);
 					CameraUpdate center = CameraUpdateFactory.newLatLng(Montpellier);
@@ -98,25 +101,43 @@ public class TabMapFragment extends Fragment implements
 				}
 
 				else {
-					handler.postDelayed(this, 500);
+					handler.postDelayed(this, 1000);
 				}
 			}
-		}, 500);
+		}, 1000);
 
 		return rootView;
 	}
 
 	@Override
-	public void onInfoWindowClick(Marker marker) {
+	public boolean onMarkerClick(Marker marker) {
+		
 		String id = markers.get(marker);
+		/*
 		FragmentTransaction ft = getFragmentManager().beginTransaction();
 		//ft.setCustomAnimations(R.anim.enter_2, R.anim.exit);
 		Fragment fragment = new adullact.publicrowdfunding.fragment.v4.detailProject.PagerFragment();
 		Bundle bundle = new Bundle();
-		bundle.putString("idProject", markers.get(id));
+		bundle.putString("idProject", id);
 		fragment.setArguments(bundle);
 		ft.replace(R.id.content_frame, fragment);
 		ft.commit();
+		*/
+		
+		FragmentTransaction ft = fm.beginTransaction();
+		//ft.setCustomAnimations(R.anim.enter_2, R.anim.exit);
+		Fragment fragment = new adullact.publicrowdfunding.fragment.v4.detailProject.TabProjectFragment();
+		Bundle bundle = new Bundle();
+		bundle.putString("idProject", id);
+		fragment.setArguments(bundle);
+		ft.replace(R.id.FlashBarLayout, fragment);
+		ft.commit();
+		
+		return true;
+		
+		
+		
+		
 	}
 
 }

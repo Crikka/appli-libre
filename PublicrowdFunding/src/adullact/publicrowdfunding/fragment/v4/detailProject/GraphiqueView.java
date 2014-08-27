@@ -79,13 +79,12 @@ public class GraphiqueView extends View {
 					* (largeur / nombreDeCarre), largeur + offset, paint);
 
 		}
-		
+
 		if (projet == null) {
 			return;
 		}
-		
-		graphData = projet.getFundingIntervals();
 
+		graphData = projet.getFundingIntervals();
 
 		paint.reset();
 		int xPos = (int) (canvas.getWidth() / 2);
@@ -103,7 +102,6 @@ public class GraphiqueView extends View {
 		paint.setColor(Color.rgb(109, 195, 41));
 		canvas.drawText("100 %", xPos, yPos, paint);
 
-		
 		paint.reset();
 		// Ajout date de début
 		xPos = 0;
@@ -146,12 +144,16 @@ public class GraphiqueView extends View {
 		int nbIteration = projet.getNbPeriod();
 		long somme = 0;
 		for (int i = 0; i < nbIteration; i++) {
-
-			if (graphData.get(i).getTotal() == -1) {
+			long data = 0;
+			try {
+				if (graphData.get(i).getTotal() == -1) {
+					break;
+				}
+				data = graphData.get(i).getTotal();
+			} catch (Exception e) {
+				e.printStackTrace();
 				break;
 			}
-
-			long data = graphData.get(i).getTotal();
 
 			somme += data;
 			long pourcentage = 0;
@@ -179,7 +181,7 @@ public class GraphiqueView extends View {
 
 			paint.reset();
 			paint.setColor(Color.argb(150, 131, 182, 255));
-			
+
 			path.reset();
 			path.setFillType(Path.FillType.EVEN_ODD);
 			path.moveTo(xDepart, yDepart);
