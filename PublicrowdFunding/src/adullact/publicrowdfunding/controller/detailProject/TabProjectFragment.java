@@ -6,6 +6,7 @@ import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
+import adullact.publicrowdfunding.model.local.utilities.Share;
 import adullact.publicrowdfunding.model.local.utilities.Utility;
 import android.app.Fragment;
 import android.content.Context;
@@ -38,8 +39,6 @@ public class TabProjectFragment extends Fragment {
 	private Button m_website;
 	private Button m_call;
 
-	private Button m_connexion;
-
 	private ImageView m_illustration;
 	private ImageView m_avatar;
 
@@ -47,7 +46,6 @@ public class TabProjectFragment extends Fragment {
 	private User user;
 
 	private LinearLayout layoutConnect;
-	private LinearLayout layoutDisconnect;
 
 	private RelativeLayout layout_website;
 	private RelativeLayout layout_call;
@@ -63,7 +61,6 @@ public class TabProjectFragment extends Fragment {
 				container, false);
 
 		layoutConnect = (LinearLayout) view.findViewById(R.id.connect);
-		layoutDisconnect = (LinearLayout) view.findViewById(R.id.disconnect);
 
 		layout_website = (RelativeLayout) view
 				.findViewById(R.id.layout_website);
@@ -103,19 +100,6 @@ public class TabProjectFragment extends Fragment {
 
 		m_illustration = (ImageView) view.findViewById(R.id.icon);
 
-		m_avatar = (ImageView) view.findViewById(R.id.avatar);
-
-		m_connexion = (Button) view.findViewById(R.id.connexion);
-		m_connexion.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				/*
-				Intent in = new Intent(_this.getApplicationContext(),
-						ConnexionActivity.class);
-				startActivity(in);*/
-			}
-		});
-
 		if (projet.getIllustration() != 0) {
 			m_illustration.setImageResource(Utility.getDrawable(projet
 					.getIllustration()));
@@ -147,13 +131,17 @@ public class TabProjectFragment extends Fragment {
 
 			@Override
 			public void hold(User resource) {
+				try{
 				user = resource;
-				m_utilisateur_soumission.setText(resource.getPseudo());
-				m_utilisateur_ville.setText(resource.getCity());
+				m_utilisateur_soumission.setText(Share.formatString(resource.getPseudo()));
+				m_utilisateur_ville.setText(Share.formatString(resource.getCity()));
 				if (user.getGender().equals("0")) {
 					m_avatar.setImageResource(R.drawable.male_user_icon);
 				} else {
 					m_avatar.setImageResource(R.drawable.female_user_icon);
+				}
+				}catch(Exception e){
+					e.printStackTrace();
 				}
 
 			}
@@ -220,10 +208,8 @@ public class TabProjectFragment extends Fragment {
 		try {
 			Account.getOwn();
 			layoutConnect.setVisibility(View.VISIBLE);
-			layoutDisconnect.setVisibility(View.GONE);
 		} catch (NoAccountExistsInLocal e1) {
 			layoutConnect.setVisibility(View.GONE);
-			layoutDisconnect.setVisibility(View.VISIBLE);
 		}
 	}
 

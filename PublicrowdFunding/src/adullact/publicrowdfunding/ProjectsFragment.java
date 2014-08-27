@@ -28,9 +28,9 @@ public class ProjectsFragment extends Fragment {
 
 	private SwipeRefreshLayout swipeView;
 
-	private ArrayList<Project> projetsToDisplay;
-
 	private ArrayAdapter<Project> adapter;
+	
+	private adullact.publicrowdfunding.MainActivity _this;
 	
 	private LinearLayout m_layout_loading;
 
@@ -42,12 +42,14 @@ public class ProjectsFragment extends Fragment {
 				container, false);
 
 		m_layout_loading = (LinearLayout) view.findViewById(R.id.loading);
-		projetsToDisplay = new ArrayList<Project>();
+		m_layout_loading.setVisibility(View.GONE);
+		
+		_this = (adullact.publicrowdfunding.MainActivity) getActivity();
 
 		listeProjets = (ListView) view.findViewById(R.id.liste);
 
 		adapter = new CustomAdapter(this.getActivity().getBaseContext(),
-				R.layout.adaptor_project, projetsToDisplay);
+				R.layout.adaptor_project, _this.p_project_displayed);
 
 		TextView empty = (TextView) view.findViewById(R.id.empty);
 		listeProjets.setEmptyView(empty);
@@ -55,8 +57,6 @@ public class ProjectsFragment extends Fragment {
 		listeProjets.setAdapter(adapter);
 		swipeView = (SwipeRefreshLayout) view.findViewById(R.id.refresher);
 		swipeView.setEnabled(false);
-
-		refresh();
 
 		swipeView.setColorScheme(R.color.blue, R.color.green, R.color.yellow,
 				R.color.red);
@@ -106,23 +106,7 @@ public class ProjectsFragment extends Fragment {
 	}
 
 	public void refresh() {
-		SyncServerToLocal sync = SyncServerToLocal.getInstance();
-		sync.sync(new HoldAllToDo<Project>() {
-
-			@Override
-			public void holdAll(ArrayList<Project> projects) {
-				projetsToDisplay = projects;
-
-				adapter = new CustomAdapter(getActivity().getBaseContext(),
-						R.layout.adaptor_project, projetsToDisplay);
-
-				listeProjets.setAdapter(adapter);
-
-				adapter.notifyDataSetChanged();
-				swipeView.setRefreshing(false);
-				m_layout_loading.setVisibility(View.GONE);
-			}
-		});
+		_this.syncProjects();
 
 	}
 

@@ -66,9 +66,6 @@ public class TabMapFragment extends Fragment implements
 			}
 		});
 		
-		
-		
-		
 		FragmentTransaction ft = fm.beginTransaction();
 		ft.replace(R.id.content_frame, fragment, "mapid").commit();
 
@@ -88,7 +85,6 @@ public class TabMapFragment extends Fragment implements
 						MarkerOptions marker = new MarkerOptions();
 						marker.position(proj.getPosition());
 						marker.title(proj.getName());
-						marker.snippet(proj.getDescription());
 						Marker m = googleMap.addMarker(marker);
 						markers.put(m, proj.getResourceId());
 

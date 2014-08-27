@@ -65,6 +65,7 @@ public class MainActivity extends Activity {
 	private Button m_button_authentificate;
 	private Button m_button_map_projects;
 	private Button m_button_all_projects;
+	private Button m_button_deconnexion;
 
 	private TextView utilisateurVille;
 	private TextView utilisateurName;
@@ -75,7 +76,7 @@ public class MainActivity extends Activity {
 	private LocationListener locationListener;
 	private String locationProvider;
 
-	protected ArrayList<Project> projetsToDisplay;
+	protected ArrayList<Project> p_project_displayed;
 
 	private SyncServerToLocal sync;
 
@@ -84,10 +85,10 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		projetsToDisplay = new ArrayList<Project>();
+		p_project_displayed = new ArrayList<Project>();
 
 		syncProjects();
-		
+
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (LinearLayout) findViewById(R.id.left);
 
@@ -101,6 +102,7 @@ public class MainActivity extends Activity {
 		) {
 			public void onDrawerClosed(View view) {
 				invalidateOptionsMenu();
+				mDrawerLayout.setClickable(true);
 			}
 
 			public void onDrawerOpened(View drawerView) {
@@ -172,8 +174,8 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 
-				
-				FragmentTransaction ft = getFragmentManager().beginTransaction();
+				FragmentTransaction ft = getFragmentManager()
+						.beginTransaction();
 				ft.setCustomAnimations(R.anim.enter, R.anim.exit);
 				Fragment fragment = new connexionFragment();
 				ft.replace(R.id.content_frame, fragment);
@@ -191,6 +193,7 @@ public class MainActivity extends Activity {
 				Intent in = new Intent(
 						getBaseContext().getApplicationContext(),
 						adullact.publicrowdfunding.controller.addProject.MainActivity.class);
+
 				startActivity(in);
 
 			}
@@ -223,20 +226,14 @@ public class MainActivity extends Activity {
 					}
 				});
 
-		
-		
-		
 		// OK
 		m_button_map_projects = (Button) findViewById(R.id.button_map_projet);
 		m_button_map_projects.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 
-				
-				
-				
-
-				FragmentTransaction ft = getFragmentManager().beginTransaction();
+				FragmentTransaction ft = getFragmentManager()
+						.beginTransaction();
 				ft.setCustomAnimations(R.anim.enter, R.anim.exit);
 				Fragment fragment = new TabMapFragment();
 
@@ -256,6 +253,16 @@ public class MainActivity extends Activity {
 			}
 		});
 
+		m_button_deconnexion = (Button) findViewById(R.id.button_deconnexion);
+		m_button_deconnexion.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Account.disconnect();
+				isConnect();
+
+			}
+		});
+
 		utilisateurVille = (TextView) findViewById(R.id.utilisateur_ville);
 		utilisateurName = (TextView) findViewById(R.id.utilisateur_name);
 		avatar = (ImageView) findViewById(R.id.avatar);
@@ -267,13 +274,15 @@ public class MainActivity extends Activity {
 			Account account = Account.getOwn();
 			m_button_account.setVisibility(View.VISIBLE);
 			m_button_authentificate.setVisibility(View.GONE);
-
+			m_button_deconnexion.setVisibility(View.VISIBLE);
 			account.getUser(new WhatToDo<User>() {
 
 				@Override
 				public void hold(User resource) {
-					utilisateurName.setText(resource.getPseudo());
-					utilisateurVille.setText(resource.getCity());
+					utilisateurName.setText(Share.formatString(resource
+							.getPseudo()));
+					utilisateurVille.setText(Share.formatString(resource
+							.getCity()));
 					if (resource.getGender().equals("0")) {
 						avatar.setImageResource(R.drawable.male_user_icon);
 					} else {
@@ -291,6 +300,7 @@ public class MainActivity extends Activity {
 		} catch (NoAccountExistsInLocal e1) {
 			m_button_account.setVisibility(View.GONE);
 			m_button_authentificate.setVisibility(View.VISIBLE);
+			m_button_deconnexion.setVisibility(View.GONE);
 		}
 	}
 
@@ -321,7 +331,6 @@ public class MainActivity extends Activity {
 
 	public void launchDefaultFragment() {
 
-		
 		FragmentTransaction ft = getFragmentManager().beginTransaction();
 		ft.setCustomAnimations(R.anim.enter, R.anim.exit);
 		Fragment fragment = new ProjectsFragment();
@@ -410,6 +419,7 @@ public class MainActivity extends Activity {
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(
 				MainActivity.this, android.R.layout.simple_list_item_1, names);
 		lv.setAdapter(adapter);
+		final AlertDialog dialog = alertDialog.create();
 		lv.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -418,26 +428,28 @@ public class MainActivity extends Activity {
 
 				switch (position) {
 				case 0:
-					/*
-					 * sortBiggestProjectFirst(); reLoad(); dialog.dismiss();
-					 */
+
+					sortProjects.sortBiggestProjectFirst(p_project_displayed);
+					launchDefaultFragment();
+					dialog.dismiss();
+
 					break;
 				case 1:
-					/*
-					 * sortBiggestProjectLast(); reLoad(); dialog.dismiss();
-					 */
+					sortProjects.sortBiggestProjectLast(p_project_displayed);
+					launchDefaultFragment();
+					dialog.dismiss();
 					break;
 				case 2:
-					/*
-					 * sortAlmostFunded(); reLoad(); dialog.dismiss();
-					 */
+
+					sortProjects.sortAlmostFunded(p_project_displayed);
+					launchDefaultFragment();
+					dialog.dismiss();
 					break;
 
 				}
 			}
 		});
 
-		AlertDialog dialog = alertDialog.create();
 		dialog.show();
 
 	}
@@ -457,7 +469,7 @@ public class MainActivity extends Activity {
 
 			@Override
 			public boolean onClose() {
-				projetsToDisplay = new ArrayList<Project>(sync.getProjects());
+				p_project_displayed = new ArrayList<Project>(sync.getProjects());
 				// reLoad();
 				return false;
 			}
@@ -492,7 +504,10 @@ public class MainActivity extends Activity {
 
 				ArrayList<Project> allSync = new ArrayList<Project>(sync
 						.getProjects());
-				projetsToDisplay = allSync;
+				p_project_displayed = allSync;
+				
+				launchDefaultFragment();
+				
 
 			}
 		});

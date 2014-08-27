@@ -213,6 +213,10 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
     public void setAdmin(){
     	m_administrator = true;
     }
+    
+    public static void disconnect(){
+    	m_own = null;
+    }
 
 
     public void save() {

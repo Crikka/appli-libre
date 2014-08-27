@@ -18,6 +18,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,6 +26,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,7 +35,7 @@ import com.touchmenotapps.carousel.simple.HorizontalCarouselLayout;
 import com.touchmenotapps.carousel.simple.HorizontalCarouselLayout.CarouselInterface;
 import com.touchmenotapps.carousel.simple.HorizontalCarouselStyle;
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
 
 	private EditText m_titre;
 	private EditText m_Description;
@@ -59,6 +61,8 @@ public class MainActivity extends Activity {
 
 	private static final int PICK_MAPS = 3;
 
+	private ImageView avatar;
+
 	private HorizontalCarouselStyle mStyle;
 	private HorizontalCarouselLayout mCarousel;
 	private CarouselAdapter mAdapter;
@@ -78,6 +82,22 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_project);
 
+		m_titre = (EditText) findViewById(R.id.titre);
+		m_Description = (EditText) findViewById(R.id.description);
+		m_dateFin = (DatePicker) findViewById(R.id.date_de_fin);
+		m_localisation = (Button) findViewById(R.id.button_localisation);
+		m_edit_text_somme = (EditText) findViewById(R.id.edit_text_somme);
+		m_user_pseudo = (TextView) findViewById(R.id.utilisateur_soumission);
+		m_user_ville = (TextView) findViewById(R.id.ville);
+
+		m_email = (EditText) findViewById(R.id.mail);
+		m_website = (EditText) findViewById(R.id.website);
+		m_phone = (EditText) findViewById(R.id.phone);
+
+		m_edit_text_somme = (EditText) findViewById(R.id.edit_text_somme);
+
+		avatar = (ImageView) findViewById(R.id.avatar);
+		
 		try {
 			Account compte = Account.getOwn();
 			compte.getUser(new WhatToDo<User>() {
@@ -89,6 +109,15 @@ public class MainActivity extends Activity {
 					}
 					user = resource;
 					System.out.println(user.getResourceId());
+
+					m_user_pseudo.setText(resource.getPseudo());
+					m_user_ville.setText(resource.getCity());
+					if (resource.getGender().equals("0")) {
+						avatar.setImageResource(R.drawable.male_user_icon);
+					} else {
+						avatar.setImageResource(R.drawable.female_user_icon);
+					}
+
 				}
 
 				@Override
@@ -106,42 +135,7 @@ public class MainActivity extends Activity {
 
 		context = this;
 
-		m_titre = (EditText) findViewById(R.id.titre);
-		m_Description = (EditText) findViewById(R.id.description);
-		m_dateFin = (DatePicker) findViewById(R.id.date_de_fin);
-		m_localisation = (Button) findViewById(R.id.button_localisation);
-		m_edit_text_somme = (EditText) findViewById(R.id.edit_text_somme);
-		m_user_pseudo = (TextView) findViewById(R.id.utilisateur_soumission);
-		m_user_ville = (TextView) findViewById(R.id.ville);
-
-		m_email = (EditText) findViewById(R.id.mail);
-		m_website = (EditText) findViewById(R.id.website);
-		m_phone = (EditText) findViewById(R.id.phone);
-
-		m_edit_text_somme = (EditText) findViewById(R.id.edit_text_somme);
-
 		position = new LatLng(0, 0);
-
-		try {
-			Account count = Account.getOwn();
-			count.getUser(new WhatToDo<User>() {
-
-				@Override
-				public void hold(User resource) {
-					m_user_pseudo.setText(resource.getPseudo());
-					m_user_ville.setText(resource.getCity());
-				}
-
-				@Override
-				public void eventually() {
-					// TODO Auto-generated method stub
-
-				}
-
-			});
-		} catch (NoAccountExistsInLocal e) {
-			finish();
-		}
 
 		mData.add(R.drawable.ic_launcher);
 		mData.add(R.drawable.roi);
@@ -263,7 +257,7 @@ public class MainActivity extends Activity {
 			int year = m_dateFin.getYear();
 			Calendar calendar = Calendar.getInstance();
 			calendar.set(year, month, day);
-	
+
 			String Stryear = "" + year;
 			String StrMonth = null;
 			if (month < 10) {
@@ -281,7 +275,8 @@ public class MainActivity extends Activity {
 							+ StrDay + " 00:00:00"), new LatLng(
 							position.latitude, position.longitude),
 					m_illustration, m_email.getText().toString(), m_website
-							.getText().toString(), m_phone.getText().toString(), false)
+							.getText().toString(),
+					m_phone.getText().toString(), false)
 					.serverCreate(new CreateEvent<Project>() {
 						@Override
 						public void errorResourceIdAlreadyUsed() {

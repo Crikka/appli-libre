@@ -22,11 +22,11 @@
             android:id="@+id/connexion"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/buttonshapes"
+            android:background="@drawable/buttonshapesred"
             android:gravity="center"
             android:padding="10dip"
             android:text="@string/login_or_register"
-            android:textColor="#808080"
+            android:textColor="#ffffff"
             android:textSize="25sp" />
 
         <LinearLayout
@@ -99,7 +99,7 @@
             android:layout_marginLeft="20dip"
             android:background="@null"
             android:contentDescription="@string/description_image_button"
-            android:drawableLeft="@drawable/ic_menu_mark"
+            android:drawableLeft="@drawable/ic_menu_home"
             android:text="Tout les projets" />
 
         <Button
@@ -142,6 +142,16 @@
             android:layout_width="wrap_content"
             android:layout_height="3dp"
             android:layout_marginTop="10dp" />
+        
+           <Button
+            android:id="@+id/button_deconnexion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dip"
+            android:background="@null"
+            android:contentDescription="@string/description_image_button"
+            android:drawableLeft="@android:drawable/ic_menu_close_clear_cancel"
+            android:text="Déconnexion" />
 
     </LinearLayout>
 
