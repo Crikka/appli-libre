@@ -129,9 +129,10 @@ public class MainActivity extends Activity implements TabListener {
 
 		if (tab.getText().equals("Projets")) {
 
+			/*
 			fram1 = new TabSubmitedProjectFragment();
 			ft.replace(rl.getId(), fram1);
-
+*/
 		} else if (tab.getText().equals("Favoris")) {
 
 			fram2 = new TabBookmarkFragment();

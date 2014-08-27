@@ -1,32 +1,47 @@
-package adullact.publicrowdfunding.controller.profile;
+package adullact.publicrowdfunding.fragment.v4.profile;
 
 import java.util.ArrayList;
 
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.controller.detailProject.MainActivity;
 import adullact.publicrowdfunding.custom.CustomAdapter;
+import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
+import adullact.publicrowdfunding.model.local.cache.Cache;
+import adullact.publicrowdfunding.model.local.callback.HoldToDo;
+import adullact.publicrowdfunding.model.local.callback.WhatToDo;
+import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.Project;
+import adullact.publicrowdfunding.model.local.ressource.User;
+import adullact.publicrowdfunding.model.local.utilities.Share;
+import adullact.publicrowdfunding.model.local.utilities.Utility;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
-public class TabSubmitedProjectFragment extends Fragment {
-
+public class SubmitedFragment extends Fragment {
+	
 	private ListView listeProjets;
 
 	private ArrayList<Project> projets;
-
+	
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		super.onCreateView(inflater, container, savedInstanceState);
 
 		final View view = inflater.inflate(R.layout.fragment_list_project_no_refresh, container, false);
 
@@ -70,4 +85,5 @@ public class TabSubmitedProjectFragment extends Fragment {
 
 		return view;
 	}
+
 }

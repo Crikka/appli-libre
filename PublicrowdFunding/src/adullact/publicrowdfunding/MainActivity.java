@@ -177,10 +177,6 @@ public class MainActivity extends FragmentActivity {
 				ft.commit();
 
 				mDrawerLayout.closeDrawer(mDrawerList);
-
-				_this.getActionBar().removeAllTabs();
-				_this.getActionBar().setNavigationMode(
-						ActionBar.NAVIGATION_MODE_STANDARD);
 			}
 		});
 
@@ -195,10 +191,6 @@ public class MainActivity extends FragmentActivity {
 
 				startActivity(in);
 
-				_this.getActionBar().removeAllTabs();
-				_this.getActionBar().setNavigationMode(
-						ActionBar.NAVIGATION_MODE_STANDARD);
-
 			}
 		});
 
@@ -206,11 +198,21 @@ public class MainActivity extends FragmentActivity {
 		m_button_account.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent in = new Intent(
-						getBaseContext().getApplicationContext(),
-						adullact.publicrowdfunding.controller.profile.MainActivity.class);
-				in.putExtra("myCount", true);
-				startActivity(in);
+				
+				
+				FragmentTransaction ft = getSupportFragmentManager()
+						.beginTransaction();
+				// ft.setCustomAnimations(R.anim.enter, R.anim.exit);
+				Fragment fragment = new adullact.publicrowdfunding.fragment.v4.profile.PagerFragment();
+				Bundle bundle = new Bundle();
+        		bundle.putString("idUser","me");
+        		fragment.setArguments(bundle);
+        		fragment.setHasOptionsMenu(true);
+				ft.replace(R.id.content_frame, fragment);
+				ft.commit();
+
+				mDrawerLayout.closeDrawer(mDrawerList);
+				
 			}
 		});
 
