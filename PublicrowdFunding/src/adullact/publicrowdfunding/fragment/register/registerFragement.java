@@ -1,19 +1,30 @@
-package adullact.publicrowdfunding.controller.register;
+package adullact.publicrowdfunding.fragment.register;
 
+import adullact.publicrowdfunding.MainActivity;
+import adullact.publicrowdfunding.ProjectsFragment;
 import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
+import adullact.publicrowdfunding.model.local.callback.HoldToDo;
+import adullact.publicrowdfunding.model.local.ressource.Account;
+import adullact.publicrowdfunding.model.local.ressource.User;
+import adullact.publicrowdfunding.model.server.event.AuthenticationEvent;
 import adullact.publicrowdfunding.model.server.event.RegistrationEvent;
+import adullact.publicrowdfunding.model.server.request.AuthenticationRequest;
 import adullact.publicrowdfunding.model.server.request.RegistrationRequest;
-import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-public class registerActivity extends Activity {
+public class registerFragement extends Fragment {
 
 	private EditText m_login;
 	private EditText m_password1;
@@ -23,44 +34,51 @@ public class registerActivity extends Activity {
 	private LinearLayout loading;
 	
 	private Context context;
-
+	
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_register);
-
-		context = this;
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
 		
-		m_login = (EditText) findViewById(R.id.inscription_login);
-		m_password1 = (EditText) findViewById(R.id.inscription_password1);
-		m_password2 = (EditText) findViewById(R.id.inscription_password2);
-		m_button = (Button) findViewById(R.id.inscription_button);
+		final View view = inflater.inflate(R.layout.activity_register,
+				container, false);
+		
+		context = getActivity();
 
-		loading = (LinearLayout) findViewById(R.id.loading);
+		
+		m_login = (EditText) view.findViewById(R.id.inscription_login);
+		m_password1 = (EditText) view.findViewById(R.id.inscription_password1);
+		m_password2 = (EditText) view.findViewById(R.id.inscription_password2);
+		m_button = (Button) view.findViewById(R.id.inscription_button);
+
+		loading = (LinearLayout) view.findViewById(R.id.loading);
 		loading.setVisibility(View.GONE);
 		
-		String login = getIntent().getExtras().getString("login");
-		m_login.setText(login);
-
+		
+		Bundle bundle = this.getArguments();
+		if(bundle != null){
+		    String login = bundle.getString("login");
+		    m_login.setText(login);
+		}
+		
 		m_button.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 
 				if (m_login.length() == 0) {
-					Toast.makeText(getApplicationContext(),
+					Toast.makeText(context,
 							"Vous avez oublié le pseudo", Toast.LENGTH_SHORT)
 							.show();
 					return;
 				}
 
 				if (m_password1.length() == 0) {
-					Toast.makeText(getApplicationContext(),
+					Toast.makeText(context,
 							"Vous avez oublié le 1er mot de passes",
 							Toast.LENGTH_SHORT).show();
 					return;
 				}
 
 				if (m_password2.length() == 0) {
-					Toast.makeText(getApplicationContext(),
+					Toast.makeText(context,
 							"Vous avez oublié le 2e mot de passes",
 							Toast.LENGTH_SHORT).show();
 					return;
@@ -68,7 +86,7 @@ public class registerActivity extends Activity {
 
 				if (!m_password1.getText().toString()
 						.equals(m_password2.getText().toString())) {
-					Toast.makeText(getApplicationContext(),
+					Toast.makeText(context,
 							"Les mots de passe sont différents : ",
 							Toast.LENGTH_SHORT).show();
 					return;
@@ -86,10 +104,18 @@ public class registerActivity extends Activity {
                 new RegistrationRequest(username, password, username, new RegistrationEvent() {
                     @Override
                     public void onRegister() {
-                    	Toast.makeText(context, "Bienvenue "+m_login, Toast.LENGTH_SHORT).show();
-                        Intent returnIntent = new Intent();
-                        setResult(RESULT_OK, returnIntent);
-                        finish();
+                    	Toast.makeText(context, "Bienvenue "+m_login.getText().toString(), Toast.LENGTH_SHORT).show();
+                    	
+                    	FragmentTransaction ft = getFragmentManager().beginTransaction();
+                		ft.setCustomAnimations(R.anim.enter, R.anim.exit);
+                		Fragment fragment = new ProjectsFragment();
+
+                		ft.replace(R.id.content_frame, fragment);
+                		
+                		MainActivity _this = (MainActivity) getActivity();
+                		_this.isConnect();
+                		
+                		ft.commit();
                     }
 
                     @Override
@@ -112,5 +138,10 @@ public class registerActivity extends Activity {
                 }).execute();
 			}
 		});
+		
+		
+		return view;
+		
 	}
+
 }

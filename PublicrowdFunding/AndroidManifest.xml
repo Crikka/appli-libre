@@ -83,7 +83,7 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.controller.register.registerActivity"
+            android:name="adullact.publicrowdfunding.fragment.register.registerActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
@@ -95,7 +95,7 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.controller.register.ConnexionActivity"
+            android:name="adullact.publicrowdfunding.fragment.register.ConnexionActivity"
             android:label="@string/app_name" >
         </activity>
         <activity

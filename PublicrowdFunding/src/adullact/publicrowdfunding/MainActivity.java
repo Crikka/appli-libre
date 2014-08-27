@@ -5,8 +5,8 @@ import java.util.Locale;
 
 import com.google.android.gms.maps.model.LatLng;
 
-import adullact.publicrowdfunding.controller.register.connexionFragment;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
+import adullact.publicrowdfunding.fragment.register.connexionFragment;
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
