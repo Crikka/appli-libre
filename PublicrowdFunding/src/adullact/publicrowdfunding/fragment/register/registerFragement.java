@@ -16,8 +16,10 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,7 +45,6 @@ public class registerFragement extends Fragment {
 				container, false);
 		
 		context = getActivity();
-
 		
 		m_login = (EditText) view.findViewById(R.id.inscription_login);
 		m_password1 = (EditText) view.findViewById(R.id.inscription_password1);
@@ -139,9 +140,33 @@ public class registerFragement extends Fragment {
 			}
 		});
 		
+		view.setFocusableInTouchMode(true);
+		view.requestFocus();
+		view.setOnKeyListener( new OnKeyListener()
+		{
+		    @Override
+		    public boolean onKey( View v, int keyCode, KeyEvent event )
+		    {
+		        if( keyCode == KeyEvent.KEYCODE_BACK )
+		        {
+		        	System.out.println("back");
+                	FragmentTransaction ft = getFragmentManager().beginTransaction();
+            		ft.setCustomAnimations(R.anim.enter, R.anim.exit);
+            		Fragment fragment = new connexionFragment();
+
+            		ft.replace(R.id.content_frame, fragment);
+            		
+            		ft.commit(); 
+            		return true;
+		        }
+		        return false;
+		    }
+		} );
 		
 		return view;
 		
 	}
+	
+	
 
 }

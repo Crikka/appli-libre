@@ -37,10 +37,11 @@ public class connexionFragment extends Fragment {
 			Bundle savedInstanceState) {
 		final View view = inflater.inflate(R.layout.activity_authetificate,
 				container, false);
-
 		
 		context = getActivity();
-
+		
+		this.setHasOptionsMenu(false);
+		
 		m_login = (EditText) view.findViewById(R.id.login_connexion);
 		m_password = (EditText) view.findViewById(R.id.password_connexion);
 

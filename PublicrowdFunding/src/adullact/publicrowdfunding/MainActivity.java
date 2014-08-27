@@ -168,7 +168,8 @@ public class MainActivity extends Activity {
 	}
 
 	private void gererPanneauMenu() {
-
+		final MainActivity _this = this;
+		this.invalidateOptionsMenu();
 		m_button_authentificate = (Button) findViewById(R.id.connexion);
 		m_button_authentificate.setOnClickListener(new View.OnClickListener() {
 			@Override
