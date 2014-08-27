@@ -1,7 +1,6 @@
 package adullact.publicrowdfunding.controller.detailProject;
 
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.controller.register.ConnexionActivity;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
@@ -110,9 +109,10 @@ public class TabProjectFragment extends Fragment {
 		m_connexion.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				/*
 				Intent in = new Intent(_this.getApplicationContext(),
 						ConnexionActivity.class);
-				startActivity(in);
+				startActivity(in);*/
 			}
 		});
 

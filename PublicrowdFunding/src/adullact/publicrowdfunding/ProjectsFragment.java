@@ -22,7 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class TabProjectsFragment extends Fragment {
+public class ProjectsFragment extends Fragment {
 
 	private ListView listeProjets;
 

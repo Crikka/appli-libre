@@ -1,18 +1,24 @@
 package adullact.publicrowdfunding;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 import com.google.android.gms.maps.model.LatLng;
 
-import adullact.publicrowdfunding.controller.register.ConnexionActivity;
+import adullact.publicrowdfunding.controller.register.connexionFragment;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
+import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
+import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
 import adullact.publicrowdfunding.model.local.utilities.Share;
+import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -33,12 +39,17 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.SearchView.OnCloseListener;
+import android.widget.SearchView.OnQueryTextListener;
 
 public class MainActivity extends Activity {
 
@@ -64,11 +75,19 @@ public class MainActivity extends Activity {
 	private LocationListener locationListener;
 	private String locationProvider;
 
+	protected ArrayList<Project> projetsToDisplay;
+
+	private SyncServerToLocal sync;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		projetsToDisplay = new ArrayList<Project>();
+
+		syncProjects();
+		
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (LinearLayout) findViewById(R.id.left);
 
@@ -96,20 +115,23 @@ public class MainActivity extends Activity {
 
 		gererPanneauMenu();
 		isConnect();
-		geolocalisation();
+		// geolocalisation();
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		// inflater.inflate(R.menu.main, menu);
+		inflater.inflate(R.menu.menu_main, menu);
+		search(menu);
+
 		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-		// menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
+		menu.findItem(R.id.action_search).setVisible(!drawerOpen);
+		menu.findItem(R.id.action_sort).setVisible(!drawerOpen);
 		return super.onPrepareOptionsMenu(menu);
 	}
 
@@ -121,36 +143,25 @@ public class MainActivity extends Activity {
 		}
 
 		switch (item.getItemId()) {
-		/*
-		 * case R.id.action_websearch: // create intent to perform web search
-		 * for this planet Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
-		 * intent.putExtra(SearchManager.QUERY, getActionBar().getTitle()); //
-		 * catch event that there's no activity to handle intent if
-		 * (intent.resolveActivity(getPackageManager()) != null) {
-		 * startActivity(intent); } else { Toast.makeText(this,
-		 * R.string.app_not_available, Toast.LENGTH_LONG).show(); } return true;
-		 */
+
+		case R.id.action_sort:
+			sort();
+			break;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+		return true;
 	}
-
-	/**
-	 * When using the ActionBarDrawerToggle, you must call it during
-	 * onPostCreate() and onConfigurationChanged()...
-	 */
 
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
-		// Sync the toggle state after onRestoreInstanceState has occurred.
 		mDrawerToggle.syncState();
 	}
 
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
-		// Pass any configuration change to the drawer toggls
 		mDrawerToggle.onConfigurationChanged(newConfig);
 	}
 
@@ -161,10 +172,14 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 
-				Intent in = new Intent(
-						getBaseContext().getApplicationContext(),
-						ConnexionActivity.class);
-				startActivity(in);
+				
+				FragmentTransaction ft = getFragmentManager().beginTransaction();
+				ft.setCustomAnimations(R.anim.enter, R.anim.exit);
+				Fragment fragment = new connexionFragment();
+				ft.replace(R.id.content_frame, fragment);
+				ft.commit();
+
+				mDrawerLayout.closeDrawer(mDrawerList);
 			}
 		});
 
@@ -208,17 +223,25 @@ public class MainActivity extends Activity {
 					}
 				});
 
+		
+		
+		
 		// OK
 		m_button_map_projects = (Button) findViewById(R.id.button_map_projet);
 		m_button_map_projects.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 
+				
+				
+				
+
+				FragmentTransaction ft = getFragmentManager().beginTransaction();
+				ft.setCustomAnimations(R.anim.enter, R.anim.exit);
 				Fragment fragment = new TabMapFragment();
 
-				FragmentManager fragmentManager = getFragmentManager();
-				fragmentManager.beginTransaction()
-						.replace(R.id.content_frame, fragment).commit();
+				ft.replace(R.id.content_frame, fragment);
+				ft.commit();
 
 				mDrawerLayout.closeDrawer(mDrawerList);
 			}
@@ -261,7 +284,6 @@ public class MainActivity extends Activity {
 
 				@Override
 				public void eventually() {
-					// TODO Auto-generated method stub
 
 				}
 
@@ -299,12 +321,13 @@ public class MainActivity extends Activity {
 
 	public void launchDefaultFragment() {
 
-		Fragment fragment = new TabProjectsFragment();
+		
+		FragmentTransaction ft = getFragmentManager().beginTransaction();
+		ft.setCustomAnimations(R.anim.enter, R.anim.exit);
+		Fragment fragment = new ProjectsFragment();
 
-		FragmentManager fragmentManager = getFragmentManager();
-		fragmentManager.beginTransaction()
-				.replace(R.id.content_frame, fragment, "allProjectFragment")
-				.commit();
+		ft.replace(R.id.content_frame, fragment, "allProjectFragment");
+		ft.commit();
 
 		mDrawerLayout.closeDrawer(mDrawerList);
 	}
@@ -312,9 +335,9 @@ public class MainActivity extends Activity {
 	public void geolocalisation() {
 
 		if (Share.position != null) {
-			try{
-			locationManager.removeUpdates(locationListener);
-			}catch(Exception e){
+			try {
+				locationManager.removeUpdates(locationListener);
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			return;
@@ -371,6 +394,108 @@ public class MainActivity extends Activity {
 		locationManager.requestLocationUpdates(locationProvider, 60000, 0,
 				locationListener);
 
+	}
+
+	public void sort() {
+		String names[] = { "Les plus gros projets en premier",
+				"Le plus petit projets en premier", "Le plus avancés" };
+
+		AlertDialog.Builder alertDialog = new AlertDialog.Builder(
+				MainActivity.this);
+		LayoutInflater inflater = getLayoutInflater();
+		View convertView = (View) inflater.inflate(R.layout.listeview, null);
+		alertDialog.setView(convertView);
+		alertDialog.setTitle("Trier par");
+		ListView lv = (ListView) convertView.findViewById(R.id.liste);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+				MainActivity.this, android.R.layout.simple_list_item_1, names);
+		lv.setAdapter(adapter);
+		lv.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+
+				switch (position) {
+				case 0:
+					/*
+					 * sortBiggestProjectFirst(); reLoad(); dialog.dismiss();
+					 */
+					break;
+				case 1:
+					/*
+					 * sortBiggestProjectLast(); reLoad(); dialog.dismiss();
+					 */
+					break;
+				case 2:
+					/*
+					 * sortAlmostFunded(); reLoad(); dialog.dismiss();
+					 */
+					break;
+
+				}
+			}
+		});
+
+		AlertDialog dialog = alertDialog.create();
+		dialog.show();
+
+	}
+
+	public void search(Menu menu) {
+		MenuItem searchItem;
+		searchItem = menu.findItem(R.id.action_search);
+		assert searchItem != null;
+		SearchView searchView = (SearchView) searchItem.getActionView();
+		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+		if (null != searchManager) {
+			searchView.setSearchableInfo(searchManager
+					.getSearchableInfo(getComponentName()));
+		}
+		searchView.setIconifiedByDefault(true);
+		searchView.setOnCloseListener(new OnCloseListener() {
+
+			@Override
+			public boolean onClose() {
+				projetsToDisplay = new ArrayList<Project>(sync.getProjects());
+				// reLoad();
+				return false;
+			}
+
+		});
+
+		searchView.setOnQueryTextListener(new OnQueryTextListener() {
+
+			public boolean onQueryTextSubmit(String query) {
+				/*
+				 * projetsToDisplay = sync.searchInName(query); reLoad();
+				 */
+				return false;
+			}
+
+			@Override
+			public boolean onQueryTextChange(String newText) {
+				return false;
+			}
+
+		});
+
+	}
+
+	public void syncProjects() {
+
+		sync = SyncServerToLocal.getInstance();
+		sync.sync(new HoldAllToDo<Project>() {
+
+			@Override
+			public void holdAll(ArrayList<Project> projects) {
+
+				ArrayList<Project> allSync = new ArrayList<Project>(sync
+						.getProjects());
+				projetsToDisplay = allSync;
+
+			}
+		});
 	}
 
 }

@@ -1,5 +1,7 @@
 package adullact.publicrowdfunding.controller.register;
 
+import adullact.publicrowdfunding.MainActivity;
+import adullact.publicrowdfunding.ProjectsFragment;
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.callback.HoldToDo;
@@ -7,46 +9,49 @@ import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.User;
 import adullact.publicrowdfunding.model.server.event.AuthenticationEvent;
 import adullact.publicrowdfunding.model.server.request.AuthenticationRequest;
-import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-public class ConnexionActivity extends Activity {
+public class connexionFragment extends Fragment {
 
 	private EditText m_login;
 	private EditText m_password;
 	private Button m_buttonValider;
 	private Button m_buttonInscription;
 	private Context context;
-
+	
 	private LinearLayout loading;
     private LinearLayout loadingPersonnelInfo;
-
-    @Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_authetificate);
+	
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		final View view = inflater.inflate(R.layout.activity_authetificate,
+				container, false);
 
 		
-		context = this;
+		context = getActivity();
 
-		m_login = (EditText) findViewById(R.id.login_connexion);
-		m_password = (EditText) findViewById(R.id.password_connexion);
+		m_login = (EditText) view.findViewById(R.id.login_connexion);
+		m_password = (EditText) view.findViewById(R.id.password_connexion);
 
-		m_buttonValider = (Button) findViewById(R.id.valider_connexion);
-		m_buttonInscription = (Button) findViewById(R.id.inscription_button);
+		m_buttonValider = (Button) view.findViewById(R.id.valider_connexion);
+		m_buttonInscription = (Button) view.findViewById(R.id.inscription_button);
 
-		loading = (LinearLayout) findViewById(R.id.loading);
+		loading = (LinearLayout) view.findViewById(R.id.loading);
 		loading.setVisibility(View.GONE);
 
-        loadingPersonnelInfo = (LinearLayout) findViewById(R.id.loadingLoadingInfo);
+        loadingPersonnelInfo = (LinearLayout) view.findViewById(R.id.loadingLoadingInfo);
         loadingPersonnelInfo.setVisibility(View.GONE);
 
 		m_buttonValider.setOnClickListener(new View.OnClickListener() {
@@ -92,12 +97,24 @@ public class ConnexionActivity extends Activity {
                                     Account.getOwn().getUser(new HoldToDo<User>() {
                                         @Override
                                         public void hold(User resource) {
-                                            Toast.makeText(context, "Bienvenue " + resource.getPseudo() + "!", Toast.LENGTH_LONG).show();
-                                            finish();
+                                            Toast.makeText(context, "Bienvenue " + resource.getPseudo(), Toast.LENGTH_LONG).show();
+                                            
+                                    		FragmentTransaction ft = getFragmentManager().beginTransaction();
+                                    		ft.setCustomAnimations(R.anim.enter, R.anim.exit);
+                                    		Fragment fragment = new ProjectsFragment();
+
+                                    		ft.replace(R.id.content_frame, fragment, "allProjectFragment");
+                                    		
+                                    		MainActivity _this = (MainActivity) getActivity();
+                                    		_this.isConnect();
+                                    		
+                                    		ft.commit();
+                                            
+                                            
                                         }
                                     });
                                 } catch (NoAccountExistsInLocal noAccountExistsInLocal) {
-                                    finish();
+                                	Toast.makeText(context, "Impossible de se conncecté", Toast.LENGTH_LONG).show();
 
                                 }
 							}
@@ -106,7 +123,7 @@ public class ConnexionActivity extends Activity {
 							public void errorNetwork() {
 								System.out.println("Erreur serveur");
 								Toast.makeText(
-										getApplicationContext(),
+										context,
 										"Connexion impossible au serveur, veuillez vérifier vos paramètres resaux.",
 										Toast.LENGTH_LONG).show();
 								loading.setVisibility(View.GONE);
@@ -121,26 +138,14 @@ public class ConnexionActivity extends Activity {
 
 				String login = m_login.getText().toString();
 
-				Intent in = new Intent(getBaseContext(),
+				Intent in = new Intent(context,
 						registerActivity.class);
 				in.putExtra("login", login);
 				startActivityForResult(in, 1);
 
 			}
 		});
+		return view;
 	}
 
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-		if (requestCode == 1) {
-			if (resultCode == RESULT_OK) {
-				finish();
-			}
-			if (resultCode == RESULT_CANCELED) {
-				/*
-				Toast.makeText(getApplicationContext(), "Inscription refusé",
-						Toast.LENGTH_LONG).show();*/
-			}
-		}
-	}
 }

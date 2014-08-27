@@ -1,6 +1,6 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    
+    <integer name="config_mediumAnimTime">500</integer>    
     
     <color name="bleu">#90083BA6</color>
     <color name="monJaune">#ffff00A6</color>

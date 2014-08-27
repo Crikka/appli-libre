@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.controller.register.ConnexionActivity;
 import adullact.publicrowdfunding.custom.CommentaireAdapteur;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
@@ -66,9 +65,10 @@ public class TabCommentsFragment extends Fragment {
 		m_connexion.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				/*
 				Intent in = new Intent(_this.getApplicationContext(),
 						ConnexionActivity.class);
-				startActivity(in);
+				startActivity(in);*/
 			}
 		});
 
