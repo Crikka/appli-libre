@@ -1,4 +1,4 @@
-package adullact.publicrowdfunding.controller.detailProject;
+package adullact.publicrowdfunding.fragment.v4.detailProject;
 
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;

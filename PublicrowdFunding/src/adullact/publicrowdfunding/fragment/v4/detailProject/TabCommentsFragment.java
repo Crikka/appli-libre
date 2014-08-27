@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.controller.detailProject.addCommentAlert;
 import adullact.publicrowdfunding.custom.CommentaireAdapteur;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.cache.Cache;
@@ -15,11 +14,10 @@ import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.Commentary;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.PagerTabStrip;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +25,6 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RatingBar;
@@ -48,6 +45,8 @@ public class TabCommentsFragment extends Fragment {
 	private SwipeRefreshLayout swipeView;
 
 	private Project projetCurrent;
+	
+	private FragmentManager fm;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,6 +56,8 @@ public class TabCommentsFragment extends Fragment {
 		
 		final View view = inflater.inflate(R.layout.fragment_list_comments,
 				container, false);
+		
+		fm = this.getActivity().getSupportFragmentManager();
 		
 		layoutConnect = (LinearLayout) view.findViewById(R.id.connect);
 
@@ -159,14 +160,19 @@ public class TabCommentsFragment extends Fragment {
 
 					@Override
 					public void hold(User resource) {
-						Context c = getActivity();
-						Intent in = new Intent(
-								c,
-								adullact.publicrowdfunding.controller.profile.MainActivity.class);
-						in.putExtra("myCount", false);
-						in.putExtra("id", resource.getResourceId());
-						startActivity(in);
-
+						
+						
+						FragmentTransaction ft = fm.beginTransaction();
+						
+						// ft.setCustomAnimations(R.anim.enter, R.anim.exit);
+						Fragment fragment = new adullact.publicrowdfunding.fragment.v4.profile.PagerFragment();
+						Bundle bundle = new Bundle();
+		        		bundle.putString("idUser",resource.getResourceId());
+		        		fragment.setArguments(bundle);
+		        		fragment.setHasOptionsMenu(true);
+						ft.replace(R.id.content_frame, fragment);
+						ft.commit();
+					
 					}
 
 					@Override

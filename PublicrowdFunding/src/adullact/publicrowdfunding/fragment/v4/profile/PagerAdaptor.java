@@ -32,7 +32,7 @@ public class PagerAdaptor extends FragmentStatePagerAdapter {
 		switch (position) {
 		
 		case 0:
-			fragment =  new FinancedFragment();
+			fragment =  new SubmitedFragment();
     		bundle.putString("idUser",idUser);
     		fragment.setArguments(bundle);
 			return fragment;
@@ -42,7 +42,7 @@ public class PagerAdaptor extends FragmentStatePagerAdapter {
 	    		fragment.setArguments(bundle);
 				return fragment;
 		case 2:
-			fragment =  new SubmitedFragment();
+			fragment =  new FinancedFragment();
     		bundle.putString("idUser",idUser);
     		fragment.setArguments(bundle);
 			return fragment;

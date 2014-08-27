@@ -3,21 +3,15 @@ package adullact.publicrowdfunding.fragment.v4.register;
 import adullact.publicrowdfunding.MainActivity;
 import adullact.publicrowdfunding.ProjectsFragment;
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
-import adullact.publicrowdfunding.model.local.callback.HoldToDo;
-import adullact.publicrowdfunding.model.local.ressource.Account;
-import adullact.publicrowdfunding.model.local.ressource.User;
-import adullact.publicrowdfunding.model.server.event.AuthenticationEvent;
 import adullact.publicrowdfunding.model.server.event.RegistrationEvent;
-import adullact.publicrowdfunding.model.server.request.AuthenticationRequest;
 import adullact.publicrowdfunding.model.server.request.RegistrationRequest;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
@@ -153,7 +147,6 @@ public class registerFragement extends Fragment {
                 	FragmentTransaction ft = getFragmentManager().beginTransaction();
             		//ft.setCustomAnimations(R.anim.enter, R.anim.exit);
             		Fragment fragment = new connexionFragment();
-
             		ft.replace(R.id.content_frame, fragment);
             		
             		ft.commit(); 
@@ -165,6 +158,12 @@ public class registerFragement extends Fragment {
 		
 		return view;
 		
+	}
+	
+	@Override
+	public void onPrepareOptionsMenu(Menu menu) {
+		menu.findItem(R.id.action_search).setVisible(false);
+		menu.findItem(R.id.action_sort).setVisible(false);
 	}
 	
 	

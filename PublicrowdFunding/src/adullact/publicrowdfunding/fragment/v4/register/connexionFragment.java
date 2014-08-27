@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -158,6 +159,12 @@ public class connexionFragment extends Fragment {
 			}
 		});
 		return view;
+	}
+	
+	@Override
+	public void onPrepareOptionsMenu(Menu menu) {
+		menu.findItem(R.id.action_search).setVisible(false);
+		menu.findItem(R.id.action_sort).setVisible(false);
 	}
 
 }

@@ -3,41 +3,28 @@ package adullact.publicrowdfunding.fragment.v4.profile;
 import java.util.ArrayList;
 
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.controller.detailProject.MainActivity;
 import adullact.publicrowdfunding.custom.CustomAdapter;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.cache.Cache;
-import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
-import adullact.publicrowdfunding.model.local.utilities.Share;
-import adullact.publicrowdfunding.model.local.utilities.Utility;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.DisplayMetrics;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
 public class BookmarkFragment extends Fragment {
 
 	private ListView listeProjets;
-
-	private adullact.publicrowdfunding.controller.profile.MainActivity _this;
 
 	private ArrayList<Project> projets;
 
@@ -73,12 +60,14 @@ public class BookmarkFragment extends Fragment {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 
-				Project projet = (Project) listeProjets
-						.getItemAtPosition(position);
-				Intent in = new Intent(parent.getContext()
-						.getApplicationContext(), MainActivity.class);
-				in.putExtra("key", projet.getResourceId());
-				startActivity(in);
+				FragmentTransaction ft = getFragmentManager().beginTransaction();
+				//ft.setCustomAnimations(R.anim.enter_2, R.anim.exit);
+				Fragment fragment = new adullact.publicrowdfunding.fragment.v4.detailProject.PagerFragment();
+        		Bundle bundle = new Bundle();
+        		bundle.putString("idProject", projets.get(position).getResourceId());
+        		fragment.setArguments(bundle);
+				ft.replace(R.id.content_frame, fragment);
+				ft.commit();
 			}
 		});
 

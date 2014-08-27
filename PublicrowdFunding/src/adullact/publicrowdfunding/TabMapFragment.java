@@ -8,7 +8,6 @@ import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -38,8 +37,6 @@ public class TabMapFragment extends Fragment implements
 	private GoogleMap googleMap;
 	private HashMap<Marker, String> markers = new HashMap<Marker, String>();
 	
-	private Context context;
-	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -54,8 +51,6 @@ public class TabMapFragment extends Fragment implements
 
 		fragment = new SupportMapFragment();
 		fm = getFragmentManager();
-		
-		context = this.getActivity();
 		
 		SyncServerToLocal sync = SyncServerToLocal.getInstance();
 		sync.sync(new HoldAllToDo<Project>() {
@@ -114,13 +109,14 @@ public class TabMapFragment extends Fragment implements
 	@Override
 	public void onInfoWindowClick(Marker marker) {
 		String id = markers.get(marker);
-		System.out.println("test");
-		Intent intent = new Intent(
-				context,
-				adullact.publicrowdfunding.controller.detailProject.MainActivity.class);
-		intent.putExtra("key", id);
-		
-		context.startActivity(intent);
+		FragmentTransaction ft = getFragmentManager().beginTransaction();
+		//ft.setCustomAnimations(R.anim.enter_2, R.anim.exit);
+		Fragment fragment = new adullact.publicrowdfunding.fragment.v4.detailProject.PagerFragment();
+		Bundle bundle = new Bundle();
+		bundle.putString("idProject", markers.get(id));
+		fragment.setArguments(bundle);
+		ft.replace(R.id.content_frame, fragment);
+		ft.commit();
 	}
 
 }

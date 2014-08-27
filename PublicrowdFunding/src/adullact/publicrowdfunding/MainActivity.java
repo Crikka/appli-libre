@@ -12,7 +12,6 @@ import adullact.publicrowdfunding.model.local.ressource.User;
 import adullact.publicrowdfunding.model.local.utilities.Share;
 import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import adullact.publicrowdfunding.model.local.utilities.sortProjects;
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
@@ -60,6 +59,7 @@ public class MainActivity extends FragmentActivity {
 	private Button m_button_map_projects;
 	private Button m_button_all_projects;
 	private Button m_button_deconnexion;
+	private Button m_Button_preferences;
 
 	private TextView utilisateurVille;
 	private TextView utilisateurName;
@@ -239,12 +239,32 @@ public class MainActivity extends FragmentActivity {
 
 				FragmentTransaction ft = getSupportFragmentManager()
 						.beginTransaction();
+				
 				//ft.setCustomAnimations(R.anim.enter, R.anim.exit);
 				Fragment fragment = new TabMapFragment();
-
+			
 				ft.replace(R.id.content_frame, fragment);
 				ft.commit();
 
+				mDrawerLayout.closeDrawer(mDrawerList);
+			}
+		});
+		
+		
+		m_Button_preferences = (Button) findViewById(R.id.button_preferences);
+		m_Button_preferences.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+				/*
+				FragmentTransaction ft = getSupportFragmentManager()
+						.beginTransaction();
+				//ft.setCustomAnimations(R.anim.enter, R.anim.exit);
+				Fragment fragment = new prefFragment();
+
+				ft.replace(R.id.content_frame, fragment);
+				ft.commit();
+*/
 				mDrawerLayout.closeDrawer(mDrawerList);
 			}
 		});
@@ -254,9 +274,6 @@ public class MainActivity extends FragmentActivity {
 			@Override
 			public void onClick(View v) {
 				launchDefaultFragment();
-				_this.getActionBar().removeAllTabs();
-				_this.getActionBar().setNavigationMode(
-						ActionBar.NAVIGATION_MODE_STANDARD);
 
 			}
 		});

@@ -3,15 +3,11 @@ package adullact.publicrowdfunding.fragment.v4.profile;
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -20,7 +16,7 @@ public class PagerFragment extends Fragment {
 	protected Project projetCurrent;
 
 	FragmentTransaction fragMentTra = null;
-	protected String idUser;
+	private String idUser;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,19 +38,13 @@ public class PagerFragment extends Fragment {
 
 	}
 	
+	/*
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		if(idUser.equals("me")){
 			inflater.inflate(R.menu.profile, menu);
 		}
 	    super.onCreateOptionsMenu(menu, inflater);
-	}
-
-	
-	@Override
-	public void onPrepareOptionsMenu(Menu menu) {
-		menu.clear();
-		return;
 	}
 	
 	@Override
@@ -71,5 +61,5 @@ public class PagerFragment extends Fragment {
 		}
 		return false;
 	}
-
+*/
 }

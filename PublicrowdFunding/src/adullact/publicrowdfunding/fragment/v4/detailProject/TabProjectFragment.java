@@ -10,10 +10,10 @@ import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
 import adullact.publicrowdfunding.model.local.utilities.Share;
 import adullact.publicrowdfunding.model.local.utilities.Utility;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,29 +57,19 @@ public class TabProjectFragment extends Fragment {
 
 	private View view;
 
-	
-    @Override
-public void onSaveInstanceState(Bundle outState) {
-    super.onSaveInstanceState(outState);
-    
-    System.out.println("restore projets");
- 
-}
+	private FragmentManager fm;
 
-    public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-
-	System.out.println("create Project Fragment");
-}
-	
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
 		System.out.println("Load Project Fragment");
-		
+
 		view = inflater.inflate(R.layout.fragment_detail_project, container,
 				false);
-		
+
+		fm = this.getActivity().getSupportFragmentManager();
+
 		layoutConnect = (LinearLayout) view.findViewById(R.id.connect);
 
 		layout_website = (RelativeLayout) view
@@ -114,14 +104,15 @@ public void onSaveInstanceState(Bundle outState) {
 		m_call = (Button) view.findViewById(R.id.phone);
 
 		m_illustration = (ImageView) view.findViewById(R.id.icon);
-		
+
 		isConnect();
 
 		Bundle bundle = this.getArguments();
 		if (bundle != null) {
 			String idProject = bundle.getString("idProject");
 			System.out.println("Affichage du projet : " + idProject);
-			Cache<Project> projet = new Project().getCache(idProject).forceRetrieve();
+			Cache<Project> projet = new Project().getCache(idProject)
+					.forceRetrieve();
 			projet.toResource(new HoldToDo<Project>() {
 				@Override
 				public void hold(Project project) {
@@ -131,7 +122,7 @@ public void onSaveInstanceState(Bundle outState) {
 					displayInfo();
 				}
 			});
-		}else{
+		} else {
 			getActivity().finish();
 		}
 
@@ -208,18 +199,22 @@ public void onSaveInstanceState(Bundle outState) {
 
 		LinearLayout userLayoutButton = (LinearLayout) view
 				.findViewById(R.id.layoutUser);
+
 		userLayoutButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 
 				try {
-					String id = user.getCache().getResourceId();
-					Context c = getActivity().getBaseContext();
-					Intent in = new Intent(
-							c,
-							adullact.publicrowdfunding.controller.profile.MainActivity.class);
-					in.putExtra("myCount", false);
-					in.putExtra("id", id);
-					startActivity(in);
+
+					FragmentTransaction ft = fm.beginTransaction();
+
+					// ft.setCustomAnimations(R.anim.enter, R.anim.exit);
+					Fragment fragment = new adullact.publicrowdfunding.fragment.v4.profile.PagerFragment();
+					Bundle bundle = new Bundle();
+					bundle.putString("idUser", user.getResourceId());
+					fragment.setArguments(bundle);
+					fragment.setHasOptionsMenu(true);
+					ft.replace(R.id.content_frame, fragment);
+					ft.commit();
 
 				} catch (NullPointerException e) {
 					Toast.makeText(getActivity(), "Une erreur s'est produite",
