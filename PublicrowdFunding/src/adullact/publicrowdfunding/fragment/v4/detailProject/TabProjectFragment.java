@@ -57,9 +57,24 @@ public class TabProjectFragment extends Fragment {
 
 	private View view;
 
+	
+    @Override
+public void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    
+    System.out.println("restore projets");
+ 
+}
+
+    public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+
+	System.out.println("create Project Fragment");
+}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+		super.onCreateView(inflater, container, savedInstanceState);
 		System.out.println("Load Project Fragment");
 		
 		view = inflater.inflate(R.layout.fragment_detail_project, container,

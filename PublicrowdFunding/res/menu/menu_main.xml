@@ -6,8 +6,7 @@
         android:icon="@android:drawable/ic_menu_search"
         android:showAsAction="always"
         android:title=""/>
-    
-      <item
+    <item
         android:id="@+id/action_sort"
         android:icon="@android:drawable/ic_menu_sort_by_size"
         android:showAsAction="always"

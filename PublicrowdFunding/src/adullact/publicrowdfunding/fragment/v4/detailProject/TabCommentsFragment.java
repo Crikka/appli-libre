@@ -42,9 +42,6 @@ public class TabCommentsFragment extends Fragment {
 	private Vector<Commentary> commentaries;
 
 	private LinearLayout layoutConnect;
-	private LinearLayout layoutDisconnect;
-
-	private Button m_connexion;
 
 	protected CommentaireAdapteur adapter;
 
@@ -62,7 +59,6 @@ public class TabCommentsFragment extends Fragment {
 				container, false);
 		
 		layoutConnect = (LinearLayout) view.findViewById(R.id.connect);
-		layoutDisconnect = (LinearLayout) view.findViewById(R.id.disconnect);
 
 		isConnect();
 
@@ -78,17 +74,6 @@ public class TabCommentsFragment extends Fragment {
 				}
 			});
 		}
-
-		m_connexion = (Button) view.findViewById(R.id.connexion);
-		m_connexion.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				/*
-				 * Intent in = new Intent(_this.getApplicationContext(),
-				 * ConnexionActivity.class); startActivity(in);
-				 */
-			}
-		});
 
 		swipeView = (SwipeRefreshLayout) view.findViewById(R.id.refresher);
 		swipeView.setEnabled(false);
@@ -141,10 +126,8 @@ public class TabCommentsFragment extends Fragment {
 		try {
 			Account.getOwn();
 			layoutConnect.setVisibility(View.VISIBLE);
-			layoutDisconnect.setVisibility(View.GONE);
 		} catch (NoAccountExistsInLocal e1) {
 			layoutConnect.setVisibility(View.GONE);
-			layoutDisconnect.setVisibility(View.VISIBLE);
 		}
 	}
 

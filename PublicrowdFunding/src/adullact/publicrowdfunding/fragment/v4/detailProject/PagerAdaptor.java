@@ -3,9 +3,9 @@ package adullact.publicrowdfunding.fragment.v4.detailProject;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
-public class PagerAdaptor extends FragmentPagerAdapter {
+public class PagerAdaptor extends FragmentStatePagerAdapter {
 
 	private String idProject;
 
