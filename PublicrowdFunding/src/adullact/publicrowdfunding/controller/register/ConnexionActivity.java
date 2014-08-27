@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,6 +34,7 @@ public class ConnexionActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_authetificate);
 
+		
 		context = this;
 
 		m_login = (EditText) findViewById(R.id.login_connexion);
@@ -64,6 +66,7 @@ public class ConnexionActivity extends Activity {
 					return;
 				}
 
+				
 				loading.setVisibility(View.VISIBLE);
 				String login = m_login.getText().toString();
 				String password = m_password.getText().toString();

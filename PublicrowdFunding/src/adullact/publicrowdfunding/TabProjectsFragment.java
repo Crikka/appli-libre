@@ -18,6 +18,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -27,7 +28,11 @@ public class TabProjectsFragment extends Fragment {
 
 	private SwipeRefreshLayout swipeView;
 
-	private adullact.publicrowdfunding.MainActivity _this;
+	private ArrayList<Project> projetsToDisplay;
+
+	private ArrayAdapter<Project> adapter;
+	
+	private LinearLayout m_layout_loading;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,15 +41,23 @@ public class TabProjectsFragment extends Fragment {
 		final View view = inflater.inflate(R.layout.fragment_liste_projet,
 				container, false);
 
-		_this = (adullact.publicrowdfunding.MainActivity) getActivity();
+		m_layout_loading = (LinearLayout) view.findViewById(R.id.loading);
+		projetsToDisplay = new ArrayList<Project>();
 
 		listeProjets = (ListView) view.findViewById(R.id.liste);
+
+		adapter = new CustomAdapter(this.getActivity().getBaseContext(),
+				R.layout.adaptor_project, projetsToDisplay);
 
 		TextView empty = (TextView) view.findViewById(R.id.empty);
 		listeProjets.setEmptyView(empty);
 
+		listeProjets.setAdapter(adapter);
 		swipeView = (SwipeRefreshLayout) view.findViewById(R.id.refresher);
 		swipeView.setEnabled(false);
+
+		refresh();
+
 		swipeView.setColorScheme(R.color.blue, R.color.green, R.color.yellow,
 				R.color.red);
 		swipeView
@@ -52,28 +65,12 @@ public class TabProjectsFragment extends Fragment {
 					@Override
 					public void onRefresh() {
 						swipeView.setRefreshing(true);
-						SyncServerToLocal sync = SyncServerToLocal
-								.getInstance();
-						sync.sync(new HoldAllToDo<Project>() {
-
-							@Override
-							public void holdAll(ArrayList<Project> projects) {
-								_this.projetsToDisplay = projects;
-
-								_this.reLoad();
-								swipeView.setRefreshing(false);
-							}
-						});
+						refresh();
 
 					}
 
 				});
 
-		ArrayAdapter<Project> adapter = new CustomAdapter(this.getActivity()
-				.getBaseContext(), R.layout.adaptor_project,
-				_this.projetsToDisplay);
-
-		listeProjets.setAdapter(adapter);
 		listeProjets.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -107,6 +104,26 @@ public class TabProjectsFragment extends Fragment {
 
 		return view;
 	}
-	
+
+	public void refresh() {
+		SyncServerToLocal sync = SyncServerToLocal.getInstance();
+		sync.sync(new HoldAllToDo<Project>() {
+
+			@Override
+			public void holdAll(ArrayList<Project> projects) {
+				projetsToDisplay = projects;
+
+				adapter = new CustomAdapter(getActivity().getBaseContext(),
+						R.layout.adaptor_project, projetsToDisplay);
+
+				listeProjets.setAdapter(adapter);
+
+				adapter.notifyDataSetChanged();
+				swipeView.setRefreshing(false);
+				m_layout_loading.setVisibility(View.GONE);
+			}
+		});
+
+	}
 
 }

@@ -30,6 +30,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -45,22 +46,15 @@ import android.widget.SearchView.OnQueryTextListener;
 
 import com.google.android.gms.maps.model.LatLng;
 
-public class MainActivity extends Activity implements TabListener {
+public class MainActivityOld extends Activity implements TabListener {
 
 	private FrameLayout rl;
 
 	private TabProjectsFragment m_tab_projects_fragment;
 	private TabMapFragment m_tab_map_fragment;
 
-	private ImageButton m_button_add_projet;
-	private ImageButton m_button_account;
 	private ImageButton m_button_sort;
-	private ImageButton m_button_validate_projects;
 
-	private Button m_button_authentificate;
-
-	private RelativeLayout m_layout_connect;
-	private LinearLayout m_layout_disconnect;
 	private LinearLayout m_layout_loading;
 
 	private SearchView searchView;
@@ -73,9 +67,10 @@ public class MainActivity extends Activity implements TabListener {
 
 	private AlertDialog dialog;
 
-	private LocationManager locationManager;
-	private LocationListener locationListener;
-	private String locationProvider;
+	
+	public MainActivityOld _this;
+	
+	private ViewGroup parent;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -83,16 +78,17 @@ public class MainActivity extends Activity implements TabListener {
 
 		setContentView(R.layout.activity_main);
 
-		m_layout_connect = (RelativeLayout) findViewById(R.id.connect);
-		m_layout_disconnect = (LinearLayout) findViewById(R.id.disconnect);
+		parent = (ViewGroup) findViewById(R.id.layout_general);
+
+		
+	
 		m_layout_loading = (LinearLayout) findViewById(R.id.loading);
 
 		projetsToDisplay = new ArrayList<Project>();
 
-		isConnect();
 
 		sync = SyncServerToLocal.getInstance();
-		final MainActivity _this = this;
+		final MainActivityOld _this = this;
 		sync.sync(new HoldAllToDo<Project>() {
 
 			@Override
@@ -124,59 +120,11 @@ public class MainActivity extends Activity implements TabListener {
 				m_actionbar.setDisplayShowTitleEnabled(true);
 				m_actionbar.show();
 				m_layout_loading.setVisibility(View.GONE);
-				geolocalisation();
 
 			}
 		});
 
-		m_button_authentificate = (Button) findViewById(R.id.connexion);
-		m_button_authentificate.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent in = new Intent(
-						getBaseContext().getApplicationContext(),
-						ConnexionActivity.class);
-				startActivity(in);
-			}
-		});
-
-		m_button_add_projet = (ImageButton) findViewById(R.id.button_soumettre_projet);
-		m_button_add_projet.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-
-				Intent in = new Intent(
-						getBaseContext().getApplicationContext(),
-						adullact.publicrowdfunding.controller.addProject.MainActivity.class);
-				startActivity(in);
-
-			}
-		});
-
-		m_button_account = (ImageButton) findViewById(R.id.button_mon_compte);
-		m_button_account.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent in = new Intent(
-						getBaseContext().getApplicationContext(),
-						adullact.publicrowdfunding.controller.profile.MainActivity.class);
-				in.putExtra("myCount", true);
-				startActivity(in);
-			}
-		});
-
-		m_button_validate_projects = (ImageButton) findViewById(R.id.button_valider_projet);
-
-		m_button_validate_projects
-				.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						Intent in = new Intent(
-								getBaseContext().getApplicationContext(),
-								adullact.publicrowdfunding.controller.validateProject.MainActivity.class);
-						startActivity(in);
-					}
-				});
+		
 
 		m_button_sort = (ImageButton) findViewById(R.id.button_filtrer);
 		m_button_sort.setOnClickListener(new View.OnClickListener() {
@@ -187,7 +135,7 @@ public class MainActivity extends Activity implements TabListener {
 						"Le plus petit projet en premier", "Le plus avancé" };
 
 				AlertDialog.Builder alertDialog = new AlertDialog.Builder(
-						MainActivity.this);
+						MainActivityOld.this);
 				LayoutInflater inflater = getLayoutInflater();
 				View convertView = (View) inflater.inflate(R.layout.listeview,
 						null);
@@ -195,7 +143,7 @@ public class MainActivity extends Activity implements TabListener {
 				alertDialog.setTitle("List");
 				ListView lv = (ListView) convertView.findViewById(R.id.liste);
 				ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-						MainActivity.this, android.R.layout.simple_list_item_1,
+						MainActivityOld.this, android.R.layout.simple_list_item_1,
 						names);
 				lv.setAdapter(adapter);
 				lv.setOnItemClickListener(new OnItemClickListener() {
@@ -255,24 +203,6 @@ public class MainActivity extends Activity implements TabListener {
 
 	@Override
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-
-	}
-
-	public void isConnect() {
-		try {
-			Account.getOwn();
-			m_layout_connect.setVisibility(View.VISIBLE);
-			m_layout_disconnect.setVisibility(View.GONE);
-		} catch (NoAccountExistsInLocal e1) {
-			m_layout_connect.setVisibility(View.GONE);
-			m_layout_disconnect.setVisibility(View.VISIBLE);
-		}
-	}
-
-	@Override
-	protected void onRestart() {
-		super.onRestart();
-		isConnect();
 
 	}
 
@@ -392,79 +322,5 @@ public class MainActivity extends Activity implements TabListener {
 
 	}
 
-	public void geolocalisation() {
-
-		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-			locationProvider = LocationManager.GPS_PROVIDER;
-		} else {
-			locationProvider = LocationManager.NETWORK_PROVIDER;
-		}
-
-		locationListener = new LocationListener() {
-
-			@Override
-			public void onLocationChanged(Location location) {
-				Share.position = new LatLng(location.getLatitude(),
-						location.getLongitude());
-				try {
-					if (getActionBar().getSelectedTab().getPosition() == 0) {
-						reLoad();
-					}
-				} catch (NullPointerException e) {
-					// 1er Initialisation
-				}
-
-			}
-
-			@Override
-			public void onStatusChanged(String provider, int status,
-					Bundle extras) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void onProviderEnabled(String provider) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void onProviderDisabled(String provider) {
-				// TODO Auto-generated method stub
-
-			}
-
-		};
-
-		locationManager.requestLocationUpdates(locationProvider, 10000, 0,
-				locationListener);
-
-	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-		try {
-			locationManager.removeUpdates(locationListener);
-		} catch (Exception e) {
-			System.out.println("Erreur 1");
-		}
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		try {
-			locationManager = (LocationManager) this
-					.getSystemService(LOCATION_SERVICE);
-			locationManager.requestLocationUpdates(locationProvider, 10000, 0,
-					locationListener);
-		} catch (Exception e) {
-			System.out.println("Erreur 2");
-		}
-	}
 
 }

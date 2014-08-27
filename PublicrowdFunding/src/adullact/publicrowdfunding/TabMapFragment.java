@@ -3,11 +3,14 @@ package adullact.publicrowdfunding;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.ressource.Project;
+import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -34,12 +37,15 @@ public class TabMapFragment extends Fragment implements
 	private View rootView;
 	private GoogleMap googleMap;
 	private HashMap<Marker, String> markers = new HashMap<Marker, String>();
-	private adullact.publicrowdfunding.MainActivity _this;
+	
+	private Context context;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
+		projets = new ArrayList<Project> ();
+		
 		mprogressDialog = new ProgressDialog(getActivity());
 		mprogressDialog.setMessage("Chargement en cours...");
 		mprogressDialog.setTitle("Google Map");
@@ -48,11 +54,23 @@ public class TabMapFragment extends Fragment implements
 
 		fragment = new MapFragment();
 		fm = getFragmentManager();
-		_this = (adullact.publicrowdfunding.MainActivity) getActivity();
 		
-        projets =_this.projetsToDisplay;
+		context = this.getActivity();
+		
+		SyncServerToLocal sync = SyncServerToLocal.getInstance();
+		sync.sync(new HoldAllToDo<Project>() {
+
+			@Override
+			public void holdAll(ArrayList<Project> projects) {
+				projets = projects;
+			}
+		});
+		
+		
+		
+		
 		FragmentTransaction ft = fm.beginTransaction();
-		ft.replace(R.id.tabcontent, fragment, "mapid").commit();
+		ft.replace(R.id.content_frame, fragment, "mapid").commit();
 
 		rootView = inflater.inflate(R.layout.activity_maps, container, false);
 
@@ -102,11 +120,11 @@ public class TabMapFragment extends Fragment implements
 		String id = markers.get(marker);
 		System.out.println("test");
 		Intent intent = new Intent(
-				_this.getApplicationContext(),
+				context,
 				adullact.publicrowdfunding.controller.detailProject.MainActivity.class);
 		intent.putExtra("key", id);
 		
-		_this.startActivity(intent);
+		context.startActivity(intent);
 	}
 
 }

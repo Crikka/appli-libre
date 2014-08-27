@@ -5,7 +5,7 @@
     android:versionName="debug" >
 
     <uses-sdk
-        android:minSdkVersion="11"
+        android:minSdkVersion="14"
         android:targetSdkVersion="19" />
 
     <permission
@@ -56,10 +56,6 @@
         </activity>
         <activity
             android:name="adullact.publicrowdfunding.TabMapFragment"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name="adullact.publicrowdfunding.controller.validateProject.MainActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
