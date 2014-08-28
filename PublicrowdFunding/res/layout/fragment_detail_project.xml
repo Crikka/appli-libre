@@ -2,14 +2,36 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/linearLayoutDetail"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:background="@color/background"
     android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical" >
+
+        <ProgressBar
+            android:id="@+id/progressBar1"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/loading" />
+
+        </LinearLayout>
 
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" >
+        android:layout_height="wrap_content" >
 
         <LinearLayout
             android:id="@+id/ll"
@@ -283,17 +305,17 @@
                 android:id="@+id/graphique"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="50dp"
                 android:layout_marginTop="10dp" />
         </LinearLayout>
     </ScrollView>
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/connect"
-        android:layout_width="fill_parent"
-        android:layout_height="50dip"
-        android:layout_margin="5dp"
-        android:layout_weight="0"
-        android:gravity="center" >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="0dp">
 
         <Button
             android:id="@+id/payer"
@@ -306,6 +328,6 @@
             android:text="@string/contribute"
             android:textColor="#808080"
             android:textSize="25sp" />
-    </LinearLayout>
+    </FrameLayout>
 
 </LinearLayout>

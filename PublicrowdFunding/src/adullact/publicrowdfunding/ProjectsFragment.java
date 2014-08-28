@@ -27,7 +27,7 @@ public class ProjectsFragment extends Fragment {
 	
 	private adullact.publicrowdfunding.MainActivity _this;
 	
-	private LinearLayout m_layout_loading;
+	private LinearLayout loading;
 
 
 	@Override
@@ -36,14 +36,13 @@ public class ProjectsFragment extends Fragment {
 
 		final View view = inflater.inflate(R.layout.fragment_liste_projet,
 				container, false);
-
-		m_layout_loading = (LinearLayout) view.findViewById(R.id.loading);
-		m_layout_loading.setVisibility(View.GONE);
 		
 		_this = (adullact.publicrowdfunding.MainActivity) getActivity();
 
 		listeProjets = (ListView) view.findViewById(R.id.liste);
 
+		loading =  (LinearLayout) view.findViewById(R.id.loading);
+		
 		adapter = new CustomAdapter(this.getActivity().getBaseContext(),
 				R.layout.adaptor_project, _this.p_project_displayed);
 
@@ -100,7 +99,7 @@ public class ProjectsFragment extends Fragment {
 					swipeView.setEnabled(false);
 			}
 		});
-
+		loading.setVisibility(View.GONE);
 		return view;
 		
 	}

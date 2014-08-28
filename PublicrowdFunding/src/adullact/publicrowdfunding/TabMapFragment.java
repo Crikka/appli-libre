@@ -8,14 +8,20 @@ import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.Display;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout.LayoutParams;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -41,7 +47,7 @@ public class TabMapFragment extends Fragment implements
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-
+		
 		rootView = inflater.inflate(R.layout.activity_maps, container, false);
 		
 		projets = new ArrayList<Project> ();
@@ -101,10 +107,10 @@ public class TabMapFragment extends Fragment implements
 				}
 
 				else {
-					handler.postDelayed(this, 1000);
+					handler.postDelayed(this, 2000);
 				}
 			}
-		}, 1000);
+		}, 2000);
 
 		return rootView;
 	}
@@ -126,7 +132,7 @@ public class TabMapFragment extends Fragment implements
 		
 		FragmentTransaction ft = fm.beginTransaction();
 		//ft.setCustomAnimations(R.anim.enter_2, R.anim.exit);
-		Fragment fragment = new adullact.publicrowdfunding.fragment.v4.detailProject.TabProjectFragment();
+		Fragment fragment = new adullact.publicrowdfunding.fragment.v4.detailProject.FicheProjectFragment();
 		Bundle bundle = new Bundle();
 		bundle.putString("idProject", id);
 		fragment.setArguments(bundle);
@@ -139,5 +145,7 @@ public class TabMapFragment extends Fragment implements
 		
 		
 	}
-
+	
+	
+	
 }

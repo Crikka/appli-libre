@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -47,7 +48,7 @@ public class TabProjectFragment extends Fragment {
 	private Project projetToDisplay;
 	private User user;
 
-	private LinearLayout layoutConnect;
+	private FrameLayout layoutConnect;
 
 	private RelativeLayout layout_website;
 	private RelativeLayout layout_call;
@@ -58,6 +59,8 @@ public class TabProjectFragment extends Fragment {
 	private View view;
 
 	private FragmentManager fm;
+	
+	private LinearLayout loading;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,8 +73,10 @@ public class TabProjectFragment extends Fragment {
 
 		fm = this.getActivity().getSupportFragmentManager();
 
-		layoutConnect = (LinearLayout) view.findViewById(R.id.connect);
+		layoutConnect = (FrameLayout) view.findViewById(R.id.connect);
 
+		loading = (LinearLayout) view.findViewById(R.id.loading);
+		
 		layout_website = (RelativeLayout) view
 				.findViewById(R.id.layout_website);
 		layout_call = (RelativeLayout) view.findViewById(R.id.layout_call);
@@ -105,6 +110,8 @@ public class TabProjectFragment extends Fragment {
 
 		m_illustration = (ImageView) view.findViewById(R.id.icon);
 
+		m_avatar = (ImageView) view.findViewById(R.id.avatar);
+		
 		isConnect();
 
 		Bundle bundle = this.getArguments();
@@ -252,6 +259,7 @@ public class TabProjectFragment extends Fragment {
 
 			}
 		});
+		loading.setVisibility(View.GONE);
 		view.invalidate();
 	}
 

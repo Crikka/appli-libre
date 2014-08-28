@@ -25,6 +25,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RatingBar;
@@ -38,35 +39,56 @@ public class TabCommentsFragment extends Fragment {
 
 	private Vector<Commentary> commentaries;
 
-	private LinearLayout layoutConnect;
+	private FrameLayout layoutConnect;
 
 	protected CommentaireAdapteur adapter;
 
 	private SwipeRefreshLayout swipeView;
 
 	private Project projetCurrent;
-	
+
 	private FragmentManager fm;
+
+	private LinearLayout loading;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
 		System.out.println("Load Comment Fragment");
-		
+
 		final View view = inflater.inflate(R.layout.fragment_list_comments,
 				container, false);
-		
+
 		fm = this.getActivity().getSupportFragmentManager();
-		
-		layoutConnect = (LinearLayout) view.findViewById(R.id.connect);
+
+		layoutConnect = (FrameLayout) view.findViewById(R.id.connect);
+
+		loading = (LinearLayout) view.findViewById(R.id.loading);
 
 		isConnect();
+
+		commentaries = new Vector<Commentary>();
+		
+		lv = (ListView) view.findViewById(R.id.commentaires);
+		adapter = new CommentaireAdapteur(
+				getActivity().getApplicationContext(), R.layout.adaptor_comment);
+		
+		adapter.setCommentaries(commentaries);
+
+		lv.setAdapter(adapter);
+
+		m_notation = (RatingBar) view
+				.findViewById(R.id.rating_bar_projet_detail);
+
+		TextView empty = (TextView) view.findViewById(R.id.empty);
+		lv.setEmptyView(empty);
 
 		Bundle bundle = this.getArguments();
 		if (bundle != null) {
 			String idProject = bundle.getString("idProject");
-			Cache<Project> projet = new Project().getCache(idProject).forceRetrieve();
+			Cache<Project> projet = new Project().getCache(idProject)
+					.forceRetrieve();
 			projet.toResource(new HoldToDo<Project>() {
 				@Override
 				public void hold(Project project) {
@@ -89,19 +111,6 @@ public class TabCommentsFragment extends Fragment {
 					}
 
 				});
-
-		commentaries = new Vector<Commentary>();
-
-		m_notation = (RatingBar) view
-				.findViewById(R.id.rating_bar_projet_detail);
-
-		lv = (ListView) view.findViewById(R.id.commentaires);
-
-		adapter = new CommentaireAdapteur(
-				getActivity().getApplicationContext(), R.layout.adaptor_comment);
-
-		TextView empty = (TextView) view.findViewById(R.id.empty);
-		lv.setEmptyView(empty);
 
 		lv.setOnScrollListener(new AbsListView.OnScrollListener() {
 			@Override
@@ -143,12 +152,12 @@ public class TabCommentsFragment extends Fragment {
 			@Override
 			public void holdAll(ArrayList<Commentary> resources) {
 				commentaries = new Vector<Commentary>(resources);
+				loading.setVisibility(View.GONE);
+				adapter.setCommentaries(commentaries);
+				adapter.notifyDataSetChanged();
 			}
 		});
 
-		adapter.setCommentaries(commentaries);
-
-		lv.setAdapter(adapter);
 		lv.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -160,19 +169,18 @@ public class TabCommentsFragment extends Fragment {
 
 					@Override
 					public void hold(User resource) {
-						
-						
+
 						FragmentTransaction ft = fm.beginTransaction();
-						
+
 						// ft.setCustomAnimations(R.anim.enter, R.anim.exit);
 						Fragment fragment = new adullact.publicrowdfunding.fragment.v4.profile.PagerFragment();
 						Bundle bundle = new Bundle();
-		        		bundle.putString("idUser",resource.getResourceId());
-		        		fragment.setArguments(bundle);
-		        		fragment.setHasOptionsMenu(true);
+						bundle.putString("idUser", resource.getResourceId());
+						fragment.setArguments(bundle);
+						fragment.setHasOptionsMenu(true);
 						ft.replace(R.id.content_frame, fragment);
 						ft.commit();
-					
+
 					}
 
 					@Override

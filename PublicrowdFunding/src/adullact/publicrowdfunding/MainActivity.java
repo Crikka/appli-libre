@@ -2,6 +2,7 @@ package adullact.publicrowdfunding;
 
 import java.util.ArrayList;
 
+import adullact.publicrowdfunding.controller.preferences.preferencesFragment;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.fragment.v4.register.connexionFragment;
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
@@ -85,7 +86,7 @@ public class MainActivity extends FragmentActivity {
 
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (LinearLayout) findViewById(R.id.left);
-
+		
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setHomeButtonEnabled(true);
 
@@ -255,12 +256,12 @@ public class MainActivity extends FragmentActivity {
 		m_Button_preferences.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-
-				/*
+/*
+				
 				FragmentTransaction ft = getSupportFragmentManager()
 						.beginTransaction();
 				//ft.setCustomAnimations(R.anim.enter, R.anim.exit);
-				Fragment fragment = new prefFragment();
+				Fragment fragment = new preferencesFragment();
 
 				ft.replace(R.id.content_frame, fragment);
 				ft.commit();
@@ -268,6 +269,7 @@ public class MainActivity extends FragmentActivity {
 				mDrawerLayout.closeDrawer(mDrawerList);
 			}
 		});
+		
 
 		m_button_all_projects = (Button) findViewById(R.id.button_tout_les_projet);
 		m_button_all_projects.setOnClickListener(new View.OnClickListener() {
