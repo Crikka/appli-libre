@@ -1,7 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/buttonshapes"
     android:orientation="vertical"
     android:paddingBottom="5dip"
     android:paddingLeft="10dip"
@@ -56,6 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:ellipsize="marquee"
+                android:maxWidth="500dip"
                 android:singleLine="true"
                 android:text="@string/project_name"
                 android:textSize="18sp"
@@ -68,6 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dip"
             android:gravity="center_vertical"
+            android:maxWidth="500dip"
             android:text="@string/project_description"
             android:textSize="15sp" />
 

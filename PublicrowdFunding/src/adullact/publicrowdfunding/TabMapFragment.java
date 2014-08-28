@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
+import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import android.app.ProgressDialog;
@@ -34,7 +35,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class TabMapFragment extends Fragment implements
-		OnMarkerClickListener {
+		OnInfoWindowClickListener {
 
 	private SupportMapFragment fragment;
 	private FragmentManager fm;
@@ -43,15 +44,24 @@ public class TabMapFragment extends Fragment implements
 	private View rootView;
 	private GoogleMap googleMap;
 	private HashMap<Marker, String> markers = new HashMap<Marker, String>();
-	
+
+	private View infoWindow;
+
+	private TabMapFragment _this;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		
+
 		rootView = inflater.inflate(R.layout.activity_maps, container, false);
-		
-		projets = new ArrayList<Project> ();
-		
+
+		infoWindow = getLayoutInflater(savedInstanceState).inflate(
+				R.layout.fiche_project, null);
+
+		projets = new ArrayList<Project>();
+
+		_this = this;
+
 		mprogressDialog = new ProgressDialog(getActivity());
 		mprogressDialog.setMessage("Chargement en cours...");
 		mprogressDialog.setTitle("Google Map");
@@ -60,8 +70,9 @@ public class TabMapFragment extends Fragment implements
 
 		fragment = new SupportMapFragment();
 		fm = getFragmentManager();
-		
+
 		SyncServerToLocal sync = SyncServerToLocal.getInstance();
+		 Account.getOwnOrAnonymous().setLastSync(null);
 		sync.sync(new HoldAllToDo<Project>() {
 
 			@Override
@@ -69,8 +80,7 @@ public class TabMapFragment extends Fragment implements
 				projets = projects;
 			}
 		});
-		
-		
+
 		FragmentTransaction ft = fm.beginTransaction();
 		ft.replace(R.id.mapView, fragment, "mapid").commit();
 
@@ -84,22 +94,28 @@ public class TabMapFragment extends Fragment implements
 						.getMap();
 
 				if (googleMap != null) {
-					System.out.println(projets.size());
 					for (Project proj : projets) {
 						MarkerOptions marker = new MarkerOptions();
 						marker.position(proj.getPosition());
 						marker.title(proj.getName());
 						Marker m = googleMap.addMarker(marker);
 						markers.put(m, proj.getResourceId());
-
 					}
+
+					googleMap.setOnInfoWindowClickListener(_this);
+					googleMap
+							.setInfoWindowAdapter(new adullact.publicrowdfunding.custom.infoMarkerWindowAdaptor(
+									infoWindow, markers) {
+
+							});
 
 					handler.removeCallbacksAndMessages(null);
 
-					googleMap.setOnMarkerClickListener(TabMapFragment.this);
+					// googleMap.setOnMarkerClickListener(TabMapFragment.this);
 					googleMap.setMyLocationEnabled(true);
-					LatLng Montpellier = new LatLng(43.652400,3.761380);
-					CameraUpdate center = CameraUpdateFactory.newLatLng(Montpellier);
+					LatLng Montpellier = new LatLng(43.652400, 3.761380);
+					CameraUpdate center = CameraUpdateFactory
+							.newLatLng(Montpellier);
 					CameraUpdate zoom = CameraUpdateFactory.zoomTo(9);
 					googleMap.moveCamera(center);
 					googleMap.animateCamera(zoom);
@@ -116,36 +132,19 @@ public class TabMapFragment extends Fragment implements
 	}
 
 	@Override
-	public boolean onMarkerClick(Marker marker) {
-		
+	public void onInfoWindowClick(Marker marker) {
+
 		String id = markers.get(marker);
-		/*
+
 		FragmentTransaction ft = getFragmentManager().beginTransaction();
-		//ft.setCustomAnimations(R.anim.enter_2, R.anim.exit);
+		// ft.setCustomAnimations(R.anim.enter_2, R.anim.exit); Fragment
 		Fragment fragment = new adullact.publicrowdfunding.fragment.v4.detailProject.PagerFragment();
 		Bundle bundle = new Bundle();
 		bundle.putString("idProject", id);
 		fragment.setArguments(bundle);
 		ft.replace(R.id.content_frame, fragment);
 		ft.commit();
-		*/
-		
-		FragmentTransaction ft = fm.beginTransaction();
-		//ft.setCustomAnimations(R.anim.enter_2, R.anim.exit);
-		Fragment fragment = new adullact.publicrowdfunding.fragment.v4.detailProject.FicheProjectFragment();
-		Bundle bundle = new Bundle();
-		bundle.putString("idProject", id);
-		fragment.setArguments(bundle);
-		ft.replace(R.id.FlashBarLayout, fragment);
-		ft.commit();
-		
-		return true;
-		
-		
-		
-		
+
 	}
-	
-	
-	
+
 }
