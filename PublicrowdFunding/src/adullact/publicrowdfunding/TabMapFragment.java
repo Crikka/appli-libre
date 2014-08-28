@@ -129,9 +129,7 @@ public class TabMapFragment extends Fragment implements
 					googleMap.setOnInfoWindowClickListener(_this);
 					googleMap
 							.setInfoWindowAdapter(new adullact.publicrowdfunding.custom.infoMarkerWindowAdaptor(
-									infoWindow, markers) {
-
-							});
+									 getLayoutInflater(null), markers));
 
 					handler.removeCallbacksAndMessages(null);
 

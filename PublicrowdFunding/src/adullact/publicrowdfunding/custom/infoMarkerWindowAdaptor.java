@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -28,8 +29,7 @@ import android.widget.TextView;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.model.Marker;
 
-public class infoMarkerWindowAdaptor extends FragmentActivity implements
-		InfoWindowAdapter {
+public class infoMarkerWindowAdaptor extends FragmentActivity implements InfoWindowAdapter {
 
 	private LinearLayout loading;
 
@@ -41,67 +41,57 @@ public class infoMarkerWindowAdaptor extends FragmentActivity implements
 	private TextView sommeFunded;
 	private TextView sommeDemander;
 	private TextView distance;
-
+	
+	private boolean finish;
+	
 	private final HashMap<Marker, String> markers;
-
-	private View v;
 	
 	private LayoutInflater inflater;
+	
+	public infoMarkerWindowAdaptor(LayoutInflater inflater,  HashMap<Marker, String> markers) {
+        this.inflater=inflater;
+        this.markers = markers;
+        finish = false;
+    }
 
-	public infoMarkerWindowAdaptor(View inflater,
-			HashMap<Marker, String> markers) {
-		this.v = inflater;
-		this.markers = markers;
-	}
+	public void displayInfo(Project projet) {
+		titre_projet_liste.setText(projet.getName());
+		description_projet_liste.setText(projet.getDescription());
+		temps_restant_projet_liste.setText(projet.getNumberOfDayToEnd()
+				+ " jours");
 
-	public void displayInfo(final Project projet) {
+		avancement_projet_liste.setProgress(projet.getPercentOfAchievement());
+		sommeDemander.setText(projet.getRequestedFunding() + "€");
+		sommeFunded.setText(projet.getCurrentFunding() + "€");
+		if (projet.getIllustration() != 0) {
+			illustration.setImageResource(Utility.getDrawable(projet
+					.getIllustration()));
+		} else {
+			illustration.setImageResource(R.drawable.ic_launcher);
+		}
 
-		runOnUiThread(new Runnable() {
-
-			@Override
-			public void run() {
-
-				System.out.println("Titre projet : "
-						+ titre_projet_liste.getText());
-				titre_projet_liste.setText(projet.getName());
-				System.out.println("Titre projet : "
-						+ titre_projet_liste.getText());
-				description_projet_liste.setText(projet.getDescription());
-				temps_restant_projet_liste.setText(projet.getNumberOfDayToEnd()
-						+ " jours");
-
-				avancement_projet_liste.setProgress(projet
-						.getPercentOfAchievement());
-				sommeDemander.setText(projet.getRequestedFunding() + "€");
-				sommeFunded.setText(projet.getCurrentFunding() + "€");
-				if (projet.getIllustration() != 0) {
-					illustration.setImageResource(Utility.getDrawable(projet
-							.getIllustration()));
-				} else {
-					illustration.setImageResource(R.drawable.ic_launcher);
-				}
-
-				distance.setVisibility(View.GONE);
-				try {
-					distance.setText("Distance : "
-							+ Calcul.diplayDistance(Share.position,
-									projet.getPosition()));
-					distance.setVisibility(View.VISIBLE);
-				} catch (NullPointerException e) {
-					distance.setVisibility(View.GONE);
-				}
-				loading.setVisibility(View.GONE);
-				System.out.println("projet chagé");
-			}
-		});
+		distance.setVisibility(View.GONE);
+		try {
+			distance.setText("Distance : "
+					+ Calcul.diplayDistance(Share.position,
+							projet.getPosition()));
+			distance.setVisibility(View.VISIBLE);
+		} catch (NullPointerException e) {
+			distance.setVisibility(View.GONE);
+		}		
+		loading.setVisibility(View.GONE);
+		System.out.println("projet chagé");
+		finish = true;
 	}
 
 	@Override
 	public View getInfoContents(Marker arg0) {
+		View v = inflater.inflate(
+				R.layout.fiche_project, null);
 		
 		loading = (LinearLayout) v.findViewById(R.id.loading);
 		loading.setVisibility(View.GONE);
-
+		
 		titre_projet_liste = (TextView) v.findViewById(R.id.titre_projet_liste);
 		description_projet_liste = (TextView) v
 				.findViewById(R.id.description_projet_liste);
@@ -115,15 +105,31 @@ public class infoMarkerWindowAdaptor extends FragmentActivity implements
 		sommeFunded = (TextView) v.findViewById(R.id.sommeFund);
 		distance = (TextView) v.findViewById(R.id.distance);
 
+		System.out.println("cherche projet :"+markers.get(arg0));
 		Cache<Project> projet = new Project().getCache(markers.get(arg0))
 				.forceRetrieve();
 		projet.toResource(new HoldToDo<Project>() {
 			@Override
 			public void hold(Project project) {
+				System.out.println("trouvé");
 				displayInfo(project);
 			}
 		});
-		
+		int chargement = 0;
+		while(!finish){
+			try {
+				System.out.println("on attends le chargement");
+				chargement++;
+				if(chargement<5){
+				Thread.sleep(1000);
+				}else{
+					finish = true;
+				}
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		return v;
 	}
 
