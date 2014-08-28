@@ -78,6 +78,7 @@ public class ProjectsFragment extends Fragment {
         		Bundle bundle = new Bundle();
         		bundle.putString("idProject", _this.p_project_displayed.get(position).getResourceId());
         		fragment.setArguments(bundle);
+        		ft.addToBackStack(null);
 				ft.replace(R.id.content_frame, fragment);
 				ft.commit();
 

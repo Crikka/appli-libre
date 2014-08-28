@@ -179,6 +179,7 @@ public class TabCommentsFragment extends Fragment {
 						fragment.setArguments(bundle);
 						fragment.setHasOptionsMenu(true);
 						ft.replace(R.id.content_frame, fragment);
+						ft.addToBackStack(null);
 						ft.commit();
 
 					}

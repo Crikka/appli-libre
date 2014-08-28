@@ -126,6 +126,7 @@ public class MainActivity extends FragmentActivity {
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
+		
 		boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
 		menu.findItem(R.id.action_search).setVisible(!drawerOpen);
 		menu.findItem(R.id.action_sort).setVisible(!drawerOpen);
@@ -209,6 +210,7 @@ public class MainActivity extends FragmentActivity {
         		bundle.putString("idUser","me");
         		fragment.setArguments(bundle);
         		fragment.setHasOptionsMenu(true);
+        		ft.addToBackStack(null);
 				ft.replace(R.id.content_frame, fragment);
 				ft.commit();
 

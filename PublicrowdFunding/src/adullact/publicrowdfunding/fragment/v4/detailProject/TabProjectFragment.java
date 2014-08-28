@@ -219,7 +219,8 @@ public class TabProjectFragment extends Fragment {
 					Bundle bundle = new Bundle();
 					bundle.putString("idUser", user.getResourceId());
 					fragment.setArguments(bundle);
-					fragment.setHasOptionsMenu(true);
+					fragment.setHasOptionsMenu(false);
+					ft.addToBackStack(null);
 					ft.replace(R.id.content_frame, fragment);
 					ft.commit();
 

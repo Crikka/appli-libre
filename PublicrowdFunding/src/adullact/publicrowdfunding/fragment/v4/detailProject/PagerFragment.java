@@ -51,20 +51,8 @@ public class PagerFragment extends Fragment {
 		    {
 		        if( keyCode == KeyEvent.KEYCODE_BACK )
 		        {
-		        	/*
-		        	fm.beginTransaction().remove(_current).commit();
-		        	getActivity().getSupportFragmentManager().beginTransaction().remove(_current).commit();
-		        	int id = fm.getBackStackEntryAt(0).getId();
-		        	Fragment fragment = fm.findFragmentById(id);
-		        	fm.popBackStack();	
-		        	
-                	FragmentTransaction ft = fm.beginTransaction();
-                	ft.addToBackStack("stack");
-            		//ft.setCustomAnimations(R.anim.enter, R.anim.exit);
-            		
-            		ft.replace(R.id.content_frame, fragment);
-            		
-            		ft.commit(); */
+		        	fm.popBackStack();
+		  
             		return true;
 		        }
 		        return false;
