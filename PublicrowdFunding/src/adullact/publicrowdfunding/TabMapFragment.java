@@ -43,7 +43,7 @@ public class TabMapFragment extends Fragment implements
 	private ArrayList<Project> projets;
 	private View rootView;
 	private GoogleMap googleMap;
-	private HashMap<Marker, String> markers = new HashMap<Marker, String>();
+	private final HashMap<Marker, String> markers = new HashMap<Marker, String>();
 
 	private View infoWindow;
 
@@ -55,7 +55,8 @@ public class TabMapFragment extends Fragment implements
 
 		rootView = inflater.inflate(R.layout.activity_maps, container, false);
 
-		infoWindow = getLayoutInflater(savedInstanceState).inflate(
+		
+		infoWindow = getLayoutInflater(null).inflate(
 				R.layout.fiche_project, null);
 
 		projets = new ArrayList<Project>();
@@ -78,8 +79,30 @@ public class TabMapFragment extends Fragment implements
 			@Override
 			public void holdAll(ArrayList<Project> projects) {
 				projets = projects;
+				initMaps();
 			}
 		});
+
+		return rootView;
+	}
+
+	@Override
+	public void onInfoWindowClick(Marker marker) {
+
+		String id = markers.get(marker);
+
+		FragmentTransaction ft = getFragmentManager().beginTransaction();
+		// ft.setCustomAnimations(R.anim.enter_2, R.anim.exit); Fragment
+		Fragment fragment = new adullact.publicrowdfunding.fragment.v4.detailProject.PagerFragment();
+		Bundle bundle = new Bundle();
+		bundle.putString("idProject", id);
+		fragment.setArguments(bundle);
+		ft.replace(R.id.content_frame, fragment);
+		ft.commit();
+
+	}
+	
+	public void initMaps(){
 
 		FragmentTransaction ft = fm.beginTransaction();
 		ft.replace(R.id.mapView, fragment, "mapid").commit();
@@ -99,6 +122,7 @@ public class TabMapFragment extends Fragment implements
 						marker.position(proj.getPosition());
 						marker.title(proj.getName());
 						Marker m = googleMap.addMarker(marker);
+						
 						markers.put(m, proj.getResourceId());
 					}
 
@@ -127,24 +151,7 @@ public class TabMapFragment extends Fragment implements
 				}
 			}
 		}, 2000);
-
-		return rootView;
 	}
-
-	@Override
-	public void onInfoWindowClick(Marker marker) {
-
-		String id = markers.get(marker);
-
-		FragmentTransaction ft = getFragmentManager().beginTransaction();
-		// ft.setCustomAnimations(R.anim.enter_2, R.anim.exit); Fragment
-		Fragment fragment = new adullact.publicrowdfunding.fragment.v4.detailProject.PagerFragment();
-		Bundle bundle = new Bundle();
-		bundle.putString("idProject", id);
-		fragment.setArguments(bundle);
-		ft.replace(R.id.content_frame, fragment);
-		ft.commit();
-
-	}
+	
 
 }

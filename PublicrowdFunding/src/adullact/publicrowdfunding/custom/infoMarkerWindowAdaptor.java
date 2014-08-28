@@ -28,7 +28,8 @@ import android.widget.TextView;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.model.Marker;
 
-public class infoMarkerWindowAdaptor extends FragmentActivity implements InfoWindowAdapter {
+public class infoMarkerWindowAdaptor extends FragmentActivity implements
+		InfoWindowAdapter {
 
 	private LinearLayout loading;
 
@@ -40,53 +41,67 @@ public class infoMarkerWindowAdaptor extends FragmentActivity implements InfoWin
 	private TextView sommeFunded;
 	private TextView sommeDemander;
 	private TextView distance;
-	
-	private HashMap<Marker, String> markers;
-	
+
+	private final HashMap<Marker, String> markers;
+
 	private View v;
 	
-	public infoMarkerWindowAdaptor(View view,  HashMap<Marker, String> markers){
-		this.v = view;
+	private LayoutInflater inflater;
+
+	public infoMarkerWindowAdaptor(View inflater,
+			HashMap<Marker, String> markers) {
+		this.v = inflater;
 		this.markers = markers;
 	}
 
-	public void displayInfo(Project projet) {
-		titre_projet_liste.setText(projet.getName());
-		description_projet_liste.setText(projet.getDescription());
-		temps_restant_projet_liste.setText(projet.getNumberOfDayToEnd()
-				+ " jours");
+	public void displayInfo(final Project projet) {
 
-		avancement_projet_liste.setProgress(projet.getPercentOfAchievement());
-		sommeDemander.setText(projet.getRequestedFunding() + "€");
-		sommeFunded.setText(projet.getCurrentFunding() + "€");
-		if (projet.getIllustration() != 0) {
-			illustration.setImageResource(Utility.getDrawable(projet
-					.getIllustration()));
-		} else {
-			illustration.setImageResource(R.drawable.ic_launcher);
-		}
+		runOnUiThread(new Runnable() {
 
-		distance.setVisibility(View.GONE);
-		try {
-			distance.setText("Distance : "
-					+ Calcul.diplayDistance(Share.position,
-							projet.getPosition()));
-			distance.setVisibility(View.VISIBLE);
-		} catch (NullPointerException e) {
-			distance.setVisibility(View.GONE);
-		}		
-		loading.setVisibility(View.GONE);
-		v.invalidate();
-		System.out.println("projet chagé");
+			@Override
+			public void run() {
+
+				System.out.println("Titre projet : "
+						+ titre_projet_liste.getText());
+				titre_projet_liste.setText(projet.getName());
+				System.out.println("Titre projet : "
+						+ titre_projet_liste.getText());
+				description_projet_liste.setText(projet.getDescription());
+				temps_restant_projet_liste.setText(projet.getNumberOfDayToEnd()
+						+ " jours");
+
+				avancement_projet_liste.setProgress(projet
+						.getPercentOfAchievement());
+				sommeDemander.setText(projet.getRequestedFunding() + "€");
+				sommeFunded.setText(projet.getCurrentFunding() + "€");
+				if (projet.getIllustration() != 0) {
+					illustration.setImageResource(Utility.getDrawable(projet
+							.getIllustration()));
+				} else {
+					illustration.setImageResource(R.drawable.ic_launcher);
+				}
+
+				distance.setVisibility(View.GONE);
+				try {
+					distance.setText("Distance : "
+							+ Calcul.diplayDistance(Share.position,
+									projet.getPosition()));
+					distance.setVisibility(View.VISIBLE);
+				} catch (NullPointerException e) {
+					distance.setVisibility(View.GONE);
+				}
+				loading.setVisibility(View.GONE);
+				System.out.println("projet chagé");
+			}
+		});
 	}
 
 	@Override
 	public View getInfoContents(Marker arg0) {
 		
-
-		
 		loading = (LinearLayout) v.findViewById(R.id.loading);
 		loading.setVisibility(View.GONE);
+
 		titre_projet_liste = (TextView) v.findViewById(R.id.titre_projet_liste);
 		description_projet_liste = (TextView) v
 				.findViewById(R.id.description_projet_liste);
@@ -100,7 +115,6 @@ public class infoMarkerWindowAdaptor extends FragmentActivity implements InfoWin
 		sommeFunded = (TextView) v.findViewById(R.id.sommeFund);
 		distance = (TextView) v.findViewById(R.id.distance);
 
-		
 		Cache<Project> projet = new Project().getCache(markers.get(arg0))
 				.forceRetrieve();
 		projet.toResource(new HoldToDo<Project>() {
@@ -109,7 +123,7 @@ public class infoMarkerWindowAdaptor extends FragmentActivity implements InfoWin
 				displayInfo(project);
 			}
 		});
-
+		
 		return v;
 	}
 
