@@ -20,8 +20,6 @@ import com.google.android.gms.maps.model.Marker;
 
 public class MarkerWindowAdaptor extends FragmentActivity implements InfoWindowAdapter {
 
-	private LinearLayout loading;
-
 	private TextView titre_projet_liste;
 	private TextView description_projet_liste;
 	private TextView temps_restant_projet_liste;
@@ -66,17 +64,12 @@ public class MarkerWindowAdaptor extends FragmentActivity implements InfoWindowA
 		} catch (NullPointerException e) {
 			distance.setVisibility(View.GONE);
 		}		
-		loading.setVisibility(View.GONE);
-		System.out.println("projet chagé");
 	}
 
 	@Override
 	public View getInfoContents(Marker arg0) {
 		View v = inflater.inflate(
 				R.layout.fiche_project, null);
-		
-		loading = (LinearLayout) v.findViewById(R.id.loading);
-		loading.setVisibility(View.GONE);
 		
 		titre_projet_liste = (TextView) v.findViewById(R.id.titre_projet_liste);
 		description_projet_liste = (TextView) v

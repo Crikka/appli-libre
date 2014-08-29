@@ -63,6 +63,8 @@ public class InfoProjectFragment extends Fragment {
 	private LinearLayout loading;
 
 	private FrameLayout filter;
+	
+	private FrameLayout showLoaded;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,6 +79,9 @@ public class InfoProjectFragment extends Fragment {
 		filter.setVisibility(View.GONE);
 		layoutConnect = (FrameLayout) view.findViewById(R.id.connect);
 
+		showLoaded = (FrameLayout) view.findViewById(R.id.showLoaded);
+		showLoaded.setVisibility(View.GONE);
+		
 		loading = (LinearLayout) view.findViewById(R.id.loading);
 
 		layout_website = (RelativeLayout) view
@@ -264,8 +269,9 @@ public class InfoProjectFragment extends Fragment {
 
 			}
 		});
+		showLoaded.setVisibility(View.VISIBLE);
 		loading.setVisibility(View.GONE);
-		view.invalidate();
+		//view.invalidate();
 	}
 
 }

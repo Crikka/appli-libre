@@ -37,7 +37,6 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="XXX"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -47,7 +46,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:paddingBottom="5dip"
-                    android:text="XXX"
                     android:textSize="15sp" />
             </LinearLayout>
         </RelativeLayout>

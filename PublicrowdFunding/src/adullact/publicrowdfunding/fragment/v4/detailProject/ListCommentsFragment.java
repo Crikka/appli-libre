@@ -51,6 +51,7 @@ public class ListCommentsFragment extends Fragment {
 	private FragmentManager fm;
 
 	private LinearLayout loading;
+	private FrameLayout loaded;
 	
 	private FrameLayout filter;
 
@@ -68,7 +69,9 @@ public class ListCommentsFragment extends Fragment {
 		fm = this.getActivity().getSupportFragmentManager();
 
 		layoutConnect = (LinearLayout) view.findViewById(R.id.connect);
-
+		loaded = (FrameLayout) view.findViewById(R.id.showLoaded);
+		loaded.setVisibility(View.GONE);
+		
 		loading = (LinearLayout) view.findViewById(R.id.loading);
 
 		isConnect();
@@ -157,9 +160,11 @@ public class ListCommentsFragment extends Fragment {
 			@Override
 			public void holdAll(ArrayList<Commentary> resources) {
 				commentaries = new Vector<Commentary>(resources);
-				loading.setVisibility(View.GONE);
+				
 				adapter.setCommentaries(commentaries);
 				adapter.notifyDataSetChanged();
+				loading.setVisibility(View.GONE);
+				loaded.setVisibility(View.VISIBLE);
 			}
 		});
 
