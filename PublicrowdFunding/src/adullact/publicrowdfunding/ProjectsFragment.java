@@ -82,6 +82,7 @@ public class ProjectsFragment extends Fragment {
         		bundle.putString("idProject", _this.p_project_displayed.get(position).getResourceId());
         		fragment.setArguments(bundle);
         		ft.addToBackStack(null);
+        		fragment.setHasOptionsMenu(true);
 				ft.replace(R.id.content_frame, fragment);
 				ft.commit();
 
@@ -122,12 +123,6 @@ public class ProjectsFragment extends Fragment {
 
 	@Override
 	public void onPrepareOptionsMenu(Menu menu) {
-		/*
-		boolean drawerOpen = getActivity().mDrawerLayout.isDrawerOpen(mDrawerList);
-		menu.findItem(R.id.action_search).setVisible(!drawerOpen);
-		menu.findItem(R.id.action_sort).setVisible(!drawerOpen);
-		return super.onPrepareOptionsMenu(menu);
-		*/
 
 	}
 

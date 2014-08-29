@@ -71,7 +71,7 @@ public class MainActivity extends FragmentActivity {
 	private LocationManager locationManager;
 	private LocationListener locationListener;
 	private String locationProvider;
-	
+
 	private DrawLine m_separator_1;
 	private DrawLine m_separator_2;
 	private DrawLine m_separator_3;
@@ -79,6 +79,8 @@ public class MainActivity extends FragmentActivity {
 	protected ArrayList<Project> p_project_displayed;
 
 	private SyncServerToLocal sync;
+
+	private User me;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +93,7 @@ public class MainActivity extends FragmentActivity {
 
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (LinearLayout) findViewById(R.id.left);
-		
+
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setHomeButtonEnabled(true);
 
@@ -117,7 +119,7 @@ public class MainActivity extends FragmentActivity {
 
 		gererPanneauMenu();
 		isConnect();
-		// geolocalisation();
+		geolocalisation();
 	}
 
 	@Override
@@ -153,11 +155,11 @@ public class MainActivity extends FragmentActivity {
 	private void gererPanneauMenu() {
 		final MainActivity _this = this;
 		this.invalidateOptionsMenu();
-		
+
 		m_separator_1 = (DrawLine) findViewById(R.id.separator_1);
 		m_separator_2 = (DrawLine) findViewById(R.id.separator_2);
 		m_separator_3 = (DrawLine) findViewById(R.id.separator_3);
-		
+
 		m_button_authentificate = (Button) findViewById(R.id.connexion);
 		m_button_authentificate.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -192,22 +194,21 @@ public class MainActivity extends FragmentActivity {
 		m_button_account.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				
-				
+
 				FragmentTransaction ft = getSupportFragmentManager()
 						.beginTransaction();
 				// ft.setCustomAnimations(R.anim.enter, R.anim.exit);
 				Fragment fragment = new adullact.publicrowdfunding.fragment.v4.profile.PagerFragment();
 				Bundle bundle = new Bundle();
-        		bundle.putString("idUser","me");
-        		fragment.setArguments(bundle);
-        		fragment.setHasOptionsMenu(true);
-        		ft.addToBackStack(null);
+				bundle.putString("idUser", me.getResourceId());
+				fragment.setArguments(bundle);
+				fragment.setHasOptionsMenu(true);
+				ft.addToBackStack(null);
 				ft.replace(R.id.content_frame, fragment);
 				ft.commit();
 
 				mDrawerLayout.closeDrawer(mDrawerList);
-				
+
 			}
 		});
 
@@ -234,36 +235,32 @@ public class MainActivity extends FragmentActivity {
 
 				FragmentTransaction ft = getSupportFragmentManager()
 						.beginTransaction();
-				
-				//ft.setCustomAnimations(R.anim.enter, R.anim.exit);
+
+				// ft.setCustomAnimations(R.anim.enter, R.anim.exit);
 				Fragment fragment = new TabMapFragment();
-			
+
 				ft.replace(R.id.content_frame, fragment);
 				ft.commit();
 
 				mDrawerLayout.closeDrawer(mDrawerList);
 			}
 		});
-		
-		
+
 		m_Button_preferences = (Button) findViewById(R.id.button_preferences);
 		m_Button_preferences.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-/*
-				
-				FragmentTransaction ft = getSupportFragmentManager()
-						.beginTransaction();
-				//ft.setCustomAnimations(R.anim.enter, R.anim.exit);
-				Fragment fragment = new preferencesFragment();
-
-				ft.replace(R.id.content_frame, fragment);
-				ft.commit();
-*/
+				/*
+				 * 
+				 * FragmentTransaction ft = getSupportFragmentManager()
+				 * .beginTransaction(); //ft.setCustomAnimations(R.anim.enter,
+				 * R.anim.exit); Fragment fragment = new preferencesFragment();
+				 * 
+				 * ft.replace(R.id.content_frame, fragment); ft.commit();
+				 */
 				mDrawerLayout.closeDrawer(mDrawerList);
 			}
 		});
-		
 
 		m_button_all_projects = (Button) findViewById(R.id.button_tout_les_projet);
 		m_button_all_projects.setOnClickListener(new View.OnClickListener() {
@@ -289,27 +286,27 @@ public class MainActivity extends FragmentActivity {
 		avatar = (ImageView) findViewById(R.id.avatar);
 
 	}
-	
-	public void setDrawerMenu(boolean connect){
-		if(connect){
+
+	public void setDrawerMenu(boolean connect) {
+		if (connect) {
 			m_button_account.setVisibility(View.VISIBLE);
 			m_button_authentificate.setVisibility(View.GONE);
 			m_button_deconnexion.setVisibility(View.VISIBLE);
 			m_Button_preferences.setVisibility(View.VISIBLE);
 			m_button_add_projet.setVisibility(View.VISIBLE);
 			m_button_validate_projects.setVisibility(View.VISIBLE);
-			
+
 			m_separator_1.setVisibility(View.VISIBLE);
 			m_separator_2.setVisibility(View.VISIBLE);
 			m_separator_3.setVisibility(View.VISIBLE);
-		}else{
+		} else {
 			m_button_account.setVisibility(View.GONE);
 			m_button_authentificate.setVisibility(View.VISIBLE);
 			m_button_deconnexion.setVisibility(View.GONE);
 			m_Button_preferences.setVisibility(View.GONE);
 			m_button_add_projet.setVisibility(View.GONE);
 			m_button_validate_projects.setVisibility(View.GONE);
-			
+
 			m_separator_1.setVisibility(View.GONE);
 			m_separator_2.setVisibility(View.GONE);
 			m_separator_3.setVisibility(View.GONE);
@@ -325,6 +322,7 @@ public class MainActivity extends FragmentActivity {
 
 				@Override
 				public void hold(User resource) {
+					me = resource;
 					utilisateurName.setText(Share.formatString(resource
 							.getPseudo()));
 					utilisateurVille.setText(Share.formatString(resource
@@ -411,13 +409,19 @@ public class MainActivity extends FragmentActivity {
 				Share.position = new LatLng(location.getLatitude(),
 						location.getLongitude());
 				try {
-					/*
-					 * Fragment myFragment = (Fragment) getFragmentManager()
-					 * .findFragmentByTag("allProjectFragment"); if
-					 * (myFragment.isVisible()) { launchDefaultFragment(); }
-					 */
+
+					Fragment myFragment = (Fragment) getSupportFragmentManager()
+							.findFragmentByTag("allProjectFragment");
+					if (myFragment.isVisible()) {
+						launchDefaultFragment();
+						locationManager.removeUpdates(locationListener);
+						locationListener = null;
+						locationManager = null;
+						
+					}
+
 				} catch (NullPointerException e) {
-					// 1er Initialisation
+					System.out.println("Initialisation");
 				}
 
 			}
@@ -443,7 +447,7 @@ public class MainActivity extends FragmentActivity {
 
 		};
 
-		locationManager.requestLocationUpdates(locationProvider, 60000, 0,
+		locationManager.requestLocationUpdates(locationProvider, 60000, 1000,
 				locationListener);
 
 	}
@@ -522,10 +526,10 @@ public class MainActivity extends FragmentActivity {
 		searchView.setOnQueryTextListener(new OnQueryTextListener() {
 
 			public boolean onQueryTextSubmit(String query) {
-				
-				p_project_displayed = sync.searchInName(query); 
-				 launchDefaultFragment();
-				 
+
+				p_project_displayed = sync.searchInName(query);
+				launchDefaultFragment();
+
 				return false;
 			}
 
