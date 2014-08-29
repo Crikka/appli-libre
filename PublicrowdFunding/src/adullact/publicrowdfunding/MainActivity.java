@@ -2,6 +2,7 @@ package adullact.publicrowdfunding;
 
 import java.util.ArrayList;
 
+import adullact.publicrowdfunding.controller.preferences.preferencesFragment;
 import adullact.publicrowdfunding.fragment.v4.register.ConnexionFragment;
 import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
@@ -248,14 +249,14 @@ public class MainActivity extends FragmentActivity {
 		m_Button_preferences.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				/*
-				 * 
-				 * FragmentTransaction ft = getSupportFragmentManager()
-				 * .beginTransaction(); //ft.setCustomAnimations(R.anim.enter,
-				 * R.anim.exit); Fragment fragment = new preferencesFragment();
-				 * 
-				 * ft.replace(R.id.content_frame, fragment); ft.commit();
-				 */
+
+				FragmentTransaction ft = getSupportFragmentManager()
+						.beginTransaction();
+				Fragment fragment = new preferencesFragment();
+
+				ft.replace(R.id.content_frame, fragment);
+				ft.commit();
+
 				mDrawerLayout.closeDrawer(mDrawerList);
 			}
 		});

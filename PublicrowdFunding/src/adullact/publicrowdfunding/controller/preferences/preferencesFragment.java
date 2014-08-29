@@ -1,23 +1,21 @@
 package adullact.publicrowdfunding.controller.preferences;
 
+import adullact.publicrowdfunding.MainActivity;
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.User;
 import adullact.publicrowdfunding.model.server.event.UpdateEvent;
-import android.annotation.TargetApi;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
-import android.preference.PreferenceFragment;
 import android.preference.SwitchPreference;
+import android.support.v4.preference.PreferenceFragment;
 import android.widget.Toast;
 
-@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 public class preferencesFragment extends PreferenceFragment {
 
 	private User user;
@@ -127,6 +125,8 @@ public class preferencesFragment extends PreferenceFragment {
 
 	public void update() {
 		super.onResume();
+		MainActivity _this = (MainActivity)	this.getActivity();
+		_this.isConnect();
 
 		try {
 			Account account = Account.getOwn();
