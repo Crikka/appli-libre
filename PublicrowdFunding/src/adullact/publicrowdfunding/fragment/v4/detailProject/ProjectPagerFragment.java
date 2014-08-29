@@ -56,7 +56,7 @@ public class ProjectPagerFragment extends Fragment {
 
 		fm = context.getSupportFragmentManager();
 		fm.beginTransaction().disallowAddToBackStack().commit();
-		
+
 		PagerAdaptor adaptor = new PagerAdaptor(fm, idProject);
 
 		ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager);
@@ -82,9 +82,9 @@ public class ProjectPagerFragment extends Fragment {
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		try{
+		try {
 			menu.clear(); // Permettra d'éviter les bugs de superpositions
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		inflater.inflate(R.menu.detail_projet, menu);
@@ -221,42 +221,38 @@ public class ProjectPagerFragment extends Fragment {
 
 	public void initBookmark() {
 
-		try {
-			new Project().getCache(idProject).forceRetrieve()
-					.toResource(new HoldToDo<Project>() {
+		new Project().getCache(idProject).forceRetrieve()
+				.toResource(new HoldToDo<Project>() {
 
-						@Override
-						public void hold(Project resource) {
-							projectCurrent = resource;
-							new CanI() {
-								@Override
-								protected void yes() {
-									m_Is_favorite = false;
-									function();
-								}
+					@Override
+					public void hold(Project resource) {
+						projectCurrent = resource;
+						function();
 
-								@Override
-								protected void no() {
-									m_Is_favorite = true;
-									function();
-								}
+					}
 
-							}.bookmark(resource);
-
-						}
-
-					});
-		} catch (Exception e) {
-			e.printStackTrace();
-			m_Is_favorite = false;
-			changeColorStar();
-		}
+				});
 
 	}
 
 	public void function() {
 		try {
 			Account.getOwn();
+			new CanI() {
+				@Override
+				protected void yes() {
+					m_Is_favorite = false;
+					function();
+				}
+
+				@Override
+				protected void no() {
+					m_Is_favorite = true;
+					function();
+				}
+
+			}.bookmark(projectCurrent);
+
 		} catch (NoAccountExistsInLocal e) {
 			m_Is_favorite = false;
 		}
