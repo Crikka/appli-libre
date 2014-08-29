@@ -1,6 +1,6 @@
 package adullact.publicrowdfunding.model.server.event;
 
-import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
+import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.server.errorHandler.AuthenticatedErrorHandler;
 import adullact.publicrowdfunding.model.server.request.AuthenticatedRequest;

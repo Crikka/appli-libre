@@ -13,7 +13,7 @@ import org.joda.time.DateTime;
 
 import rx.Observable;
 import adullact.publicrowdfunding.PublicrowdFundingApplication;
-import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
+import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.cache.Cache;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.utilities.Utility;

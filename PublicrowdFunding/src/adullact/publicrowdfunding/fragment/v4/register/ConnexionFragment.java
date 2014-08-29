@@ -1,9 +1,9 @@
 package adullact.publicrowdfunding.fragment.v4.register;
 
 import adullact.publicrowdfunding.MainActivity;
-import adullact.publicrowdfunding.ProjectsFragment;
+import adullact.publicrowdfunding.ListProjectsFragment;
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
+import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.User;
@@ -22,7 +22,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-public class connexionFragment extends Fragment {
+public class ConnexionFragment extends Fragment {
 
 	private EditText m_login;
 	private EditText m_password;
@@ -101,7 +101,7 @@ public class connexionFragment extends Fragment {
                                             
                                     		FragmentTransaction ft = getFragmentManager().beginTransaction();
                                     		//ft.setCustomAnimations(R.anim.enter, R.anim.exit);
-                                    		Fragment fragment = new ProjectsFragment();
+                                    		Fragment fragment = new ListProjectsFragment();
 
                                     		ft.replace(R.id.content_frame, fragment, "allProjectFragment");
                                     		
@@ -140,7 +140,7 @@ public class connexionFragment extends Fragment {
 				
 				FragmentTransaction ft = getFragmentManager().beginTransaction();
         		//ft.setCustomAnimations(R.anim.enter, R.anim.exit);
-        		Fragment fragment = new registerFragement();
+        		Fragment fragment = new RegisterFragement();
 
         		ft.replace(R.id.content_frame, fragment);
         		

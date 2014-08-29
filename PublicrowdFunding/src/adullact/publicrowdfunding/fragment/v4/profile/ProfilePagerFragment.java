@@ -3,7 +3,6 @@ package adullact.publicrowdfunding.fragment.v4.profile;
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.ressource.Project;
-import adullact.publicrowdfunding.model.local.ressource.Resource;
 import adullact.publicrowdfunding.model.local.ressource.User;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
@@ -12,16 +11,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnKeyListener;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class PagerFragment extends Fragment {
+public class ProfilePagerFragment extends Fragment {
 
 	protected Project projetCurrent;
 

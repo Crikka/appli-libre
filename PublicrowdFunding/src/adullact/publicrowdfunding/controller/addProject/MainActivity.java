@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.custom.CarouselAdapter;
-import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
+import adullact.publicrowdfunding.custom.CarouselAdaptor;
+import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.Project;
@@ -65,7 +65,7 @@ public class MainActivity extends FragmentActivity {
 
 	private HorizontalCarouselStyle mStyle;
 	private HorizontalCarouselLayout mCarousel;
-	private CarouselAdapter mAdapter;
+	private CarouselAdaptor mAdapter;
 	private ArrayList<Integer> mData = new ArrayList<Integer>(0);
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -143,7 +143,7 @@ public class MainActivity extends FragmentActivity {
 		mData.add(R.drawable.plante);
 		mData.add(R.drawable.fete);
 
-		mAdapter = new CarouselAdapter(this);
+		mAdapter = new CarouselAdaptor(this);
 		mAdapter.setData(mData);
 		mCarousel = (HorizontalCarouselLayout) findViewById(R.id.carousel_layout);
 		mStyle = new HorizontalCarouselStyle(this,

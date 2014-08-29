@@ -3,8 +3,8 @@ package adullact.publicrowdfunding.fragment.v4.profile;
 import java.util.ArrayList;
 
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.custom.CustomAdapter;
-import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
+import adullact.publicrowdfunding.custom.ProjectAdaptor;
+import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.cache.Cache;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
@@ -22,7 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class BookmarkFragment extends Fragment {
+public class ListBookmarksFragment extends Fragment {
 
 	private ListView listeProjets;
 
@@ -48,7 +48,7 @@ public class BookmarkFragment extends Fragment {
 
 		projets = new ArrayList<Project>();
 
-		adapter = new CustomAdapter(this.getActivity().getBaseContext(),
+		adapter = new ProjectAdaptor(this.getActivity().getBaseContext(),
 				R.layout.adaptor_project, projets);
 		listeProjets.setAdapter(adapter);
 
@@ -62,7 +62,7 @@ public class BookmarkFragment extends Fragment {
 
 				FragmentTransaction ft = getFragmentManager().beginTransaction();
 				//ft.setCustomAnimations(R.anim.enter_2, R.anim.exit);
-				Fragment fragment = new adullact.publicrowdfunding.fragment.v4.detailProject.PagerFragment();
+				Fragment fragment = new adullact.publicrowdfunding.fragment.v4.detailProject.ProjectPagerFragment();
         		Bundle bundle = new Bundle();
         		bundle.putString("idProject", projets.get(position).getResourceId());
         		fragment.setArguments(bundle);

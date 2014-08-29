@@ -24,7 +24,7 @@ import android.widget.TextView;
  * @author warting {@link https://github.com/warting/AndroidChatBubbles}
  *
  */
-public class CommentaireAdapteur extends ArrayAdapter<Commentary> {
+public class CommentsAdaptor extends ArrayAdapter<Commentary> {
 
 	private TextView commentaire;
 	private TextView utilisateurName;
@@ -33,14 +33,14 @@ public class CommentaireAdapteur extends ArrayAdapter<Commentary> {
 	private TextView titre;
 	private Vector<Commentary> commentaries = new Vector<Commentary>();
 	private ImageView avatar;
-	private CommentaireAdapteur _this;
+	private CommentsAdaptor _this;
 
 	public void setCommentaries(Vector<Commentary> object) {
 		commentaries = object;
 		_this = this;
 	}
 
-	public CommentaireAdapteur(Context context, int textViewResourceId) {
+	public CommentsAdaptor(Context context, int textViewResourceId) {
 		super(context, textViewResourceId);
 		this.notifyDataSetChanged();
 	}

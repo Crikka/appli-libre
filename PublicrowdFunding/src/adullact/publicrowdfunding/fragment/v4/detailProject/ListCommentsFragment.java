@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.custom.CommentaireAdapteur;
-import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
+import adullact.publicrowdfunding.custom.CommentsAdaptor;
+import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.cache.Cache;
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.callback.HoldToDo;
@@ -30,11 +30,9 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RatingBar;
-import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.TextView;
 
-public class TabCommentsFragment extends Fragment {
+public class ListCommentsFragment extends Fragment {
 
 	private Button m_button_comment;
 	
@@ -44,7 +42,7 @@ public class TabCommentsFragment extends Fragment {
 
 	private LinearLayout layoutConnect;
 
-	protected CommentaireAdapteur adapter;
+	protected CommentsAdaptor adapter;
 
 	private SwipeRefreshLayout swipeView;
 
@@ -78,7 +76,7 @@ public class TabCommentsFragment extends Fragment {
 		commentaries = new Vector<Commentary>();
 		
 		lv = (ListView) view.findViewById(R.id.commentaires);
-		adapter = new CommentaireAdapteur(
+		adapter = new CommentsAdaptor(
 				getActivity().getApplicationContext(), R.layout.adaptor_comment);
 		
 		adapter.setCommentaries(commentaries);
@@ -180,7 +178,7 @@ public class TabCommentsFragment extends Fragment {
 						FragmentTransaction ft = fm.beginTransaction();
 
 						// ft.setCustomAnimations(R.anim.enter, R.anim.exit);
-						Fragment fragment = new adullact.publicrowdfunding.fragment.v4.profile.PagerFragment();
+						Fragment fragment = new adullact.publicrowdfunding.fragment.v4.profile.ProfilePagerFragment();
 						Bundle bundle = new Bundle();
 						bundle.putString("idUser", resource.getResourceId());
 						fragment.setArguments(bundle);
@@ -208,7 +206,7 @@ public class TabCommentsFragment extends Fragment {
 				// TODO Auto-generated method stub
 				FragmentTransaction ft = fm.beginTransaction();
 
-				Fragment fragment = new adullact.publicrowdfunding.fragment.v4.detailProject.addCommentFragment();
+				Fragment fragment = new adullact.publicrowdfunding.fragment.v4.detailProject.CommentPopup();
 				Bundle bundle = new Bundle();
 				bundle.putString("idProject", projetCurrent.getResourceId());
 				fragment.setArguments(bundle);

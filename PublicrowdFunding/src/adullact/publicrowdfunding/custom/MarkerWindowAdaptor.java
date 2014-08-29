@@ -1,6 +1,5 @@
 package adullact.publicrowdfunding.custom;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import adullact.publicrowdfunding.R;
@@ -10,26 +9,18 @@ import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.utilities.Calcul;
 import adullact.publicrowdfunding.model.local.utilities.Share;
 import adullact.publicrowdfunding.model.local.utilities.Utility;
-import android.content.Context;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import adullact.publicrowdfunding.views.CustomProgressBar;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
-import android.widget.LinearLayout.LayoutParams;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.model.Marker;
 
-public class infoMarkerWindowAdaptor extends FragmentActivity implements InfoWindowAdapter {
+public class MarkerWindowAdaptor extends FragmentActivity implements InfoWindowAdapter {
 
 	private LinearLayout loading;
 
@@ -48,7 +39,7 @@ public class infoMarkerWindowAdaptor extends FragmentActivity implements InfoWin
 	
 	private LayoutInflater inflater;
 	
-	public infoMarkerWindowAdaptor(LayoutInflater inflater,  HashMap<Marker, String> markers) {
+	public MarkerWindowAdaptor(LayoutInflater inflater,  HashMap<Marker, String> markers) {
         this.inflater=inflater;
         this.markers = markers;
         finish = false;

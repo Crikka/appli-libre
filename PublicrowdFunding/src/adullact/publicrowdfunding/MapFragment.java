@@ -8,33 +8,25 @@ import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.Display;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout.LayoutParams;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
-import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class TabMapFragment extends Fragment implements
+public class MapFragment extends Fragment implements
 		OnInfoWindowClickListener {
 
 	private SupportMapFragment fragment;
@@ -47,7 +39,7 @@ public class TabMapFragment extends Fragment implements
 
 	private View infoWindow;
 
-	private TabMapFragment _this;
+	private MapFragment _this;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -93,7 +85,7 @@ public class TabMapFragment extends Fragment implements
 
 		FragmentTransaction ft = getFragmentManager().beginTransaction();
 		// ft.setCustomAnimations(R.anim.enter_2, R.anim.exit); Fragment
-		Fragment fragment = new adullact.publicrowdfunding.fragment.v4.detailProject.PagerFragment();
+		Fragment fragment = new adullact.publicrowdfunding.fragment.v4.detailProject.ProjectPagerFragment();
 		Bundle bundle = new Bundle();
 		bundle.putString("idProject", id);
 		fragment.setArguments(bundle);
@@ -128,7 +120,7 @@ public class TabMapFragment extends Fragment implements
 
 					googleMap.setOnInfoWindowClickListener(_this);
 					googleMap
-							.setInfoWindowAdapter(new adullact.publicrowdfunding.custom.infoMarkerWindowAdaptor(
+							.setInfoWindowAdapter(new adullact.publicrowdfunding.custom.MarkerWindowAdaptor(
 									 getLayoutInflater(null), markers));
 
 					handler.removeCallbacksAndMessages(null);

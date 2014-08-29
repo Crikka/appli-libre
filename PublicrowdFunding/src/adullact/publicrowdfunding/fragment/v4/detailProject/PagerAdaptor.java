@@ -32,23 +32,23 @@ public class PagerAdaptor extends FragmentStatePagerAdapter {
 		switch (position) {
 		
 		case 0:
-			fragment =  new TabCommentsFragment();
+			fragment =  new ListCommentsFragment();
     		bundle.putString("idProject",idProject);
     		fragment.setArguments(bundle);
 			return fragment;
 		case 1:
-				fragment =  new TabProjectFragment();
+				fragment =  new InfoProjectFragment();
 	    		bundle.putString("idProject",idProject);
 	    		fragment.setArguments(bundle);
 				return fragment;
 		case 2:
-			fragment =  new TabMapFragment();
+			fragment =  new MapFragment();
     		bundle.putString("idProject",idProject);
     		fragment.setArguments(bundle);
 			return fragment;
 
 		default:
-			return new TabProjectFragment();
+			return new InfoProjectFragment();
 		}
 	}
 	

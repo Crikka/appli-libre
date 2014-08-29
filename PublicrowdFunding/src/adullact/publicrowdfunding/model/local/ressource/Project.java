@@ -10,7 +10,7 @@ import org.joda.time.Duration;
 import org.joda.time.Interval;
 
 import rx.Observable;
-import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
+import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.cache.Cache;
 import adullact.publicrowdfunding.model.local.cache.CacheSet;
 import adullact.publicrowdfunding.model.local.callback.HoldToDo;

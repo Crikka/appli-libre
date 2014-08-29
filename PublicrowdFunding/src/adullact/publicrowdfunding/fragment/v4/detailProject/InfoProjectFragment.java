@@ -1,7 +1,7 @@
 package adullact.publicrowdfunding.fragment.v4.detailProject;
 
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
+import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.cache.Cache;
 import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
@@ -10,7 +10,6 @@ import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
 import adullact.publicrowdfunding.model.local.utilities.Share;
 import adullact.publicrowdfunding.model.local.utilities.Utility;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,8 +18,6 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -29,7 +26,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class TabProjectFragment extends Fragment {
+public class InfoProjectFragment extends Fragment {
 
 	private TextView m_titre;
 	private TextView m_description;
@@ -219,7 +216,7 @@ public class TabProjectFragment extends Fragment {
 					FragmentTransaction ft = fm.beginTransaction();
 
 					// ft.setCustomAnimations(R.anim.enter, R.anim.exit);
-					Fragment fragment = new adullact.publicrowdfunding.fragment.v4.profile.PagerFragment();
+					Fragment fragment = new adullact.publicrowdfunding.fragment.v4.profile.ProfilePagerFragment();
 					Bundle bundle = new Bundle();
 					bundle.putString("idUser", user.getResourceId());
 					fragment.setArguments(bundle);
@@ -254,7 +251,7 @@ public class TabProjectFragment extends Fragment {
 
 				FragmentTransaction ft = fm.beginTransaction();
 
-				Fragment fragment = new adullact.publicrowdfunding.fragment.v4.participate.participateFragment();
+				Fragment fragment = new adullact.publicrowdfunding.fragment.v4.detailProject.ParticipatePopup();
 				Bundle bundle = new Bundle();
 				bundle.putString("idProject", projetToDisplay.getResourceId());
 				fragment.setArguments(bundle);

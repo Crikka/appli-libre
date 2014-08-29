@@ -19,7 +19,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class TabMapFragment extends Fragment {
+public class MapFragment extends Fragment {
 
 	private SupportMapFragment fragment;
 	private FragmentManager fm;

@@ -1,7 +1,7 @@
 package adullact.publicrowdfunding.fragment.v4.register;
 
 import adullact.publicrowdfunding.MainActivity;
-import adullact.publicrowdfunding.ProjectsFragment;
+import adullact.publicrowdfunding.ListProjectsFragment;
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.model.server.event.RegistrationEvent;
 import adullact.publicrowdfunding.model.server.request.RegistrationRequest;
@@ -20,7 +20,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-public class registerFragement extends Fragment {
+public class RegisterFragement extends Fragment {
 
 	private EditText m_login;
 	private EditText m_password1;
@@ -103,7 +103,7 @@ public class registerFragement extends Fragment {
                     	
                     	FragmentTransaction ft = getFragmentManager().beginTransaction();
                 		//ft.setCustomAnimations(R.anim.enter, R.anim.exit);
-                		Fragment fragment = new ProjectsFragment();
+                		Fragment fragment = new ListProjectsFragment();
 
                 		ft.replace(R.id.content_frame, fragment);
                 		
@@ -146,7 +146,7 @@ public class registerFragement extends Fragment {
 		        	System.out.println("back");
                 	FragmentTransaction ft = getFragmentManager().beginTransaction();
             		//ft.setCustomAnimations(R.anim.enter, R.anim.exit);
-            		Fragment fragment = new connexionFragment();
+            		Fragment fragment = new ConnexionFragment();
             		ft.replace(R.id.content_frame, fragment);
             		
             		ft.commit(); 

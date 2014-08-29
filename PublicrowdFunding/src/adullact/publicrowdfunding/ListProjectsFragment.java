@@ -1,6 +1,6 @@
 package adullact.publicrowdfunding;
 
-import adullact.publicrowdfunding.custom.CustomAdapter;
+import adullact.publicrowdfunding.custom.ProjectAdaptor;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,7 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class ProjectsFragment extends Fragment {
+public class ListProjectsFragment extends Fragment {
 
 	private ListView listeProjets;
 
@@ -40,14 +40,14 @@ public class ProjectsFragment extends Fragment {
 		final View view = inflater.inflate(R.layout.fragment_liste_projet,
 				container, false);
 		
-		 fragment = new adullact.publicrowdfunding.fragment.v4.detailProject.PagerFragment();
+		 fragment = new adullact.publicrowdfunding.fragment.v4.detailProject.ProjectPagerFragment();
 		_this = (adullact.publicrowdfunding.MainActivity) getActivity();
 
 		listeProjets = (ListView) view.findViewById(R.id.liste);
 
 		loading =  (LinearLayout) view.findViewById(R.id.loading);
 		
-		adapter = new CustomAdapter(this.getActivity().getBaseContext(),
+		adapter = new ProjectAdaptor(this.getActivity().getBaseContext(),
 				R.layout.adaptor_project, _this.p_project_displayed);
 
 		TextView empty = (TextView) view.findViewById(R.id.empty);

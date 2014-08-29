@@ -118,7 +118,7 @@
             </TableRow>
         </TableLayout>
 
-        <adullact.publicrowdfunding.custom.CustomProgressBar
+        <adullact.publicrowdfunding.views.CustomProgressBar
             android:id="@+id/avancement_projet_liste"
             style="@android:style/Widget.ProgressBar.Horizontal"
             android:layout_width="fill_parent"

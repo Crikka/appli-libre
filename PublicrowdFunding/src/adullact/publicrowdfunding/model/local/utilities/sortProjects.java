@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import com.google.android.gms.maps.model.LatLng;
-
 import adullact.publicrowdfunding.model.local.ressource.Project;
+
+import com.google.android.gms.maps.model.LatLng;
 
 public class sortProjects {
 	

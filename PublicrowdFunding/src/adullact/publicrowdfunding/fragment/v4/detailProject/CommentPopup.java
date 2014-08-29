@@ -1,7 +1,7 @@
 package adullact.publicrowdfunding.fragment.v4.detailProject;
 
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
+import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.ressource.Commentary;
 import adullact.publicrowdfunding.model.local.ressource.Project;
@@ -26,7 +26,7 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
-public class addCommentFragment extends Fragment {
+public class CommentPopup extends Fragment {
 
 	private Fragment _this;
 

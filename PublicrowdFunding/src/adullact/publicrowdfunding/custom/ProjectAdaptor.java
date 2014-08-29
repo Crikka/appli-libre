@@ -7,6 +7,7 @@ import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.utilities.Calcul;
 import adullact.publicrowdfunding.model.local.utilities.Share;
 import adullact.publicrowdfunding.model.local.utilities.Utility;
+import adullact.publicrowdfunding.views.CustomProgressBar;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,13 +16,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class CustomAdapter extends ArrayAdapter<Project> {
+public class ProjectAdaptor extends ArrayAdapter<Project> {
 
 	Context mContext;
 	int layoutResourceId;
 	ArrayList<Project> data;
 
-	public CustomAdapter(Context context, int resource, ArrayList<Project> listItem) {
+	public ProjectAdaptor(Context context, int resource, ArrayList<Project> listItem) {
 		super(context, resource, listItem);
 		this.mContext = context;
 		this.layoutResourceId = resource;

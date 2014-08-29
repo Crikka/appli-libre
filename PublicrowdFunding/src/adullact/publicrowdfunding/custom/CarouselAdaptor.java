@@ -8,12 +8,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
-public class  CarouselAdapter  extends BaseAdapter {
+public class  CarouselAdaptor  extends BaseAdapter {
 	
 	private ArrayList<Integer> mData = new ArrayList<Integer>(0);
 	private Context mContext;
 
-	public CarouselAdapter(Context context) {
+	public CarouselAdaptor(Context context) {
 		mContext = context;
 	}
 	

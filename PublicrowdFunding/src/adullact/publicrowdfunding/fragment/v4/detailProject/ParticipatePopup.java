@@ -1,37 +1,26 @@
-package adullact.publicrowdfunding.fragment.v4.participate;
+package adullact.publicrowdfunding.fragment.v4.detailProject;
 
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.R.color;
-import adullact.publicrowdfunding.model.local.callback.HoldToDo;
-import adullact.publicrowdfunding.model.local.ressource.Project;
-import adullact.publicrowdfunding.model.local.ressource.Resource;
-import adullact.publicrowdfunding.model.local.ressource.User;
+import adullact.publicrowdfunding.fragment.v4.participate.PaypalActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.view.View.OnKeyListener;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-public class participateFragment extends Fragment {
+public class ParticipatePopup extends Fragment {
 
 	private EditText somme;
 	private CheckBox conditions;
@@ -80,7 +69,7 @@ public class participateFragment extends Fragment {
 					somme.startAnimation(shake);
 				}
 					
-				Intent intent = new Intent(getActivity(), paypalActivity.class);
+				Intent intent = new Intent(getActivity(), PaypalActivity.class);
 				intent.putExtra("participation", sommeToFund);
 				getActivity().startActivity(intent);
 			}

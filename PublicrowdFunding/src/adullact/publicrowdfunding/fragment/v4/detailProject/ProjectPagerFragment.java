@@ -1,10 +1,8 @@
 package adullact.publicrowdfunding.fragment.v4.detailProject;
 
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
-import adullact.publicrowdfunding.fragment.v4.register.connexionFragment;
+import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.callback.HoldToDo;
-import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.Bookmark;
 import adullact.publicrowdfunding.model.local.ressource.Project;
@@ -12,7 +10,6 @@ import adullact.publicrowdfunding.model.local.ressource.User;
 import adullact.publicrowdfunding.model.local.utilities.CanI;
 import adullact.publicrowdfunding.model.server.event.CreateEvent;
 import adullact.publicrowdfunding.model.server.event.DeleteEvent;
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
@@ -27,11 +24,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnKeyListener;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
-public class PagerFragment extends Fragment {
+public class ProjectPagerFragment extends Fragment {
 
 	FragmentTransaction fragMentTra;
 	FragmentManager fm;

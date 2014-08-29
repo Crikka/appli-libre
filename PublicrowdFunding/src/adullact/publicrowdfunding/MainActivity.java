@@ -2,10 +2,8 @@ package adullact.publicrowdfunding;
 
 import java.util.ArrayList;
 
-import adullact.publicrowdfunding.controller.preferences.preferencesFragment;
-import adullact.publicrowdfunding.custom.DrawLine;
-import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
-import adullact.publicrowdfunding.fragment.v4.register.connexionFragment;
+import adullact.publicrowdfunding.fragment.v4.register.ConnexionFragment;
+import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
@@ -14,6 +12,7 @@ import adullact.publicrowdfunding.model.local.ressource.User;
 import adullact.publicrowdfunding.model.local.utilities.Share;
 import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import adullact.publicrowdfunding.model.local.utilities.sortProjects;
+import adullact.publicrowdfunding.views.SimpleLine;
 import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
@@ -30,7 +29,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -72,9 +70,9 @@ public class MainActivity extends FragmentActivity {
 	private LocationListener locationListener;
 	private String locationProvider;
 
-	private DrawLine m_separator_1;
-	private DrawLine m_separator_2;
-	private DrawLine m_separator_3;
+	private SimpleLine m_separator_1;
+	private SimpleLine m_separator_2;
+	private SimpleLine m_separator_3;
 
 	protected ArrayList<Project> p_project_displayed;
 
@@ -156,9 +154,9 @@ public class MainActivity extends FragmentActivity {
 		final MainActivity _this = this;
 		this.invalidateOptionsMenu();
 
-		m_separator_1 = (DrawLine) findViewById(R.id.separator_1);
-		m_separator_2 = (DrawLine) findViewById(R.id.separator_2);
-		m_separator_3 = (DrawLine) findViewById(R.id.separator_3);
+		m_separator_1 = (SimpleLine) findViewById(R.id.separator_1);
+		m_separator_2 = (SimpleLine) findViewById(R.id.separator_2);
+		m_separator_3 = (SimpleLine) findViewById(R.id.separator_3);
 
 		m_button_authentificate = (Button) findViewById(R.id.connexion);
 		m_button_authentificate.setOnClickListener(new View.OnClickListener() {
@@ -168,7 +166,7 @@ public class MainActivity extends FragmentActivity {
 				FragmentTransaction ft = getSupportFragmentManager()
 						.beginTransaction();
 				// ft.setCustomAnimations(R.anim.enter, R.anim.exit);
-				Fragment fragment = new connexionFragment();
+				Fragment fragment = new ConnexionFragment();
 				ft.replace(R.id.content_frame, fragment);
 				ft.commit();
 
@@ -198,7 +196,7 @@ public class MainActivity extends FragmentActivity {
 				FragmentTransaction ft = getSupportFragmentManager()
 						.beginTransaction();
 				// ft.setCustomAnimations(R.anim.enter, R.anim.exit);
-				Fragment fragment = new adullact.publicrowdfunding.fragment.v4.profile.PagerFragment();
+				Fragment fragment = new adullact.publicrowdfunding.fragment.v4.profile.ProfilePagerFragment();
 				Bundle bundle = new Bundle();
 				bundle.putString("idUser", me.getResourceId());
 				fragment.setArguments(bundle);
@@ -237,7 +235,7 @@ public class MainActivity extends FragmentActivity {
 						.beginTransaction();
 
 				// ft.setCustomAnimations(R.anim.enter, R.anim.exit);
-				Fragment fragment = new TabMapFragment();
+				Fragment fragment = new MapFragment();
 
 				ft.replace(R.id.content_frame, fragment);
 				ft.commit();
@@ -375,7 +373,7 @@ public class MainActivity extends FragmentActivity {
 
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 		// ft.setCustomAnimations(R.anim.enter, R.anim.exit);
-		Fragment fragment = new ProjectsFragment();
+		Fragment fragment = new ListProjectsFragment();
 		fragment.setHasOptionsMenu(true);
 		ft.replace(R.id.content_frame, fragment, "allProjectFragment");
 		ft.commit();

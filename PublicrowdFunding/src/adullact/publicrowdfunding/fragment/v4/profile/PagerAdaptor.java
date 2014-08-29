@@ -32,23 +32,23 @@ public class PagerAdaptor extends FragmentStatePagerAdapter {
 		switch (position) {
 		
 		case 0:
-			fragment =  new SubmitedFragment();
+			fragment =  new ListSubmitedProjectsFragment();
     		bundle.putString("idUser",idUser);
     		fragment.setArguments(bundle);
 			return fragment;
 		case 1:
-				fragment =  new BookmarkFragment();
+				fragment =  new ListBookmarksFragment();
 	    		bundle.putString("idUser",idUser);
 	    		fragment.setArguments(bundle);
 				return fragment;
 		case 2:
-			fragment =  new FinancedFragment();
+			fragment =  new ListFinancedProjectsFragment();
     		bundle.putString("idUser",idUser);
     		fragment.setArguments(bundle);
 			return fragment;
 
 		default:
-			return new BookmarkFragment();
+			return new ListBookmarksFragment();
 		}
 	}
 	

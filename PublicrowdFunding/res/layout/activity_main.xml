@@ -96,7 +96,7 @@
                     </RelativeLayout>
                 </LinearLayout>
 
-                <adullact.publicrowdfunding.custom.DrawLine
+                <adullact.publicrowdfunding.views.SimpleLine
                     android:layout_width="wrap_content"
                     android:layout_height="3dp"
                     android:layout_marginTop="20dp" />
@@ -121,7 +121,7 @@
                     android:drawableLeft="@android:drawable/ic_menu_mapmode"
                     android:text="Carte des projets" />
 
-                <adullact.publicrowdfunding.custom.DrawLine
+                <adullact.publicrowdfunding.views.SimpleLine
                     android:id="@+id/separator_1"
                     android:layout_width="wrap_content"
                     android:layout_height="3dp"
@@ -147,7 +147,7 @@
                     android:drawableLeft="@android:drawable/ic_menu_add"
                     android:text="Ajouter un projet" />
 
-                <adullact.publicrowdfunding.custom.DrawLine
+                <adullact.publicrowdfunding.views.SimpleLine
                     android:id="@+id/separator_2"
                     android:layout_width="wrap_content"
                     android:layout_height="3dp"
@@ -163,7 +163,7 @@
                     android:drawableLeft="@android:drawable/ic_menu_preferences"
                     android:text="Préférences" />
 
-                <adullact.publicrowdfunding.custom.DrawLine
+                <adullact.publicrowdfunding.views.SimpleLine
                     android:id="@+id/separator_3"
                     android:layout_width="wrap_content"
                     android:layout_height="3dp"

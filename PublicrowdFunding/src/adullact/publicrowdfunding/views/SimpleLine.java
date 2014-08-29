@@ -1,4 +1,4 @@
-package adullact.publicrowdfunding.custom;
+package adullact.publicrowdfunding.views;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -10,14 +10,14 @@ import android.view.View;
 /**
  * @author Nelaupe Lucas
  */
-public class DrawLine extends View {
+public class SimpleLine extends View {
 
     private final Paint paint;
 
     /**
      * @param context The context of the application
      */
-    public DrawLine(Context context) {
+    public SimpleLine(Context context) {
         super(context);
         paint = new Paint();
     }
@@ -26,7 +26,7 @@ public class DrawLine extends View {
      * @param context The context of the application
      * @param attrs   The attributs
      */
-    public DrawLine(Context context, AttributeSet attrs) {
+    public SimpleLine(Context context, AttributeSet attrs) {
         super(context, attrs);
         paint = new Paint();
 
