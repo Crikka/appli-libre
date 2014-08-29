@@ -32,12 +32,13 @@ public class MapFragment extends Fragment implements
 	private SupportMapFragment fragment;
 	private FragmentManager fm;
 	private ProgressDialog mprogressDialog;
-	private ArrayList<Project> projets;
 	private View rootView;
 	private GoogleMap googleMap;
-	private final HashMap<Marker, String> markers = new HashMap<Marker, String>();
+	private final HashMap<Marker, Project> markers = new HashMap<Marker, Project>();
 
 	private View infoWindow;
+	
+	private ArrayList<Project> projets;
 
 	private MapFragment _this;
 
@@ -50,8 +51,7 @@ public class MapFragment extends Fragment implements
 		
 		infoWindow = getLayoutInflater(null).inflate(
 				R.layout.fiche_project, null);
-
-		projets = new ArrayList<Project>();
+		projets = new ArrayList<Project>(); 
 
 		_this = this;
 
@@ -81,8 +81,8 @@ public class MapFragment extends Fragment implements
 	@Override
 	public void onInfoWindowClick(Marker marker) {
 
-		String id = markers.get(marker);
-
+		
+		String id = markers.get(marker).getResourceId();
 		FragmentTransaction ft = getFragmentManager().beginTransaction();
 		// ft.setCustomAnimations(R.anim.enter_2, R.anim.exit); Fragment
 		Fragment fragment = new adullact.publicrowdfunding.fragment.v4.detailProject.ProjectPagerFragment();
@@ -115,7 +115,7 @@ public class MapFragment extends Fragment implements
 						marker.title(proj.getName());
 						Marker m = googleMap.addMarker(marker);
 						
-						markers.put(m, proj.getResourceId());
+						markers.put(m, proj);
 					}
 
 					googleMap.setOnInfoWindowClickListener(_this);

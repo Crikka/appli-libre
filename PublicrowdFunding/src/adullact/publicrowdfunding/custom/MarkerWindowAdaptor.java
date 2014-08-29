@@ -3,8 +3,6 @@ package adullact.publicrowdfunding.custom;
 import java.util.HashMap;
 
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.model.local.cache.Cache;
-import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.utilities.Calcul;
 import adullact.publicrowdfunding.model.local.utilities.Share;
@@ -33,16 +31,14 @@ public class MarkerWindowAdaptor extends FragmentActivity implements InfoWindowA
 	private TextView sommeDemander;
 	private TextView distance;
 	
-	private boolean finish;
-	
-	private final HashMap<Marker, String> markers;
+	private final HashMap<Marker, Project> markers;
 	
 	private LayoutInflater inflater;
 	
-	public MarkerWindowAdaptor(LayoutInflater inflater,  HashMap<Marker, String> markers) {
+	public MarkerWindowAdaptor(LayoutInflater inflater,  HashMap<Marker, Project> markers) {
         this.inflater=inflater;
         this.markers = markers;
-        finish = false;
+
     }
 
 	public void displayInfo(Project projet) {
@@ -72,7 +68,6 @@ public class MarkerWindowAdaptor extends FragmentActivity implements InfoWindowA
 		}		
 		loading.setVisibility(View.GONE);
 		System.out.println("projet chagé");
-		finish = true;
 	}
 
 	@Override
@@ -96,31 +91,8 @@ public class MarkerWindowAdaptor extends FragmentActivity implements InfoWindowA
 		sommeFunded = (TextView) v.findViewById(R.id.sommeFund);
 		distance = (TextView) v.findViewById(R.id.distance);
 
-		System.out.println("cherche projet :"+markers.get(arg0));
-		Cache<Project> projet = new Project().getCache(markers.get(arg0))
-				.forceRetrieve();
-		projet.toResource(new HoldToDo<Project>() {
-			@Override
-			public void hold(Project project) {
-				System.out.println("trouvé");
-				displayInfo(project);
-			}
-		});
-		int chargement = 0;
-		while(!finish){
-			try {
-				System.out.println("on attends le chargement");
-				chargement++;
-				if(chargement<5){
-				Thread.sleep(1000);
-				}else{
-					finish = true;
-				}
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		displayInfo(markers.get(arg0));
+		
 		return v;
 	}
 
