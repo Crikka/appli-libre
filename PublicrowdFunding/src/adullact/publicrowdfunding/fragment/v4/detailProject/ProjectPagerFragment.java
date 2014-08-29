@@ -242,13 +242,11 @@ public class ProjectPagerFragment extends Fragment {
 				@Override
 				protected void yes() {
 					m_Is_favorite = false;
-					function();
 				}
 
 				@Override
 				protected void no() {
 					m_Is_favorite = true;
-					function();
 				}
 
 			}.bookmark(projectCurrent);
