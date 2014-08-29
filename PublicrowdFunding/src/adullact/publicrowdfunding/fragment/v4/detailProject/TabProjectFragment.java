@@ -10,6 +10,7 @@ import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
 import adullact.publicrowdfunding.model.local.utilities.Share;
 import adullact.publicrowdfunding.model.local.utilities.Utility;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -61,18 +62,21 @@ public class TabProjectFragment extends Fragment {
 	private FragmentManager fm;
 	
 	private LinearLayout loading;
+	
+	private FrameLayout filter;
+	
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
-		System.out.println("Load Project Fragment");
 
 		view = inflater.inflate(R.layout.fragment_detail_project, container,
 				false);
-
 		fm = this.getActivity().getSupportFragmentManager();
-
+		
+		filter = (FrameLayout) view.findViewById(R.id.filter);
+		filter.setVisibility(View.GONE);
 		layoutConnect = (FrameLayout) view.findViewById(R.id.connect);
 
 		loading = (LinearLayout) view.findViewById(R.id.loading);
@@ -140,7 +144,7 @@ public class TabProjectFragment extends Fragment {
 			Account.getOwn();
 			layoutConnect.setVisibility(View.VISIBLE);
 		} catch (NoAccountExistsInLocal e1) {
-			layoutConnect.setVisibility(View.GONE);
+			//layoutConnect.setVisibility(View.GONE);
 		}
 	}
 
@@ -247,15 +251,19 @@ public class TabProjectFragment extends Fragment {
 		m_payer.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 
-				// Start Activity payer
+				FragmentTransaction ft = fm.beginTransaction();
 
-				/*
-				 * Intent in = new Intent( getActivity(),
-				 * adullact.publicrowdfunding
-				 * .controller.participate.MainActivity.class);
-				 * in.putExtra("projectId", projet.getResourceId());
-				 * getActivit.startActivity(in);
-				 */
+				// ft.setCustomAnimations(R.anim.enter, R.anim.exit);
+				Fragment fragment = new adullact.publicrowdfunding.fragment.v4.participate.participateFragment();
+				Bundle bundle = new Bundle();
+				bundle.putString("idProject", projetToDisplay.getResourceId());
+				fragment.setArguments(bundle);
+				ft.addToBackStack(null);
+				ft.replace(R.id.front, fragment);
+				ft.commit();
+		
+				filter.setVisibility(View.VISIBLE);
+				
 
 			}
 		});

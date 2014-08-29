@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/linearLayoutDetail"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
     android:orientation="vertical" >
+
 
     <LinearLayout
         android:id="@+id/loading"
@@ -25,13 +26,13 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/loading" />
-
-        </LinearLayout>
+    </LinearLayout>
 
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_weight="1" >
 
         <LinearLayout
             android:id="@+id/ll"
@@ -315,7 +316,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|bottom"
-        android:layout_marginBottom="0dp">
+        android:layout_marginBottom="0dp"
+        android:layout_weight="0" >
 
         <Button
             android:id="@+id/payer"
@@ -330,4 +332,12 @@
             android:textSize="25sp" />
     </FrameLayout>
 
-</LinearLayout>
+    <FrameLayout
+        android:id="@+id/filter"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="@drawable/filter" >
+    </FrameLayout>
+
+</FrameLayout>

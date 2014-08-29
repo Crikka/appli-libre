@@ -1,16 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"  
-    android:id="@+id/pager"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <android.support.v4.view.PagerTabStrip
-        android:id="@+id/pager_header"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="40dip"
-        android:layout_gravity="top"
-        android:background="@color/background"
-        android:paddingBottom="4dp"
-        android:paddingTop="4dp" />
+        android:layout_height="match_parent" >
 
-</android.support.v4.view.ViewPager>  
+        <android.support.v4.view.PagerTabStrip
+            android:id="@+id/pager_header"
+            android:layout_width="match_parent"
+            android:layout_height="40dip"
+            android:layout_gravity="top"
+            android:background="@color/background"
+            android:paddingBottom="4dp"
+            android:paddingTop="4dp" />
+    </android.support.v4.view.ViewPager>
+    
+    <FrameLayout
+        android:id="@+id/front"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+    </FrameLayout>
+
+</FrameLayout>

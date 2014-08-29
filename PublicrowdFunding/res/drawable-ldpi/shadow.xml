@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+<!--Layer 0-->
+<!--Layer 1-->
+<!--Layer 2-->
+<!--Layer 3-->
+<!--Layer 4 (content background)-->
+
+    <!-- dropshadow -->
+    <item>
+        <shape>
+            <solid android:color="#10f0f0f0" />
+            <padding android:top="3dp" android:right="3dp" android:bottom="3dp" android:left="3dp" />
+        </shape>
+    </item>
+
+    <item>
+        <shape>
+            <solid android:color="#20f0f0f0" />
+            <padding android:top="3dp" android:right="3dp" android:bottom="3dp" android:left="3dp" />
+        </shape>
+    </item>
+
+    <item>
+        <shape>
+            <solid android:color="#40f0f0f0" />
+            <padding android:top="3dp" android:right="3dp" android:bottom="3dp" android:left="3dp" />
+        </shape>
+    </item>
+
+    <item>
+        <shape>
+            <solid android:color="#50f0f0f0" />
+            <padding android:top="3dp" android:right="3dp" android:bottom="3dp" android:left="3dp" />
+        </shape>
+    </item>
+
+    <item>
+        <shape>
+            <solid android:color="#60f0f0f0" />
+            <padding android:top="3dp" android:right="3dp" android:bottom="3dp" android:left="3dp" />
+        </shape>
+    </item>
+
+    <!-- content background -->
+    <item>
+        <shape>
+            <solid android:color="#fff000" />
+        </shape>
+    </item>
+</layer-list>
