@@ -134,7 +134,8 @@ public class PagerFragment extends Fragment {
 									@Override
 									public void onDelete(Bookmark resource) {
 										m_Is_favorite = false;
-										Toast.makeText(context, "Projet retiré de vos favoris",
+										Toast.makeText(context,
+												"Projet retiré de vos favoris",
 												Toast.LENGTH_SHORT).show();
 										changeColorStar();
 									}
@@ -180,7 +181,8 @@ public class PagerFragment extends Fragment {
 									@Override
 									public void onCreate(Bookmark resource) {
 										m_Is_favorite = true;
-										Toast.makeText(context, "Projet ajouté à vos favoris",
+										Toast.makeText(context,
+												"Projet ajouté à vos favoris",
 												Toast.LENGTH_SHORT).show();
 										changeColorStar();
 									}
@@ -217,36 +219,46 @@ public class PagerFragment extends Fragment {
 
 	public void initBookmark() {
 
-		new Project().getCache(idProject).forceRetrieve()
-				.toResource(new HoldToDo<Project>() {
+		try {
+			new Project().getCache(idProject).forceRetrieve()
+					.toResource(new HoldToDo<Project>() {
 
-					@Override
-					public void hold(Project resource) {
-						projectCurrent = resource;
-						new CanI() {
-							@Override
-							protected void yes() {
-								m_Is_favorite = false;
-							}
+						@Override
+						public void hold(Project resource) {
+							projectCurrent = resource;
+							new CanI() {
+								@Override
+								protected void yes() {
+									m_Is_favorite = false;
+									function();
+								}
 
-							@Override
-							protected void no() {
-								m_Is_favorite = true;
-							}
+								@Override
+								protected void no() {
+									m_Is_favorite = true;
+									function();
+								}
 
-						}.bookmark(resource);
+							}.bookmark(resource);
 
-					}
+						}
 
-				});
+					});
+		} catch (Exception e) {
+			e.printStackTrace();
+			m_Is_favorite = false;
+			changeColorStar();
+		}
 
+	}
+
+	public void function() {
 		try {
 			Account.getOwn();
 		} catch (NoAccountExistsInLocal e) {
 			m_Is_favorite = false;
 		}
 		changeColorStar();
-
 	}
 
 	public void changeColorStar() {
