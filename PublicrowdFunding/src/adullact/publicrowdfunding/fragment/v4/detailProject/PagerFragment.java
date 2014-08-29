@@ -49,23 +49,19 @@ public class PagerFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
-		
+
 		View view = inflater.inflate(R.layout.pager_tab, container, false);
-		
-		
+
 		Bundle bundle = this.getArguments();
 		idProject = bundle.getString("idProject");
-		
+
 		context = (adullact.publicrowdfunding.MainActivity) getActivity();
-		
-		
+
 		fm = context.getSupportFragmentManager();
 		fm.beginTransaction().disallowAddToBackStack().commit();
 
-
-		
 		PagerAdaptor adaptor = new PagerAdaptor(fm, idProject);
-		
+
 		ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager);
 		viewPager.setAdapter(adaptor);
 		viewPager.setCurrentItem(1);
@@ -138,8 +134,9 @@ public class PagerFragment extends Fragment {
 									@Override
 									public void onDelete(Bookmark resource) {
 										m_Is_favorite = false;
-										Toast.makeText(context, "ok",
+										Toast.makeText(context, "Projet retiré de vos favoris",
 												Toast.LENGTH_SHORT).show();
+										changeColorStar();
 									}
 
 									@Override
@@ -183,8 +180,9 @@ public class PagerFragment extends Fragment {
 									@Override
 									public void onCreate(Bookmark resource) {
 										m_Is_favorite = true;
-										Toast.makeText(context, "ok",
+										Toast.makeText(context, "Projet ajouté à vos favoris",
 												Toast.LENGTH_SHORT).show();
+										changeColorStar();
 									}
 
 									@Override
@@ -210,30 +208,30 @@ public class PagerFragment extends Fragment {
 
 			});
 		} catch (NoAccountExistsInLocal e) {
-			Toast.makeText(context, "Il faut un compte pour avoir des favoris !",
+			Toast.makeText(context,
+					"Il faut un compte pour avoir des favoris !",
 					Toast.LENGTH_SHORT).show();
 			e.printStackTrace();
 		}
-		changeColorStar();
 	}
 
 	public void initBookmark() {
+
 		new Project().getCache(idProject).forceRetrieve()
 				.toResource(new HoldToDo<Project>() {
 
 					@Override
 					public void hold(Project resource) {
+						projectCurrent = resource;
 						new CanI() {
 							@Override
 							protected void yes() {
 								m_Is_favorite = false;
-								changeColorStar();
 							}
 
 							@Override
 							protected void no() {
 								m_Is_favorite = true;
-								changeColorStar();
 							}
 
 						}.bookmark(resource);
@@ -241,15 +239,26 @@ public class PagerFragment extends Fragment {
 					}
 
 				});
+
+		try {
+			Account.getOwn();
+		} catch (NoAccountExistsInLocal e) {
+			m_Is_favorite = false;
+		}
+		changeColorStar();
+
 	}
 
 	public void changeColorStar() {
 		PorterDuffColorFilter filter;
 		if (m_Is_favorite) {
-			filter = new PorterDuffColorFilter(Color.TRANSPARENT,
-					PorterDuff.Mode.SRC_ATOP);
-		} else {
+
 			filter = new PorterDuffColorFilter(Color.YELLOW,
+					PorterDuff.Mode.SRC_ATOP);
+
+		} else {
+
+			filter = new PorterDuffColorFilter(Color.TRANSPARENT,
 					PorterDuff.Mode.SRC_ATOP);
 		}
 		star.getIcon().setColorFilter(filter);

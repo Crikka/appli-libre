@@ -66,6 +66,7 @@ public class BookmarkFragment extends Fragment {
         		Bundle bundle = new Bundle();
         		bundle.putString("idProject", projets.get(position).getResourceId());
         		fragment.setArguments(bundle);
+        		fragment.setHasOptionsMenu(true);
 				ft.replace(R.id.content_frame, fragment);
 				ft.commit();
 			}
