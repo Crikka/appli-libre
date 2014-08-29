@@ -28,15 +28,27 @@
             android:layout_marginTop="10dp" />
 
         <RatingBar
-            android:id="@+id/ratingBar1"
-            style="?android:attr/ratingBarStyleIndicator"
+            android:id="@+id/mark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:stepSize="1"
             android:layout_gravity="center"
             android:layout_marginTop="20dp" />
 
+          <EditText
+            android:id="@+id/titre_comment"
+            android:layout_width="match_parent"
+            android:layout_height="50dip"
+            android:layout_marginBottom="10dip"
+            android:layout_marginTop="10dp"
+            android:ems="10"
+            android:hint="Titre du commentaire">
+
+            <requestFocus />
+        </EditText>
+
         <EditText
-            android:id="@+id/participation"
+            android:id="@+id/message_comment"
             android:layout_width="match_parent"
             android:layout_height="50dip"
             android:layout_marginBottom="10dip"

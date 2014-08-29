@@ -314,19 +314,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|bottom"
-        android:layout_marginBottom="0dp">
+        android:layout_marginBottom="0dp"
+        android:padding="20dip" >
 
         <Button
             android:id="@+id/payer"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/buttonshapes"
-            android:drawableLeft="@drawable/paypal"
             android:gravity="center"
-            android:padding="10dip"
-            android:text="@string/contribute"
-            android:textColor="#808080"
-            android:textSize="25sp" />
+            android:text="Contribuer" />
     </FrameLayout>
 
     <FrameLayout

@@ -6,6 +6,7 @@ import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.Resource;
 import adullact.publicrowdfunding.model.local.ressource.User;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -78,7 +79,10 @@ public class participateFragment extends Fragment {
 				if (sommeToFund < 1) {
 					somme.startAnimation(shake);
 				}
-
+					
+				Intent intent = new Intent(getActivity(), paypalActivity.class);
+				intent.putExtra("participation", sommeToFund);
+				getActivity().startActivity(intent);
 			}
 
 		});

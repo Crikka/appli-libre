@@ -5,7 +5,6 @@
     android:background="@color/background"
     android:orientation="vertical" >
 
-    
     <LinearLayout
         android:id="@+id/loading"
         android:layout_width="match_parent"
@@ -26,7 +25,7 @@
             android:gravity="center"
             android:text="@string/loading" />
     </LinearLayout>
- 
+
     <TextView
         android:id="@+id/empty"
         android:layout_width="fill_parent"
@@ -37,7 +36,7 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/refresher"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content" >
 
         <ListView
             android:id="@+id/commentaires"
@@ -53,26 +52,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|bottom"
-        
-        android:background="@color/background" >
+        android:layout_marginBottom="0dp"
+        android:padding="20dip" >
 
         <Button
             android:id="@+id/button_comment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Commenter"
             android:background="@drawable/buttonshapes"
             android:gravity="center"
-            android:stepSize="1.0" />
+            android:text="Commenter" />
     </LinearLayout>
 
-     <FrameLayout
+    <FrameLayout
         android:id="@+id/alpha_comment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:background="@drawable/filter" >
     </FrameLayout>
-    
+
 </FrameLayout>
