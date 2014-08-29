@@ -7,6 +7,7 @@ import com.google.android.gms.maps.model.LatLng;
 public class Share {
 
 	public static LatLng position;
+	public static boolean displayPosition;
 
 	public static String formatString(String str) {
 		try {

@@ -384,7 +384,7 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	public void geolocalisation() {
-
+		Share.displayPosition = false;
 		if (Share.position != null) {
 			try {
 				locationManager.removeUpdates(locationListener);
@@ -413,10 +413,14 @@ public class MainActivity extends FragmentActivity {
 					Fragment myFragment = (Fragment) getSupportFragmentManager()
 							.findFragmentByTag("allProjectFragment");
 					if (myFragment.isVisible()) {
+						if(Share.displayPosition == false){
 						launchDefaultFragment();
 						locationManager.removeUpdates(locationListener);
 						locationListener = null;
 						locationManager = null;
+						locationProvider = null;
+						Share.displayPosition = true;
+						}
 						
 					}
 

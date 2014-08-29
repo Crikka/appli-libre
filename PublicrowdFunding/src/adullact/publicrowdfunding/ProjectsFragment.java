@@ -126,5 +126,4 @@ public class ProjectsFragment extends Fragment {
 
 	}
 
-
 }
