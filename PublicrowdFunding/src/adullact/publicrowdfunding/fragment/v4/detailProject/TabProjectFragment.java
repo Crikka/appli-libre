@@ -117,7 +117,6 @@ public class TabProjectFragment extends Fragment {
 		Bundle bundle = this.getArguments();
 		if (bundle != null) {
 			String idProject = bundle.getString("idProject");
-			System.out.println("Affichage du projet : " + idProject);
 			Cache<Project> projet = new Project().getCache(idProject)
 					.forceRetrieve();
 			projet.toResource(new HoldToDo<Project>() {

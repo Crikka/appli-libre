@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -109,5 +111,24 @@ public class ProjectsFragment extends Fragment {
 		_this.syncProjects();
 
 	}
+	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.menu_main, menu);
+	    super.onCreateOptionsMenu(menu, inflater);
+	}
+	
+
+	@Override
+	public void onPrepareOptionsMenu(Menu menu) {
+		/*
+		boolean drawerOpen = getActivity().mDrawerLayout.isDrawerOpen(mDrawerList);
+		menu.findItem(R.id.action_search).setVisible(!drawerOpen);
+		menu.findItem(R.id.action_sort).setVisible(!drawerOpen);
+		return super.onPrepareOptionsMenu(menu);
+		*/
+
+	}
+
 
 }

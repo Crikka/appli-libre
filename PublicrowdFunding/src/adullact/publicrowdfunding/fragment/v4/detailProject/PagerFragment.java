@@ -61,4 +61,5 @@ public class PagerFragment extends Fragment {
 		return view;
 
 	}
+	
 }

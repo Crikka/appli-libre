@@ -51,7 +51,7 @@ public class MainActivity extends FragmentActivity {
 	private DrawerLayout mDrawerLayout;
 	private LinearLayout mDrawerList;
 
-	private ActionBarDrawerToggle mDrawerToggle;
+	public ActionBarDrawerToggle mDrawerToggle;
 
 	private Button m_button_add_projet;
 	private LinearLayout m_button_account;
@@ -113,24 +113,6 @@ public class MainActivity extends FragmentActivity {
 		gererPanneauMenu();
 		isConnect();
 		// geolocalisation();
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.menu_main, menu);
-		search(menu);
-
-		return super.onCreateOptionsMenu(menu);
-	}
-
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		
-		boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-		menu.findItem(R.id.action_search).setVisible(!drawerOpen);
-		menu.findItem(R.id.action_sort).setVisible(!drawerOpen);
-		return super.onPrepareOptionsMenu(menu);
 	}
 
 	@Override
@@ -363,7 +345,7 @@ public class MainActivity extends FragmentActivity {
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 		// ft.setCustomAnimations(R.anim.enter, R.anim.exit);
 		Fragment fragment = new ProjectsFragment();
-
+		fragment.setHasOptionsMenu(true);
 		ft.replace(R.id.content_frame, fragment, "allProjectFragment");
 		ft.commit();
 
@@ -498,7 +480,7 @@ public class MainActivity extends FragmentActivity {
 			@Override
 			public boolean onClose() {
 				p_project_displayed = new ArrayList<Project>(sync.getProjects());
-				// reLoad();
+				launchDefaultFragment();
 				return false;
 			}
 
@@ -507,9 +489,10 @@ public class MainActivity extends FragmentActivity {
 		searchView.setOnQueryTextListener(new OnQueryTextListener() {
 
 			public boolean onQueryTextSubmit(String query) {
-				/*
-				 * projetsToDisplay = sync.searchInName(query); reLoad();
-				 */
+				
+				p_project_displayed = sync.searchInName(query); 
+				 launchDefaultFragment();
+				 
 				return false;
 			}
 
