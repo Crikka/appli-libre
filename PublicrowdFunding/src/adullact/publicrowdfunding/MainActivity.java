@@ -3,6 +3,7 @@ package adullact.publicrowdfunding;
 import java.util.ArrayList;
 
 import adullact.publicrowdfunding.controller.preferences.preferencesFragment;
+import adullact.publicrowdfunding.custom.DrawLine;
 import adullact.publicrowdfunding.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.fragment.v4.register.connexionFragment;
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
@@ -70,6 +71,10 @@ public class MainActivity extends FragmentActivity {
 	private LocationManager locationManager;
 	private LocationListener locationListener;
 	private String locationProvider;
+	
+	private DrawLine m_separator_1;
+	private DrawLine m_separator_2;
+	private DrawLine m_separator_3;
 
 	protected ArrayList<Project> p_project_displayed;
 
@@ -148,6 +153,11 @@ public class MainActivity extends FragmentActivity {
 	private void gererPanneauMenu() {
 		final MainActivity _this = this;
 		this.invalidateOptionsMenu();
+		
+		m_separator_1 = (DrawLine) findViewById(R.id.separator_1);
+		m_separator_2 = (DrawLine) findViewById(R.id.separator_2);
+		m_separator_3 = (DrawLine) findViewById(R.id.separator_3);
+		
 		m_button_authentificate = (Button) findViewById(R.id.connexion);
 		m_button_authentificate.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -279,13 +289,38 @@ public class MainActivity extends FragmentActivity {
 		avatar = (ImageView) findViewById(R.id.avatar);
 
 	}
+	
+	public void setDrawerMenu(boolean connect){
+		if(connect){
+			m_button_account.setVisibility(View.VISIBLE);
+			m_button_authentificate.setVisibility(View.GONE);
+			m_button_deconnexion.setVisibility(View.VISIBLE);
+			m_Button_preferences.setVisibility(View.VISIBLE);
+			m_button_add_projet.setVisibility(View.VISIBLE);
+			m_button_validate_projects.setVisibility(View.VISIBLE);
+			
+			m_separator_1.setVisibility(View.VISIBLE);
+			m_separator_2.setVisibility(View.VISIBLE);
+			m_separator_3.setVisibility(View.VISIBLE);
+		}else{
+			m_button_account.setVisibility(View.GONE);
+			m_button_authentificate.setVisibility(View.VISIBLE);
+			m_button_deconnexion.setVisibility(View.GONE);
+			m_Button_preferences.setVisibility(View.GONE);
+			m_button_add_projet.setVisibility(View.GONE);
+			m_button_validate_projects.setVisibility(View.GONE);
+			
+			m_separator_1.setVisibility(View.GONE);
+			m_separator_2.setVisibility(View.GONE);
+			m_separator_3.setVisibility(View.GONE);
+		}
+	}
 
 	public void isConnect() {
 		try {
 			Account account = Account.getOwn();
-			m_button_account.setVisibility(View.VISIBLE);
-			m_button_authentificate.setVisibility(View.GONE);
-			m_button_deconnexion.setVisibility(View.VISIBLE);
+
+			setDrawerMenu(true);
 			account.getUser(new WhatToDo<User>() {
 
 				@Override
@@ -309,9 +344,7 @@ public class MainActivity extends FragmentActivity {
 
 			});
 		} catch (NoAccountExistsInLocal e1) {
-			m_button_account.setVisibility(View.GONE);
-			m_button_authentificate.setVisibility(View.VISIBLE);
-			m_button_deconnexion.setVisibility(View.GONE);
+			setDrawerMenu(false);
 		}
 	}
 

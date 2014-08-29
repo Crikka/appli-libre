@@ -10,14 +10,14 @@ import android.view.View;
 /**
  * @author Nelaupe Lucas
  */
-public class drawLine extends View {
+public class DrawLine extends View {
 
     private final Paint paint;
 
     /**
      * @param context The context of the application
      */
-    public drawLine(Context context) {
+    public DrawLine(Context context) {
         super(context);
         paint = new Paint();
     }
@@ -26,7 +26,7 @@ public class drawLine extends View {
      * @param context The context of the application
      * @param attrs   The attributs
      */
-    public drawLine(Context context, AttributeSet attrs) {
+    public DrawLine(Context context, AttributeSet attrs) {
         super(context, attrs);
         paint = new Paint();
 
