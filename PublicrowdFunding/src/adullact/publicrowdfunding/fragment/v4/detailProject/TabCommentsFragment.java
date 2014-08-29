@@ -21,10 +21,12 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -34,12 +36,13 @@ import android.widget.TextView;
 
 public class TabCommentsFragment extends Fragment {
 
-	private RatingBar m_notation;
+	private Button m_button_comment;
+	
 	private ListView lv;
 
 	private Vector<Commentary> commentaries;
 
-	private FrameLayout layoutConnect;
+	private LinearLayout layoutConnect;
 
 	protected CommentaireAdapteur adapter;
 
@@ -50,6 +53,8 @@ public class TabCommentsFragment extends Fragment {
 	private FragmentManager fm;
 
 	private LinearLayout loading;
+	
+	private FrameLayout filter;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,9 +63,13 @@ public class TabCommentsFragment extends Fragment {
 		final View view = inflater.inflate(R.layout.fragment_list_comments,
 				container, false);
 
+		
+		filter = (FrameLayout) view.findViewById(R.id.alpha_comment);
+		filter.setVisibility(View.GONE);	
+		
 		fm = this.getActivity().getSupportFragmentManager();
 
-		layoutConnect = (FrameLayout) view.findViewById(R.id.connect);
+		layoutConnect = (LinearLayout) view.findViewById(R.id.connect);
 
 		loading = (LinearLayout) view.findViewById(R.id.loading);
 
@@ -76,9 +85,9 @@ public class TabCommentsFragment extends Fragment {
 
 		lv.setAdapter(adapter);
 
-		m_notation = (RatingBar) view
-				.findViewById(R.id.rating_bar_projet_detail);
-
+		m_button_comment = (Button) view
+				.findViewById(R.id.button_comment);
+		
 		TextView empty = (TextView) view.findViewById(R.id.empty);
 		lv.setEmptyView(empty);
 
@@ -135,7 +144,7 @@ public class TabCommentsFragment extends Fragment {
 			Account.getOwn();
 			layoutConnect.setVisibility(View.VISIBLE);
 		} catch (NoAccountExistsInLocal e1) {
-			layoutConnect.setVisibility(View.GONE);
+		//	layoutConnect.setVisibility(View.GONE);
 		}
 	}
 
@@ -192,20 +201,28 @@ public class TabCommentsFragment extends Fragment {
 			}
 		});
 
-		m_notation
-				.setOnRatingBarChangeListener(new OnRatingBarChangeListener() {
+		m_button_comment.setOnClickListener(new OnClickListener(){
 
-					@Override
-					public void onRatingChanged(RatingBar ratingBar,
-							float rating, boolean fromUser) {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				FragmentTransaction ft = fm.beginTransaction();
 
-						System.out.println(rating);
-						addCommentAlert commentaireBuilder = new addCommentAlert(
-								getActivity(), rating, projetCurrent);
-						commentaireBuilder.show();
+				Fragment fragment = new adullact.publicrowdfunding.fragment.v4.detailProject.addCommentFragment();
+				Bundle bundle = new Bundle();
+				bundle.putString("idProject", projetCurrent.getResourceId());
+				fragment.setArguments(bundle);
+				ft.addToBackStack(null);
+				ft.setCustomAnimations(R.anim.popup_enter, R.anim.no_anim);
+				ft.add(R.id.front, fragment);
+				ft.commit();
+		
+				filter.setVisibility(View.VISIBLE);
 
-					}
-				});
+			}
+			
+		});
+		
 	}
 
 }

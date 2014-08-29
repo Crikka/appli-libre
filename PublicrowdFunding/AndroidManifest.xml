@@ -116,7 +116,7 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.controller.participate.paypalActivity"
+            android:name="adullact.publicrowdfunding.fragment.v4.participate.paypalActivity"
             android:label="@string/app_name" >
         </activity>
         <activity

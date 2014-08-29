@@ -19,6 +19,8 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -253,13 +255,13 @@ public class TabProjectFragment extends Fragment {
 
 				FragmentTransaction ft = fm.beginTransaction();
 
-				// ft.setCustomAnimations(R.anim.enter, R.anim.exit);
 				Fragment fragment = new adullact.publicrowdfunding.fragment.v4.participate.participateFragment();
 				Bundle bundle = new Bundle();
 				bundle.putString("idProject", projetToDisplay.getResourceId());
 				fragment.setArguments(bundle);
 				ft.addToBackStack(null);
-				ft.replace(R.id.front, fragment);
+				ft.setCustomAnimations(R.anim.popup_enter, R.anim.no_anim);
+				ft.add(R.id.front, fragment);
 				ft.commit();
 		
 				filter.setVisibility(View.VISIBLE);
@@ -269,6 +271,11 @@ public class TabProjectFragment extends Fragment {
 		});
 		loading.setVisibility(View.GONE);
 		view.invalidate();
+	}
+	
+	public void OnResume(){
+		super.onResume();
+		filter.setVisibility(View.GONE);
 	}
 
 }

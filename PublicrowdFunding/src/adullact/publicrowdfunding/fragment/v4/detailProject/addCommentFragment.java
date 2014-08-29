@@ -1,4 +1,4 @@
-package adullact.publicrowdfunding.fragment.v4.participate;
+package adullact.publicrowdfunding.fragment.v4.detailProject;
 
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.R.color;
@@ -30,27 +30,20 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class participateFragment extends Fragment {
-
-	private EditText somme;
-	private CheckBox conditions;
-	private Button valider;
-
-	private String idProject;
-
-	private Animation shake;
-
+public class addCommentFragment extends Fragment {
+	
 	private Fragment _this;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
-		View view = inflater.inflate(R.layout.popup_participate, container,
+		View view = inflater.inflate(R.layout.popup_add_comment, container,
 				false);
 
 		_this = this;
 
+		/*
 		somme = (EditText) view.findViewById(R.id.participation);
 		conditions = (CheckBox) view.findViewById(R.id.conditions);
 		valider = (Button) view.findViewById(R.id.valider);
@@ -83,6 +76,8 @@ public class participateFragment extends Fragment {
 
 		});
 
+*/
+
 		view.setFocusableInTouchMode(true);
 		view.requestFocus();
 		view.setOnKeyListener(new OnKeyListener() {
@@ -102,7 +97,7 @@ public class participateFragment extends Fragment {
 		                public void run() {
 		                	try {
 								getActivity().getWindow().getDecorView()
-								.findViewById(R.id.filter)
+								.findViewById(R.id.alpha_comment)
 								.setVisibility(View.GONE);
 								
 							} catch (Exception e) {
@@ -116,6 +111,7 @@ public class participateFragment extends Fragment {
 				return false;
 			}
 		});
+		
 		return view;
 
 	}

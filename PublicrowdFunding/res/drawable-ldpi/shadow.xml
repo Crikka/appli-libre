@@ -45,7 +45,7 @@
     <!-- content background -->
     <item>
         <shape>
-            <solid android:color="#fff000" />
+            <solid android:color="@color/background" />
         </shape>
     </item>
 </layer-list>

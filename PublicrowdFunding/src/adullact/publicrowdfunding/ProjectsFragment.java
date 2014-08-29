@@ -30,7 +30,8 @@ public class ProjectsFragment extends Fragment {
 	private adullact.publicrowdfunding.MainActivity _this;
 	
 	private LinearLayout loading;
-
+	
+	private Fragment fragment;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,6 +40,7 @@ public class ProjectsFragment extends Fragment {
 		final View view = inflater.inflate(R.layout.fragment_liste_projet,
 				container, false);
 		
+		 fragment = new adullact.publicrowdfunding.fragment.v4.detailProject.PagerFragment();
 		_this = (adullact.publicrowdfunding.MainActivity) getActivity();
 
 		listeProjets = (ListView) view.findViewById(R.id.liste);
@@ -75,9 +77,8 @@ public class ProjectsFragment extends Fragment {
 					int position, long id) {
 				
 				FragmentTransaction ft = getFragmentManager().beginTransaction();
-				//ft.setCustomAnimations(R.anim.enter_2, R.anim.exit);
-				Fragment fragment = new adullact.publicrowdfunding.fragment.v4.detailProject.PagerFragment();
-        		Bundle bundle = new Bundle();
+				ft.setCustomAnimations(R.anim.fade_enter, R.anim.fade_exit);
+				Bundle bundle = new Bundle();
         		bundle.putString("idProject", _this.p_project_displayed.get(position).getResourceId());
         		fragment.setArguments(bundle);
         		ft.addToBackStack(null);
