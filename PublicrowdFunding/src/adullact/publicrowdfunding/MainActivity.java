@@ -413,15 +413,16 @@ public class MainActivity extends FragmentActivity {
 					Fragment myFragment = (Fragment) getSupportFragmentManager()
 							.findFragmentByTag("allProjectFragment");
 					if (myFragment.isVisible()) {
-						if(Share.displayPosition == false){
-						launchDefaultFragment();
-						locationManager.removeUpdates(locationListener);
-						locationListener = null;
-						locationManager = null;
-						locationProvider = null;
-						Share.displayPosition = true;
+						if (Share.displayPosition == false) {
+							sortProjects.sortAlmostFunded(p_project_displayed);
+							launchDefaultFragment();
+							locationManager.removeUpdates(locationListener);
+							locationListener = null;
+							locationManager = null;
+							locationProvider = null;
+							Share.displayPosition = true;
 						}
-						
+
 					}
 
 				} catch (NullPointerException e) {
@@ -457,9 +458,18 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	public void sort() {
-		String names[] = { "Les plus gros projets en premier",
-				"Le plus petit projets en premier", "Le plus avancés" };
-
+		ArrayAdapter<String> adapter = null;
+		if (Share.position == null) {
+			String names[] = { "Le plus gros projet", "Le plus petit projet",
+					"Le plus avancé" };
+			adapter = new ArrayAdapter<String>(MainActivity.this,
+					android.R.layout.simple_list_item_1, names);
+		} else {
+			String names[] = { "Le plus gros projet", "Le plus petit",
+					"Le plus avancé", "Le plus proche (Défaut)" };
+			adapter = new ArrayAdapter<String>(MainActivity.this,
+					android.R.layout.simple_list_item_1, names);
+		}
 		AlertDialog.Builder alertDialog = new AlertDialog.Builder(
 				MainActivity.this);
 		LayoutInflater inflater = getLayoutInflater();
@@ -467,8 +477,7 @@ public class MainActivity extends FragmentActivity {
 		alertDialog.setView(convertView);
 		alertDialog.setTitle("Trier par");
 		ListView lv = (ListView) convertView.findViewById(R.id.liste);
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-				MainActivity.this, android.R.layout.simple_list_item_1, names);
+
 		lv.setAdapter(adapter);
 		final AlertDialog dialog = alertDialog.create();
 		lv.setOnItemClickListener(new OnItemClickListener() {
@@ -493,6 +502,12 @@ public class MainActivity extends FragmentActivity {
 				case 2:
 
 					sortProjects.sortAlmostFunded(p_project_displayed);
+					launchDefaultFragment();
+					dialog.dismiss();
+					break;
+
+				case 3:
+					sortProjects.sortClothersProject(p_project_displayed);
 					launchDefaultFragment();
 					dialog.dismiss();
 					break;

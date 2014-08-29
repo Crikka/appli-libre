@@ -62,11 +62,10 @@ public class TabProjectFragment extends Fragment {
 	private View view;
 
 	private FragmentManager fm;
-	
+
 	private LinearLayout loading;
-	
+
 	private FrameLayout filter;
-	
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,13 +75,13 @@ public class TabProjectFragment extends Fragment {
 		view = inflater.inflate(R.layout.fragment_detail_project, container,
 				false);
 		fm = this.getActivity().getSupportFragmentManager();
-		
+
 		filter = (FrameLayout) view.findViewById(R.id.filter);
 		filter.setVisibility(View.GONE);
 		layoutConnect = (FrameLayout) view.findViewById(R.id.connect);
 
 		loading = (LinearLayout) view.findViewById(R.id.loading);
-		
+
 		layout_website = (RelativeLayout) view
 				.findViewById(R.id.layout_website);
 		layout_call = (RelativeLayout) view.findViewById(R.id.layout_call);
@@ -117,7 +116,7 @@ public class TabProjectFragment extends Fragment {
 		m_illustration = (ImageView) view.findViewById(R.id.icon);
 
 		m_avatar = (ImageView) view.findViewById(R.id.avatar);
-		
+
 		isConnect();
 
 		Bundle bundle = this.getArguments();
@@ -146,7 +145,7 @@ public class TabProjectFragment extends Fragment {
 			Account.getOwn();
 			layoutConnect.setVisibility(View.VISIBLE);
 		} catch (NoAccountExistsInLocal e1) {
-			//layoutConnect.setVisibility(View.GONE);
+			// layoutConnect.setVisibility(View.GONE);
 		}
 	}
 
@@ -259,23 +258,17 @@ public class TabProjectFragment extends Fragment {
 				Bundle bundle = new Bundle();
 				bundle.putString("idProject", projetToDisplay.getResourceId());
 				fragment.setArguments(bundle);
-				ft.addToBackStack(null);
+			//	ft.addToBackStack(null);
 				ft.setCustomAnimations(R.anim.popup_enter, R.anim.no_anim);
 				ft.add(R.id.front, fragment);
 				ft.commit();
-		
+
 				filter.setVisibility(View.VISIBLE);
-				
 
 			}
 		});
 		loading.setVisibility(View.GONE);
 		view.invalidate();
-	}
-	
-	public void OnResume(){
-		super.onResume();
-		filter.setVisibility(View.GONE);
 	}
 
 }

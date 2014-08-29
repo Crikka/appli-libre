@@ -116,6 +116,12 @@ public class ProjectsFragment extends Fragment {
 	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		
+		try{
+			menu.clear();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		inflater.inflate(R.menu.menu_main, menu);
 	    super.onCreateOptionsMenu(menu, inflater);
 	}

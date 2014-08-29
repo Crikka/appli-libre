@@ -59,7 +59,7 @@ public class PagerFragment extends Fragment {
 
 		fm = context.getSupportFragmentManager();
 		fm.beginTransaction().disallowAddToBackStack().commit();
-
+		
 		PagerAdaptor adaptor = new PagerAdaptor(fm, idProject);
 
 		ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager);
@@ -85,6 +85,11 @@ public class PagerFragment extends Fragment {
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		try{
+			menu.clear(); // Permettra d'éviter les bugs de superpositions
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		inflater.inflate(R.menu.detail_projet, menu);
 		super.onCreateOptionsMenu(menu, inflater);
 	}
