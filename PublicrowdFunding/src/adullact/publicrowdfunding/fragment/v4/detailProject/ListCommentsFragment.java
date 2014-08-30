@@ -16,8 +16,10 @@ import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,13 +57,14 @@ public class ListCommentsFragment extends Fragment {
 	
 	private FrameLayout filter;
 
+	
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
 		final View view = inflater.inflate(R.layout.fragment_list_comments,
 				container, false);
-
 		
 		filter = (FrameLayout) view.findViewById(R.id.alpha_comment);
 		filter.setVisibility(View.GONE);	
@@ -114,7 +117,7 @@ public class ListCommentsFragment extends Fragment {
 				.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 					@Override
 					public void onRefresh() {
-						// refresh();
+						ListCommentsFragment.reloadCommentFragment(getActivity());
 
 					}
 
@@ -148,11 +151,6 @@ public class ListCommentsFragment extends Fragment {
 		//	layoutConnect.setVisibility(View.GONE);
 		}
 	}
-
-	/*
-	 * public void refresh() { _this.refresh(); adapter.notifyDataSetChanged();
-	 * }
-	 */
 
 	public void displayInfo() {
 		projetCurrent.getCommentaries(new HoldAllToDo<Commentary>() {
@@ -215,7 +213,6 @@ public class ListCommentsFragment extends Fragment {
 				Bundle bundle = new Bundle();
 				bundle.putString("idProject", projetCurrent.getResourceId());
 				fragment.setArguments(bundle);
-				ft.addToBackStack(null);
 				ft.setCustomAnimations(R.anim.popup_enter, R.anim.no_anim);
 				ft.add(R.id.front, fragment);
 				ft.commit();
@@ -226,6 +223,19 @@ public class ListCommentsFragment extends Fragment {
 			
 		});
 		
+	}
+	
+	public static void reloadCommentFragment(FragmentActivity activity) {
+
+		for (Fragment fragment : activity.getSupportFragmentManager()
+				.getFragments()) {
+			if (fragment instanceof adullact.publicrowdfunding.fragment.v4.detailProject.ListCommentsFragment) {
+				activity.getSupportFragmentManager().beginTransaction()
+						.detach(fragment).attach(fragment).commit();
+			}
+			
+		}
+
 	}
 
 }

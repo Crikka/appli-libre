@@ -63,6 +63,7 @@ public class ProfilePagerFragment extends Fragment {
 		
 		
 		adullact.publicrowdfunding.MainActivity _this = (adullact.publicrowdfunding.MainActivity) getActivity();
+		
 		fm = _this.getSupportFragmentManager();
 		fm.beginTransaction().disallowAddToBackStack().commit();
 

@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -171,6 +172,7 @@ public class CommentPopup extends Fragment {
 							Toast.makeText(context, "Commentaire ajouté !",
 									Toast.LENGTH_SHORT).show();
 							back();
+							ListCommentsFragment.reloadCommentFragment(getActivity());
 
 						}
 
@@ -213,5 +215,6 @@ public class CommentPopup extends Fragment {
 					}
 
 				});
-	}
+	}	
+	
 }

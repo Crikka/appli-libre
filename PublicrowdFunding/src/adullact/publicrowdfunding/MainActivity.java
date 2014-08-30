@@ -373,7 +373,6 @@ public class MainActivity extends FragmentActivity {
 	public void launchDefaultFragment() {
 
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-		// ft.setCustomAnimations(R.anim.enter, R.anim.exit);
 		Fragment fragment = new ListProjectsFragment();
 		fragment.setHasOptionsMenu(true);
 		ft.replace(R.id.content_frame, fragment, "allProjectFragment");

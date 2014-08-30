@@ -55,7 +55,6 @@ public class ProjectAdaptor extends ArrayAdapter<Project> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View v = convertView;
-		System.out.println("Adaptor du projet");
 		UserHolder holder = new UserHolder();
 
 		// First let's verify the convertView is not null

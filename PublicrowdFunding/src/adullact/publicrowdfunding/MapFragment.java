@@ -105,6 +105,7 @@ public class MapFragment extends Fragment implements
 			@Override
 			public void run() {
 
+				try{
 				googleMap = ((SupportMapFragment) fm.findFragmentByTag("mapid"))
 						.getMap();
 
@@ -138,6 +139,9 @@ public class MapFragment extends Fragment implements
 
 				else {
 					handler.postDelayed(this, 2000);
+				}
+				}catch(Exception e){
+					System.out.println("Impossible de lancer Google Map");
 				}
 			}
 		}, 2000);
