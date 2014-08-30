@@ -129,7 +129,9 @@ public class MainActivity extends FragmentActivity {
 		}
 
 		switch (item.getItemId()) {
-
+		case R.id.action_search:
+			search(item);
+			break;
 		case R.id.action_sort:
 			sort();
 			break;
@@ -534,10 +536,8 @@ public class MainActivity extends FragmentActivity {
 		});
 	}
 
-	public void search(Menu menu) {
-		MenuItem searchItem;
-		searchItem = menu.findItem(R.id.action_search);
-		assert searchItem != null;
+	public void search(MenuItem searchItem) {
+		
 		SearchView searchView = (SearchView) searchItem.getActionView();
 		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 		if (null != searchManager) {
