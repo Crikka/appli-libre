@@ -89,6 +89,7 @@ public class MapFragment extends Fragment implements
 		Bundle bundle = new Bundle();
 		bundle.putString("idProject", id);
 		fragment.setArguments(bundle);
+		fragment.setHasOptionsMenu(true);
 		ft.replace(R.id.content_frame, fragment);
 		ft.commit();
 

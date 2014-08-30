@@ -166,7 +166,6 @@ public class MainActivity extends FragmentActivity {
 
 				FragmentTransaction ft = getSupportFragmentManager()
 						.beginTransaction();
-				// ft.setCustomAnimations(R.anim.enter, R.anim.exit);
 				Fragment fragment = new ConnexionFragment();
 				ft.replace(R.id.content_frame, fragment);
 				ft.commit();
@@ -196,7 +195,6 @@ public class MainActivity extends FragmentActivity {
 
 				FragmentTransaction ft = getSupportFragmentManager()
 						.beginTransaction();
-				// ft.setCustomAnimations(R.anim.enter, R.anim.exit);
 				Fragment fragment = new adullact.publicrowdfunding.fragment.v4.profile.ProfilePagerFragment();
 				Bundle bundle = new Bundle();
 				bundle.putString("idUser", me.getResourceId());
@@ -237,7 +235,7 @@ public class MainActivity extends FragmentActivity {
 
 				// ft.setCustomAnimations(R.anim.enter, R.anim.exit);
 				Fragment fragment = new MapFragment();
-
+				ft.addToBackStack(null);
 				ft.replace(R.id.content_frame, fragment);
 				ft.commit();
 
@@ -253,8 +251,8 @@ public class MainActivity extends FragmentActivity {
 				FragmentTransaction ft = getSupportFragmentManager()
 						.beginTransaction();
 				Fragment fragment = new preferencesFragment();
-
 				ft.replace(R.id.content_frame, fragment);
+				ft.addToBackStack(null);
 				ft.commit();
 
 				mDrawerLayout.closeDrawer(mDrawerList);
@@ -518,6 +516,24 @@ public class MainActivity extends FragmentActivity {
 
 	}
 
+	public void syncProjects() {
+
+		sync = SyncServerToLocal.getInstance();
+		sync.sync(new HoldAllToDo<Project>() {
+
+			@Override
+			public void holdAll(ArrayList<Project> projects) {
+
+				ArrayList<Project> allSync = new ArrayList<Project>(sync
+						.getProjects());
+				p_project_displayed = allSync;
+
+				launchDefaultFragment();
+
+			}
+		});
+	}
+
 	public void search(Menu menu) {
 		MenuItem searchItem;
 		searchItem = menu.findItem(R.id.action_search);
@@ -557,24 +573,6 @@ public class MainActivity extends FragmentActivity {
 
 		});
 
-	}
-
-	public void syncProjects() {
-
-		sync = SyncServerToLocal.getInstance();
-		sync.sync(new HoldAllToDo<Project>() {
-
-			@Override
-			public void holdAll(ArrayList<Project> projects) {
-
-				ArrayList<Project> allSync = new ArrayList<Project>(sync
-						.getProjects());
-				p_project_displayed = allSync;
-
-				launchDefaultFragment();
-
-			}
-		});
 	}
 
 }
