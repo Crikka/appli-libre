@@ -61,14 +61,14 @@ public class MainActivity extends Fragment {
 		listeProjets.setAdapter(adapter);
 		swipeView = (SwipeRefreshLayout) view.findViewById(R.id.refresher);
 		swipeView.setEnabled(false);
-
+		refresh();
 		swipeView.setColorScheme(R.color.blue, R.color.green, R.color.yellow,
 				R.color.red);
 		swipeView
 				.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 					@Override
 					public void onRefresh() {
-						swipeView.setRefreshing(true);
+						swipeView.setEnabled(true);
 						refresh();
 
 					}
@@ -127,6 +127,7 @@ public class MainActivity extends Fragment {
 				p_project_displayed = allSync;
 				adapter.addAll(projects);
 				adapter.notifyDataSetChanged();
+				swipeView.setRefreshing(false);
 			
 
 			}

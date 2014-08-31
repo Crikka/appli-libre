@@ -520,7 +520,6 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	public void syncProjects() {
-
 		sync = SyncServerToLocal.getInstance();
 		sync.sync(new HoldAllToDo<Project>() {
 
