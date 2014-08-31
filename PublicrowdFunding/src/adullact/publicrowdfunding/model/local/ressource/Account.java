@@ -30,15 +30,14 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
     private static Account m_own = null;
     private void initialize() throws NoAccountExistsInLocal {
         SharedPreferences sharedPreferences = PublicrowdFundingApplication.sharedPreferences();//m_context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
-        if(!sharedPreferences.contains(KEY_USERNAME) || !sharedPreferences.contains(KEY_USERNAME) || !sharedPreferences.contains(KEY_USERNAME)) {
-            {
+        if(!sharedPreferences.contains(KEY_USERNAME) || !sharedPreferences.contains(KEY_PASSWORD) || !sharedPreferences.contains(KEY_PSEUDO)) {
                 m_own = null;
                 throw new NoAccountExistsInLocal();
-            }
         }
 
         m_username = sharedPreferences.getString(KEY_USERNAME, "");
         m_password = decrypt("mystery", sharedPreferences.getString(KEY_PASSWORD, ""));
+        m_user = new User().getCache(sharedPreferences.getString(KEY_PSEUDO, ""));
     }
 
     public static Account getOwn() throws NoAccountExistsInLocal {
@@ -71,7 +70,7 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
     /* --- Static const to store --- */
     private static final String KEY_USERNAME = "name";
     private static final String KEY_PASSWORD = "password";
-    private static final String KEY_LAST_SYNC = "last sync";
+    private static final String KEY_PSEUDO = "pseudo";
     /* ----------------------------- */
 
     /* ----- Resource ----- */
@@ -97,7 +96,14 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
 
     @Override
     public Account makeCopyFromServer(ServerAccount serverAccount) {
-        return null;
+        Account res = new Account();
+        res.m_username = serverAccount.username;
+        res.m_administrator = serverAccount.administrator;
+        res.m_anonymous = false;
+        res.m_context = PublicrowdFundingApplication.context();
+        res.m_user = new User().getCache(serverAccount.pseudo);
+
+        return res;
     }
 
     @Override
@@ -208,16 +214,12 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
     
 
     private void save() {
-        System.out.println("ici1");
         SharedPreferences.Editor editor = PublicrowdFundingApplication.sharedPreferences().edit();//.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE).edit();
 
-        System.out.println("ici2");
         editor.putString(KEY_USERNAME, m_username);
-        System.out.println("ici3");
         editor.putString(KEY_PASSWORD, encrypt("mystery", m_password));
-        System.out.println("ici4");
+        editor.putString(KEY_PSEUDO, m_user.getResourceId());
         editor.apply();
-        System.out.println("ici6");
     }
 
 
