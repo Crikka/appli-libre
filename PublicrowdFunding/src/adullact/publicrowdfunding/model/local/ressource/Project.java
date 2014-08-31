@@ -51,7 +51,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
     public ServerProject toServerResource() {
         ServerProject serverProject = new ServerProject();
         serverProject.id = m_id == null ? -1 : m_id;
-        serverProject.active = m_active;
+        serverProject.active = m_active ? 1 : 0;
         serverProject.name = m_name;
         serverProject.description = m_description;
         serverProject.proposedBy = m_proposedBy.getResourceId() ;
@@ -60,7 +60,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         serverProject.creationDate = m_creationDate.toString();
         serverProject.latitude = m_position.latitude;
         serverProject.longitude = m_position.longitude;
-        serverProject.validate = m_validate;
+        serverProject.validate = m_validate ? 1 : 0;
         serverProject.illustration = m_illustration;
         serverProject.beginDate = m_fundingInterval.getStart().toString();
         serverProject.endDate = m_fundingInterval.getEnd().toString();
@@ -75,7 +75,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
     public Project makeCopyFromServer(ServerProject serverProject) {
         Project res = new Project();
         res.m_id = serverProject.id;
-        res.m_active = serverProject.active;
+        res.m_active = (serverProject.active == 1);
         res.m_name = serverProject.name;
         res.m_description = serverProject.description;
         res.m_funding = new CacheSet<Funding>();
@@ -85,7 +85,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         res.m_currentFunding = new BigDecimal(serverProject.currentFunding);
         res.m_creationDate = Utility.stringToDateTime(serverProject.creationDate);
         res.m_position = new LatLng(serverProject.latitude, serverProject.longitude);
-        res.m_validate = serverProject.validate;
+        res.m_validate = (serverProject.validate == 1);
         res.m_illustration = serverProject.illustration;
         res.m_fundingInterval = new Interval(Utility.stringToDateTime(serverProject.beginDate), Utility.stringToDateTime(serverProject.endDate));
         res.m_email = serverProject.email;
@@ -98,7 +98,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
     @Override
     public Project syncFromServer(DetailedServerProject detailedServerProject) {
         this.m_id = detailedServerProject.id;
-        this.m_active = detailedServerProject.active;
+        this.m_active = (detailedServerProject.active == 1);
         this.m_name = detailedServerProject.name;
         this.m_description = detailedServerProject.description;
         this.m_funding = new CacheSet<Funding>();
@@ -108,7 +108,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         this.m_currentFunding = new BigDecimal(detailedServerProject.currentFunding);
         this.m_creationDate = Utility.stringToDateTime(detailedServerProject.creationDate);
         this.m_position = new LatLng(detailedServerProject.latitude, detailedServerProject.longitude);
-        this.m_validate = detailedServerProject.validate;
+        this.m_validate = (detailedServerProject.validate == 1);
         this.m_illustration = detailedServerProject.illustration;
         this.m_fundingInterval = new Interval(Utility.stringToDateTime(detailedServerProject.beginDate), Utility.stringToDateTime(detailedServerProject.endDate));
         this.m_fundingIntervals = new ArrayList<FundingInterval>();

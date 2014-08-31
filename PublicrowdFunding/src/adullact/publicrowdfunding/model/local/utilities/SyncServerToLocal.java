@@ -1,6 +1,9 @@
 package adullact.publicrowdfunding.model.local.utilities;
 
+import android.content.SharedPreferences;
+
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,10 +11,10 @@ import java.util.Comparator;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
 
+import adullact.publicrowdfunding.PublicrowdFundingApplication;
 import adullact.publicrowdfunding.model.local.callback.NothingToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.database.ProjectsDatabase;
-import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.server.event.ListerEvent;
 import rx.Scheduler;
@@ -34,11 +37,16 @@ public class SyncServerToLocal {
 
         ProjectsDatabase projectsDatabase = ProjectsDatabase.getInstance();
         ArrayList<Project> projects = projectsDatabase.get();
+        System.out.println(projects.size());
 
         for(Project project : projects) {
             m_projects.add(project);
         }
+
+        SharedPreferences sharedPreferences = PublicrowdFundingApplication.sharedPreferences();
+        m_lastSync = Utility.stringToDateTime(sharedPreferences.getString(KEY_LAST_SYNC, "2015-01-01 00:00:00"));
     }
+
     public static SyncServerToLocal getInstance() {
         if(m_instance == null) {
             m_instance = new SyncServerToLocal();
@@ -49,8 +57,10 @@ public class SyncServerToLocal {
     /* ----------------- */
 
     private TreeSet<Project> m_projects;
+    private DateTime m_lastSync;
     private Searcher m_currentSearcher;
     private Comparator<Project> m_currentComparator;
+    private static String KEY_LAST_SYNC = "lastSync";
 
     public TreeSet<Project> getProjects() {
         return m_projects;
@@ -61,12 +71,16 @@ public class SyncServerToLocal {
     }
 
     public void sync(final WhatToDo<Project> projectWhatToDo) {
-        final DateTime now = DateTime.now();
+        final DateTime now = DateTime.now(DateTimeZone.getDefault());
         final SyncServerToLocal _this = this;
         ListerEvent<Project> event = new ListerEvent<Project>() {
             @Override
             public void onLister(ArrayList<Project> projects) {
-                Account.getOwnOrAnonymous().setLastSync(now);
+                m_lastSync = now;
+                SharedPreferences.Editor editor = PublicrowdFundingApplication.sharedPreferences().edit();//.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE).edit();
+
+                editor.putString(KEY_LAST_SYNC, Utility.DateTimeToString(m_lastSync));
+                editor.apply();
 
                 final ArrayList<Project> newProjects = new ArrayList<Project>();
                 final ArrayList<Project> updatedProjects = new ArrayList<Project>();
@@ -88,6 +102,7 @@ public class SyncServerToLocal {
                 }
 
                 m_projects.addAll(projects);
+
                 _this.syncLocalDatabase(newProjects, updatedProjects, deletedProject);
                 projectWhatToDo.eventually();
             }
@@ -97,12 +112,8 @@ public class SyncServerToLocal {
                 projectWhatToDo.eventually();
             }
         };
-        if(Account.getOwnOrAnonymous().getLastSync() == null) {
-            (new Project()).serverLister(event);
-        }
-        else {
-            (new Project()).serverListerToSync(event, Account.getOwnOrAnonymous().getLastSync());
-        }
+
+        new Project().serverListerToSync(event, m_lastSync);
     }
 
     private void syncLocalDatabase(final ArrayList<Project> newProjects, final ArrayList<Project> updatedProjects, final ArrayList<Project> deletedProjects) {
