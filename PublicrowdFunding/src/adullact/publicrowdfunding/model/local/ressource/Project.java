@@ -91,7 +91,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         res.m_email = serverProject.email;
         res.m_website = serverProject.website;
         res.m_phone = serverProject.phone;
-        
+
         return res;
     }
 
@@ -115,7 +115,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         this.m_email = detailedServerProject.email;
         this.m_website = detailedServerProject.website;
         this.m_phone = detailedServerProject.phone;
-        
+
 
         // Now, we calculate 10 periods for graphics
         calculatePeriods();
@@ -175,29 +175,29 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
 
     public void serverListerToSync(ListerEvent<Project> listerEvent, DateTime lastSync) {
         HashMap<String, String> filter = new HashMap<String, String>();
-        filter.put("lastSync", lastSync.toString());
+        filter.put("lastSync", Utility.DateTimeToString(lastSync));
         (new ListerRequest<Project, ServerProject, DetailedServerProject>(this, filter, listerEvent)).execute();
     }
     /* -------------------- */
 
-	private Integer m_id;
+    private Integer m_id;
     private boolean m_active;
-	private String m_name;
-	private String m_description;
+    private String m_name;
+    private String m_description;
     private Cache<User> m_proposedBy;
     private CacheSet<Funding> m_funding;
     private CacheSet<Commentary> m_commentaries;
-	private BigDecimal m_requestedFunding;
-	private BigDecimal m_currentFunding;
-	private DateTime m_creationDate;
-	private Interval m_fundingInterval;
-	private LatLng m_position;
-	private ArrayList<FundingInterval> m_fundingIntervals;
-	private boolean m_validate;
-	private int m_illustration;
-	private String m_email;
-	private String m_website;
-	private String m_phone;
+    private BigDecimal m_requestedFunding;
+    private BigDecimal m_currentFunding;
+    private DateTime m_creationDate;
+    private Interval m_fundingInterval;
+    private LatLng m_position;
+    private ArrayList<FundingInterval> m_fundingIntervals;
+    private boolean m_validate;
+    private int m_illustration;
+    private String m_email;
+    private String m_website;
+    private String m_phone;
 
     public Project() {
         this.m_id = null;
@@ -219,30 +219,30 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
 
     public Project(String name, String description, String proposedBy, String requestedFunding, DateTime beginDate, DateTime endDate, LatLng position, int illustration, String email, String website, String phone, boolean validate) {
         this.m_id = null;
-		this.m_name = name;
-		this.m_description = description;
+        this.m_name = name;
+        this.m_description = description;
         this.m_proposedBy = new User().getCache(proposedBy);
-		this.m_requestedFunding = new BigDecimal(requestedFunding);
-		this.m_currentFunding = new BigDecimal("0");
-		this.m_creationDate = DateTime.now();
-		this.m_fundingInterval = new Interval(beginDate, endDate);
-		this.m_fundingIntervals = new ArrayList<FundingInterval>();
-		this.m_position = position;
-		this.m_validate = validate;
-		this.m_illustration = illustration;
-		this.m_email = email;
-		this.m_website = website;
-		this.m_phone = phone;
-		
-		// Now, we calculate 10 periods for graphics
+        this.m_requestedFunding = new BigDecimal(requestedFunding);
+        this.m_currentFunding = new BigDecimal("0");
+        this.m_creationDate = DateTime.now();
+        this.m_fundingInterval = new Interval(beginDate, endDate);
+        this.m_fundingIntervals = new ArrayList<FundingInterval>();
+        this.m_position = position;
+        this.m_validate = validate;
+        this.m_illustration = illustration;
+        this.m_email = email;
+        this.m_website = website;
+        this.m_phone = phone;
+
+        // Now, we calculate 10 periods for graphics
         calculatePeriods();
-	}
+    }
 
     /**
      * Reserved for local database
      */
     public Project(Integer id, boolean active, String name, String description, boolean validate, String proposedBy, String requestedFunding, String currentFunding, String creationDate, String beginDate, String endDate, Double latitude, Double longitude, Integer illustration, String email, String website, String phone) {
-    	this.m_id = id;
+        this.m_id = id;
         this.m_active = active;
         this.m_name = name;
         this.m_description = description;
@@ -255,31 +255,31 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         this.m_position = new LatLng(latitude, longitude);
         this.m_validate = validate;
         this.m_illustration = illustration;
-		this.m_email = email;
-		this.m_website = website;
-		this.m_phone = phone;
+        this.m_email = email;
+        this.m_website = website;
+        this.m_phone = phone;
 
         // Now, we calculate 10 periods for graphics
         calculatePeriods();
     }
-    
-    
+
+
     // Sert pour le graphique pour couter la ligne au jour en cours et qu'elle ne continue pas dans le futur.
     public int getNbPeriod(){
-            int numberOfPeriod = 10;
-            DateTime startDateTime = m_fundingInterval.getStart();
-            long numberOfDayBetweenStartAndEnd = m_fundingInterval.toDuration().getStandardDays();
-            long dayByPeriod = numberOfDayBetweenStartAndEnd/numberOfPeriod;
-            DateTime today = new DateTime();
-            for(int i = 0; i < (numberOfPeriod-1); i++){
-            	if(!startDateTime.isBefore(today)){
-            		return i;
-            	} else{
-            		startDateTime = startDateTime.plusDays((int) dayByPeriod);
-            	}
+        int numberOfPeriod = 10;
+        DateTime startDateTime = m_fundingInterval.getStart();
+        long numberOfDayBetweenStartAndEnd = m_fundingInterval.toDuration().getStandardDays();
+        long dayByPeriod = numberOfDayBetweenStartAndEnd/numberOfPeriod;
+        DateTime today = new DateTime();
+        for(int i = 0; i < (numberOfPeriod-1); i++){
+            if(!startDateTime.isBefore(today)){
+                return i;
+            } else{
+                startDateTime = startDateTime.plusDays((int) dayByPeriod);
             }
-            
-          return 10;
+        }
+
+        return 10;
     }
 
     private void calculatePeriods() {
@@ -289,19 +289,19 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         long numberOfDayBetweenStartAndEnd = m_fundingInterval.toDuration().getStandardDays();
         long dayByPeriod = numberOfDayBetweenStartAndEnd/numberOfPeriod;
         for(int i = 0; i < (numberOfPeriod-1); i++){
-        		m_fundingIntervals.add(new FundingInterval(new Interval(startDateTime, startDateTime.plusDays((int) dayByPeriod))));
-            	startDateTime = startDateTime.plusDays((int) dayByPeriod);
+            m_fundingIntervals.add(new FundingInterval(new Interval(startDateTime, startDateTime.plusDays((int) dayByPeriod))));
+            startDateTime = startDateTime.plusDays((int) dayByPeriod);
         }
         m_fundingIntervals.add(new FundingInterval(new Interval(startDateTime, endDateTime)));
     }
 
-	public String getName() {
-		return m_name;
-	}
+    public String getName() {
+        return m_name;
+    }
 
-	public String getDescription(){
-		return m_description;
-	}
+    public String getDescription(){
+        return m_description;
+    }
 
     public String getRequestedFunding(){
         return m_requestedFunding.toString();
@@ -321,8 +321,8 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
     }
 
     public LatLng getPosition(){
-		return m_position;
-	}
+        return m_position;
+    }
 
     public boolean isValidate() {
         return m_validate;
@@ -351,14 +351,14 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
     public void validate() {
         m_validate = true;
     }
-    
+
     public long getNumberOfDayToEnd(){
-    	return new Duration(m_creationDate,m_fundingInterval.getEnd()).getStandardDays();
-    			
+        return new Duration(m_creationDate,m_fundingInterval.getEnd()).getStandardDays();
+
     }
-    
+
     public Interval getFundingInterval(){
-    	return this.m_fundingInterval;
+        return this.m_fundingInterval;
     }
 
     public ArrayList<FundingInterval> getFundingIntervals(){
@@ -372,82 +372,72 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
 
         return m_fundingIntervals.get(index);
     }
-    
+
     public String getEmail(){
-    	return m_email;
-    }
-    
-    public String getWebsite(){
-    	return m_website;
-    }
-    
-    public String getPhone(){
-    	return m_phone;
+        return m_email;
     }
 
-	/**
-	 * @return percent of achievement, may be upper than 100.
-	 */
-	public Integer getPercentOfAchievement() {
+    public String getWebsite(){
+        return m_website;
+    }
+
+    public String getPhone(){
+        return m_phone;
+    }
+
+    /**
+     * @return percent of achievement, may be upper than 100.
+     */
+    public Integer getPercentOfAchievement() {
         if(m_requestedFunding.compareTo(BigDecimal.ZERO) == 0) {
             return 0;
         }
         else {
             return ((m_currentFunding.divide(m_requestedFunding)).multiply(BigDecimal.TEN).multiply(BigDecimal.TEN)).intValue();
         }
-	}
+    }
 
-	/**
-	 * @param value
-	 * @brief Add value to current funding.
-	 */
-	public void finance(final String value, final CreateEvent<Funding> fundingCreateEvent) throws NoAccountExistsInLocal  {
-		// m_currentFunding = m_currentFunding.add(new BigDecimal(value));
-		
-		// Et on appel le serveur aussis ^^
-		
-		
-		 Account account = Account.getOwn();
-	        final Project _this = this;
-	        account.getUser(new HoldToDo<User>() {
-	            @Override
-	            public void hold(User resource) {
-	                new Funding(resource, _this, "", value).serverCreate(new CreateEvent<Funding>() {
+    /**
+     * @param value
+     * @brief Add value to current funding.
+     */
+    public void finance(final String value, final CreateEvent<Funding> fundingCreateEvent) throws NoAccountExistsInLocal  {
+        Account account = Account.getOwn();
+        final Project _this = this;
+        account.getUser(new HoldToDo<User>() {
+            @Override
+            public void hold(User resource) {
+                new Funding(resource, _this, "", value).serverCreate(new CreateEvent<Funding>() {
 
-						@Override
-						public void errorResourceIdAlreadyUsed() {
-							fundingCreateEvent.errorResourceIdAlreadyUsed();
-							
-						}
+                    @Override
+                    public void errorResourceIdAlreadyUsed() {
+                        fundingCreateEvent.errorResourceIdAlreadyUsed();
 
-						@Override
-						public void onCreate(Funding resource) {
-							m_currentFunding = m_currentFunding.add(new BigDecimal(value));
-							fundingCreateEvent.onCreate(resource);
-							
-						}
+                    }
 
-						@Override
-						public void errorAuthenticationRequired() {
-							fundingCreateEvent.errorAuthenticationRequired();
-							
-						}
+                    @Override
+                    public void onCreate(Funding resource) {
+                        m_currentFunding = m_currentFunding.add(new BigDecimal(value));
+                        fundingCreateEvent.onCreate(resource);
 
-						@Override
-						public void errorNetwork() {
-							fundingCreateEvent.errorNetwork();
-							
-						}
-	                   
-	                });
-	            }
-	        });
-	            
-		
-		
-		
-		
-	}
+                    }
+
+                    @Override
+                    public void errorAuthenticationRequired() {
+                        fundingCreateEvent.errorAuthenticationRequired();
+
+                    }
+
+                    @Override
+                    public void errorNetwork() {
+                        fundingCreateEvent.errorNetwork();
+
+                    }
+
+                });
+            }
+        });
+    }
 
     public void postCommentary(final String title, final String text, final double mark, final CreateEvent<Commentary> commentaryCreateEvent) throws NoAccountExistsInLocal {
         Account account = Account.getOwn();
