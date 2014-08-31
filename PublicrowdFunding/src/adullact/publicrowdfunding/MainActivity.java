@@ -522,12 +522,11 @@ public class MainActivity extends FragmentActivity {
 	public void syncProjects() {
 		sync = SyncServerToLocal.getInstance();
 		sync.sync(new HoldAllToDo<Project>() {
-
 			@Override
 			public void holdAll(ArrayList<Project> projects) {
 
 				ArrayList<Project> allSync = new ArrayList<Project>(sync
-						.getProjects());
+						.restrictToValidatedProjects());
 				p_project_displayed = allSync;
 
 				launchDefaultFragment();
