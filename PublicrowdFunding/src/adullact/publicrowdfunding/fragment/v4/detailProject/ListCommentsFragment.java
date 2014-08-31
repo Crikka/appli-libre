@@ -116,7 +116,7 @@ public class ListCommentsFragment extends Fragment {
 				.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 					@Override
 					public void onRefresh() {
-						ListCommentsFragment.reloadCommentFragment(getActivity());
+						ListCommentsFragment.reloadCommentFragment(getActivity(),projetCurrent);
 
 					}
 
@@ -217,15 +217,15 @@ public class ListCommentsFragment extends Fragment {
 				ft.commit();
 		
 				filter.setVisibility(View.VISIBLE);
-
 			}
 			
 		});
 		
 	}
 	
-	public static void reloadCommentFragment(FragmentActivity activity) {
+	public static void reloadCommentFragment(FragmentActivity activity, Project project) {
 
+		new Project().getCache(project.getResourceId()).forceRetrieve();
 		for (Fragment fragment : activity.getSupportFragmentManager()
 				.getFragments()) {
 			if (fragment instanceof adullact.publicrowdfunding.fragment.v4.detailProject.ListCommentsFragment) {

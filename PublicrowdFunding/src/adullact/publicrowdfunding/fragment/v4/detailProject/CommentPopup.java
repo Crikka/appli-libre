@@ -172,7 +172,7 @@ public class CommentPopup extends Fragment {
 							Toast.makeText(context, "Commentaire ajouté !",
 									Toast.LENGTH_SHORT).show();
 							back();
-							ListCommentsFragment.reloadCommentFragment(getActivity());
+							ListCommentsFragment.reloadCommentFragment(getActivity(),projet);
 
 						}
 
