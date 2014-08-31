@@ -215,6 +215,7 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
 
         editor.putString(KEY_USERNAME, m_username);
         editor.putString(KEY_PASSWORD, encrypt("mystery", m_password));
+        editor.putString(KEY_PSEUDO, m_user.getResourceId());
         editor.apply();
     }
 
