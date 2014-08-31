@@ -216,13 +216,17 @@ public class MainActivity extends FragmentActivity {
 				.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						/*
-						 * Intent in = new Intent(
-						 * getBaseContext().getApplicationContext(),
-						 * adullact.publicrowdfunding
-						 * .controller.validateProject.MainActivity.class);
-						 * startActivity(in);
-						 */
+
+						FragmentTransaction ft = getSupportFragmentManager()
+								.beginTransaction();
+						Fragment fragment = new adullact.publicrowdfunding.controller.validateProject.MainActivity();
+						Bundle bundle = new Bundle();
+						fragment.setArguments(bundle);
+						ft.addToBackStack(null);
+						ft.replace(R.id.content_frame, fragment);
+						ft.commit();
+
+						mDrawerLayout.closeDrawer(mDrawerList);
 					}
 				});
 
