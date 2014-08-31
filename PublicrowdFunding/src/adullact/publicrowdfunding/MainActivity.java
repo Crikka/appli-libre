@@ -429,4 +429,13 @@ public class MainActivity extends FragmentActivity {
 
 	}
 
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		if (MainActivity.mDrawerToggle.onOptionsItemSelected(item)) {
+			return true;
+		}
+		return false;
+	}
 }

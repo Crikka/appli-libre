@@ -278,10 +278,6 @@ public class ListProjectsFragment extends Fragment {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
-		if (MainActivity.mDrawerToggle.onOptionsItemSelected(item)) {
-			return true;
-		}
-
 		switch (item.getItemId()) {
 		case R.id.action_search:
 			search(item);
