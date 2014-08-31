@@ -101,7 +101,7 @@ public class SyncServerToLocal {
                     projectWhatToDo.hold(project);
                 }
 
-                m_projects.addAll(projects);
+                m_projects.addAll(newProjects);
 
                 _this.syncLocalDatabase(newProjects, updatedProjects, deletedProject);
                 projectWhatToDo.eventually();
@@ -141,6 +141,11 @@ public class SyncServerToLocal {
         boolean searchTest(Project project, String motif);
     }
 
+    private interface Filter {
+        boolean filterTest(Project project);
+    }
+
+
     public ArrayList<Project> searchInName(final String motif) {
         return search(motif, new Searcher() {
             @Override
@@ -158,6 +163,28 @@ public class SyncServerToLocal {
             }
         });
     }
+
+    public ArrayList<Project> restrictToValidatedProjects() {
+        return restrict(new Filter() {
+            @Override
+            public boolean filterTest(Project project) {
+                return project.isValidate();
+            }
+        });
+    }
+
+    private ArrayList<Project> restrict(Filter filter) {
+        ArrayList<Project> res = new ArrayList<Project>();
+
+        for(Project project : m_projects) {
+            if(filter.filterTest(project)) {
+                res.add(project);
+            }
+        }
+
+        return res;
+    }
+
 
     private ArrayList<Project> search(final String motif, Searcher searcher) {
         m_currentSearcher = searcher;
