@@ -33,7 +33,7 @@ public class RegistrationRequest extends Request<RegistrationRequest, Registrati
                     @Override
                     public void call(ServerRegistrationResponse response) {
                         if(response.accountOK == 0 || response.userOK == 0) {
-                            errorHandler().manageCallback();
+                            errorHandler().manageCallback(response);
                             return;
                         }
 

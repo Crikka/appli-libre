@@ -177,7 +177,7 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
 
     public void setOwn() {
         m_own = this;
-        save();
+        //save();
     }
 
     public void setLastSync(DateTime lastSync) {
