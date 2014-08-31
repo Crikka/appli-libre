@@ -138,7 +138,7 @@ public class ListProjectsFragment extends Fragment {
 		adapter.clear();
 		adapter.addAll(p_project_displayed);
 		adapter.notifyDataSetChanged();
-		swipeView.setRefreshing(true);
+		swipeView.setRefreshing(false);
 	}
 	
 	@Override
