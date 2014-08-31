@@ -1,12 +1,5 @@
 package adullact.publicrowdfunding;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
-import adullact.publicrowdfunding.model.local.ressource.Account;
-import adullact.publicrowdfunding.model.local.ressource.Project;
-import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,6 +18,13 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
+import adullact.publicrowdfunding.model.local.ressource.Project;
+import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 
 public class MapFragment extends Fragment implements
 		OnInfoWindowClickListener {
@@ -65,7 +65,6 @@ public class MapFragment extends Fragment implements
 		fm = getFragmentManager();
 
 		SyncServerToLocal sync = SyncServerToLocal.getInstance();
-		 Account.getOwnOrAnonymous().setLastSync(null);
 		sync.sync(new HoldAllToDo<Project>() {
 
 			@Override

@@ -3,8 +3,6 @@ package adullact.publicrowdfunding.model.local.ressource;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import org.joda.time.DateTime;
-
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Map;
@@ -18,7 +16,6 @@ import adullact.publicrowdfunding.PublicrowdFundingApplication;
 import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.cache.Cache;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
-import adullact.publicrowdfunding.model.local.utilities.Utility;
 import adullact.publicrowdfunding.model.server.entities.RowAffected;
 import adullact.publicrowdfunding.model.server.entities.ServerAccount;
 import adullact.publicrowdfunding.model.server.entities.Service;
@@ -32,7 +29,7 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
     /* ---- Singleton ---- */
     private static Account m_own = null;
     private void initialize() throws NoAccountExistsInLocal {
-        SharedPreferences sharedPreferences = m_context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = PublicrowdFundingApplication.sharedPreferences();//m_context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
         if(!sharedPreferences.contains(KEY_USERNAME) || !sharedPreferences.contains(KEY_USERNAME) || !sharedPreferences.contains(KEY_USERNAME)) {
             {
                 m_own = null;
@@ -42,7 +39,6 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
 
         m_username = sharedPreferences.getString(KEY_USERNAME, "");
         m_password = decrypt("mystery", sharedPreferences.getString(KEY_PASSWORD, ""));
-        m_lastSync = Utility.stringToDateTime(sharedPreferences.getString(KEY_LAST_SYNC, ""));
     }
 
     public static Account getOwn() throws NoAccountExistsInLocal {
@@ -73,7 +69,6 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
     /* ------------------- */
 
     /* --- Static const to store --- */
-    private static final String FILE_NAME = "logs";
     private static final String KEY_USERNAME = "name";
     private static final String KEY_PASSWORD = "password";
     private static final String KEY_LAST_SYNC = "last sync";
@@ -108,7 +103,6 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
     @Override
     public Account syncFromServer(ServerAccount serverAccount) {
         this.m_username = serverAccount.username;
-        this.m_lastSync = DateTime.now();
         this.m_administrator = serverAccount.administrator;
         this.m_anonymous = false;
         this.m_context = PublicrowdFundingApplication.context();
@@ -146,7 +140,6 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
     /* ---- Own data ---- */
     private String m_username;
     private String m_password;
-    private DateTime m_lastSync;
     private boolean m_administrator;
     private boolean m_anonymous;
     private Context m_context;
@@ -159,7 +152,6 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
     public Account() {
         this.m_username = null;
         this.m_password = null;
-        this.m_lastSync = null;
         this.m_administrator = false;
         this.m_anonymous = true;
         this.m_context = null;
@@ -169,7 +161,6 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
         this.m_username = username;
         this.m_password = password;
         this.m_user = new User().getCache(pseudo);
-        this.m_lastSync = null;
         this.m_administrator = false;
         this.m_anonymous = false;
         this.m_context = null;
@@ -177,19 +168,11 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
 
     public void setOwn() {
         m_own = this;
-        //save();
-    }
-
-    public void setLastSync(DateTime lastSync) {
-        this.m_lastSync = lastSync;
+        save();
     }
 
     public boolean isAdmin() {
         return m_administrator;
-    }
-
-    public DateTime getLastSync() {
-        return m_lastSync;
     }
 
     public String getUsername() {
@@ -223,21 +206,13 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
 
     private void save() {
         System.out.println("ici1");
-        try {
-            SharedPreferences sh = m_context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
-        }
-        catch(Exception exception) {
-            System.out.println(exception.getMessage());
-        }
-        SharedPreferences.Editor editor = m_context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE).edit();
+        SharedPreferences.Editor editor = PublicrowdFundingApplication.sharedPreferences().edit();//.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE).edit();
 
         System.out.println("ici2");
         editor.putString(KEY_USERNAME, m_username);
         System.out.println("ici3");
         editor.putString(KEY_PASSWORD, encrypt("mystery", m_password));
         System.out.println("ici4");
-        editor.putString(KEY_LAST_SYNC, Utility.DateTimeToString(m_lastSync));
-        System.out.println("ici5");
         editor.apply();
         System.out.println("ici6");
     }

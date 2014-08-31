@@ -6,9 +6,9 @@ package adullact.publicrowdfunding.model.server.entities;
  */
 public class ServerProject {
     public int id;
-    public boolean active;
+    public int active;
     public String proposedBy;
-    public boolean validate;
+    public int validate;
     public String name;
     public String description;
     public String currentFunding;
