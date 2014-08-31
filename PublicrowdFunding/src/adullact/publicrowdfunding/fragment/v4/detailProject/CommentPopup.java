@@ -167,6 +167,8 @@ public class CommentPopup extends Fragment {
 							back();
 						}
 
+						
+						
 						@Override
 						public void onCreate(Commentary resource) {
 							Toast.makeText(context, "Commentaire ajouté !",
