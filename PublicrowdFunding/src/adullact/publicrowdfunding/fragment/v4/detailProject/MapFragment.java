@@ -62,7 +62,9 @@ public class MapFragment extends Fragment {
 							Fragment fr = fm.findFragmentByTag("mapid");
 
 							if (fr == null) {
-								getActivity().finish();
+                                if(getActivity() != null) {
+                                    getActivity().finish();
+                                }
 							}
 
 							if (fr instanceof SupportMapFragment) {

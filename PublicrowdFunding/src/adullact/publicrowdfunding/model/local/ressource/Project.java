@@ -1,15 +1,16 @@
 package adullact.publicrowdfunding.model.local.ressource;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import com.google.android.gms.maps.model.LatLng;
 
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
 
-import rx.Observable;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.cache.Cache;
 import adullact.publicrowdfunding.model.local.cache.CacheSet;
@@ -27,8 +28,7 @@ import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
 import adullact.publicrowdfunding.model.server.event.CreateEvent;
 import adullact.publicrowdfunding.model.server.event.ListerEvent;
 import adullact.publicrowdfunding.model.server.request.ListerRequest;
-
-import com.google.android.gms.maps.model.LatLng;
+import rx.Observable;
 
 public class Project extends Resource<Project, ServerProject, DetailedServerProject> {
 
@@ -307,6 +307,11 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         return m_requestedFunding.toString();
     }
 
+    public Long getRequestedFundingLongValue(){
+        return m_requestedFunding.longValue();
+    }
+
+
     public String getCurrentFunding(){
         return m_currentFunding.toString();
     }
@@ -383,13 +388,13 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
 	/**
 	 * @return percent of achievement, may be upper than 100.
 	 */
-	public int getPercentOfAchievement() {
-		try{
-		return ((m_currentFunding.divide(m_requestedFunding)).multiply(BigDecimal.TEN).multiply(BigDecimal.TEN)).intValue();
-		}catch(ArithmeticException e){
-			e.printStackTrace();
-			return 0;
-		}
+	public Integer getPercentOfAchievement() {
+        if(m_requestedFunding.compareTo(BigDecimal.ZERO) == 0) {
+            return 0;
+        }
+        else {
+            return ((m_currentFunding.divide(m_requestedFunding)).multiply(BigDecimal.TEN).multiply(BigDecimal.TEN)).intValue();
+        }
 	}
 
 	/**

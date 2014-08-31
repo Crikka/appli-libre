@@ -1,21 +1,22 @@
 package adullact.publicrowdfunding.model.local.utilities;
 
+import org.joda.time.DateTime;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
 
-import org.joda.time.DateTime;
-
-import rx.Scheduler;
-import rx.functions.Action0;
-import rx.schedulers.Schedulers;
 import adullact.publicrowdfunding.model.local.callback.NothingToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.database.ProjectsDatabase;
 import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.server.event.ListerEvent;
+import rx.Scheduler;
+import rx.functions.Action0;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Ferrand on 19/07/2014.
@@ -48,6 +49,8 @@ public class SyncServerToLocal {
     /* ----------------- */
 
     private TreeSet<Project> m_projects;
+    private Searcher m_currentSearcher;
+    private Comparator<Project> m_currentComparator;
 
     public TreeSet<Project> getProjects() {
         return m_projects;
@@ -146,6 +149,7 @@ public class SyncServerToLocal {
     }
 
     private ArrayList<Project> search(final String motif, Searcher searcher) {
+        m_currentSearcher = searcher;
         ArrayList<Project> res = new ArrayList<Project>();
 
         for(Project project : m_projects) {
@@ -153,6 +157,53 @@ public class SyncServerToLocal {
                 res.add(project);
             }
         }
+
+        return res;
+    }
+
+    public ArrayList<Project> sortByRequestingProjectMaxToMin() {
+        return sort(new Comparator<Project>() {
+            @Override
+            public int compare(Project lhs, Project rhs) {
+                return rhs.getRequestedFundingLongValue().compareTo(lhs.getRequestedFundingLongValue());
+            }
+        });
+    }
+
+    public ArrayList<Project> sortByRequestingProjectMinToMax() {
+        return sort(new Comparator<Project>() {
+            @Override
+            public int compare(Project lhs, Project rhs) {
+                return lhs.getRequestedFundingLongValue().compareTo(rhs.getRequestedFundingLongValue());
+            }
+        });
+    }
+
+    public ArrayList<Project> sortByAlmostFunded() {
+        return sort(new Comparator<Project>() {
+            @Override
+            public int compare(Project lhs, Project rhs) {
+                return rhs.getPercentOfAchievement().compareTo(lhs.getPercentOfAchievement());
+            }
+        });
+
+    }
+
+    public ArrayList<Project> sortByProximity() {
+        return sort(new Comparator<Project>() {
+            @Override
+            public int compare(Project lhs, Project rhs) {
+                return Calcul.distance(Share.position, rhs.getPosition()).compareTo(Calcul.distance(Share.position, lhs.getPosition()));
+            }
+        });
+
+    }
+
+    private ArrayList<Project> sort(final Comparator<Project> sorter) {
+        m_currentComparator = sorter;
+        ArrayList<Project> res = new ArrayList<Project>(m_projects);
+
+        Collections.sort(res, sorter);
 
         return res;
     }

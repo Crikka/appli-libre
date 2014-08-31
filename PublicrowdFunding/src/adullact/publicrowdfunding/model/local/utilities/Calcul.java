@@ -4,7 +4,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 public final class Calcul {
 
-	public static int distance (LatLng a, LatLng b) 
+	public static Integer distance (LatLng a, LatLng b)
 	{
 	    double earthRadius = 3958.75;
 	    double latDiff = Math.toRadians(b.latitude-a.latitude);

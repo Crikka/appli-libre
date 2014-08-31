@@ -1,19 +1,5 @@
 package adullact.publicrowdfunding;
 
-import java.util.ArrayList;
-
-import adullact.publicrowdfunding.controller.preferences.preferencesFragment;
-import adullact.publicrowdfunding.fragment.v4.register.ConnexionFragment;
-import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
-import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
-import adullact.publicrowdfunding.model.local.callback.WhatToDo;
-import adullact.publicrowdfunding.model.local.ressource.Account;
-import adullact.publicrowdfunding.model.local.ressource.Project;
-import adullact.publicrowdfunding.model.local.ressource.User;
-import adullact.publicrowdfunding.model.local.utilities.Share;
-import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
-import adullact.publicrowdfunding.model.local.utilities.sortProjects;
-import adullact.publicrowdfunding.views.SimpleLine;
 import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
@@ -29,7 +15,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -45,6 +30,20 @@ import android.widget.SearchView.OnQueryTextListener;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
+
+import java.util.ArrayList;
+
+import adullact.publicrowdfunding.controller.preferences.preferencesFragment;
+import adullact.publicrowdfunding.fragment.v4.register.ConnexionFragment;
+import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
+import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
+import adullact.publicrowdfunding.model.local.callback.WhatToDo;
+import adullact.publicrowdfunding.model.local.ressource.Account;
+import adullact.publicrowdfunding.model.local.ressource.Project;
+import adullact.publicrowdfunding.model.local.ressource.User;
+import adullact.publicrowdfunding.model.local.utilities.Share;
+import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
+import adullact.publicrowdfunding.views.SimpleLine;
 
 public class MainActivity extends FragmentActivity {
 
@@ -412,7 +411,7 @@ public class MainActivity extends FragmentActivity {
 							.findFragmentByTag("allProjectFragment");
 					if (myFragment.isVisible()) {
 						if (Share.displayPosition == false) {
-							sortProjects.sortAlmostFunded(p_project_displayed);
+                            p_project_displayed = sync.sortByProximity();
 							launchDefaultFragment();
 							locationManager.removeUpdates(locationListener);
 							locationListener = null;
@@ -486,26 +485,23 @@ public class MainActivity extends FragmentActivity {
 
 				switch (position) {
 				case 0:
-
-					sortProjects.sortBiggestProjectFirst(p_project_displayed);
+                    p_project_displayed = sync.sortByRequestingProjectMaxToMin();
 					launchDefaultFragment();
 					dialog.dismiss();
 
 					break;
 				case 1:
-					sortProjects.sortBiggestProjectLast(p_project_displayed);
+                    p_project_displayed = sync.sortByRequestingProjectMinToMax();
 					launchDefaultFragment();
 					dialog.dismiss();
 					break;
 				case 2:
-
-					sortProjects.sortAlmostFunded(p_project_displayed);
+                    p_project_displayed = sync.sortByAlmostFunded();
 					launchDefaultFragment();
 					dialog.dismiss();
 					break;
-
 				case 3:
-					sortProjects.sortClothersProject(p_project_displayed);
+                    p_project_displayed = sync.sortByProximity();
 					launchDefaultFragment();
 					dialog.dismiss();
 					break;

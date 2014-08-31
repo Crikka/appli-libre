@@ -9,7 +9,7 @@ public class PagerAdaptor extends FragmentStatePagerAdapter {
 
 	private String idUser;
 
-    private String[] titles = { "Projets soumis", "Favoris", "Fianncé"};
+    private String[] titles = { "Projets soumis", "Favoris", "Financés"};
 	
 	public PagerAdaptor(FragmentManager fm, String idUser) {
 		super(fm);
