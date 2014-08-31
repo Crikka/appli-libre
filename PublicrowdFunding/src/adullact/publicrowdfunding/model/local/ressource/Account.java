@@ -205,6 +205,10 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
         m_administrator = true;
     }
 
+    public static boolean isConnect(){
+        return (m_own != null);
+    }
+
     public static void disconnect(){
         m_own = null;
     }
