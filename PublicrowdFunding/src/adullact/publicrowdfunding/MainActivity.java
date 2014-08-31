@@ -33,7 +33,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 
-import adullact.publicrowdfunding.controller.preferences.preferencesFragment;
+import adullact.publicrowdfunding.fragment.v4.preferences.preferencesFragment;
 import adullact.publicrowdfunding.fragment.v4.register.ConnexionFragment;
 import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
@@ -44,6 +44,7 @@ import adullact.publicrowdfunding.model.local.ressource.User;
 import adullact.publicrowdfunding.model.local.utilities.Share;
 import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import adullact.publicrowdfunding.views.SimpleLine;
+
 
 public class MainActivity extends FragmentActivity {
 

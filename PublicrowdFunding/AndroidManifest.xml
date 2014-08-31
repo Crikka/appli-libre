@@ -76,7 +76,7 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.controller.preferences.MainActivity"
+            android:name="adullact.publicrowdfunding.fragment.v4.preferences.MainActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
