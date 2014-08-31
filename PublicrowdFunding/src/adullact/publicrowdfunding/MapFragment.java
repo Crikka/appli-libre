@@ -64,13 +64,16 @@ public class MapFragment extends Fragment implements
 		fragment = new SupportMapFragment();
 		fm = getFragmentManager();
 
-		SyncServerToLocal sync = SyncServerToLocal.getInstance();
+		final SyncServerToLocal sync = SyncServerToLocal.getInstance();
 		sync.sync(new HoldAllToDo<Project>() {
-
 			@Override
 			public void holdAll(ArrayList<Project> projects) {
-				projets = projects;
+
+				projets = new ArrayList<Project>(sync
+						.restrictToValidatedProjects());
+				
 				initMaps();
+
 			}
 		});
 
@@ -83,7 +86,6 @@ public class MapFragment extends Fragment implements
 		
 		String id = markers.get(marker).getResourceId();
 		FragmentTransaction ft = getFragmentManager().beginTransaction();
-		// ft.setCustomAnimations(R.anim.enter_2, R.anim.exit); Fragment
 		Fragment fragment = new adullact.publicrowdfunding.fragment.v4.detailProject.ProjectPagerFragment();
 		Bundle bundle = new Bundle();
 		bundle.putString("idProject", id);
@@ -138,13 +140,13 @@ public class MapFragment extends Fragment implements
 				}
 
 				else {
-					handler.postDelayed(this, 2000);
+					handler.postDelayed(this, 1000);
 				}
 				}catch(Exception e){
 					System.out.println("Impossible de lancer Google Map");
 				}
 			}
-		}, 2000);
+		}, 1000);
 	}
 	
 

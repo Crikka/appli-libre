@@ -270,7 +270,11 @@ public class ProjectPagerFragment extends Fragment {
 			filter = new PorterDuffColorFilter(Color.TRANSPARENT,
 					PorterDuff.Mode.SRC_ATOP);
 		}
+		try{
 		star.getIcon().setColorFilter(filter);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 
 }
