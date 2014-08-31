@@ -1,9 +1,5 @@
 package adullact.publicrowdfunding.fragment.v4.detailProject;
 
-import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.model.local.cache.Cache;
-import adullact.publicrowdfunding.model.local.callback.HoldToDo;
-import adullact.publicrowdfunding.model.local.ressource.Project;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -18,6 +14,11 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.model.local.cache.Cache;
+import adullact.publicrowdfunding.model.local.callback.HoldToDo;
+import adullact.publicrowdfunding.model.local.ressource.Project;
 
 public class MapFragment extends Fragment {
 
@@ -47,8 +48,7 @@ public class MapFragment extends Fragment {
 		Bundle bundle = this.getArguments();
 		if (bundle != null) {
 			String idProject = bundle.getString("idProject");
-			Cache<Project> projet = new Project().getCache(idProject)
-					.forceRetrieve();
+			Cache<Project> projet = new Project().getCache(idProject);
 			projet.toResource(new HoldToDo<Project>() {
 				@Override
 				public void hold(Project project) {

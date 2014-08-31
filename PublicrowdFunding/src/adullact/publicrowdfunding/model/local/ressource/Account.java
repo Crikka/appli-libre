@@ -177,7 +177,7 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
 
     public void setOwn() {
         m_own = this;
-        //save();
+        save();
     }
 
     public void setLastSync(DateTime lastSync) {
@@ -223,16 +223,22 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
 
     private void save() {
         System.out.println("ici1");
-        SharedPreferences sharedPreferences = m_context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+        try {
+            SharedPreferences sh = m_context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+        }
+        catch(Exception exception) {
+            System.out.println(exception.getMessage());
+        }
+        SharedPreferences.Editor editor = m_context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE).edit();
 
         System.out.println("ici2");
-        sharedPreferences.edit().putString(KEY_USERNAME, m_username);
+        editor.putString(KEY_USERNAME, m_username);
         System.out.println("ici3");
-        sharedPreferences.edit().putString(KEY_PASSWORD, encrypt("mystery", m_password));
+        editor.putString(KEY_PASSWORD, encrypt("mystery", m_password));
         System.out.println("ici4");
-        sharedPreferences.edit().putString(KEY_LAST_SYNC, Utility.DateTimeToString(m_lastSync));
+        editor.putString(KEY_LAST_SYNC, Utility.DateTimeToString(m_lastSync));
         System.out.println("ici5");
-        sharedPreferences.edit().commit();
+        editor.apply();
         System.out.println("ici6");
     }
 

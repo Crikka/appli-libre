@@ -2,6 +2,9 @@ package adullact.publicrowdfunding.model.local.callback;
 
 import adullact.publicrowdfunding.model.local.cache.Sync;
 import adullact.publicrowdfunding.model.local.ressource.Resource;
+import rx.Scheduler;
+import rx.functions.Action0;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Ferrand on 18/07/2014.
@@ -23,8 +26,16 @@ public abstract class WhatToDo<TResource extends Resource<TResource, ?, ?>> {
     }
 
     public final void give(final Sync<TResource> resource) {
-        m_resource = resource;
-        hold(m_resource.resource);
+        Scheduler.Worker worker = Schedulers.trampoline().createWorker();
+        worker.schedule(new Action0() {
+
+            @Override
+            public void call() {
+                m_resource = resource;
+                hold(m_resource.resource);
+            }
+
+        });
     }
 
     public abstract void hold(final TResource resource);

@@ -1,17 +1,10 @@
 package adullact.publicrowdfunding.fragment.v4.detailProject;
 
-import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
-import adullact.publicrowdfunding.model.local.callback.HoldToDo;
-import adullact.publicrowdfunding.model.local.ressource.Commentary;
-import adullact.publicrowdfunding.model.local.ressource.Project;
-import adullact.publicrowdfunding.model.server.event.CreateEvent;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -26,6 +19,13 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
+
+import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
+import adullact.publicrowdfunding.model.local.callback.HoldToDo;
+import adullact.publicrowdfunding.model.local.ressource.Commentary;
+import adullact.publicrowdfunding.model.local.ressource.Project;
+import adullact.publicrowdfunding.model.server.event.CreateEvent;
 
 public class CommentPopup extends Fragment {
 
@@ -205,7 +205,7 @@ public class CommentPopup extends Fragment {
 	}
 
 	public void getProject(String idProject) {
-		new Project().getCache(idProject).forceRetrieve()
+		new Project().getCache(idProject)
 				.toResource(new HoldToDo<Project>() {
 
 					@Override
