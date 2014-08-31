@@ -44,7 +44,7 @@ public class SyncServerToLocal {
         }
 
         SharedPreferences sharedPreferences = PublicrowdFundingApplication.sharedPreferences();
-        m_lastSync = Utility.stringToDateTime(sharedPreferences.getString(KEY_LAST_SYNC, "2015-01-01 00:00:00"));
+        m_lastSync = Utility.stringToDateTime(sharedPreferences.getString(KEY_LAST_SYNC, "2000-01-01 00:00:00"));
     }
 
     public static SyncServerToLocal getInstance() {
