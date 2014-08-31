@@ -1,5 +1,10 @@
 package adullact.publicrowdfunding.model.local.ressource;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import org.joda.time.DateTime;
+
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Map;
@@ -9,9 +14,6 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.joda.time.DateTime;
-
-import rx.Observable;
 import adullact.publicrowdfunding.PublicrowdFundingApplication;
 import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.cache.Cache;
@@ -21,8 +23,7 @@ import adullact.publicrowdfunding.model.server.entities.RowAffected;
 import adullact.publicrowdfunding.model.server.entities.ServerAccount;
 import adullact.publicrowdfunding.model.server.entities.Service;
 import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
-import android.content.Context;
-import android.content.SharedPreferences;
+import rx.Observable;
 
 /**
  * Created by Ferrand on 16/07/2014.
@@ -33,14 +34,14 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
     private void initialize() throws NoAccountExistsInLocal {
         SharedPreferences sharedPreferences = m_context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
         if(!sharedPreferences.contains(KEY_USERNAME) || !sharedPreferences.contains(KEY_USERNAME) || !sharedPreferences.contains(KEY_USERNAME)) {
-        	{
-        		m_own = null;
-        		throw new NoAccountExistsInLocal();
-        	}
+            {
+                m_own = null;
+                throw new NoAccountExistsInLocal();
+            }
         }
 
         m_username = sharedPreferences.getString(KEY_USERNAME, "");
-        m_password = sharedPreferences.getString(KEY_PASSWORD, "");
+        m_password = decrypt("mystery", sharedPreferences.getString(KEY_PASSWORD, ""));
         m_lastSync = Utility.stringToDateTime(sharedPreferences.getString(KEY_LAST_SYNC, ""));
     }
 
@@ -106,14 +107,14 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
 
     @Override
     public Account syncFromServer(ServerAccount serverAccount) {
-    	 this.m_username = serverAccount.username;
-         this.m_lastSync = DateTime.now();
-         this.m_administrator = serverAccount.administrator;
-         this.m_anonymous = false;
-         this.m_context = PublicrowdFundingApplication.context();
-         this.m_user = new User().getCache(serverAccount.pseudo);
+        this.m_username = serverAccount.username;
+        this.m_lastSync = DateTime.now();
+        this.m_administrator = serverAccount.administrator;
+        this.m_anonymous = false;
+        this.m_context = PublicrowdFundingApplication.context();
+        this.m_user = new User().getCache(serverAccount.pseudo);
 
-         return this;
+        return this;
     }
 
     @Override
@@ -176,6 +177,7 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
 
     public void setOwn() {
         m_own = this;
+        //save();
     }
 
     public void setLastSync(DateTime lastSync) {
@@ -209,38 +211,56 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
     public Cache<User> getUser() {
         return m_user;
     }
-    
+
     public void setAdmin(){
-    	m_administrator = true;
+        m_administrator = true;
     }
-    
+
     public static void disconnect(){
-    	m_own = null;
+        m_own = null;
     }
 
 
-    public void save() {
+    private void save() {
+        System.out.println("ici1");
         SharedPreferences sharedPreferences = m_context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
 
+        System.out.println("ici2");
         sharedPreferences.edit().putString(KEY_USERNAME, m_username);
-        sharedPreferences.edit().putString(KEY_PASSWORD, m_password);
+        System.out.println("ici3");
+        sharedPreferences.edit().putString(KEY_PASSWORD, encrypt("mystery", m_password));
+        System.out.println("ici4");
         sharedPreferences.edit().putString(KEY_LAST_SYNC, Utility.DateTimeToString(m_lastSync));
+        System.out.println("ici5");
         sharedPreferences.edit().commit();
+        System.out.println("ici6");
     }
 
 
     /* --------- Cryptography part ------------ */
     private final static String HEX = "0123456789ABCDEF";
-    private static String encrypt(String seed, String password) throws Exception {
-        byte[] rawKey = getRawKey(seed.getBytes());
-        byte[] result = encrypt(rawKey, password.getBytes());
+    private static String encrypt(String seed, String password)  {
+        byte[] result;
+        try {
+            byte[] rawKey = getRawKey(seed.getBytes());
+            result = encrypt(rawKey, password.getBytes());
+        }
+        catch(Exception exception) {
+            return password;
+        }
         return toHex(result);
     }
 
-    private static String decrypt(String seed, String encrypted) throws Exception {
-        byte[] rawKey = getRawKey(seed.getBytes());
-        byte[] enc = toByte(encrypted);
-        byte[] result = decrypt(rawKey, enc);
+    private static String decrypt(String seed, String encrypted)  {
+        byte[] result;
+        try {
+            byte[] rawKey = getRawKey(seed.getBytes());
+            byte[] enc = toByte(encrypted);
+            result = decrypt(rawKey, enc);
+        }
+        catch(Exception exception) {
+            return encrypted;
+        }
         return new String(result);
     }
 
@@ -269,13 +289,6 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
         cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
         byte[] decrypted = cipher.doFinal(encrypted);
         return decrypted;
-    }
-
-    private static String toHex(String txt) {
-        return toHex(txt.getBytes());
-    }
-    private static String fromHex(String hex) {
-        return new String(toByte(hex));
     }
 
     private static byte[] toByte(String hexString) {
