@@ -1,7 +1,20 @@
 package adullact.publicrowdfunding;
 
+import java.util.ArrayList;
+
+import com.google.android.gms.maps.model.LatLng;
+
 import adullact.publicrowdfunding.custom.ProjectAdaptor;
+import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.ressource.Project;
+import adullact.publicrowdfunding.model.local.utilities.Share;
+import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
+import android.app.AlertDialog;
+import android.app.SearchManager;
+import android.content.Context;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -9,14 +22,18 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.SearchView.OnCloseListener;
+import android.widget.SearchView.OnQueryTextListener;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 public class ListProjectsFragment extends Fragment {
@@ -26,12 +43,18 @@ public class ListProjectsFragment extends Fragment {
 	private SwipeRefreshLayout swipeView;
 
 	private ArrayAdapter<Project> adapter;
-	
-	private adullact.publicrowdfunding.MainActivity _this;
-	
+
 	private LinearLayout loading;
 	
 	private Fragment fragment;
+	
+	private SyncServerToLocal sync;
+	
+	private ArrayList<Project> p_project_displayed;
+	
+	private LocationManager locationManager;
+	private LocationListener locationListener;
+	private String locationProvider;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,15 +63,16 @@ public class ListProjectsFragment extends Fragment {
 		final View view = inflater.inflate(R.layout.fragment_liste_projet,
 				container, false);
 		
+		p_project_displayed = new ArrayList<Project>();
+		
 		 fragment = new adullact.publicrowdfunding.fragment.v4.detailProject.ProjectPagerFragment();
-		_this = (adullact.publicrowdfunding.MainActivity) getActivity();
 
 		listeProjets = (ListView) view.findViewById(R.id.liste);
 
 		loading =  (LinearLayout) view.findViewById(R.id.loading);
 		
 		adapter = new ProjectAdaptor(this.getActivity().getBaseContext(),
-				R.layout.adaptor_project, _this.p_project_displayed);
+				R.layout.adaptor_project, p_project_displayed);
 
 		TextView empty = (TextView) view.findViewById(R.id.empty);
 		listeProjets.setEmptyView(empty);
@@ -64,7 +88,7 @@ public class ListProjectsFragment extends Fragment {
 					@Override
 					public void onRefresh() {
 						swipeView.setRefreshing(true);
-						refresh();
+						reload();
 
 					}
 
@@ -79,7 +103,7 @@ public class ListProjectsFragment extends Fragment {
 				FragmentTransaction ft = getFragmentManager().beginTransaction();
 				ft.setCustomAnimations(R.anim.fade_enter, R.anim.fade_exit);
 				Bundle bundle = new Bundle();
-        		bundle.putString("idProject", _this.p_project_displayed.get(position).getResourceId());
+        		bundle.putString("idProject", p_project_displayed.get(position).getResourceId());
         		fragment.setArguments(bundle);
         		ft.addToBackStack(null);
         		fragment.setHasOptionsMenu(true);
@@ -104,14 +128,17 @@ public class ListProjectsFragment extends Fragment {
 					swipeView.setEnabled(false);
 			}
 		});
+		reload();
 		loading.setVisibility(View.GONE);
 		return view;
 		
 	}
 
 	public void refresh() {
-		_this.syncProjects();
-
+		adapter.clear();
+		adapter.addAll(p_project_displayed);
+		adapter.notifyDataSetChanged();
+		swipeView.setRefreshing(true);
 	}
 	
 	@Override
@@ -130,6 +157,142 @@ public class ListProjectsFragment extends Fragment {
 	@Override
 	public void onPrepareOptionsMenu(Menu menu) {
 
+	}
+	
+	public void sort() {
+		ArrayAdapter<String> adapter = null;
+		if (Share.position == null) {
+			String names[] = { "Le plus gros projet", "Le plus petit projet",
+					"Le plus avancé" };
+			adapter = new ArrayAdapter<String>(getActivity(),
+					android.R.layout.simple_list_item_1, names);
+		} else {
+			String names[] = { "Le plus gros projet", "Le plus petit",
+					"Le plus avancé", "Le plus proche (Défaut)" };
+			adapter = new ArrayAdapter<String>(getActivity(),
+					android.R.layout.simple_list_item_1, names);
+		}
+		AlertDialog.Builder alertDialog = new AlertDialog.Builder(
+				getActivity());
+		LayoutInflater inflater = getActivity().getLayoutInflater();
+		View convertView = (View) inflater.inflate(R.layout.listeview, null);
+		alertDialog.setView(convertView);
+		alertDialog.setTitle("Trier par");
+		ListView lv = (ListView) convertView.findViewById(R.id.liste);
+
+		lv.setAdapter(adapter);
+		final AlertDialog dialog = alertDialog.create();
+		lv.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+
+				switch (position) {
+				case 0:
+                    p_project_displayed = sync.sortByRequestingProjectMaxToMin();
+					refresh();
+					dialog.dismiss();
+
+					break;
+				case 1:
+                    p_project_displayed = sync.sortByRequestingProjectMinToMax();
+                    refresh();
+					dialog.dismiss();
+					break;
+				case 2:
+                    p_project_displayed = sync.sortByAlmostFunded();
+                    refresh();
+					dialog.dismiss();
+					break;
+				case 3:
+                    p_project_displayed = sync.sortByProximity();
+                    refresh();
+					dialog.dismiss();
+					break;
+
+				}
+			}
+		});
+
+		dialog.show();
+
+	}
+
+	public void reload() {
+		sync = SyncServerToLocal.getInstance();
+		sync.sync(new HoldAllToDo<Project>() {
+			@Override
+			public void holdAll(ArrayList<Project> projects) {
+
+				ArrayList<Project> allSync = new ArrayList<Project>(sync
+						.restrictToValidatedProjects());
+				p_project_displayed = allSync;
+
+				refresh();
+
+			}
+		});
+	}
+
+	public void search(MenuItem searchItem) {
+		
+		SearchView searchView = (SearchView) searchItem.getActionView();
+		SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+		if (null != searchManager) {
+			searchView.setSearchableInfo(searchManager
+					.getSearchableInfo(getActivity().getComponentName()));
+		}
+		searchView.setIconifiedByDefault(true);
+		searchView.setOnCloseListener(new OnCloseListener() {
+
+			@Override
+			public boolean onClose() {
+				p_project_displayed = new ArrayList<Project>(sync.getProjects());
+				refresh();
+				return false;
+			}
+
+		});
+
+		searchView.setOnQueryTextListener(new OnQueryTextListener() {
+
+			public boolean onQueryTextSubmit(String query) {
+
+				p_project_displayed = sync.searchInName(query);
+				refresh();
+
+				return false;
+			}
+
+			@Override
+			public boolean onQueryTextChange(String newText) {
+				return false;
+			}
+
+		});
+
+	}
+
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		if (MainActivity.mDrawerToggle.onOptionsItemSelected(item)) {
+			return true;
+		}
+
+		switch (item.getItemId()) {
+		case R.id.action_search:
+			search(item);
+			break;
+		case R.id.action_sort:
+			sort();
+			break;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+		return true;
 	}
 
 }

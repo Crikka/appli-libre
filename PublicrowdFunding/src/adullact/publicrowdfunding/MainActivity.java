@@ -51,7 +51,7 @@ public class MainActivity extends FragmentActivity {
 	private DrawerLayout mDrawerLayout;
 	private LinearLayout mDrawerList;
 
-	public ActionBarDrawerToggle mDrawerToggle;
+	public static ActionBarDrawerToggle mDrawerToggle;
 
 	private Button m_button_add_projet;
 	private LinearLayout m_button_account;
@@ -75,20 +75,12 @@ public class MainActivity extends FragmentActivity {
 	private SimpleLine m_separator_2;
 	private SimpleLine m_separator_3;
 
-	protected ArrayList<Project> p_project_displayed;
-
-	private SyncServerToLocal sync;
-
 	private User me;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
-		p_project_displayed = new ArrayList<Project>();
-
-		syncProjects();
 
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (LinearLayout) findViewById(R.id.left);
@@ -122,26 +114,6 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-
-		if (mDrawerToggle.onOptionsItemSelected(item)) {
-			return true;
-		}
-
-		switch (item.getItemId()) {
-		case R.id.action_search:
-			search(item);
-			break;
-		case R.id.action_sort:
-			sort();
-			break;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
-		return true;
-	}
-
-	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
 		mDrawerToggle.syncState();
@@ -154,7 +126,6 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	private void gererPanneauMenu() {
-		final MainActivity _this = this;
 		this.invalidateOptionsMenu();
 
 		m_separator_1 = (SimpleLine) findViewById(R.id.separator_1);
@@ -287,7 +258,7 @@ public class MainActivity extends FragmentActivity {
 		utilisateurVille = (TextView) findViewById(R.id.utilisateur_ville);
 		utilisateurName = (TextView) findViewById(R.id.utilisateur_name);
 		avatar = (ImageView) findViewById(R.id.avatar);
-
+		geolocalisation();
 	}
 
 	public void setDrawerMenu(boolean connect) {
@@ -376,7 +347,7 @@ public class MainActivity extends FragmentActivity {
 
 	public void launchDefaultFragment() {
 
-		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		FragmentTransaction ft = getSupportFragmentManager().beginTransaction().disallowAddToBackStack();
 		Fragment fragment = new ListProjectsFragment();
 		fragment.setHasOptionsMenu(true);
 		ft.replace(R.id.content_frame, fragment, "allProjectFragment");
@@ -416,7 +387,6 @@ public class MainActivity extends FragmentActivity {
 							.findFragmentByTag("allProjectFragment");
 					if (myFragment.isVisible()) {
 						if (Share.displayPosition == false) {
-                            p_project_displayed = sync.sortByProximity();
 							launchDefaultFragment();
 							locationManager.removeUpdates(locationListener);
 							locationListener = null;
@@ -456,121 +426,6 @@ public class MainActivity extends FragmentActivity {
 
 		locationManager.requestLocationUpdates(locationProvider, 60000, 1000,
 				locationListener);
-
-	}
-
-	public void sort() {
-		ArrayAdapter<String> adapter = null;
-		if (Share.position == null) {
-			String names[] = { "Le plus gros projet", "Le plus petit projet",
-					"Le plus avancé" };
-			adapter = new ArrayAdapter<String>(MainActivity.this,
-					android.R.layout.simple_list_item_1, names);
-		} else {
-			String names[] = { "Le plus gros projet", "Le plus petit",
-					"Le plus avancé", "Le plus proche (Défaut)" };
-			adapter = new ArrayAdapter<String>(MainActivity.this,
-					android.R.layout.simple_list_item_1, names);
-		}
-		AlertDialog.Builder alertDialog = new AlertDialog.Builder(
-				MainActivity.this);
-		LayoutInflater inflater = getLayoutInflater();
-		View convertView = (View) inflater.inflate(R.layout.listeview, null);
-		alertDialog.setView(convertView);
-		alertDialog.setTitle("Trier par");
-		ListView lv = (ListView) convertView.findViewById(R.id.liste);
-
-		lv.setAdapter(adapter);
-		final AlertDialog dialog = alertDialog.create();
-		lv.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-
-				switch (position) {
-				case 0:
-                    p_project_displayed = sync.sortByRequestingProjectMaxToMin();
-					launchDefaultFragment();
-					dialog.dismiss();
-
-					break;
-				case 1:
-                    p_project_displayed = sync.sortByRequestingProjectMinToMax();
-					launchDefaultFragment();
-					dialog.dismiss();
-					break;
-				case 2:
-                    p_project_displayed = sync.sortByAlmostFunded();
-					launchDefaultFragment();
-					dialog.dismiss();
-					break;
-				case 3:
-                    p_project_displayed = sync.sortByProximity();
-					launchDefaultFragment();
-					dialog.dismiss();
-					break;
-
-				}
-			}
-		});
-
-		dialog.show();
-
-	}
-
-	public void syncProjects() {
-		sync = SyncServerToLocal.getInstance();
-		sync.sync(new HoldAllToDo<Project>() {
-			@Override
-			public void holdAll(ArrayList<Project> projects) {
-
-				ArrayList<Project> allSync = new ArrayList<Project>(sync
-						.restrictToValidatedProjects());
-				p_project_displayed = allSync;
-
-				launchDefaultFragment();
-
-			}
-		});
-	}
-
-	public void search(MenuItem searchItem) {
-		
-		SearchView searchView = (SearchView) searchItem.getActionView();
-		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-		if (null != searchManager) {
-			searchView.setSearchableInfo(searchManager
-					.getSearchableInfo(getComponentName()));
-		}
-		searchView.setIconifiedByDefault(true);
-		searchView.setOnCloseListener(new OnCloseListener() {
-
-			@Override
-			public boolean onClose() {
-				p_project_displayed = new ArrayList<Project>(sync.getProjects());
-				launchDefaultFragment();
-				return false;
-			}
-
-		});
-
-		searchView.setOnQueryTextListener(new OnQueryTextListener() {
-
-			public boolean onQueryTextSubmit(String query) {
-
-				p_project_displayed = sync.searchInName(query);
-				launchDefaultFragment();
-
-				return false;
-			}
-
-			@Override
-			public boolean onQueryTextChange(String newText) {
-				return false;
-			}
-
-		});
 
 	}
 
