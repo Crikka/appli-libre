@@ -52,16 +52,15 @@ public class MainActivity extends Fragment {
 
 		loading = (LinearLayout) view.findViewById(R.id.loading);
 
-		adapter = new ProjectAdaptor(this.getActivity().getBaseContext(),
-				R.layout.adaptor_project, p_project_displayed);
+	
 
 		TextView empty = (TextView) view.findViewById(R.id.empty);
 		listeProjets.setEmptyView(empty);
 
-		listeProjets.setAdapter(adapter);
+		refresh();
+	
 		swipeView = (SwipeRefreshLayout) view.findViewById(R.id.refresher);
 		swipeView.setEnabled(false);
-		refresh();
 		swipeView.setColorScheme(R.color.blue, R.color.green, R.color.yellow,
 				R.color.red);
 		swipeView
@@ -121,14 +120,15 @@ public class MainActivity extends Fragment {
 
 			@Override
 			public void holdAll(ArrayList<Project> projects) {
+				adapter = new ProjectAdaptor(getActivity().getBaseContext(),
+						R.layout.adaptor_project, sync.restrictToNotValidatedProjects());
+			
 
-				ArrayList<Project> allSync = new ArrayList<Project>(sync
-						.getProjects());
-				p_project_displayed = allSync;
 				adapter.addAll(projects);
 				adapter.notifyDataSetChanged();
 				swipeView.setRefreshing(false);
-			
+				
+				listeProjets.setAdapter(adapter);
 
 			}
 		});
