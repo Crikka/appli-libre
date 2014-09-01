@@ -9,6 +9,7 @@ import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,6 +20,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -30,10 +32,10 @@ public class MainActivity extends Fragment {
 	private SwipeRefreshLayout swipeView;
 
 	private ArrayAdapter<Project> adapter;
-
-	// private adullact.publicrowdfunding.MainActivity _this;
-
+	
 	private LinearLayout loading;
+	
+	private FrameLayout filter;
 
 	private ArrayList<Project> p_project_displayed;
 
@@ -46,14 +48,13 @@ public class MainActivity extends Fragment {
 
 		p_project_displayed = new ArrayList<Project>();
 
-		// _this = (adullact.publicrowdfunding.MainActivity) getActivity();
-
 		listeProjets = (ListView) view.findViewById(R.id.liste);
 
 		loading = (LinearLayout) view.findViewById(R.id.loading);
 
-	
-
+		filter = (FrameLayout) view.findViewById(R.id.alpha_projets);
+		filter.setVisibility(View.GONE);
+		
 		TextView empty = (TextView) view.findViewById(R.id.empty);
 		listeProjets.setEmptyView(empty);
 
@@ -80,16 +81,14 @@ public class MainActivity extends Fragment {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 
-				/*
-				 * FragmentTransaction ft =
-				 * getFragmentManager().beginTransaction();
-				 * ft.setCustomAnimations(R.anim.fade_enter, R.anim.fade_exit);
-				 * Bundle bundle = new Bundle(); bundle.putString("idProject",
-				 * _this.p_project_displayed.get(position).getResourceId());
-				 * fragment.setArguments(bundle); ft.addToBackStack(null);
-				 * fragment.setHasOptionsMenu(true);
-				 * ft.replace(R.id.content_frame, fragment); ft.commit();
-				 */
+				FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+				Fragment fragment = new adullact.publicrowdfunding.controller.validateProject.validatePopup();
+				ft.setCustomAnimations(R.anim.popup_enter, R.anim.no_anim);
+				ft.add(R.id.front, fragment);
+				ft.commit();
+
+				filter.setVisibility(View.VISIBLE);
+		
 			}
 		});
 

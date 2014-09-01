@@ -141,20 +141,11 @@
     </LinearLayout>
 
     <FrameLayout
+        android:id="@+id/frame"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="30dp" >
-
-        <ImageView
-            android:id="@+id/validate"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginRight="10dp"
-            android:visibility="gone"
-            android:contentDescription="@string/description_image_project"
-            android:src="@drawable/approved" />
-
         <ImageView
             android:layout_width="fill_parent"
             android:layout_height="30dp"
@@ -180,6 +171,16 @@
             android:textColor="#ffffff"
             android:textSize="20sp"
             android:textStyle="bold" />
+        
+        
+        <ImageView
+            android:id="@+id/validate"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:visibility="gone"
+            android:contentDescription="@string/description_image_project"
+            android:src="@drawable/approved" />
+        
     </FrameLayout>
 
 </FrameLayout>

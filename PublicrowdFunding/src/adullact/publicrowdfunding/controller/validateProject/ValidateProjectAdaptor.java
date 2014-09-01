@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,12 +23,17 @@ public class ValidateProjectAdaptor extends ArrayAdapter<Project> {
 	Context mContext;
 	int layoutResourceId;
 	ArrayList<Project> data;
+	ArrayList<String> idAproved;
+	
+	private Context context;
 
 	public ValidateProjectAdaptor(Context context, int resource, ArrayList<Project> listItem) {
 		super(context, resource, listItem);
 		this.mContext = context;
 		this.layoutResourceId = resource;
 		this.data = listItem;
+		this.context = context;
+		idAproved = new ArrayList<String>();
 	}
 
 	private static class UserHolder {
@@ -64,14 +70,16 @@ public class ValidateProjectAdaptor extends ArrayAdapter<Project> {
 			LayoutInflater inflater = (LayoutInflater) mContext
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			v = inflater.inflate(layoutResourceId, null);
-
+			
 			ImageView approved = (ImageView) v.findViewById(R.id.validate);
-
-			LinearLayout ll =  (LinearLayout) v.findViewById(R.id.content);
-					
-			approved.getLayoutParams().height = ll.getLayoutParams().height;
-			approved.getLayoutParams().width = ll.getLayoutParams().width;
 			approved.setVisibility(View.VISIBLE);
+			
+			if(idAproved.contains(data.get(position).getResourceId())){
+				/*
+				ImageView approved = (ImageView) v.findViewById(R.id.validate);
+				approved.setVisibility(View.VISIBLE);
+				*/
+			}
 			
 			holder.titre_projet_liste = (TextView) v
 					.findViewById(R.id.titre_projet_liste);

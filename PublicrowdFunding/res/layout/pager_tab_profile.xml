@@ -4,31 +4,31 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <LinearLayout
-        android:id="@+id/llinear"
+    <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="5dp" >
 
-        <ImageView
-            android:id="@+id/avatar"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginRight="6dip"
-            android:contentDescription="@string/description_image_project"
-            android:height="152dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/male_user_icon" />
-
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/buttonshapes" >
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:id="@+id/avatar"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginRight="6dip"
+                android:contentDescription="@string/description_image_project"
+                android:height="152dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/male_user_icon" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/avatar"
+                android:background="@drawable/buttonshapes"
                 android:orientation="vertical"
                 android:padding="6dip" >
 
@@ -49,7 +49,28 @@
                     android:textSize="15sp" />
             </LinearLayout>
         </RelativeLayout>
-    </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/admin_ribbon"
+                android:layout_gravity="right"
+            	android:layout_margin="1dp"
+                android:layout_width="57dp"
+                android:layout_height="56dp"
+                android:contentDescription="@string/description_image_project"
+                android:background="@drawable/ribbon_profile" />
+            
+            <TextView
+                android:id="@+id/text_admin"
+                android:text="ADMIN"
+                android:textColor="#ffffff"
+                android:textStyle="bold"
+                android:layout_gravity="right"
+            	android:layout_margin="1dp"
+                android:layout_width="57dp"
+                android:layout_height="56dp"
+                />
+
+    </FrameLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"

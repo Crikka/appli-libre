@@ -75,8 +75,7 @@ public class InfoProjectFragment extends Fragment {
 		view = inflater.inflate(R.layout.fragment_detail_project, container,
 				false);
 		fm = this.getActivity().getSupportFragmentManager();
-
-		filter = (FrameLayout) view.findViewById(R.id.filter);
+		filter = (FrameLayout)  view.findViewById(R.id.filter);
 		filter.setVisibility(View.GONE);
 		layoutConnect = (FrameLayout) view.findViewById(R.id.connect);
 
