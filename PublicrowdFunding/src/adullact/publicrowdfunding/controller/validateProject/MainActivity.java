@@ -120,7 +120,7 @@ public class MainActivity extends Fragment {
 
 			@Override
 			public void holdAll(ArrayList<Project> projects) {
-				adapter = new ProjectAdaptor(getActivity().getBaseContext(),
+				adapter = new ValidateProjectAdaptor(getActivity().getBaseContext(),
 						R.layout.adaptor_project, sync.restrictToNotValidatedProjects());
 			
 
