@@ -37,7 +37,6 @@ public class SyncServerToLocal {
 
         ProjectsDatabase projectsDatabase = ProjectsDatabase.getInstance();
         ArrayList<Project> projects = projectsDatabase.get();
-        System.out.println(projects.size());
 
         for(Project project : projects) {
             m_projects.add(project);
@@ -77,7 +76,7 @@ public class SyncServerToLocal {
             @Override
             public void onLister(ArrayList<Project> projects) {
                 m_lastSync = now;
-                SharedPreferences.Editor editor = PublicrowdFundingApplication.sharedPreferences().edit();//.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE).edit();
+                SharedPreferences.Editor editor = PublicrowdFundingApplication.sharedPreferences().edit();
 
                 editor.putString(KEY_LAST_SYNC, Utility.DateTimeToString(m_lastSync));
                 editor.apply();
@@ -102,6 +101,7 @@ public class SyncServerToLocal {
                 }
 
                 m_projects.addAll(newProjects);
+                m_projects.removeAll(deletedProject);
 
                 _this.syncLocalDatabase(newProjects, updatedProjects, deletedProject);
                 projectWhatToDo.eventually();
@@ -169,6 +169,15 @@ public class SyncServerToLocal {
             @Override
             public boolean filterTest(Project project) {
                 return project.isValidate();
+            }
+        });
+    }
+
+    public ArrayList<Project> restrictToNotValidatedProjects() {
+        return restrict(new Filter() {
+            @Override
+            public boolean filterTest(Project project) {
+                return !project.isValidate();
             }
         });
     }

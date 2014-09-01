@@ -50,7 +50,7 @@ public class ProjectsTable implements BaseColumns {
                     COLUMN_NAME_ACTIVE + INTEGER_TYPE + NOT_NULL + COMMA +
                     COLUMN_NAME_TITLE + TEXT_TYPE + NOT_NULL + COMMA +
                     COLUMN_NAME_DESCRIPTION + TEXT_TYPE + COMMA +
-                    COLUMN_NAME_VALIDATE + NUMERIC_TYPE + NOT_NULL + COMMA +
+                    COLUMN_NAME_VALIDATE + INTEGER_TYPE + NOT_NULL + COMMA +
                     COLUMN_NAME_PROPOSED_BY + TEXT_TYPE + NOT_NULL + COMMA +
                     COLUMN_NAME_REQUESTED_FUNDING + NUMERIC_TYPE + COMMA +
                     COLUMN_NAME_CURRENT_FUNDING + NUMERIC_TYPE + NOT_NULL + COMMA +

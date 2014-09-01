@@ -1,12 +1,13 @@
 package adullact.publicrowdfunding.model.local.database;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
 import java.util.ArrayList;
 
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.utilities.Utility;
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 
 /**
  * Created by Ferrand on 20/07/2014.
@@ -64,13 +65,14 @@ public class ProjectsDatabase {
                 null                                 // The sort order
         );
 
+
         while (cursor.moveToNext()) {
             Project project = new Project(
                     cursor.getInt(0), // id
-                    cursor.getInt(1) == 0 ? false : true, // validate
+                    (cursor.getInt(1) == 1), // validate
                     cursor.getString(2), // title
                     cursor.getString(3), // description
-                    cursor.getInt(4) == 0 ? false : true, // validate
+                    (cursor.getInt(4) == 1), // validate
                     cursor.getString(5), // proposed by
                     cursor.getString(6), // requested funding
                     cursor.getString(7), // current funding
@@ -99,10 +101,10 @@ public class ProjectsDatabase {
 
         ContentValues values = new ContentValues();
         values.put(ProjectsTable.COLUMN_NAME_ID, project.getResourceId());
-        values.put(ProjectsTable.COLUMN_NAME_ACTIVE, project.isActive() == false ? 0 : 1);
+        values.put(ProjectsTable.COLUMN_NAME_ACTIVE, project.isActive() ? 1 : 0);
         values.put(ProjectsTable.COLUMN_NAME_TITLE, project.getName());
         values.put(ProjectsTable.COLUMN_NAME_DESCRIPTION, project.getDescription());
-        values.put(ProjectsTable.COLUMN_NAME_VALIDATE, project.isValidate() == false ? 0 : 1);
+        values.put(ProjectsTable.COLUMN_NAME_VALIDATE, project.isValidate() ? 1 : 0);
         values.put(ProjectsTable.COLUMN_NAME_PROPOSED_BY, project.getUser().getResourceId());
         values.put(ProjectsTable.COLUMN_NAME_REQUESTED_FUNDING, project.getRequestedFunding());
         values.put(ProjectsTable.COLUMN_NAME_CURRENT_FUNDING, project.getCurrentFunding());
@@ -123,10 +125,10 @@ public class ProjectsDatabase {
         SQLiteDatabase db = m_helper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(ProjectsTable.COLUMN_NAME_ACTIVE, project.isActive() == false ? 0 : 1);
+        values.put(ProjectsTable.COLUMN_NAME_ACTIVE, !project.isActive() ? 0 : 1);
         values.put(ProjectsTable.COLUMN_NAME_TITLE, project.getName());
         values.put(ProjectsTable.COLUMN_NAME_DESCRIPTION, project.getDescription());
-        values.put(ProjectsTable.COLUMN_NAME_VALIDATE, project.isValidate() == false ? 0 : 1);
+        values.put(ProjectsTable.COLUMN_NAME_VALIDATE, !project.isValidate() ? 0 : 1);
         values.put(ProjectsTable.COLUMN_NAME_PROPOSED_BY, project.getUser().getResourceId());
         values.put(ProjectsTable.COLUMN_NAME_REQUESTED_FUNDING, project.getRequestedFunding());
         values.put(ProjectsTable.COLUMN_NAME_CURRENT_FUNDING, project.getCurrentFunding());
