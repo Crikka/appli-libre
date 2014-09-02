@@ -215,7 +215,7 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
 
             @Override
             public void onCreate(Bookmark resource) {
-                m_bookmarks.add(resource);
+                m_bookmarks.add(resource.getCache().declareUpToDate());
                 bookmarkCreateEvent.onCreate(resource);
             }
 
@@ -250,7 +250,7 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
                         @Override
                         public void onDelete(Bookmark resource) {
                         	System.out.println("On supprime le bookmark depuis user");
-                            m_bookmarks.remove(resource);
+                            m_bookmarks.remove(resource.getCache().declareUpToDate());
                             bookmarkDeleteEvent.onDelete(resource);
                         }
 
