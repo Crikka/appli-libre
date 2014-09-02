@@ -28,6 +28,7 @@ public class ProjectAdaptor extends ArrayAdapter<Project> {
 	int layoutResourceId;
 	ArrayList<Project> data;
 	private Activity activity;
+	private View v;
 	
 	public ProjectAdaptor(Context context, int resource, ArrayList<Project> listItem, Activity activity) {
 		super(context, resource, listItem);
@@ -63,7 +64,7 @@ public class ProjectAdaptor extends ArrayAdapter<Project> {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		View v = convertView;
+	    v = convertView;
 		UserHolder holder = new UserHolder();
 		
 		// First let's verify the convertView is not null
@@ -123,6 +124,7 @@ public class ProjectAdaptor extends ArrayAdapter<Project> {
 			@Override
 			protected void no() {
 				// Il est dans les fav
+				v.findViewById(R.id.fav_layout).setVisibility(View.VISIBLE);
 				
 			}
 			

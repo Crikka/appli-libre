@@ -10,135 +10,165 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/buttonshapes"
         android:orientation="vertical"
-        android:paddingBottom="10dp"
         android:paddingLeft="1dp"
         android:paddingRight="1dp"
         android:paddingTop="40dp" >
 
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="10dp"
-            android:contentDescription="@string/description_image_project"
-            android:src="@drawable/ribbon_shadow" />
-
-        <RelativeLayout
+        <LinearLayout
+                    android:paddingBottom="10dp"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp" >
+            android:background="@drawable/buttonshapes"
+            android:orientation="vertical" >
 
             <ImageView
-                
-                android:id="@+id/icon"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="fill_parent"
+                android:layout_height="10dp"
                 android:contentDescription="@string/description_image_project"
-                android:src="@drawable/ic_launcher" />
+                android:src="@drawable/ribbon_shadow" />
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp" >
+
+                <ImageView
+                    android:id="@+id/icon"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:contentDescription="@string/description_image_project"
+                    android:src="@drawable/ic_launcher" />
+
+                <TextView
+                    android:id="@+id/description_projet_liste"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/icon"
+                    android:text="@string/project_description"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+            <TableLayout
+                android:id="@+id/tableLayout1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dip"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp" >
+
+                <TableRow
+                    android:id="@+id/tableRow1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="1dip" >
+
+                    <TextView
+                        android:id="@+id/sommeFund"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/sommeeDemande"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/nombre_jour_restant_detail"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/tableRow2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="1dip" >
+
+                    <TextView
+                        android:id="@+id/recolter"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/funded"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/ask"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/restant"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/remain"
+                        android:textSize="15sp" />
+                </TableRow>
+            </TableLayout>
+
+            <adullact.publicrowdfunding.views.CustomProgressBar
+                android:id="@+id/avancement_projet_liste"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="10dip"
+                android:layout_marginBottom="10dip"
+                android:layout_marginTop="10dip"
+                android:max="100"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:progress="100"
+                android:progressDrawable="@drawable/progressbar" />
 
             <TextView
-                android:id="@+id/description_projet_liste"
-                android:layout_width="wrap_content"
+                android:id="@+id/distance"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/icon"
-                android:text="@string/project_description"
-                android:textSize="15sp" />
-        </RelativeLayout>
+                android:layout_gravity="center"
+                android:ellipsize="marquee"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:singleLine="true"
+                android:textSize="12sp" />
+        </LinearLayout>
 
-        <TableLayout
-            android:id="@+id/tableLayout1"
+        <LinearLayout
+            android:id="@+id/fav_layout"
+            android:visibility="gone"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dip"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp" >
-
-            <TableRow
-                android:id="@+id/tableRow1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="1dip" >
-
-                <TextView
-                    android:id="@+id/sommeFund"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/sommeeDemande"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/nombre_jour_restant_detail"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tableRow2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="1dip" >
-
-                <TextView
-                    android:id="@+id/recolter"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/funded"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/ask"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/restant"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/remain"
-                    android:textSize="15sp" />
-            </TableRow>
-        </TableLayout>
-
-        <adullact.publicrowdfunding.views.CustomProgressBar
-            android:id="@+id/avancement_projet_liste"
-            style="@android:style/Widget.ProgressBar.Horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="10dip"
-            android:layout_marginBottom="10dip"
-            android:layout_marginTop="10dip"
-            android:max="100"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:progress="100"
-            android:progressDrawable="@drawable/progressbar" />
+            android:paddingTop="10dp"
+            android:orientation="horizontal" >
+            
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/description_image_project"
+            android:src="@drawable/fullstar" />
 
         <TextView
-            android:id="@+id/distance"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:ellipsize="marquee"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:ellipsize="marquee"
+            android:gravity="center"
             android:singleLine="true"
+            android:text="Ce projet est dans vos favoris"
             android:textSize="12sp" />
+        </LinearLayout>
     </LinearLayout>
 
     <FrameLayout
@@ -147,6 +177,7 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="30dp" >
+
         <ImageView
             android:layout_width="fill_parent"
             android:layout_height="30dp"
@@ -172,16 +203,14 @@
             android:textColor="#ffffff"
             android:textSize="20sp"
             android:textStyle="bold" />
-        
-        
+
         <ImageView
             android:id="@+id/validate"
             android:layout_width="match_parent"
             android:layout_height="220dp"
-            android:visibility="gone"
             android:contentDescription="@string/description_image_project"
-            android:src="@drawable/approved" />
-        
+            android:src="@drawable/approved"
+            android:visibility="gone" />
     </FrameLayout>
 
 </FrameLayout>
