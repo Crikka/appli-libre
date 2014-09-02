@@ -18,6 +18,7 @@ extends ServerObject<TRequest, TEvent, TErrorHandler> {
 
     /* Callback functions */
     public abstract void errorNetwork();
+    public abstract void errorServer();
 	/* ----------------- */
 	
 	final protected void retry(){

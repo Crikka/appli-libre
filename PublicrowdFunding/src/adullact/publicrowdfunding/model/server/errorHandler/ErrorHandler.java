@@ -16,16 +16,25 @@ TEvent extends Event<TRequest, TEvent, TErrorHandler>,
 TErrorHandler extends ErrorHandler<TRequest, TEvent, TErrorHandler>> 
 extends ServerObject<TRequest, TEvent, TErrorHandler> implements retrofit.ErrorHandler {
     private boolean m_networkError = false;
+    private boolean m_serverError = false;
 
     public void manageCallback() {
         if(m_networkError) {
             event().errorNetwork();
+        }
+        if(m_serverError) {
+            event().errorServer();
         }
     }
 
     @Override
     public Throwable handleError(RetrofitError error) {
         m_networkError = error.isNetworkError();
+
+        if(error.getResponse().getStatus() == 500) {
+            m_serverError = true;
+        }
+
         return error;
     }
 

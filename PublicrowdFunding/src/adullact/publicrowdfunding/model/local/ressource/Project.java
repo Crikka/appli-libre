@@ -433,6 +433,11 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
 
                     }
 
+                    @Override
+                    public void errorServer() {
+                        fundingCreateEvent.errorServer();
+                    }
+
                 });
             }
         });
@@ -459,6 +464,11 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
                     @Override
                     public void errorNetwork() {
                         commentaryCreateEvent.errorNetwork();
+                    }
+
+                    @Override
+                    public void errorServer() {
+                        commentaryCreateEvent.errorServer();
                     }
 
                     @Override

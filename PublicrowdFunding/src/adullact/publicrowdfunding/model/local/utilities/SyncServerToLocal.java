@@ -111,6 +111,11 @@ public class SyncServerToLocal {
             public void errorNetwork() {
                 projectWhatToDo.eventually();
             }
+
+            @Override
+            public void errorServer() {
+                projectWhatToDo.eventually();
+            }
         };
 
         new Project().serverListerToSync(event, m_lastSync);

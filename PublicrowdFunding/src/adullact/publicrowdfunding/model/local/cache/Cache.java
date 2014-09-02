@@ -1,9 +1,9 @@
 package adullact.publicrowdfunding.model.local.cache;
 
-import java.util.Comparator;
-
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
+
+import java.util.Comparator;
 
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Resource;
@@ -80,6 +80,12 @@ public class Cache<TResource extends Resource<TResource, ?, ?>> {
 
                 @Override
                 public void errorNetwork() {
+                    whatToDo.give(m_resource);
+                    whatToDo.eventually();
+                }
+
+                @Override
+                public void errorServer() {
                     whatToDo.give(m_resource);
                     whatToDo.eventually();
                 }

@@ -47,6 +47,11 @@ extends Event<TRequest, TEvent, TErrorHandler> {
             public void errorNetwork() {
                 contextualEvent.errorNetwork();
             }
+
+            @Override
+            public void errorServer() {
+                contextualEvent.errorServer();
+            }
         });
         request.execute();
 	}

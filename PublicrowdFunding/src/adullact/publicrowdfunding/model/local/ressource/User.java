@@ -228,6 +228,11 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
             public void errorNetwork() {
                 bookmarkCreateEvent.errorNetwork();
             }
+
+            @Override
+            public void errorServer() {
+                bookmarkCreateEvent.errorServer();
+            }
         });
     }
 
@@ -267,6 +272,11 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
                         @Override
                         public void errorNetwork() {
                             bookmarkDeleteEvent.errorNetwork();
+                        }
+
+                        @Override
+                        public void errorServer() {
+                            bookmarkDeleteEvent.errorServer();
                         }
                     });
                 }
