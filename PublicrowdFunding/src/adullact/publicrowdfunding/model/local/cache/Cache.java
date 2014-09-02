@@ -3,6 +3,7 @@ package adullact.publicrowdfunding.model.local.cache;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
@@ -15,9 +16,12 @@ import adullact.publicrowdfunding.model.server.event.RetrieveEvent;
 public class Cache<TResource extends Resource<TResource, ?, ?>> {
     private Sync<TResource> m_resource;
     private DateTime m_dateTime;
+    private ArrayList<WhatToDo<TResource>> m_pendingWhatToDo;
 
     public Cache(TResource resource) {
         this.m_resource = new Sync<TResource>(resource);
+        this.m_pendingWhatToDo = new ArrayList<WhatToDo<TResource>>();
+
         this.m_dateTime = null;
     }
 
@@ -61,8 +65,7 @@ public class Cache<TResource extends Resource<TResource, ?, ?>> {
                 @Override
                 public void errorResourceIdDoesNotExists(String id) {
                     m_resource.setState(Sync.State.deleted);
-                    whatToDo.give(m_resource);
-                    whatToDo.eventually();
+                    workWithResource();
                 }
 
                 @Override
@@ -74,27 +77,39 @@ public class Cache<TResource extends Resource<TResource, ?, ?>> {
                         m_resource.setState(Sync.State.unchanged);
                     }
                     m_dateTime = DateTime.now();
-                    whatToDo.give(m_resource);
-                    whatToDo.eventually();
+
+                    workWithResource();
                 }
 
                 @Override
                 public void errorNetwork() {
-                    whatToDo.give(m_resource);
-                    whatToDo.eventually();
+                    workWithResource();
                 }
 
                 @Override
                 public void errorServer() {
-                    whatToDo.give(m_resource);
-                    whatToDo.eventually();
+                    workWithResource();
                 }
             };
-            m_resource.resource.serverRetrieve(event);
+            if(m_pendingWhatToDo.isEmpty()) {
+                m_pendingWhatToDo.add(whatToDo);
+                m_resource.resource.serverRetrieve(event);
+            }
+            else {
+                m_pendingWhatToDo.add(whatToDo);
+            }
         }
         else {
             whatToDo.give(m_resource);
             whatToDo.eventually();
         }
+    }
+
+    private void workWithResource() {
+        for(WhatToDo<TResource> whatToDo : m_pendingWhatToDo) {
+            whatToDo.give(m_resource);
+            whatToDo.eventually();
+        }
+        m_pendingWhatToDo.clear();
     }
 }

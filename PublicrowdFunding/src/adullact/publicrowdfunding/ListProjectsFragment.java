@@ -1,18 +1,8 @@
 package adullact.publicrowdfunding;
 
-import java.util.ArrayList;
-
-import com.google.android.gms.maps.model.LatLng;
-
-import adullact.publicrowdfunding.custom.ProjectAdaptor;
-import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
-import adullact.publicrowdfunding.model.local.ressource.Project;
-import adullact.publicrowdfunding.model.local.utilities.Share;
-import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
-import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -28,13 +18,21 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.SearchView.OnCloseListener;
-import android.widget.SearchView.OnQueryTextListener;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.SearchView.OnCloseListener;
+import android.widget.SearchView.OnQueryTextListener;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+
+import adullact.publicrowdfunding.custom.ProjectAdaptor;
+import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
+import adullact.publicrowdfunding.model.local.ressource.Project;
+import adullact.publicrowdfunding.model.local.utilities.Share;
+import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 
 public class ListProjectsFragment extends Fragment {
 

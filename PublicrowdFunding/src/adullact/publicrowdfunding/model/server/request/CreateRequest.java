@@ -27,6 +27,7 @@ public class CreateRequest<TResource extends Resource<TResource, TServerResource
                     public void call(RowAffected response) {
                         done();
                         m_resource.setResourceId(response.id);
+
                         event().onCreate(m_resource);
                     }
                 }, new Action1<Throwable>() {

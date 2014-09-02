@@ -1,13 +1,12 @@
 package adullact.publicrowdfunding.model.local.ressource;
 
+import org.joda.time.DateTime;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.joda.time.DateTime;
-
-import rx.Observable;
 import adullact.publicrowdfunding.model.local.cache.Cache;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.utilities.Utility;
@@ -17,6 +16,7 @@ import adullact.publicrowdfunding.model.server.entities.Service;
 import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
 import adullact.publicrowdfunding.model.server.event.ListerEvent;
 import adullact.publicrowdfunding.model.server.request.ListerRequest;
+import rx.Observable;
 
 public class Funding extends Resource<Funding, ServerFunding, ServerFunding> {
     private int m_id;
@@ -81,6 +81,7 @@ public class Funding extends Resource<Funding, ServerFunding, ServerFunding> {
         funding.m_to = new Project().getCache(serverFunding.projectID);
         funding.m_value = new BigDecimal(serverFunding.value);
         funding.m_date = Utility.stringToDateTime(serverFunding.creationDate);
+        funding.getCache().declareUpToDate();
 
         return funding;
     }
@@ -114,7 +115,6 @@ public class Funding extends Resource<Funding, ServerFunding, ServerFunding> {
 
     @Override
     public Observable<RowAffected> methodPOST(Service service) {
-    	System.out.println("appel de la méthode post");
         return service.createFunding(toServerResource());
     }
 

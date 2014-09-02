@@ -121,28 +121,29 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
         calculatePeriods();
         final long numberOfDayByPeriod = m_fundingInterval.toDuration().getStandardDays() / 10;
 
+
         for(final ServerFunding serverFunding : detailedServerProject.fundedBy) {
-            final Cache<Funding> funding = new Funding().getCache(Integer.toString(serverFunding.id)).declareUpToDate();
-            funding.toResource(new HoldToDo<Funding>() {
-                @Override
-                public void hold(Funding resource) {
-                    resource.syncFromServer(serverFunding);
-                    long numberOfDayFromBegin = new Duration(m_fundingInterval.getStart(), resource.getDate()).getStandardDays();
-                    m_fundingIntervals.get((int) (numberOfDayFromBegin/numberOfDayByPeriod)).addFunding(resource);
-                    m_funding.add(funding);
+            Funding funding  = new Funding().makeCopyFromServer(serverFunding);
+            long numberOfDayFromBegin = new Duration(m_fundingInterval.getStart(), funding.getDate()).getStandardDays();
+            if(numberOfDayFromBegin < 0) {
+                System.err.println("A funding was ignore, because his creation date is before beginning date of project");
+            }
+            else {
+                int index;
+                if(numberOfDayByPeriod == 0) {
+                    index = 0;
                 }
-            });
+                else {
+                    index = (int) (numberOfDayFromBegin/numberOfDayByPeriod);
+                }
+                m_fundingIntervals.get(index).addFunding(funding);
+                m_funding.add(funding);
+            }
+
         }
 
         for(final ServerCommentary serverCommentary : detailedServerProject.commentedBy) {
-            final Cache<Commentary> commentary = new Commentary().getCache(Integer.toString(serverCommentary.id)).declareUpToDate();
-            commentary.toResource(new HoldToDo<Commentary>() {
-                @Override
-                public void hold(Commentary resource) {
-                    resource.syncFromServer(serverCommentary);
-                    m_commentaries.add(commentary);
-                }
-            });
+            m_commentaries.add(new Commentary().makeCopyFromServer(serverCommentary).getCache());
         }
 
         return this;

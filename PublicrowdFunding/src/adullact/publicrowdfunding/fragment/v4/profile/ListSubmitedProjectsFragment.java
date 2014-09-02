@@ -1,15 +1,5 @@
 package adullact.publicrowdfunding.fragment.v4.profile;
 
-import java.util.ArrayList;
-
-import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.custom.ProjectAdaptor;
-import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
-import adullact.publicrowdfunding.model.local.cache.Cache;
-import adullact.publicrowdfunding.model.local.callback.WhatToDo;
-import adullact.publicrowdfunding.model.local.ressource.Account;
-import adullact.publicrowdfunding.model.local.ressource.Project;
-import adullact.publicrowdfunding.model.local.ressource.User;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -21,6 +11,17 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+
+import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.custom.ProjectAdaptor;
+import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
+import adullact.publicrowdfunding.model.local.cache.Cache;
+import adullact.publicrowdfunding.model.local.callback.HoldToDo;
+import adullact.publicrowdfunding.model.local.ressource.Account;
+import adullact.publicrowdfunding.model.local.ressource.Project;
+import adullact.publicrowdfunding.model.local.ressource.User;
 
 public class ListSubmitedProjectsFragment extends Fragment {
 	
@@ -74,35 +75,22 @@ public class ListSubmitedProjectsFragment extends Fragment {
 		String idUser = bundle.getString("idUser");
 		if (idUser.equals("me")) {
 			try {
-				Account.getOwn().getUser(new WhatToDo<User>() {
+				Account.getOwn().getUser(new HoldToDo<User>() {
 
 					@Override
 					public void hold(User resource) {
-						resource.getBookmarkedProjects(new WhatToDo<Project>() {
+						resource.getProposedProjects(new HoldToDo<Project>() {
 
-							@Override
-							public void hold(Project resource) {
-								projets.add(resource);
-								adapter.notifyDataSetChanged();
+                            @Override
+                            public void hold(Project resource) {
+                                projets.add(resource);
+                                adapter.notifyDataSetChanged();
 
-							}
+                            }
 
-							@Override
-							public void eventually() {
-								// TODO Auto-generated method stub
-
-							}
-
-						});
+                        });
 
 					}
-
-					@Override
-					public void eventually() {
-						// TODO Auto-generated method stub
-
-					}
-
 				});
 			} catch (NoAccountExistsInLocal e) {
 				// TODO Auto-generated catch block
@@ -111,31 +99,18 @@ public class ListSubmitedProjectsFragment extends Fragment {
 
 		} else {
 			Cache<User> cache = new User().getCache(idUser);
-			cache.toResource(new WhatToDo<User>() {
+			cache.toResource(new HoldToDo<User>() {
 
 				@Override
 				public void hold(User resource) {
-					resource.getFundedProjects(new WhatToDo<Project>() {
+					resource.getProposedProjects(new HoldToDo<Project>() {
 
 						@Override
 						public void hold(Project resource) {
 							projets.add(resource);
 							adapter.notifyDataSetChanged();
 						}
-
-						@Override
-						public void eventually() {
-							// TODO Auto-generated method stub
-
-						}
-
 					});
-				}
-
-				@Override
-				public void eventually() {
-					// TODO Auto-generated method stub
-
 				}
 			});
 

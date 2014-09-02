@@ -3,8 +3,6 @@ package adullact.publicrowdfunding.model.local.ressource;
 import java.util.ArrayList;
 import java.util.Map;
 
-import rx.Observable;
-import adullact.publicrowdfunding.model.local.cache.Cache;
 import adullact.publicrowdfunding.model.local.cache.CacheSet;
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.callback.HoldToDo;
@@ -13,11 +11,13 @@ import adullact.publicrowdfunding.model.server.entities.DetailedServerUser;
 import adullact.publicrowdfunding.model.server.entities.RowAffected;
 import adullact.publicrowdfunding.model.server.entities.ServerBookmark;
 import adullact.publicrowdfunding.model.server.entities.ServerFunding;
+import adullact.publicrowdfunding.model.server.entities.ServerProject;
 import adullact.publicrowdfunding.model.server.entities.ServerUser;
 import adullact.publicrowdfunding.model.server.entities.Service;
 import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
 import adullact.publicrowdfunding.model.server.event.CreateEvent;
 import adullact.publicrowdfunding.model.server.event.DeleteEvent;
+import rx.Observable;
 
 /**
  *
@@ -31,6 +31,7 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
     private String m_city;
     private String m_gender;
  //   private String m_email;
+    private CacheSet<Project> m_proposedProjects;
     private CacheSet<Bookmark> m_bookmarks;
     private CacheSet<Funding> m_funding;
 
@@ -74,6 +75,7 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
         user.m_firstName = serverUser.firstName;
         user.m_city = serverUser.city;
         user.m_gender = serverUser.sexe;
+        user.m_proposedProjects = new CacheSet<Project>();
         user.m_bookmarks = new CacheSet<Bookmark>();
         user.m_funding = new CacheSet<Funding>();
 
@@ -97,31 +99,23 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
         this.m_city = detailedServerUser.city;
         //this.m_email = detailedServerUser.mail;
         this.m_gender = detailedServerUser.sexe;
-        
+
+        this.m_proposedProjects = new CacheSet<Project>();
+
+        for(final ServerProject serverProject : detailedServerUser.proposedProjects) {
+            m_proposedProjects.add(new Project().makeCopyFromServer(serverProject).getCache());
+        }
+
         this.m_bookmarks = new CacheSet<Bookmark>();
 
         for(final ServerBookmark serverBookmark : detailedServerUser.bookmarkedProjects) {
-            final Cache<Bookmark> bookmarks = new Bookmark().getCache(Integer.toString(serverBookmark.id)).declareUpToDate();
-            bookmarks.toResource(new HoldToDo<Bookmark>() {
-                @Override
-                public void hold(Bookmark resource) {
-                    resource.syncFromServer(serverBookmark);
-                    m_bookmarks.add(bookmarks);
-                }
-            });
+            m_bookmarks.add(new Bookmark().makeCopyFromServer(serverBookmark).getCache());
         }
         
         this.m_funding = new CacheSet<Funding>();
 
         for(final ServerFunding serverFunding : detailedServerUser.fundedProjects) {
-            final Cache<Funding> funded = new Funding().getCache(Integer.toString(serverFunding.id)).declareUpToDate();
-            funded.toResource(new HoldToDo<Funding>() {
-                @Override
-                public void hold(Funding resource) {
-                    resource.syncFromServer(serverFunding);
-                    m_funding.add(funded);
-                }
-            });
+            //m_funding.add(new Funding().makeCopyFromServer(serverFunding).getCache(Integer.toString(serverFunding.id)));
         }
         return this;
     }
@@ -237,13 +231,10 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
     }
 
     public void removeBookmark(final Project project, final DeleteEvent<Bookmark> bookmarkDeleteEvent) {
-    	System.out.println("remove bookmark"+m_bookmarks.toString());
-    	System.out.println("project id : "+project.getResourceId());
         m_bookmarks.forEach(new HoldToDo<Bookmark>() {
 
             @Override
             public void hold(Bookmark bookmark) {
-            	System.out.println("Loop : id "+bookmark.getProject().getResourceId());
                 if(bookmark.getProject().getResourceId().equals(project.getResourceId())) {
                     m_bookmarks.stopForEach();
                     bookmark.serverDelete(new DeleteEvent<Bookmark>() {
@@ -254,7 +245,6 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
 
                         @Override
                         public void onDelete(Bookmark resource) {
-                        	System.out.println("On supprime le bookmark depuis user");
                             m_bookmarks.remove(resource.getCache().declareUpToDate());
                             bookmarkDeleteEvent.onDelete(resource);
                         }
@@ -282,6 +272,10 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
                 }
             }
         });
+    }
+
+    public void getProposedProjects(final WhatToDo<Project> projectWhatToDo) {
+        m_proposedProjects.forEach(projectWhatToDo);
     }
 
     public void getBookmarkedProjects(final WhatToDo<Project> projectWhatToDo) {

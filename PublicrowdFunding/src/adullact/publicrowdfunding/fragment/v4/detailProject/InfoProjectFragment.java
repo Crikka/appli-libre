@@ -121,14 +121,16 @@ public class InfoProjectFragment extends Fragment {
 
 		isConnect();
 
+
+
 		Bundle bundle = this.getArguments();
-		if (bundle != null) {
+        if (bundle != null) {
 			String idProject = bundle.getString("idProject");
 			Cache<Project> projet = new Project().getCache(idProject);
-			projet.toResource(new HoldToDo<Project>() {
+            projet.toResource(new HoldToDo<Project>() {
 				@Override
 				public void hold(Project project) {
-					projetToDisplay = project;
+                    projetToDisplay = project;
 					graph.setProject(projetToDisplay);
 					graph.invalidate();
 					displayInfo();
