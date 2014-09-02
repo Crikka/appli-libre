@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.utilities.Calcul;
+import adullact.publicrowdfunding.model.local.utilities.CanI;
 import adullact.publicrowdfunding.model.local.utilities.Share;
 import adullact.publicrowdfunding.model.local.utilities.Utility;
 import adullact.publicrowdfunding.views.CustomProgressBar;
@@ -88,22 +89,10 @@ public class ProjectAdaptor extends ArrayAdapter<Project> {
 					.findViewById(R.id.sommeFund);
 			holder.distance =  (TextView) v
 					.findViewById(R.id.distance);
-			
-			
-			
-			
-	
-			
-			
-			
-			
-			
-
 			v.setTag(holder);
 		} else {
 			holder = (UserHolder) v.getTag();
 		}
-
 		Project projet = data.get(position);
 		holder.titre_projet_liste.setText(projet.getName());
 		holder.description_projet_liste.setText(projet.getDescription());
@@ -120,6 +109,25 @@ public class ProjectAdaptor extends ArrayAdapter<Project> {
 		} else {
 			holder.illustration.setImageResource(R.drawable.ic_launcher);
 		}
+		
+		
+		
+		new CanI(){
+
+			@Override
+			protected void yes() {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			protected void no() {
+				// Il est dans les fav
+				
+			}
+			
+		}.bookmark(projet);
+		
 		
 		
 		holder.distance.setVisibility(View.GONE);
