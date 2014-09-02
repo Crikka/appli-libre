@@ -89,6 +89,7 @@ public class SyncServerToLocal {
                     if(project.isActive()) {
                         if(m_projects.contains(project)) {
                             updatedProjects.add(project);
+                            project.getCache().forceRetrieve();
                         }
                         else {
                             newProjects.add(project);
