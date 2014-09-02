@@ -91,7 +91,7 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
         ServerAccount res = new ServerAccount();
         res.username = m_username;
         res.password = m_password;
-        res.administrator = m_administrator;
+        res.administrator = m_administrator ? 1 : 0;
         res.pseudo = m_user.getResourceId();
         return res;
     }
@@ -100,7 +100,7 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
     public Account makeCopyFromServer(ServerAccount serverAccount) {
         Account res = new Account();
         res.m_username = serverAccount.username;
-        res.m_administrator = serverAccount.administrator;
+        res.m_administrator = (serverAccount.administrator == 1);
         res.m_anonymous = false;
         res.m_context = PublicrowdFundingApplication.context();
         res.m_user = new User().getCache(serverAccount.pseudo);
@@ -111,7 +111,7 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
     @Override
     public Account syncFromServer(ServerAccount serverAccount) {
         this.m_username = serverAccount.username;
-        this.m_administrator = serverAccount.administrator;
+        this.m_administrator = (serverAccount.administrator == 1);
         this.m_anonymous = false;
         this.m_context = PublicrowdFundingApplication.context();
         this.m_user = new User().getCache(serverAccount.pseudo);

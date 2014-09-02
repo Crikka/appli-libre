@@ -7,5 +7,5 @@ public class ServerAccount {
     public String username;
     public String password;
     public String pseudo;
-    public boolean administrator;
+    public int administrator;
 }
