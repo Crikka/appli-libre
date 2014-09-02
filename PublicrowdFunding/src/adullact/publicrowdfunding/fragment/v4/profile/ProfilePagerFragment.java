@@ -53,7 +53,6 @@ public class ProfilePagerFragment extends Fragment {
 				.loadAnimation(getActivity(), R.anim.rotate);
 		m_admin.setAnimation(rotate);
 		ribbon = (FrameLayout) view.findViewById(R.id.admin_ribbon);
-		m_admin.setVisibility(View.GONE);	
 		ribbon.setVisibility(View.GONE);
 		
 		m_avatar = (ImageView) view.findViewById(R.id.avatar);

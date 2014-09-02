@@ -9,18 +9,18 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="20dp"
         android:orientation="vertical"
         android:paddingLeft="1dp"
-        android:paddingRight="1dp"
-        android:paddingTop="40dp" >
+        android:paddingRight="1dp">
 
         <LinearLayout
-                    android:paddingBottom="10dp"
+                    android:paddingTop="40dp"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:background="@drawable/buttonshapes"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:paddingBottom="10dp" >
 
             <ImageView
                 android:layout_width="fill_parent"
@@ -49,6 +49,11 @@
                     android:text="@string/project_description"
                     android:textSize="15sp" />
             </RelativeLayout>
+
+            <adullact.publicrowdfunding.views.SimpleLine
+                android:layout_width="wrap_content"
+                android:layout_height="3dp"
+                android:layout_marginTop="20dp" />
 
             <TableLayout
                 android:id="@+id/tableLayout1"
@@ -147,27 +152,27 @@
 
         <LinearLayout
             android:id="@+id/fav_layout"
-            android:visibility="gone"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:paddingTop="10dp"
-            android:orientation="horizontal" >
-            
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/description_image_project"
-            android:src="@drawable/fullstar" />
+            android:visibility="gone" >
 
-        <TextView
-            android:paddingLeft="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:ellipsize="marquee"
-            android:gravity="center"
-            android:singleLine="true"
-            android:text="Ce projet est dans vos favoris"
-            android:textSize="12sp" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/description_image_project"
+                android:src="@drawable/fullstar" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:ellipsize="marquee"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:text="Ce projet est dans vos favoris"
+                android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>
 
