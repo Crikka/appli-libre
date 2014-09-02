@@ -72,7 +72,7 @@ public class ListProjectsFragment extends Fragment {
 		loading =  (LinearLayout) view.findViewById(R.id.loading);
 		
 		adapter = new ProjectAdaptor(this.getActivity().getBaseContext(),
-				R.layout.adaptor_project, p_project_displayed);
+				R.layout.adaptor_project, p_project_displayed, getActivity());
 
 		TextView empty = (TextView) view.findViewById(R.id.empty);
 		listeProjets.setEmptyView(empty);

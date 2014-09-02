@@ -37,7 +37,7 @@ public class ListSubmitedProjectsFragment extends Fragment {
 		projets = new ArrayList<Project>();
 
 		ArrayAdapter<Project> adapter = new ProjectAdaptor(this.getActivity()
-				.getBaseContext(), R.layout.adaptor_project, projets);
+				.getBaseContext(), R.layout.adaptor_project, projets,  getActivity());
 		
 		listeProjets.setAdapter(adapter);
 		listeProjets.setOnItemClickListener(new OnItemClickListener() {

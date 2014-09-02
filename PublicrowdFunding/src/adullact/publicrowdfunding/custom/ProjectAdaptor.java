@@ -3,12 +3,15 @@ package adullact.publicrowdfunding.custom;
 import java.util.ArrayList;
 
 import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.lib.flowText.FlowTextHelper;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.utilities.Calcul;
 import adullact.publicrowdfunding.model.local.utilities.Share;
 import adullact.publicrowdfunding.model.local.utilities.Utility;
 import adullact.publicrowdfunding.views.CustomProgressBar;
+import android.app.Activity;
 import android.content.Context;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,12 +24,15 @@ public class ProjectAdaptor extends ArrayAdapter<Project> {
 	Context mContext;
 	int layoutResourceId;
 	ArrayList<Project> data;
-
-	public ProjectAdaptor(Context context, int resource, ArrayList<Project> listItem) {
+	private Activity activity;
+	
+	public ProjectAdaptor(Context context, int resource, ArrayList<Project> listItem, Activity activity) {
 		super(context, resource, listItem);
 		this.mContext = context;
 		this.layoutResourceId = resource;
 		this.data = listItem;
+		this.activity = activity;
+		
 	}
 
 	private static class UserHolder {
@@ -56,7 +62,7 @@ public class ProjectAdaptor extends ArrayAdapter<Project> {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View v = convertView;
 		UserHolder holder = new UserHolder();
-
+		
 		// First let's verify the convertView is not null
 		if (convertView == null) {
 			// This a new view we inflate the new layout
@@ -80,6 +86,16 @@ public class ProjectAdaptor extends ArrayAdapter<Project> {
 					.findViewById(R.id.sommeFund);
 			holder.distance =  (TextView) v
 					.findViewById(R.id.distance);
+			
+			
+			
+			
+	
+			
+			
+			
+			
+			
 
 			v.setTag(holder);
 		} else {
@@ -102,6 +118,20 @@ public class ProjectAdaptor extends ArrayAdapter<Project> {
 		} else {
 			holder.illustration.setImageResource(R.drawable.ic_launcher);
 		}
+		
+		
+		
+		
+		
+		
+	//	ImageView holder.illustration = (ImageView) findViewById(R.id.thumbnail_view);
+	//	TextView holder.description_projet_liste = (TextView) findViewById(R.id.message_view);
+		String text = projet.getDescription();
+		Display display = activity.getWindowManager().getDefaultDisplay();
+		FlowTextHelper.tryFlowText(text, holder.illustration , holder.description_projet_liste, display);
+		
+		
+		
 		
 		holder.distance.setVisibility(View.GONE);
 		try{

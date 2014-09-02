@@ -49,7 +49,7 @@ public class ListBookmarksFragment extends Fragment {
 		projets = new ArrayList<Project>();
 
 		adapter = new ProjectAdaptor(this.getActivity().getBaseContext(),
-				R.layout.adaptor_project, projets);
+				R.layout.adaptor_project, projets, getActivity());
 		listeProjets.setAdapter(adapter);
 
 		// refresh();
