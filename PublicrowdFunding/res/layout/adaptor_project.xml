@@ -11,16 +11,16 @@
         android:layout_marginRight="10dp"
         android:orientation="vertical"
         android:paddingLeft="1dp"
-        android:paddingRight="1dp">
+        android:paddingRight="1dp" >
 
         <LinearLayout
-                    android:paddingTop="40dp"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:background="@drawable/buttonshapes"
             android:orientation="vertical"
-            android:paddingBottom="10dp" >
+            android:paddingBottom="10dp"
+            android:paddingTop="40dp" >
 
             <ImageView
                 android:layout_width="fill_parent"
