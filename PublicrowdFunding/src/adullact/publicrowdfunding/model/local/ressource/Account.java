@@ -71,7 +71,7 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
     /* --- Static const to store --- */
     private static final String KEY_USERNAME = "name";
     private static final String KEY_PASSWORD = "password";
-    private static final String KEY_ADMIN = "password";
+    private static final String KEY_ADMIN = "admin";
     private static final String KEY_PSEUDO = "pseudo";
     /* ----------------------------- */
 
