@@ -116,7 +116,7 @@ public class ProjectPagerFragment extends Fragment {
 	public void setBookmark() {
 
 		try {
-			Account account = Account.getOwn();
+			final Account account = Account.getOwn();
 			account.getUser(new HoldToDo<User>() {
 
 				@Override
@@ -141,6 +141,7 @@ public class ProjectPagerFragment extends Fragment {
 												"Projet retiré de vos favoris",
 												Toast.LENGTH_SHORT).show();
 										changeColorStar();
+										new Account().getCache(account.getResourceId()).forceRetrieve();
 									}
 
 									@Override
@@ -188,6 +189,7 @@ public class ProjectPagerFragment extends Fragment {
 												"Projet ajouté à vos favoris",
 												Toast.LENGTH_SHORT).show();
 										changeColorStar();
+										new Account().getCache(account.getResourceId()).forceRetrieve();
 									}
 
 									@Override

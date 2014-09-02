@@ -104,7 +104,7 @@ public class RegisterFragement extends Fragment {
                     	FragmentTransaction ft = getFragmentManager().beginTransaction();
                 		//ft.setCustomAnimations(R.anim.enter, R.anim.exit);
                 		Fragment fragment = new ListProjectsFragment();
-
+                		fragment.setHasOptionsMenu(true);
                 		ft.replace(R.id.content_frame, fragment);
                 		
                 		MainActivity _this = (MainActivity) getActivity();

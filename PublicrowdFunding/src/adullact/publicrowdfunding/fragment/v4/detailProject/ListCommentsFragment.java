@@ -220,6 +220,8 @@ public class ListCommentsFragment extends Fragment {
 	
 	public static void reloadCommentFragment(FragmentActivity activity, Project project) {
 
+		new Project().getCache(project.getResourceId()).forceRetrieve();
+		
 		for (Fragment fragment : activity.getSupportFragmentManager()
 				.getFragments()) {
 			if (fragment instanceof adullact.publicrowdfunding.fragment.v4.detailProject.ListCommentsFragment) {
