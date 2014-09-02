@@ -168,6 +168,14 @@ public class ProjectPagerFragment extends Fragment {
 
 									}
 
+									@Override
+									public void errorServer() {
+										Toast.makeText(context,
+												"Une erreur s'est produite",
+												Toast.LENGTH_SHORT).show();
+										
+									}
+
 								});
 					} else {
 
@@ -206,6 +214,14 @@ public class ProjectPagerFragment extends Fragment {
 												"Une erreur s'est produite",
 												Toast.LENGTH_SHORT).show();
 
+									}
+
+									@Override
+									public void errorServer() {
+										Toast.makeText(context,
+												"Une erreur s'est produite",
+												Toast.LENGTH_SHORT).show();
+										
 									}
 
 								});

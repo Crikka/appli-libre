@@ -130,6 +130,15 @@ public class RegisterFragement extends Fragment {
                     	loading.setVisibility(View.GONE);
                         Toast.makeText(context, "Probléme de connection", Toast.LENGTH_SHORT).show();
                     }
+
+					@Override
+					public void errorServer() {
+						loading.setVisibility(View.GONE);
+						Toast.makeText(getActivity().getBaseContext(),
+								"Une erreur s'est produite", Toast.LENGTH_SHORT)
+								.show();
+						
+					}
                 }).execute();
 			}
 		});

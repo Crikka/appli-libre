@@ -310,6 +310,14 @@ public class MainActivity extends FragmentActivity {
 									Toast.LENGTH_SHORT).show();
 							System.out.println("network error");
 						}
+
+						@Override
+						public void errorServer() {
+							Toast.makeText(getApplicationContext(),
+									"Erreur interne du serveur",
+									Toast.LENGTH_SHORT).show();
+							
+						}
 					});
 
 			return true;

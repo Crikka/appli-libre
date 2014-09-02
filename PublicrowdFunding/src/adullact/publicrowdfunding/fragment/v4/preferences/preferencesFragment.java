@@ -146,26 +146,42 @@ public class preferencesFragment extends PreferenceFragment {
 
 						@Override
 						public void errorResourceIdDoesNotExist() {
-							// TODO Auto-generated method stub
+							Toast.makeText(getActivity().getBaseContext(),
+									"Une erreur s'est produite", Toast.LENGTH_SHORT)
+									.show();
 
 						}
 
 						@Override
 						public void errorAdministratorRequired() {
-							// TODO Auto-generated method stub
+							Toast.makeText(getActivity().getBaseContext(),
+									"Une erreur s'est produite", Toast.LENGTH_SHORT)
+									.show();
 
 						}
 
 						@Override
 						public void errorAuthenticationRequired() {
-							// TODO Auto-generated method stub
+							Toast.makeText(getActivity().getBaseContext(),
+									"Une erreur s'est produite", Toast.LENGTH_SHORT)
+									.show();
 
 						}
 
 						@Override
 						public void errorNetwork() {
-							// TODO Auto-generated method stub
+							Toast.makeText(getActivity().getBaseContext(),
+									"Une erreur s'est produite", Toast.LENGTH_SHORT)
+									.show();
 
+						}
+
+						@Override
+						public void errorServer() {
+							Toast.makeText(getActivity().getBaseContext(),
+									"Une erreur s'est produite", Toast.LENGTH_SHORT)
+									.show();
+							
 						}
 
 					});

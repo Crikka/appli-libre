@@ -196,6 +196,16 @@ public class CommentPopup extends Fragment {
 
 						}
 
+
+
+						@Override
+						public void errorServer() {Toast.makeText(context,
+								"Une erreur s'est produite",
+								Toast.LENGTH_SHORT).show();
+						back();
+							
+						}
+
 					});
 		} catch (NoAccountExistsInLocal e) {
 			Toast.makeText(context, "Une erreur s'est produite",

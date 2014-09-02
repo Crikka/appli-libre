@@ -127,6 +127,14 @@ public class ConnexionFragment extends Fragment {
 										Toast.LENGTH_LONG).show();
 								loading.setVisibility(View.GONE);
 							}
+
+							@Override
+							public void errorServer() {
+								Toast.makeText(getActivity().getBaseContext(),
+										"Une erreur s'est produite", Toast.LENGTH_SHORT)
+										.show();
+								
+							}
 						}).execute();
 			}
 		});
