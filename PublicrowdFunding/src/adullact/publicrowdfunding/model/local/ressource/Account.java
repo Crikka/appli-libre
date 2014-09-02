@@ -30,13 +30,14 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
     private static Account m_own = null;
     private void initialize() throws NoAccountExistsInLocal {
         SharedPreferences sharedPreferences = PublicrowdFundingApplication.sharedPreferences();//m_context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
-        if(!sharedPreferences.contains(KEY_USERNAME) || !sharedPreferences.contains(KEY_PASSWORD) || !sharedPreferences.contains(KEY_PSEUDO)) {
+        if(!sharedPreferences.contains(KEY_USERNAME) || !sharedPreferences.contains(KEY_PASSWORD) || !sharedPreferences.contains(KEY_PSEUDO) || !sharedPreferences.contains(KEY_ADMIN)) {
                 m_own = null;
                 throw new NoAccountExistsInLocal();
         }
 
         m_username = sharedPreferences.getString(KEY_USERNAME, "");
         m_password = decrypt("mystery", sharedPreferences.getString(KEY_PASSWORD, ""));
+        m_administrator = sharedPreferences.getBoolean(KEY_ADMIN, false);
         m_user = new User().getCache(sharedPreferences.getString(KEY_PSEUDO, ""));
     }
 
@@ -70,6 +71,7 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
     /* --- Static const to store --- */
     private static final String KEY_USERNAME = "name";
     private static final String KEY_PASSWORD = "password";
+    private static final String KEY_ADMIN = "password";
     private static final String KEY_PSEUDO = "pseudo";
     /* ----------------------------- */
 
@@ -226,6 +228,7 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
         editor.remove(KEY_USERNAME);
         editor.remove(KEY_PASSWORD);
         editor.remove(KEY_PSEUDO);
+        editor.remove(KEY_ADMIN);
         editor.apply();
     }
     
@@ -239,6 +242,8 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
         editor.putString(KEY_USERNAME, m_username);
         editor.putString(KEY_PASSWORD, encrypt("mystery", m_password));
         editor.putString(KEY_PSEUDO, m_user.getResourceId());
+        editor.putBoolean(KEY_ADMIN, m_administrator);
+
         editor.apply();
     }
 
