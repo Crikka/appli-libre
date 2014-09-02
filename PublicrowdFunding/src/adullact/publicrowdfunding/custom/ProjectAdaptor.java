@@ -3,7 +3,6 @@ package adullact.publicrowdfunding.custom;
 import java.util.ArrayList;
 
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.lib.flowText.FlowTextHelper;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.utilities.Calcul;
 import adullact.publicrowdfunding.model.local.utilities.Share;
@@ -11,6 +10,9 @@ import adullact.publicrowdfunding.model.local.utilities.Utility;
 import adullact.publicrowdfunding.views.CustomProgressBar;
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
+import android.text.Html;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -118,19 +120,6 @@ public class ProjectAdaptor extends ArrayAdapter<Project> {
 		} else {
 			holder.illustration.setImageResource(R.drawable.ic_launcher);
 		}
-		
-		
-		
-		
-		
-		
-	//	ImageView holder.illustration = (ImageView) findViewById(R.id.thumbnail_view);
-	//	TextView holder.description_projet_liste = (TextView) findViewById(R.id.message_view);
-		String text = projet.getDescription();
-		Display display = activity.getWindowManager().getDefaultDisplay();
-		FlowTextHelper.tryFlowText(text, holder.illustration , holder.description_projet_liste, display);
-		
-		
 		
 		
 		holder.distance.setVisibility(View.GONE);
