@@ -170,6 +170,16 @@
                     android:layout_marginTop="10dp" />
 
                 <Button
+                    android:id="@+id/button_changeAccount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dip"
+                    android:background="@null"
+                    android:contentDescription="@string/description_image_button"
+                    android:drawableLeft="@android:drawable/ic_menu_directions"
+                    android:text="Changer de compte" />
+
+                <Button
                     android:id="@+id/button_deconnexion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -412,7 +412,6 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
                     @Override
                     public void errorResourceIdAlreadyUsed() {
                         fundingCreateEvent.errorResourceIdAlreadyUsed();
-
                     }
 
                     @Override
@@ -453,7 +452,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
 
                     @Override
                     public void onCreate(Commentary commentary) {
-                        _this.m_commentaries.add(commentary.getCache());
+                        _this.m_commentaries.add(commentary.getCache().declareUpToDate());
                         commentaryCreateEvent.onCreate(commentary);
                     }
 

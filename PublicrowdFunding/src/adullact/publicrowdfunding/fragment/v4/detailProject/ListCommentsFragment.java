@@ -28,7 +28,6 @@ import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.cache.Cache;
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.callback.HoldToDo;
-import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.Commentary;
 import adullact.publicrowdfunding.model.local.ressource.Project;
@@ -143,12 +142,14 @@ public class ListCommentsFragment extends Fragment {
 	}
 
 	public void isConnect() {
-		try {
-			Account.getOwn();
-			layoutConnect.setVisibility(View.VISIBLE);
-		} catch (NoAccountExistsInLocal e1) {
-		//	layoutConnect.setVisibility(View.GONE);
-		}
+        if(Account.isConnect()) {
+            try {
+                Account.getOwn();
+                layoutConnect.setVisibility(View.VISIBLE);
+            } catch (NoAccountExistsInLocal e1) {
+                //	layoutConnect.setVisibility(View.GONE);
+            }
+        }
 	}
 
 	public void displayInfo() {
@@ -172,7 +173,7 @@ public class ListCommentsFragment extends Fragment {
 					int position, long id) {
 
 				Commentary com = commentaries.get(position);
-				com.getUser(new WhatToDo<User>() {
+				com.getUser(new HoldToDo<User>() {
 
 					@Override
 					public void hold(User resource) {
@@ -188,12 +189,6 @@ public class ListCommentsFragment extends Fragment {
 						ft.replace(R.id.content_frame, fragment);
 						ft.addToBackStack(null);
 						ft.commit();
-
-					}
-
-					@Override
-					public void eventually() {
-						// TODO Auto-generated method stub
 
 					}
 				});
@@ -225,7 +220,6 @@ public class ListCommentsFragment extends Fragment {
 	
 	public static void reloadCommentFragment(FragmentActivity activity, Project project) {
 
-		new Project().getCache(project.getResourceId()).forceRetrieve();
 		for (Fragment fragment : activity.getSupportFragmentManager()
 				.getFragments()) {
 			if (fragment instanceof adullact.publicrowdfunding.fragment.v4.detailProject.ListCommentsFragment) {

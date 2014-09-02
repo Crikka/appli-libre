@@ -1,7 +1,5 @@
 package adullact.publicrowdfunding;
 
-import android.app.AlertDialog;
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -14,35 +12,22 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.SearchView;
-import android.widget.SearchView.OnCloseListener;
-import android.widget.SearchView.OnQueryTextListener;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
 
-import java.util.ArrayList;
-
 import adullact.publicrowdfunding.fragment.v4.preferences.preferencesFragment;
 import adullact.publicrowdfunding.fragment.v4.register.ConnexionFragment;
 import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
-import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
-import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
 import adullact.publicrowdfunding.model.local.utilities.Share;
-import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import adullact.publicrowdfunding.views.SimpleLine;
 
 
@@ -59,7 +44,8 @@ public class MainActivity extends FragmentActivity {
 	private Button m_button_authentificate;
 	private Button m_button_map_projects;
 	private Button m_button_all_projects;
-	private Button m_button_deconnexion;
+    private Button m_button_change_account;
+    private Button m_button_deconnexion;
 	private Button m_Button_preferences;
 
 	private TextView utilisateurVille;
@@ -245,6 +231,22 @@ public class MainActivity extends FragmentActivity {
 			}
 		});
 
+        m_button_change_account = (Button) findViewById(R.id.button_changeAccount);
+        m_button_change_account.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                FragmentTransaction ft = getSupportFragmentManager()
+                        .beginTransaction();
+                Fragment fragment = new ConnexionFragment();
+                ft.replace(R.id.content_frame, fragment);
+                ft.commit();
+
+                mDrawerLayout.closeDrawer(mDrawerList);
+
+            }
+        });
+
 		m_button_deconnexion = (Button) findViewById(R.id.button_deconnexion);
 		m_button_deconnexion.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -268,7 +270,8 @@ public class MainActivity extends FragmentActivity {
 			m_button_deconnexion.setVisibility(View.VISIBLE);
 			m_Button_preferences.setVisibility(View.VISIBLE);
 			m_button_add_projet.setVisibility(View.VISIBLE);
-			m_button_validate_projects.setVisibility(View.VISIBLE);
+            m_button_change_account.setVisibility(View.VISIBLE);
+            m_button_validate_projects.setVisibility(View.VISIBLE);
 
 			m_separator_1.setVisibility(View.VISIBLE);
 			m_separator_2.setVisibility(View.VISIBLE);
@@ -279,7 +282,8 @@ public class MainActivity extends FragmentActivity {
 			m_button_deconnexion.setVisibility(View.GONE);
 			m_Button_preferences.setVisibility(View.GONE);
 			m_button_add_projet.setVisibility(View.GONE);
-			m_button_validate_projects.setVisibility(View.GONE);
+            m_button_change_account.setVisibility(View.GONE);
+            m_button_validate_projects.setVisibility(View.GONE);
 
 			m_separator_1.setVisibility(View.GONE);
 			m_separator_2.setVisibility(View.GONE);
@@ -288,36 +292,41 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	public void isConnect() {
-		try {
-			Account account = Account.getOwn();
+        if(Account.isConnect()) {
+            try {
+                Account account = Account.getOwn();
 
-			setDrawerMenu(true);
-			account.getUser(new WhatToDo<User>() {
+                setDrawerMenu(true);
+                account.getUser(new WhatToDo<User>() {
 
-				@Override
-				public void hold(User resource) {
-					me = resource;
-					utilisateurName.setText(Share.formatString(resource
-							.getPseudo()));
-					utilisateurVille.setText(Share.formatString(resource
-							.getCity()));
-					if (resource.getGender().equals("0")) {
-						avatar.setImageResource(R.drawable.male_user_icon);
-					} else {
-						avatar.setImageResource(R.drawable.female_user_icon);
-					}
+                    @Override
+                    public void hold(User resource) {
+                        me = resource;
+                        utilisateurName.setText(Share.formatString(resource
+                                .getPseudo()));
+                        utilisateurVille.setText(Share.formatString(resource
+                                .getCity()));
+                        if (resource.getGender().equals("0")) {
+                            avatar.setImageResource(R.drawable.male_user_icon);
+                        } else {
+                            avatar.setImageResource(R.drawable.female_user_icon);
+                        }
 
-				}
+                    }
 
-				@Override
-				public void eventually() {
+                    @Override
+                    public void eventually() {
 
-				}
+                    }
 
-			});
-		} catch (NoAccountExistsInLocal e1) {
-			setDrawerMenu(false);
-		}
+                });
+            } catch (NoAccountExistsInLocal e1) {
+                setDrawerMenu(false);
+            }
+        }
+        else {
+            setDrawerMenu(false);
+        }
 	}
 
 	@Override

@@ -209,8 +209,24 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
         return (m_own != null);
     }
 
+    public static boolean autoConnect() {
+        try {
+            Account.getOwn();
+            return true;
+        } catch (NoAccountExistsInLocal noAccountExistsInLocal) {
+            return false;
+        }
+    }
+
     public static void disconnect(){
         m_own = null;
+
+        SharedPreferences.Editor editor = PublicrowdFundingApplication.sharedPreferences().edit();
+
+        editor.remove(KEY_USERNAME);
+        editor.remove(KEY_PASSWORD);
+        editor.remove(KEY_PSEUDO);
+        editor.apply();
     }
     
     
@@ -218,7 +234,7 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
     
 
     private void save() {
-        SharedPreferences.Editor editor = PublicrowdFundingApplication.sharedPreferences().edit();//.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE).edit();
+        SharedPreferences.Editor editor = PublicrowdFundingApplication.sharedPreferences().edit();
 
         editor.putString(KEY_USERNAME, m_username);
         editor.putString(KEY_PASSWORD, encrypt("mystery", m_password));
