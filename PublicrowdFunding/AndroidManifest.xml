@@ -52,7 +52,7 @@
         
         
         <activity
-            android:name="adullact.publicrowdfunding.fragment.v4.participate.MainActivity"
+            android:name="adullact.publicrowdfunding.fragment.v4.project.participate.MainActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
@@ -68,19 +68,19 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.controller.addProject.AddLocationProject"
+            android:name="adullact.publicrowdfunding.fragment.v4.project.add.AddLocationProject"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.controller.addProject.MainActivity"
+            android:name="adullact.publicrowdfunding.fragment.v4.project.add.MainActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.fragment.v4.preferences.MainActivity"
+            android:name="adullact.publicrowdfunding.fragment.v4.profile.preferences.MainActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.fragment.v4.detailProject.MapFragment"
+            android:name="adullact.publicrowdfunding.fragment.v4.project.details.MapFragment"
             android:label="@string/app_name" >
         </activity>
         <activity
@@ -88,11 +88,11 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.fragment.v4.detailProject.InfoProjectFragment"
+            android:name="adullact.publicrowdfunding.fragment.v4.project.details.InfoProjectFragment"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.fragment.v4.detailProject.ListCommentsFragment"
+            android:name="adullact.publicrowdfunding.fragment.v4.project.details.ListCommentsFragment"
             android:label="@string/app_name" >
         </activity>
         <activity
@@ -116,7 +116,7 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="adullact.publicrowdfunding.fragment.v4.participate.PaypalActivity"
+            android:name="adullact.publicrowdfunding.fragment.v4.project.participate.PaypalActivity"
             android:label="@string/app_name" >
         </activity>
         <activity

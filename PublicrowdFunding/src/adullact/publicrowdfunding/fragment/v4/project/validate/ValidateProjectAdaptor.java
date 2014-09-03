@@ -1,4 +1,4 @@
-package adullact.publicrowdfunding.fragment.v4.validateProject;
+package adullact.publicrowdfunding.fragment.v4.project.validate;
 
 import java.util.ArrayList;
 

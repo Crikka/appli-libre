@@ -1,7 +1,7 @@
-package adullact.publicrowdfunding.fragment.v4.detailProject;
+package adullact.publicrowdfunding.fragment.v4.project.details;
 
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.fragment.v4.participate.PaypalActivity;
+import adullact.publicrowdfunding.fragment.v4.project.participate.PaypalActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;

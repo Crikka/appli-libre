@@ -1,7 +1,7 @@
 package adullact.publicrowdfunding.fragment.v4.register;
 
-import adullact.publicrowdfunding.MainActivity;
 import adullact.publicrowdfunding.ListProjectsFragment;
+import adullact.publicrowdfunding.MainActivity;
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.model.server.event.RegistrationEvent;
 import adullact.publicrowdfunding.model.server.request.RegistrationRequest;

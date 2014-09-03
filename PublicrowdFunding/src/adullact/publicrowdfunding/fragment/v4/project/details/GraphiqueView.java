@@ -1,4 +1,4 @@
-package adullact.publicrowdfunding.fragment.v4.detailProject;
+package adullact.publicrowdfunding.fragment.v4.project.details;
 
 import java.util.ArrayList;
 

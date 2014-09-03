@@ -1,4 +1,4 @@
-package adullact.publicrowdfunding.fragment.v4.participate;
+package adullact.publicrowdfunding.fragment.v4.project.participate;
 
 import java.math.BigDecimal;
 

@@ -1,5 +1,15 @@
-package adullact.publicrowdfunding.fragment.v4.detailProject;
+package adullact.publicrowdfunding.fragment.v4.project.details;
 
+import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
+import adullact.publicrowdfunding.model.local.cache.Cache;
+import adullact.publicrowdfunding.model.local.callback.HoldToDo;
+import adullact.publicrowdfunding.model.local.callback.WhatToDo;
+import adullact.publicrowdfunding.model.local.ressource.Account;
+import adullact.publicrowdfunding.model.local.ressource.Project;
+import adullact.publicrowdfunding.model.local.ressource.User;
+import adullact.publicrowdfunding.model.local.utilities.Share;
+import adullact.publicrowdfunding.model.local.utilities.Utility;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,17 +25,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
-import adullact.publicrowdfunding.model.local.cache.Cache;
-import adullact.publicrowdfunding.model.local.callback.HoldToDo;
-import adullact.publicrowdfunding.model.local.callback.WhatToDo;
-import adullact.publicrowdfunding.model.local.ressource.Account;
-import adullact.publicrowdfunding.model.local.ressource.Project;
-import adullact.publicrowdfunding.model.local.ressource.User;
-import adullact.publicrowdfunding.model.local.utilities.Share;
-import adullact.publicrowdfunding.model.local.utilities.Utility;
 
 public class InfoProjectFragment extends Fragment {
 
@@ -257,7 +256,7 @@ public class InfoProjectFragment extends Fragment {
 
 				FragmentTransaction ft = fm.beginTransaction();
 
-				Fragment fragment = new adullact.publicrowdfunding.fragment.v4.detailProject.ParticipatePopup();
+				Fragment fragment = new adullact.publicrowdfunding.fragment.v4.project.details.ParticipatePopup();
 				Bundle bundle = new Bundle();
 				bundle.putString("idProject", projetToDisplay.getResourceId());
 				fragment.setArguments(bundle);

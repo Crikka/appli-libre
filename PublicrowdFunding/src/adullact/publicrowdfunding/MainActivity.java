@@ -1,7 +1,14 @@
 package adullact.publicrowdfunding;
 
+import adullact.publicrowdfunding.fragment.v4.profile.preferences.preferencesFragment;
+import adullact.publicrowdfunding.fragment.v4.register.ConnexionFragment;
+import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
+import adullact.publicrowdfunding.model.local.callback.WhatToDo;
+import adullact.publicrowdfunding.model.local.ressource.Account;
+import adullact.publicrowdfunding.model.local.ressource.User;
+import adullact.publicrowdfunding.model.local.utilities.Share;
+import adullact.publicrowdfunding.views.SimpleLine;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.location.Location;
 import android.location.LocationListener;
@@ -20,15 +27,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
-
-import adullact.publicrowdfunding.fragment.v4.preferences.preferencesFragment;
-import adullact.publicrowdfunding.fragment.v4.register.ConnexionFragment;
-import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
-import adullact.publicrowdfunding.model.local.callback.WhatToDo;
-import adullact.publicrowdfunding.model.local.ressource.Account;
-import adullact.publicrowdfunding.model.local.ressource.User;
-import adullact.publicrowdfunding.model.local.utilities.Share;
-import adullact.publicrowdfunding.views.SimpleLine;
 
 public class MainActivity extends FragmentActivity {
 
@@ -141,7 +139,7 @@ public class MainActivity extends FragmentActivity {
 						.beginTransaction();
 
 				// ft.setCustomAnimations(R.anim.enter, R.anim.exit);
-				Fragment fragment = new adullact.publicrowdfunding.controller.addProject.addProjectFragment();
+				Fragment fragment = new adullact.publicrowdfunding.fragment.v4.project.add.addProjectFragment();
 				ft.addToBackStack(null);
 				ft.replace(R.id.content_frame, fragment);
 				ft.commit();
@@ -179,7 +177,7 @@ public class MainActivity extends FragmentActivity {
 
 						FragmentTransaction ft = getSupportFragmentManager()
 								.beginTransaction();
-						Fragment fragment = new adullact.publicrowdfunding.fragment.v4.validateProject.MainActivity();
+						Fragment fragment = new adullact.publicrowdfunding.fragment.v4.project.validate.MainActivity();
 						Bundle bundle = new Bundle();
 						fragment.setArguments(bundle);
 						ft.addToBackStack(null);

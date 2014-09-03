@@ -1,10 +1,9 @@
 package adullact.publicrowdfunding;
 
+import adullact.publicrowdfunding.model.local.ressource.Account;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
-
-import adullact.publicrowdfunding.model.local.ressource.Account;
 
 /**
  * Created by Ferrand on 19/07/2014.

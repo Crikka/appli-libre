@@ -1,5 +1,11 @@
 package adullact.publicrowdfunding;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
+import adullact.publicrowdfunding.model.local.ressource.Project;
+import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,13 +24,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
-import adullact.publicrowdfunding.model.local.ressource.Project;
-import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 
 public class MapFragment extends Fragment implements
 		OnInfoWindowClickListener {
@@ -82,7 +81,7 @@ public class MapFragment extends Fragment implements
 		
 		String id = markers.get(marker).getResourceId();
 		FragmentTransaction ft = getFragmentManager().beginTransaction();
-		Fragment fragment = new adullact.publicrowdfunding.fragment.v4.detailProject.ProjectPagerFragment();
+		Fragment fragment = new adullact.publicrowdfunding.fragment.v4.project.details.ProjectPagerFragment();
 		Bundle bundle = new Bundle();
 		bundle.putString("idProject", id);
 		fragment.setArguments(bundle);

@@ -1,4 +1,4 @@
-package adullact.publicrowdfunding.fragment.v4.validateProject;
+package adullact.publicrowdfunding.fragment.v4.project.validate;
 
 import java.util.ArrayList;
 
@@ -77,7 +77,7 @@ public class MainActivity extends Fragment {
 					int position, long id) {
 
 				FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-				Fragment fragment = new adullact.publicrowdfunding.fragment.v4.validateProject.validatePopup();
+				Fragment fragment = new adullact.publicrowdfunding.fragment.v4.project.validate.validatePopup();
 				ft.setCustomAnimations(R.anim.popup_enter, R.anim.no_anim);
 				ft.add(R.id.front, fragment);
 				ft.commit();

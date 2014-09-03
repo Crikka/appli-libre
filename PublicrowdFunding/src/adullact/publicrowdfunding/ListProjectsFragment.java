@@ -1,10 +1,15 @@
 package adullact.publicrowdfunding;
 
+import java.util.ArrayList;
+
+import adullact.publicrowdfunding.custom.ProjectAdaptor;
+import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
+import adullact.publicrowdfunding.model.local.ressource.Project;
+import adullact.publicrowdfunding.model.local.utilities.Share;
+import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -24,15 +29,6 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.SearchView.OnCloseListener;
 import android.widget.SearchView.OnQueryTextListener;
-import android.widget.TextView;
-
-import java.util.ArrayList;
-
-import adullact.publicrowdfunding.custom.ProjectAdaptor;
-import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
-import adullact.publicrowdfunding.model.local.ressource.Project;
-import adullact.publicrowdfunding.model.local.utilities.Share;
-import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 
 public class ListProjectsFragment extends Fragment {
 
@@ -60,7 +56,7 @@ public class ListProjectsFragment extends Fragment {
 		
 		p_project_displayed = new ArrayList<Project>();
 		
-		fragment = new adullact.publicrowdfunding.fragment.v4.detailProject.ProjectPagerFragment();
+		fragment = new adullact.publicrowdfunding.fragment.v4.project.details.ProjectPagerFragment();
 
 		listeProjets = (ListView) view.findViewById(R.id.liste);
 

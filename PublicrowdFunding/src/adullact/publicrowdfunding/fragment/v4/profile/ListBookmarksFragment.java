@@ -58,7 +58,7 @@ public class ListBookmarksFragment extends Fragment {
 
 				FragmentTransaction ft = getFragmentManager().beginTransaction();
 				//ft.setCustomAnimations(R.anim.enter_2, R.anim.exit);
-				Fragment fragment = new adullact.publicrowdfunding.fragment.v4.detailProject.ProjectPagerFragment();
+				Fragment fragment = new adullact.publicrowdfunding.fragment.v4.project.details.ProjectPagerFragment();
         		Bundle bundle = new Bundle();
         		bundle.putString("idProject", projets.get(position).getResourceId());
         		fragment.setArguments(bundle);

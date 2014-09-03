@@ -1,5 +1,9 @@
-package adullact.publicrowdfunding.fragment.v4.detailProject;
+package adullact.publicrowdfunding.fragment.v4.project.details;
 
+import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.model.local.cache.Cache;
+import adullact.publicrowdfunding.model.local.callback.HoldToDo;
+import adullact.publicrowdfunding.model.local.ressource.Project;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -14,11 +18,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.model.local.cache.Cache;
-import adullact.publicrowdfunding.model.local.callback.HoldToDo;
-import adullact.publicrowdfunding.model.local.ressource.Project;
 
 public class MapFragment extends Fragment {
 

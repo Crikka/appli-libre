@@ -1,8 +1,7 @@
 package adullact.publicrowdfunding.model.server.request;
 
-import android.util.Base64;
-
 import retrofit.RequestInterceptor;
+import android.util.Base64;
 
 public class SecurityRequestInterceptor implements RequestInterceptor {
 

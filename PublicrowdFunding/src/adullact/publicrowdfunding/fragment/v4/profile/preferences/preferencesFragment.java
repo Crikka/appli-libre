@@ -1,4 +1,4 @@
-package adullact.publicrowdfunding.fragment.v4.preferences;
+package adullact.publicrowdfunding.fragment.v4.profile.preferences;
 
 import adullact.publicrowdfunding.MainActivity;
 import adullact.publicrowdfunding.R;

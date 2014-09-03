@@ -1,25 +1,24 @@
 package adullact.publicrowdfunding.model.local.utilities;
 
-import android.content.SharedPreferences;
-
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
 
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+
+import rx.Scheduler;
+import rx.functions.Action0;
+import rx.schedulers.Schedulers;
 import adullact.publicrowdfunding.PublicrowdFundingApplication;
 import adullact.publicrowdfunding.model.local.callback.NothingToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.database.ProjectsDatabase;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.server.event.ListerEvent;
-import rx.Scheduler;
-import rx.functions.Action0;
-import rx.schedulers.Schedulers;
+import android.content.SharedPreferences;
 
 /**
  * Created by Ferrand on 19/07/2014.

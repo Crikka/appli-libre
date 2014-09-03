@@ -1,5 +1,18 @@
-package adullact.publicrowdfunding.fragment.v4.detailProject;
+package adullact.publicrowdfunding.fragment.v4.project.details;
 
+import java.util.ArrayList;
+import java.util.Vector;
+
+import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.custom.CommentsAdaptor;
+import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
+import adullact.publicrowdfunding.model.local.cache.Cache;
+import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
+import adullact.publicrowdfunding.model.local.callback.HoldToDo;
+import adullact.publicrowdfunding.model.local.ressource.Account;
+import adullact.publicrowdfunding.model.local.ressource.Commentary;
+import adullact.publicrowdfunding.model.local.ressource.Project;
+import adullact.publicrowdfunding.model.local.ressource.User;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -18,20 +31,6 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.Vector;
-
-import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.custom.CommentsAdaptor;
-import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
-import adullact.publicrowdfunding.model.local.cache.Cache;
-import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
-import adullact.publicrowdfunding.model.local.callback.HoldToDo;
-import adullact.publicrowdfunding.model.local.ressource.Account;
-import adullact.publicrowdfunding.model.local.ressource.Commentary;
-import adullact.publicrowdfunding.model.local.ressource.Project;
-import adullact.publicrowdfunding.model.local.ressource.User;
 
 public class ListCommentsFragment extends Fragment {
 
@@ -203,7 +202,7 @@ public class ListCommentsFragment extends Fragment {
 				// TODO Auto-generated method stub
 				FragmentTransaction ft = fm.beginTransaction();
 
-				Fragment fragment = new adullact.publicrowdfunding.fragment.v4.detailProject.CommentPopup();
+				Fragment fragment = new adullact.publicrowdfunding.fragment.v4.project.details.CommentPopup();
 				Bundle bundle = new Bundle();
 				bundle.putString("idProject", projetCurrent.getResourceId());
 				fragment.setArguments(bundle);
@@ -224,7 +223,7 @@ public class ListCommentsFragment extends Fragment {
 		
 		for (Fragment fragment : activity.getSupportFragmentManager()
 				.getFragments()) {
-			if (fragment instanceof adullact.publicrowdfunding.fragment.v4.detailProject.ListCommentsFragment) {
+			if (fragment instanceof adullact.publicrowdfunding.fragment.v4.project.details.ListCommentsFragment) {
 				activity.getSupportFragmentManager().beginTransaction()
 						.detach(fragment).attach(fragment).commit();
 			}
