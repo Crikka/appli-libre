@@ -50,26 +50,24 @@
             </LinearLayout>
         </RelativeLayout>
 
-            <FrameLayout
-                android:id="@+id/admin_ribbon"
-                android:layout_gravity="right"
-            	android:layout_margin="1dp"
-                android:layout_width="57dp"
-                android:layout_height="56dp"
-                android:contentDescription="@string/description_image_project"
-                android:background="@drawable/ribbon_profile" />
-            
-            <TextView
-                android:id="@+id/text_admin"
-                android:text="ADMIN"
-                android:textColor="#ffffff"
-                android:textStyle="bold"
-                android:layout_gravity="right"
-            	android:layout_margin="1dp"
-                android:layout_width="57dp"
-                android:layout_height="56dp"
-                />
+        <FrameLayout
+            android:id="@+id/admin_ribbon"
+            android:layout_width="57dp"
+            android:layout_height="56dp"
+            android:layout_gravity="right"
+            android:layout_margin="1dp"
+            android:background="@drawable/ribbon_profile"
+            android:contentDescription="@string/description_image_project" />
 
+        <TextView
+            android:id="@+id/text_admin"
+            android:layout_width="57dp"
+            android:layout_height="56dp"
+            android:layout_gravity="right"
+            android:layout_margin="1dp"
+            android:text="ADMIN"
+            android:textColor="#ffffff"
+            android:textStyle="bold" />
     </FrameLayout>
 
     <android.support.v4.view.ViewPager
@@ -82,7 +80,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dip"
             android:layout_gravity="top"
-            android:background="@color/background"
+            android:background="#ffffff"
             android:paddingBottom="4dp"
             android:paddingTop="4dp" />
     </android.support.v4.view.ViewPager>

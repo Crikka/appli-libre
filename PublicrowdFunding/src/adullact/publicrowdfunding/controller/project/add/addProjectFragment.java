@@ -26,6 +26,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,7 +62,6 @@ public class addProjectFragment extends Fragment {
 
 	private User user;
 
-
 	private ImageView avatar;
 
 	private HorizontalCarouselStyle mStyle;
@@ -69,15 +69,15 @@ public class addProjectFragment extends Fragment {
 	private CarouselAdaptor mAdapter;
 	private ArrayList<Integer> mData;
 	
+	private LinearLayout loading;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
-		View view = inflater.inflate(R.layout.fragment_add_project,
-				container, false);
+		View view = inflater.inflate(R.layout.fragment_add_project, container,
+				false);
 
-		loadMaps();
-		
 		context = this.getActivity().getApplicationContext();
 
 		m_titre = (EditText) view.findViewById(R.id.titre);
@@ -85,7 +85,8 @@ public class addProjectFragment extends Fragment {
 		m_dateFin = (DatePicker) view.findViewById(R.id.date_de_fin);
 		m_valider = (Button) view.findViewById(R.id.button_valider);
 		m_edit_text_somme = (EditText) view.findViewById(R.id.edit_text_somme);
-		m_user_pseudo = (TextView) view.findViewById(R.id.utilisateur_soumission);
+		m_user_pseudo = (TextView) view
+				.findViewById(R.id.utilisateur_soumission);
 		m_user_ville = (TextView) view.findViewById(R.id.ville);
 
 		m_email = (EditText) view.findViewById(R.id.mail);
@@ -95,49 +96,13 @@ public class addProjectFragment extends Fragment {
 		m_edit_text_somme = (EditText) view.findViewById(R.id.edit_text_somme);
 
 		avatar = (ImageView) view.findViewById(R.id.avatar);
+
+		mCarousel = (HorizontalCarouselLayout) view
+				.findViewById(R.id.carousel_layout);
 		
-		try {
-			Account compte = Account.getOwn();
-			compte.getUser(new HoldToDo<User>() {
-
-				@Override
-				public void hold(User resource) {
-					
-					user = resource;
-					System.out.println(user.getResourceId());
-
-					m_user_pseudo.setText(resource.getPseudo());
-					m_user_ville.setText(resource.getCity());
-					if (resource.getGender().equals("0")) {
-						avatar.setImageResource(R.drawable.male_user_icon);
-					} else {
-						avatar.setImageResource(R.drawable.female_user_icon);
-					}
-
-				}
-
-			});
-		} catch (NoAccountExistsInLocal e) {
-			System.out.println("L'utilisateur n'est pas connecté !");
-		}
-
-		m_illustration = 0;
-
-		mData = new ArrayList<Integer>();
-		mData.add(R.drawable.ic_launcher);
-		mData.add(R.drawable.roi);
-		mData.add(R.drawable.basketball);
-		mData.add(R.drawable.plante);
-		mData.add(R.drawable.fete);
-
-		mAdapter = new CarouselAdaptor(context);
-		mAdapter.setData(mData);
-		mCarousel = (HorizontalCarouselLayout) view.findViewById(R.id.carousel_layout);
-		mStyle = new HorizontalCarouselStyle(context,
-				HorizontalCarouselStyle.NO_STYLE);
-		mCarousel.setStyle(mStyle);
-		mCarousel.setAdapter(mAdapter);
-
+		loading = (LinearLayout) view
+		.findViewById(R.id.loading);
+		
 		mCarousel.setOnCarouselViewChangedListener(new CarouselInterface() {
 
 			@Override
@@ -149,21 +114,19 @@ public class addProjectFragment extends Fragment {
 		m_valider.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				
+
 				/*
 				 * Validation
 				 */
 			}
 		});
 
-		supprimerCalendarView();
-		
+		loadContent();
+
 		return view;
 	}
-	
-	
-	public void addProjectRequest(){
-		
+
+	public void addProjectRequest() {
 
 		String titre = null;
 		if (m_titre.length() == 0) {
@@ -223,16 +186,14 @@ public class addProjectFragment extends Fragment {
 				Utility.stringToDateTime(Stryear + "-" + StrMonth + "-"
 						+ StrDay + " 00:00:00"),
 				Utility.stringToDateTime(Stryear + "-" + StrMonth + "-"
-						+ StrDay + " 00:00:00"), position,
-				m_illustration, m_email.getText().toString(), m_website
-						.getText().toString(),
+						+ StrDay + " 00:00:00"), position, m_illustration,
+				m_email.getText().toString(), m_website.getText().toString(),
 				m_phone.getText().toString(), false)
 				.serverCreate(new CreateEvent<Project>() {
 					@Override
 					public void errorResourceIdAlreadyUsed() {
 						System.out.println("id déja utilisé");
-						Toast.makeText(context,
-								"Erreur interne du serveur",
+						Toast.makeText(context, "Erreur interne du serveur",
 								Toast.LENGTH_SHORT).show();
 					}
 
@@ -247,33 +208,28 @@ public class addProjectFragment extends Fragment {
 
 					@Override
 					public void errorAuthenticationRequired() {
-						Toast.makeText(context,
-								"Vous devez vous authentifier",
+						Toast.makeText(context, "Vous devez vous authentifier",
 								Toast.LENGTH_SHORT).show();
 						System.out.println("Auth required");
 					}
 
 					@Override
 					public void errorNetwork() {
-						Toast.makeText(context,
-								"Probléme avec le réseau",
+						Toast.makeText(context, "Probléme avec le réseau",
 								Toast.LENGTH_SHORT).show();
 						System.out.println("network error");
 					}
 
 					@Override
 					public void errorServer() {
-						Toast.makeText(context,
-								"Erreur interne du serveur",
+						Toast.makeText(context, "Erreur interne du serveur",
 								Toast.LENGTH_SHORT).show();
-						
+
 					}
 				});
 
-		
-		
 	}
-	
+
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	public void supprimerCalendarView() {
 		int currentapiVersion = android.os.Build.VERSION.SDK_INT;
@@ -282,19 +238,79 @@ public class addProjectFragment extends Fragment {
 		}
 
 	}
-	
-	public void loadMaps(){
+
+	public void loadMaps() {
 		FragmentTransaction ft = getActivity().getSupportFragmentManager()
 				.beginTransaction();
 		Fragment fragment = new addLocationProjectFragment();
 		ft.replace(R.id.mapView, fragment);
 		ft.commit();
-		
+
 		_map = (addLocationProjectFragment) fragment;
-		
-		
+
 	}
-	
-	
-	
+
+	public void loadContent() {
+
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+
+				try {
+					Account compte = Account.getOwn();
+					compte.getUser(new HoldToDo<User>() {
+
+						@Override
+						public void hold(User resource) {
+
+							user = resource;
+							System.out.println(user.getResourceId());
+
+							m_user_pseudo.setText(resource.getPseudo());
+							m_user_ville.setText(resource.getCity());
+							if (resource.getGender().equals("0")) {
+								avatar.setImageResource(R.drawable.male_user_icon);
+							} else {
+								avatar.setImageResource(R.drawable.female_user_icon);
+							}
+
+						}
+
+					});
+				} catch (NoAccountExistsInLocal e) {
+					System.out.println("L'utilisateur n'est pas connecté !");
+				}
+
+				m_illustration = 0;
+
+				mData = new ArrayList<Integer>();
+				mData.add(R.drawable.ic_launcher);
+				mData.add(R.drawable.roi);
+				mData.add(R.drawable.basketball);
+				mData.add(R.drawable.plante);
+				mData.add(R.drawable.fete);
+
+				mAdapter = new CarouselAdaptor(context);
+				mAdapter.setData(mData);
+				mStyle = new HorizontalCarouselStyle(context,
+						HorizontalCarouselStyle.NO_STYLE);
+				mCarousel.setStyle(mStyle);
+				mCarousel.setAdapter(mAdapter);
+
+				supprimerCalendarView();
+				loading.setVisibility(View.GONE);
+
+			}
+		}).start();
+
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				loadMaps();
+			}
+		}).start();
+
+	}
 }
