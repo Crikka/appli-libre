@@ -1,12 +1,13 @@
 package adullact.publicrowdfunding.model.local.database;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
 import java.util.ArrayList;
 
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.utilities.Utility;
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 
 /**
  * @author Ferrand and Nelaupe
@@ -141,7 +142,7 @@ public class ProjectsDatabase {
         values.put(ProjectsTable.COLUMN_NAME_CONTACT_PHONE, project.getPhone());
         values.put(ProjectsTable.COLUMN_NAME_CONTACT_WEBSITE, project.getWebsite());
 
-        String selection = ProjectsTable.COLUMN_NAME_ID;
+        String selection = ProjectsTable.COLUMN_NAME_ID + " = ?";
         String[] selectionArgs = {project.getResourceId()};
 
         db.update(ProjectsTable.TABLE_NAME, values, selection, selectionArgs);
@@ -150,7 +151,7 @@ public class ProjectsDatabase {
     public void delete(Project project) {
         SQLiteDatabase db = m_helper.getWritableDatabase();
 
-        String selection = ProjectsTable.COLUMN_NAME_ID;
+        String selection = ProjectsTable.COLUMN_NAME_ID + " = ?";
         String[] selectionArgs = {project.getResourceId()};
 
         db.delete(ProjectsTable.TABLE_NAME, selection, selectionArgs);

@@ -1,24 +1,25 @@
 package adullact.publicrowdfunding.model.local.utilities;
 
+import android.content.SharedPreferences;
+
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
 
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-
-import rx.Scheduler;
-import rx.functions.Action0;
-import rx.schedulers.Schedulers;
 import adullact.publicrowdfunding.PublicrowdFundingApplication;
 import adullact.publicrowdfunding.model.local.callback.NothingToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.database.ProjectsDatabase;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.server.event.ListerEvent;
-import android.content.SharedPreferences;
+import rx.Scheduler;
+import rx.functions.Action0;
+import rx.schedulers.Schedulers;
 
 /**
  * @author Ferrand and Nelaupe
@@ -39,6 +40,7 @@ public class SyncServerToLocal {
 
         for(Project project : projects) {
             m_projects.add(project);
+            project.getCache(); // create a cache
         }
 
         SharedPreferences sharedPreferences = PublicrowdFundingApplication.sharedPreferences();
@@ -88,10 +90,11 @@ public class SyncServerToLocal {
                     if(project.isActive()) {
                         if(m_projects.contains(project)) {
                             updatedProjects.add(project);
-                            project.getCache().forceRetrieve();
+                            project.getCache().forceRetrieve().setResource(project);
                         }
                         else {
                             newProjects.add(project);
+                            project.getCache(); // create a cache
                         }
                     }
                     else {
