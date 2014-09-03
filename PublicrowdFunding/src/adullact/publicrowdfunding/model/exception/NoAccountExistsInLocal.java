@@ -1,7 +1,7 @@
 package adullact.publicrowdfunding.model.exception;
 
 /**
- * Created by Ferrand on 16/07/2014.
+ * @author Ferrand and Nelaupe
  */
 public class NoAccountExistsInLocal extends Exception {
 

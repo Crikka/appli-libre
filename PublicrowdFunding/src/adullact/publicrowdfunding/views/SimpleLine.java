@@ -8,7 +8,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 /**
- * @author Nelaupe Lucas
+ * @author Ferrand and Nelaupe
  */
 public class SimpleLine extends View {
 

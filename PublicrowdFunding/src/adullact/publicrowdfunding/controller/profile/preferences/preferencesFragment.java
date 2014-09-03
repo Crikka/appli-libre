@@ -17,6 +17,9 @@ import android.preference.SwitchPreference;
 import android.support.v4.preference.PreferenceFragment;
 import android.widget.Toast;
 
+/**
+ * @author Ferrand and Nelaupe
+ */
 public class preferencesFragment extends PreferenceFragment {
 
 	private User user;

@@ -11,7 +11,7 @@ import adullact.publicrowdfunding.model.local.ressource.Resource;
 import adullact.publicrowdfunding.model.server.event.RetrieveEvent;
 
 /**
- * Created by Ferrand on 18/07/2014.
+ * @author Ferrand and Nelaupe
  */
 public class Cache<TResource extends Resource<TResource, ?, ?>> {
     private Sync<TResource> m_resource;

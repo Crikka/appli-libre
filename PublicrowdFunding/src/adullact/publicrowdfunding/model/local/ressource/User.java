@@ -20,9 +20,7 @@ import adullact.publicrowdfunding.model.server.event.CreateEvent;
 import adullact.publicrowdfunding.model.server.event.DeleteEvent;
 
 /**
- *
- * @author Ferrand
- *
+ * @author Ferrand and Nelaupe
  */
 public class User extends Resource<User, ServerUser, DetailedServerUser> {
     private String m_pseudo;

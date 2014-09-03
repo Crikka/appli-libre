@@ -5,6 +5,9 @@ import adullact.publicrowdfunding.model.local.ressource.Resource;
 import adullact.publicrowdfunding.model.server.event.UpdateEvent;
 import adullact.publicrowdfunding.model.server.request.UpdateRequest;
 
+/**
+ * @author Ferrand and Nelaupe
+ */
 public class UpdateErrorHandler<TResource extends Resource<TResource, ?, ?>>
         extends AdministratorErrorHandler<UpdateRequest<TResource, ?, ?>, UpdateEvent<TResource>, UpdateErrorHandler<TResource>>  {
     private boolean m_resourceIdDoesNotExist = false;

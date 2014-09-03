@@ -12,6 +12,9 @@ import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+/**
+ * @author Ferrand and Nelaupe
+ */
 public class validatePopup extends Fragment {
 
 	private validatePopup _this;

@@ -26,6 +26,9 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
+/**
+ * @author Ferrand and Nelaupe
+ */
 public class CommentPopup extends Fragment {
 
 	private Fragment _this;

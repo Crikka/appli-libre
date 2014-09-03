@@ -16,6 +16,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/**
+ * @author Ferrand and Nelaupe
+ */
 public class ValidateProjectAdaptor extends ArrayAdapter<Project> {
 
 	Context mContext;

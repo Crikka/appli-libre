@@ -7,7 +7,7 @@ import org.joda.time.format.DateTimeFormatterBuilder;
 import adullact.publicrowdfunding.R;
 
 /**
- * Created by Ferrand on 03/08/2014.
+ * @author Ferrand and Nelaupe
  */
 public class Utility {
 	private static DateTimeFormatter dateTimeFormatter = new DateTimeFormatterBuilder()

@@ -20,6 +20,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+/**
+ * @author Ferrand and Nelaupe
+ */
 public class RegisterFragement extends Fragment {
 
 	private EditText m_login;

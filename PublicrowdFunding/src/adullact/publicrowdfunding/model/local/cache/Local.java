@@ -3,7 +3,7 @@ package adullact.publicrowdfunding.model.local.cache;
 import adullact.publicrowdfunding.model.local.ressource.Resource;
 
 /**
- * Created by Ferrand on 03/09/2014.
+ * @author Ferrand and Nelaupe
  */
 public class Local<TResource extends Resource<TResource, ?, ?>> extends Cache<TResource> {
     private boolean m_firstTime;

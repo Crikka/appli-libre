@@ -28,6 +28,9 @@ import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+/**
+ * @author Ferrand and Nelaupe
+ */
 public class ProjectPagerFragment extends Fragment {
 
 	FragmentTransaction fragMentTra;

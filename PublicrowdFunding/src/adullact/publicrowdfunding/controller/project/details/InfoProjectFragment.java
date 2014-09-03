@@ -26,6 +26,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * @author Ferrand and Nelaupe
+ */
 public class InfoProjectFragment extends Fragment {
 
 	private TextView m_titre;

@@ -34,6 +34,9 @@ import com.touchmenotapps.carousel.simple.HorizontalCarouselLayout;
 import com.touchmenotapps.carousel.simple.HorizontalCarouselLayout.CarouselInterface;
 import com.touchmenotapps.carousel.simple.HorizontalCarouselStyle;
 
+/**
+ * @author Ferrand and Nelaupe
+ */
 public class addProjectFragment extends Fragment {
 
 	private EditText m_titre;

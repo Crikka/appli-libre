@@ -19,6 +19,9 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+/**
+ * @author Ferrand and Nelaupe
+ */
 public class MapFragment extends Fragment {
 
 	private SupportMapFragment fragment;

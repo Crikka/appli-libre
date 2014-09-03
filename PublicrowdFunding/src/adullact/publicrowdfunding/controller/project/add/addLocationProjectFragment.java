@@ -15,6 +15,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+/**
+ * @author Ferrand and Nelaupe
+ */
 public class addLocationProjectFragment extends Fragment implements
 		OnMapClickListener {
 

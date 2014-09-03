@@ -3,9 +3,9 @@ package adullact.publicrowdfunding.model.local.cache;
 import adullact.publicrowdfunding.model.local.ressource.Resource;
 
 /**
+ * @author Ferrand and Nelaupe
+ * 
  * Give meta data about resource.
- *
- * Created by Ferrand on 27/07/2014.
  */
 public class Sync<TResource extends Resource<TResource, ?, ?>>  {
     public static enum State {

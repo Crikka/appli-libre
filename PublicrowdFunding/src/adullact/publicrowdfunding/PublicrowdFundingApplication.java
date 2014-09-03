@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
- * Created by Ferrand on 19/07/2014.
+ * @author Ferrand and Nelaupe
  */
 public class PublicrowdFundingApplication extends Application {
     private static Context m_context;

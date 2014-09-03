@@ -30,6 +30,9 @@ import android.widget.SearchView;
 import android.widget.SearchView.OnCloseListener;
 import android.widget.SearchView.OnQueryTextListener;
 
+/**
+ * @author Ferrand and Nelaupe
+ */
 public class ListProjectsFragment extends Fragment {
 
 	private ListView listeProjets;

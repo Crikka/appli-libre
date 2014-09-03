@@ -7,6 +7,9 @@ import org.joda.time.Interval;
 
 import adullact.publicrowdfunding.model.local.ressource.Funding;
 
+/**
+ * @author Ferrand and Nelaupe
+ */
 public class FundingInterval {
 	
 	private Interval m_interval;

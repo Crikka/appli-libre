@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+/**
+ * @author Ferrand and Nelaupe
+ */
 public class  CarouselAdaptor  extends BaseAdapter {
 	
 	private ArrayList<Integer> mData = new ArrayList<Integer>(0);

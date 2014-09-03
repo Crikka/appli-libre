@@ -17,6 +17,9 @@ import android.widget.TextView;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.model.Marker;
 
+/**
+ * @author Ferrand and Nelaupe
+ */
 public class MarkerWindowAdaptor extends FragmentActivity implements InfoWindowAdapter {
 
 	private TextView titre_projet_liste;

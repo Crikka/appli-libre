@@ -4,6 +4,9 @@ import adullact.publicrowdfunding.model.local.ressource.Resource;
 import adullact.publicrowdfunding.model.server.errorHandler.UpdateErrorHandler;
 import adullact.publicrowdfunding.model.server.request.UpdateRequest;
 
+/**
+ * @author Ferrand and Nelaupe
+ */
 public abstract class UpdateEvent<TResource extends Resource<TResource, ?, ?>>
         extends AdministratorEvent<UpdateRequest<TResource, ?, ?>, UpdateEvent<TResource>, UpdateErrorHandler<TResource>> {
 	

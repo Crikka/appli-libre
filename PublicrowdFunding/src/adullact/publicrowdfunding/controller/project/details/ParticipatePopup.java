@@ -20,6 +20,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+/**
+ * @author Ferrand and Nelaupe
+ */
 public class ParticipatePopup extends Fragment {
 
 	private EditText somme;

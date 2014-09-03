@@ -7,7 +7,7 @@ import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Resource;
 
 /**
- * Created by Ferrand on 19/08/2014.
+ * @author Ferrand and Nelaupe
  */
 public class CacheSet<TResource extends Resource<TResource, ?, ?>> {
     private TreeSet<Cache<TResource>> m_resource;

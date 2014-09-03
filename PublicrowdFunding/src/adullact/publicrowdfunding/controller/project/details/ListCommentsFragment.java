@@ -32,6 +32,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+/**
+ * @author Ferrand and Nelaupe
+ */
 public class ListCommentsFragment extends Fragment {
 
 	private Button m_button_comment;

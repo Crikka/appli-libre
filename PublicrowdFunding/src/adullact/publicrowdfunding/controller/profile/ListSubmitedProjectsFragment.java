@@ -20,6 +20,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+/**
+ * @author Ferrand and Nelaupe
+ */
 public class ListSubmitedProjectsFragment extends Fragment {
 
 	private ListView listeProjets;

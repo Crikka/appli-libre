@@ -14,6 +14,9 @@ import adullact.publicrowdfunding.model.server.entities.ServerCommentary;
 import adullact.publicrowdfunding.model.server.entities.Service;
 import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
 
+/**
+ * @author Ferrand and Nelaupe
+ */
 public class Commentary extends Resource<Commentary, ServerCommentary, ServerCommentary>{
 
     /* ---- Own data ---- */

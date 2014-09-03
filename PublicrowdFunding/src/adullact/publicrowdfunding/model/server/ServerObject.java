@@ -4,6 +4,9 @@ import adullact.publicrowdfunding.model.server.errorHandler.ErrorHandler;
 import adullact.publicrowdfunding.model.server.event.Event;
 import adullact.publicrowdfunding.model.server.request.Request;
 
+/**
+ * @author Ferrand and Nelaupe
+ */
 public class ServerObject
 <TRequest extends Request<TRequest, TEvent, TErrorHandler>, 
 TEvent extends Event<TRequest, TEvent, TErrorHandler>, 

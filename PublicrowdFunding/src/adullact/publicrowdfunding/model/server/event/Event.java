@@ -5,8 +5,8 @@ import adullact.publicrowdfunding.model.server.errorHandler.ErrorHandler;
 import adullact.publicrowdfunding.model.server.request.Request;
 
 /**
- * @author Ferrand
- *
+ * @author Ferrand and Nelaupe
+ * 
  * @param <TRequest>
  * @Brief Event is a abstract functions handle to requester.
  */

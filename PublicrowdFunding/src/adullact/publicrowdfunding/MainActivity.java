@@ -29,6 +29,9 @@ import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
 
+/**
+ * @author Ferrand and Nelaupe
+ */
 public class MainActivity extends FragmentActivity {
 
 	private DrawerLayout mDrawerLayout;

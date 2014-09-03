@@ -3,7 +3,7 @@ package adullact.publicrowdfunding.model.local.database;
 import android.provider.BaseColumns;
 
 /**
- * Created by Ferrand on 20/07/2014.
+ * @author Ferrand and Nelaupe
  */
 public class ProjectsTable implements BaseColumns {
     private ProjectsTable() {}

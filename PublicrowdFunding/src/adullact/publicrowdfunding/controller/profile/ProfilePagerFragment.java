@@ -21,6 +21,9 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/**
+ * @author Ferrand and Nelaupe
+ */
 public class ProfilePagerFragment extends Fragment {
 
 	protected Project projetCurrent;

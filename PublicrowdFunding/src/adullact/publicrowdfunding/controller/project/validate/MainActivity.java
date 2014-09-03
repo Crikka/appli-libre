@@ -24,6 +24,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+/**
+ * @author Ferrand and Nelaupe
+ */
 public class MainActivity extends Fragment {
 
 	private ListView listeProjets;
