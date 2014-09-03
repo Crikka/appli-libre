@@ -1,8 +1,9 @@
 package adullact.publicrowdfunding;
 
-import adullact.publicrowdfunding.fragment.v4.profile.preferences.preferencesFragment;
-import adullact.publicrowdfunding.fragment.v4.register.ConnexionFragment;
+import adullact.publicrowdfunding.controller.profile.preferences.preferencesFragment;
+import adullact.publicrowdfunding.controller.register.ConnexionFragment;
 import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
+import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.User;
@@ -139,7 +140,7 @@ public class MainActivity extends FragmentActivity {
 						.beginTransaction();
 
 				// ft.setCustomAnimations(R.anim.enter, R.anim.exit);
-				Fragment fragment = new adullact.publicrowdfunding.fragment.v4.project.add.addProjectFragment();
+				Fragment fragment = new adullact.publicrowdfunding.controller.project.add.addProjectFragment();
 				ft.addToBackStack(null);
 				ft.replace(R.id.content_frame, fragment);
 				ft.commit();
@@ -155,7 +156,7 @@ public class MainActivity extends FragmentActivity {
 
 				FragmentTransaction ft = getSupportFragmentManager()
 						.beginTransaction();
-				Fragment fragment = new adullact.publicrowdfunding.fragment.v4.profile.ProfilePagerFragment();
+				Fragment fragment = new adullact.publicrowdfunding.controller.profile.ProfilePagerFragment();
 				Bundle bundle = new Bundle();
 				bundle.putString("idUser", me.getResourceId());
 				fragment.setArguments(bundle);
@@ -177,7 +178,7 @@ public class MainActivity extends FragmentActivity {
 
 						FragmentTransaction ft = getSupportFragmentManager()
 								.beginTransaction();
-						Fragment fragment = new adullact.publicrowdfunding.fragment.v4.project.validate.MainActivity();
+						Fragment fragment = new adullact.publicrowdfunding.controller.project.validate.MainActivity();
 						Bundle bundle = new Bundle();
 						fragment.setArguments(bundle);
 						ft.addToBackStack(null);
@@ -298,7 +299,7 @@ public class MainActivity extends FragmentActivity {
 				Account account = Account.getOwn();
 
 				setDrawerMenu(true);
-				account.getUser(new WhatToDo<User>() {
+				account.getUser(new HoldToDo<User>() {
 
 					@Override
 					public void hold(User resource) {
@@ -312,11 +313,6 @@ public class MainActivity extends FragmentActivity {
 						} else {
 							avatar.setImageResource(R.drawable.female_user_icon);
 						}
-
-					}
-
-					@Override
-					public void eventually() {
 
 					}
 

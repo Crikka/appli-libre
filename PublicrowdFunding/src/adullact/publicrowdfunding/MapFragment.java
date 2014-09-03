@@ -81,7 +81,7 @@ public class MapFragment extends Fragment implements
 		
 		String id = markers.get(marker).getResourceId();
 		FragmentTransaction ft = getFragmentManager().beginTransaction();
-		Fragment fragment = new adullact.publicrowdfunding.fragment.v4.project.details.ProjectPagerFragment();
+		Fragment fragment = new adullact.publicrowdfunding.controller.project.details.ProjectPagerFragment();
 		Bundle bundle = new Bundle();
 		bundle.putString("idProject", id);
 		fragment.setArguments(bundle);
@@ -118,7 +118,7 @@ public class MapFragment extends Fragment implements
 
 					googleMap.setOnInfoWindowClickListener(_this);
 					googleMap
-							.setInfoWindowAdapter(new adullact.publicrowdfunding.custom.MarkerWindowAdaptor(
+							.setInfoWindowAdapter(new adullact.publicrowdfunding.controller.adaptor.MarkerWindowAdaptor(
 									 getLayoutInflater(null), markers));
 
 					handler.removeCallbacksAndMessages(null);

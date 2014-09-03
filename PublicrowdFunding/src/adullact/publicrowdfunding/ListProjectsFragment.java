@@ -2,7 +2,7 @@ package adullact.publicrowdfunding;
 
 import java.util.ArrayList;
 
-import adullact.publicrowdfunding.custom.ProjectAdaptor;
+import adullact.publicrowdfunding.controller.adaptor.ProjectAdaptor;
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.utilities.Share;
@@ -56,7 +56,7 @@ public class ListProjectsFragment extends Fragment {
 		
 		p_project_displayed = new ArrayList<Project>();
 		
-		fragment = new adullact.publicrowdfunding.fragment.v4.project.details.ProjectPagerFragment();
+		fragment = new adullact.publicrowdfunding.controller.project.details.ProjectPagerFragment();
 
 		listeProjets = (ListView) view.findViewById(R.id.liste);
 
