@@ -5,7 +5,7 @@
     android:versionName="debug" >
 
     <uses-sdk
-        android:minSdkVersion="14"
+        android:minSdkVersion="11"
         android:targetSdkVersion="19" />
 
     <permission
@@ -50,75 +50,6 @@
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyCZq_GRRjpnie92npZYaxhTY0j4JYCMbBE" />
         
-        
-        <activity
-            android:name="adullact.publicrowdfunding.fragment.v4.project.participate.MainActivity"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name="adullact.publicrowdfunding.MapFragment"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name="adullact.publicrowdfunding.controller.detailProject.MainActivity"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name="adullact.publicrowdfunding.controller.profile.MainActivity"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name="adullact.publicrowdfunding.fragment.v4.project.add.AddLocationProject"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name="adullact.publicrowdfunding.fragment.v4.project.add.MainActivity"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name="adullact.publicrowdfunding.fragment.v4.profile.preferences.MainActivity"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name="adullact.publicrowdfunding.fragment.v4.project.details.MapFragment"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name="adullact.publicrowdfunding.fragment.v4.register.registerActivity"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name="adullact.publicrowdfunding.fragment.v4.project.details.InfoProjectFragment"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name="adullact.publicrowdfunding.fragment.v4.project.details.ListCommentsFragment"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name="adullact.publicrowdfunding.fragment.v4.register.ConnexionActivity"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name="adullact.publicrowdfunding.TabsFragment"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name="adullact.publicrowdfunding.TabFavorisFragment"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name="adullact.publicrowdfunding.TabContributions"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name="adullact.publicrowdfunding.ListProjectsFragment"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name="adullact.publicrowdfunding.fragment.v4.project.participate.PaypalActivity"
-            android:label="@string/app_name" >
-        </activity>
         <activity
             android:name="adullact.publicrowdfunding.MainActivity"
             android:label="@string/app_name" >
