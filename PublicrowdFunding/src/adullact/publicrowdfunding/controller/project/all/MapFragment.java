@@ -1,8 +1,11 @@
-package adullact.publicrowdfunding;
+package adullact.publicrowdfunding.controller.project.all;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.R.id;
+import adullact.publicrowdfunding.R.layout;
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;

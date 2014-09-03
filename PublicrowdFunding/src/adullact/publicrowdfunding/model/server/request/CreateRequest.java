@@ -8,6 +8,9 @@ import adullact.publicrowdfunding.model.server.entities.RowAffected;
 import adullact.publicrowdfunding.model.server.errorHandler.CreateErrorHandler;
 import adullact.publicrowdfunding.model.server.event.CreateEvent;
 
+/**
+ * @author Ferrand and Nelaupe
+ */
 public class CreateRequest<TResource extends Resource<TResource, TServerResource, TDetailedServerResource>, TServerResource, TDetailedServerResource extends TServerResource>
         extends
         AuthenticatedRequest<CreateRequest<TResource,?,?>,CreateEvent<TResource>,CreateErrorHandler<TResource>> {

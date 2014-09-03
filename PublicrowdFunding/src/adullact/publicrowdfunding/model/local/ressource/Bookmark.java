@@ -18,7 +18,7 @@ import adullact.publicrowdfunding.model.server.event.ListerEvent;
 import adullact.publicrowdfunding.model.server.request.ListerRequest;
 
 /**
- * Created by Ferrand on 08/07/2014.
+ * @author Ferrand and Nelaupe
  */
 public class Bookmark extends Resource<Bookmark, ServerBookmark, ServerBookmark> {
 

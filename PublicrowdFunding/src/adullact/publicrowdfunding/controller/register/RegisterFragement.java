@@ -1,8 +1,8 @@
 package adullact.publicrowdfunding.controller.register;
 
-import adullact.publicrowdfunding.ListProjectsFragment;
 import adullact.publicrowdfunding.MainActivity;
 import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.controller.project.all.ListProjectsFragment;
 import adullact.publicrowdfunding.model.server.event.RegistrationEvent;
 import adullact.publicrowdfunding.model.server.request.RegistrationRequest;
 import android.content.Context;

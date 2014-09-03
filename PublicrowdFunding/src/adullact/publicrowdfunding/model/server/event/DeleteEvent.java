@@ -4,6 +4,9 @@ import adullact.publicrowdfunding.model.local.ressource.Resource;
 import adullact.publicrowdfunding.model.server.errorHandler.DeleteErrorHandler;
 import adullact.publicrowdfunding.model.server.request.DeleteRequest;
 
+/**
+ * @author Ferrand and Nelaupe
+ */
 public abstract class DeleteEvent<TResource extends Resource<TResource, ?, ?>>
         extends AdministratorEvent<DeleteRequest<TResource, ?, ?>, DeleteEvent<TResource>, DeleteErrorHandler<TResource>>   {
 

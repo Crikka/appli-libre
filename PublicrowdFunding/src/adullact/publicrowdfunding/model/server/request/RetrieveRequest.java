@@ -8,6 +8,9 @@ import adullact.publicrowdfunding.model.local.ressource.Resource;
 import adullact.publicrowdfunding.model.server.errorHandler.RetrieveErrorHandler;
 import adullact.publicrowdfunding.model.server.event.RetrieveEvent;
 
+/**
+ * @author Ferrand and Nelaupe
+ */
 public class RetrieveRequest<TResource extends Resource<TResource, TServerResource, TDetailedServerResource>, TServerResource, TDetailedServerResource extends TServerResource>
         extends Request<RetrieveRequest<TResource,?,?>,RetrieveEvent<TResource>,RetrieveErrorHandler<TResource>> {
     private TResource m_resource;

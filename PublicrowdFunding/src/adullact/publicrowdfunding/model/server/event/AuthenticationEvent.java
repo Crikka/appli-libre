@@ -4,7 +4,7 @@ import adullact.publicrowdfunding.model.server.errorHandler.AuthenticationErrorH
 import adullact.publicrowdfunding.model.server.request.AuthenticationRequest;
 
 /**
- * Created by Ferrand on 26/07/2014.
+ * @author Ferrand and Nelaupe
  */
 public abstract class AuthenticationEvent extends AuthenticatedEvent<AuthenticationRequest, AuthenticationEvent, AuthenticationErrorHandler> {
 

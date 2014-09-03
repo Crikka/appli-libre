@@ -6,6 +6,9 @@ import adullact.publicrowdfunding.model.server.errorHandler.AuthenticatedErrorHa
 import adullact.publicrowdfunding.model.server.request.AuthenticatedRequest;
 import adullact.publicrowdfunding.model.server.request.AuthenticationRequest;
 
+/**
+ * @author Ferrand and Nelaupe
+ */
 public abstract class AuthenticatedEvent
 <TRequest extends AuthenticatedRequest<TRequest, TEvent, TErrorHandler>,
 TEvent extends AuthenticatedEvent<TRequest, TEvent, TErrorHandler>,

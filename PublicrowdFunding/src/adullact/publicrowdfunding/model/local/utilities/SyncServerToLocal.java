@@ -21,7 +21,7 @@ import adullact.publicrowdfunding.model.server.event.ListerEvent;
 import android.content.SharedPreferences;
 
 /**
- * Created by Ferrand on 19/07/2014.
+ * @author Ferrand and Nelaupe
  */
 public class SyncServerToLocal {
     /* --- Singleton --- */

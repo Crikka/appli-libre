@@ -6,6 +6,9 @@ import adullact.publicrowdfunding.model.local.ressource.Resource;
 import adullact.publicrowdfunding.model.server.errorHandler.ListerErrorHandler;
 import adullact.publicrowdfunding.model.server.request.ListerRequest;
 
+/**
+ * @author Ferrand and Nelaupe
+ */
 public abstract class ListerEvent<TResource extends Resource<TResource, ?, ?>>
         extends Event<ListerRequest<TResource,?,?>,ListerEvent<TResource>,ListerErrorHandler<TResource>> {
 

@@ -5,6 +5,9 @@ import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.widget.ProgressBar;
 
+/**
+ * @author Ferrand and Nelaupe
+ */
 public class CustomProgressBar extends ProgressBar {
 
 	public CustomProgressBar(Context context) {

@@ -18,6 +18,9 @@ import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
 import adullact.publicrowdfunding.model.server.event.ListerEvent;
 import adullact.publicrowdfunding.model.server.request.ListerRequest;
 
+/**
+ * @author Ferrand and Nelaupe
+ */
 public class Funding extends Resource<Funding, ServerFunding, ServerFunding> {
     private int m_id;
 	private Cache<User> m_from;

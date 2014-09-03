@@ -7,7 +7,7 @@ import adullact.publicrowdfunding.model.local.cache.Sync;
 import adullact.publicrowdfunding.model.local.ressource.Resource;
 
 /**
- * Created by Ferrand on 18/07/2014.
+ * @author Ferrand and Nelaupe
  */
 public abstract class WhatToDo<TResource extends Resource<TResource, ?, ?>> {
     private Sync<TResource> m_resource;

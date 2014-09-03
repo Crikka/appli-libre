@@ -8,7 +8,7 @@ import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
 
 /**
- * Created by Ferrand on 29/07/2014.
+ * @author Ferrand and Nelaupe
  */
 public abstract class CanI {
     public void validate(Project project) {

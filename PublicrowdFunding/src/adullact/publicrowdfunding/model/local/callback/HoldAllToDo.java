@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import adullact.publicrowdfunding.model.local.ressource.Resource;
 
 /**
- * Created by Ferrand on 27/07/2014.
+ * @author Ferrand and Nelaupe
  */
 public abstract class HoldAllToDo<TResource extends Resource<TResource, ?, ?>> extends WhatToDo<TResource> {
     private ArrayList<TResource> m_resources;

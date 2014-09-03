@@ -8,6 +8,9 @@ import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
 import adullact.publicrowdfunding.model.server.errorHandler.DeleteErrorHandler;
 import adullact.publicrowdfunding.model.server.event.DeleteEvent;
 
+/**
+ * @author Ferrand and Nelaupe
+ */
 public class DeleteRequest<TResource extends Resource<TResource, TServerResource, TDetailedServerResource>, TServerResource, TDetailedServerResource extends TServerResource>
         extends AdministratorRequest<DeleteRequest<TResource, ?, ?>, DeleteEvent<TResource>, DeleteErrorHandler<TResource>>  {
     private TResource m_resource;

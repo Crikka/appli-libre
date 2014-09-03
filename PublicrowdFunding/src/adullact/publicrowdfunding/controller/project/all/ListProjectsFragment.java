@@ -1,7 +1,13 @@
-package adullact.publicrowdfunding;
+package adullact.publicrowdfunding.controller.project.all;
 
 import java.util.ArrayList;
 
+import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.R.anim;
+import adullact.publicrowdfunding.R.color;
+import adullact.publicrowdfunding.R.id;
+import adullact.publicrowdfunding.R.layout;
+import adullact.publicrowdfunding.R.menu;
 import adullact.publicrowdfunding.controller.adaptor.ProjectAdaptor;
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.ressource.Project;

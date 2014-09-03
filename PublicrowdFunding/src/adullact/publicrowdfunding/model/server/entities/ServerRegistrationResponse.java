@@ -1,7 +1,7 @@
 package adullact.publicrowdfunding.model.server.entities;
 
 /**
- * Created by Ferrand on 16/08/2014.
+ * @author Ferrand and Nelaupe
  */
 public class ServerRegistrationResponse {
     public int accountOK;

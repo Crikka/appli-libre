@@ -30,6 +30,9 @@ import adullact.publicrowdfunding.model.server.request.ListerRequest;
 
 import com.google.android.gms.maps.model.LatLng;
 
+/**
+ * @author Ferrand and Nelaupe
+ */
 public class Project extends Resource<Project, ServerProject, DetailedServerProject> {
 
     /* ----- Resource ----- */

@@ -1,6 +1,8 @@
 package adullact.publicrowdfunding;
 
 import adullact.publicrowdfunding.controller.profile.preferences.preferencesFragment;
+import adullact.publicrowdfunding.controller.project.all.ListProjectsFragment;
+import adullact.publicrowdfunding.controller.project.all.MapFragment;
 import adullact.publicrowdfunding.controller.register.ConnexionFragment;
 import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.callback.HoldToDo;

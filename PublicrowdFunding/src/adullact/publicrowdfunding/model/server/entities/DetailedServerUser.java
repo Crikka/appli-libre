@@ -3,7 +3,7 @@ package adullact.publicrowdfunding.model.server.entities;
 import java.util.ArrayList;
 
 /**
- * Created by Ferrand on 21/07/2014.
+ * @author Ferrand and Nelaupe
  */
 public class DetailedServerUser extends ServerUser {
     public ArrayList<ServerProject> proposedProjects;

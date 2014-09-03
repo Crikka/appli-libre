@@ -21,7 +21,7 @@ import adullact.publicrowdfunding.model.server.request.RetrieveRequest;
 import adullact.publicrowdfunding.model.server.request.UpdateRequest;
 
 /**
- * Created by Ferrand on 18/07/2014.
+ * @author Ferrand and Nelaupe
  */
 public abstract class Resource<TResource extends Resource<TResource, TServerResource, TDetailedServerResource>, TServerResource, TDetailedServerResource extends TServerResource> {
     /* ---- Cache manager ---- */

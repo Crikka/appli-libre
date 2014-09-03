@@ -24,7 +24,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
- * Created by Ferrand on 16/07/2014.
+ * @author Ferrand and Nelaupe
  */
 public class Account extends Resource<Account, ServerAccount, ServerAccount> {
     /* ---- Singleton ---- */

@@ -9,7 +9,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 /**
- * Created by Ferrand on 20/07/2014.
+ * @author Ferrand and Nelaupe
  */
 public class ProjectsDatabase {
     /* --- Singleton --- */

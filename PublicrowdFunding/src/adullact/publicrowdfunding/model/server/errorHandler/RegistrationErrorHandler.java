@@ -5,7 +5,7 @@ import adullact.publicrowdfunding.model.server.event.RegistrationEvent;
 import adullact.publicrowdfunding.model.server.request.RegistrationRequest;
 
 /**
- * Created by Ferrand on 16/08/2014.
+ * @author Ferrand and Nelaupe
  */
 public class RegistrationErrorHandler extends ErrorHandler<RegistrationRequest, RegistrationEvent, RegistrationErrorHandler> {
 

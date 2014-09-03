@@ -8,6 +8,9 @@ import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
 import adullact.publicrowdfunding.model.server.errorHandler.UpdateErrorHandler;
 import adullact.publicrowdfunding.model.server.event.UpdateEvent;
 
+/**
+ * @author Ferrand and Nelaupe
+ */
 public class UpdateRequest<TResource extends Resource<TResource, TServerResource, TDetailedServerResource>, TServerResource, TDetailedServerResource extends TServerResource>
         extends AdministratorRequest<UpdateRequest<TResource, ?, ?>, UpdateEvent<TResource>, UpdateErrorHandler<TResource>>  {
     private TResource m_resource;

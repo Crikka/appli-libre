@@ -5,7 +5,7 @@ import adullact.publicrowdfunding.model.server.event.AdministratorEvent;
 import adullact.publicrowdfunding.model.server.request.AdministratorRequest;
 
 /**
- * Created by Ferrand on 15/08/2014.
+ * @author Ferrand and Nelaupe
  */
 public class AdministratorErrorHandler<
         TRequest extends AdministratorRequest<TRequest, TEvent, TErrorHandler>,

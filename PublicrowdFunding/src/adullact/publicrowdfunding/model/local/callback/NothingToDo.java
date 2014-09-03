@@ -3,7 +3,7 @@ package adullact.publicrowdfunding.model.local.callback;
 import adullact.publicrowdfunding.model.local.ressource.Resource;
 
 /**
- * Created by Ferrand on 19/07/2014.
+ * @author Ferrand and Nelaupe
  */
 public class NothingToDo<TResource extends Resource<TResource, ?, ?>> extends WhatToDo<TResource> {
     @Override

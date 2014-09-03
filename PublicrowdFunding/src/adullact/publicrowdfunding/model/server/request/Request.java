@@ -8,9 +8,7 @@ import adullact.publicrowdfunding.model.server.errorHandler.ErrorHandler;
 import adullact.publicrowdfunding.model.server.event.Event;
 
 /**
- * 
- * @author Ferrand
- *
+ * @author Ferrand and Nelaupe
  */
 public abstract class Request
 <TRequest extends Request<TRequest, TEvent, TErrorHandler>, 
