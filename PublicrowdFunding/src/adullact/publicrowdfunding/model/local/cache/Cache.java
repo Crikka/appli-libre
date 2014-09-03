@@ -38,10 +38,20 @@ public class Cache<TResource extends Resource<TResource, ?, ?>> {
         return m_resource.id;
     }
 
+    final public Cache<TResource> useIt() {
+        m_resource.resource.overrideCache(this);
+
+        return this;
+    }
+
     public Cache<TResource> declareUpToDate() {
         m_dateTime = DateTime.now();
 
         return this;
+    }
+
+    public void setResource(TResource resource) {
+        m_resource.resource = resource;
     }
 
     public Cache<TResource> forceRetrieve() {
@@ -51,15 +61,7 @@ public class Cache<TResource extends Resource<TResource, ?, ?>> {
     }
 
     public void toResource(final WhatToDo<TResource> whatToDo) {
-        boolean timeToRetrieve;
-        if(m_dateTime == null) {
-            timeToRetrieve = true;
-        }
-        else {
-            Duration duration = new Duration(m_dateTime, DateTime.now());
-            timeToRetrieve = (duration.getStandardMinutes() > 15);// Data may be outdated
-       }
-        if(timeToRetrieve) {
+        if(timeToRetrieve()) {
             final RetrieveEvent<TResource> event = new RetrieveEvent<TResource>() {
 
                 @Override
@@ -76,7 +78,7 @@ public class Cache<TResource extends Resource<TResource, ?, ?>> {
                     else {
                         m_resource.setState(Sync.State.unchanged);
                     }
-                    m_dateTime = DateTime.now();
+                    afterRetrieve();
 
                     workWithResource();
                 }
@@ -91,18 +93,41 @@ public class Cache<TResource extends Resource<TResource, ?, ?>> {
                     workWithResource();
                 }
             };
-            if(m_pendingWhatToDo.isEmpty()) {
-                m_pendingWhatToDo.add(whatToDo);
+
+            if(addToPendingWhatToDo(whatToDo)) {
                 m_resource.resource.serverRetrieve(event);
-            }
-            else {
-                m_pendingWhatToDo.add(whatToDo);
             }
         }
         else {
             whatToDo.give(m_resource);
             whatToDo.eventually();
         }
+    }
+
+    protected boolean timeToRetrieve() {
+        if(m_dateTime == null) {
+            return true;
+        }
+        else {
+            Duration duration = new Duration(m_dateTime, DateTime.now());
+            return (duration.getStandardMinutes() > 15);// Data may be outdated
+        }
+    }
+
+    protected void afterRetrieve() {
+        m_dateTime = DateTime.now();
+    }
+
+    /**
+     *
+     * @param whatToDo
+     * @return true if new queue was created
+     */
+    private boolean addToPendingWhatToDo(WhatToDo<TResource> whatToDo) {
+        boolean res = m_pendingWhatToDo.isEmpty();
+        m_pendingWhatToDo.add(whatToDo);
+
+        return res;
     }
 
     private void workWithResource() {

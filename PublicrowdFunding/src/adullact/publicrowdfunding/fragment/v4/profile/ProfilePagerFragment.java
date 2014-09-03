@@ -1,10 +1,5 @@
 package adullact.publicrowdfunding.fragment.v4.profile;
 
-import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.model.local.callback.HoldToDo;
-import adullact.publicrowdfunding.model.local.ressource.Account;
-import adullact.publicrowdfunding.model.local.ressource.Project;
-import adullact.publicrowdfunding.model.local.ressource.User;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,6 +15,12 @@ import android.view.animation.RotateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.model.local.callback.HoldToDo;
+import adullact.publicrowdfunding.model.local.ressource.Account;
+import adullact.publicrowdfunding.model.local.ressource.Project;
+import adullact.publicrowdfunding.model.local.ressource.User;
 
 public class ProfilePagerFragment extends Fragment {
 
@@ -75,7 +76,7 @@ public class ProfilePagerFragment extends Fragment {
 			}
 
 		});
-		
+
 		new Account().getCache(idUser).toResource(new HoldToDo<Account>() {
 
 			@Override

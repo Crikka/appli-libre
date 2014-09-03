@@ -15,6 +15,8 @@ import javax.crypto.spec.SecretKeySpec;
 import adullact.publicrowdfunding.PublicrowdFundingApplication;
 import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.cache.Cache;
+import adullact.publicrowdfunding.model.local.cache.Local;
+import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.server.entities.RowAffected;
 import adullact.publicrowdfunding.model.server.entities.ServerAccount;
@@ -38,7 +40,12 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
         m_username = sharedPreferences.getString(KEY_USERNAME, "");
         m_password = decrypt("mystery", sharedPreferences.getString(KEY_PASSWORD, ""));
         m_administrator = sharedPreferences.getBoolean(KEY_ADMIN, false);
-        m_user = new User().getCache(sharedPreferences.getString(KEY_PSEUDO, ""));
+
+        User user = new User();
+        user.setResourceId(sharedPreferences.getString(KEY_PSEUDO, ""));
+        m_user = new Local<User>(user).useIt();
+
+        new Local<Account>(this).useIt();
     }
 
     public static Account getOwn() throws NoAccountExistsInLocal {
@@ -221,6 +228,7 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
     }
 
     public static void disconnect(){
+        Account own = m_own;
         m_own = null;
 
         SharedPreferences.Editor editor = PublicrowdFundingApplication.sharedPreferences().edit();
@@ -230,6 +238,14 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
         editor.remove(KEY_PSEUDO);
         editor.remove(KEY_ADMIN);
         editor.apply();
+
+        own.getUser(new HoldToDo<User>() {
+            @Override
+            public void hold(User user) {
+                new Cache<User>(user).declareUpToDate().useIt();
+            }
+        });
+        new Cache<Account>(own).declareUpToDate().useIt();
     }
     
     

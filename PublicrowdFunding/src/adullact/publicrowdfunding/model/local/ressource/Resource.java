@@ -44,13 +44,13 @@ public abstract class Resource<TResource extends Resource<TResource, TServerReso
             if (cachedType == null) {
                 cachedType = new HashMap<String, Cache>();
                 cachedResource.put(getClass().getSimpleName(), cachedType);
-                m_cache = new Cache<TResource>((TResource) this);
+                m_cache = cacheInstance();
                 cachedType.put(id, m_cache);
             }
             else {
                 m_cache = cachedType.get(id);
                 if(m_cache == null) {
-                    m_cache = new Cache<TResource>((TResource) this);
+                    m_cache = cacheInstance();
                     cachedType.put(id, m_cache);
                 }
             }
@@ -58,6 +58,24 @@ public abstract class Resource<TResource extends Resource<TResource, TServerReso
         }
 
         return m_cache;
+    }
+
+    final public void overrideCache(Cache<TResource> cache) {
+        HashMap<String, Cache> cachedType = cachedResource.get(getClass().getSimpleName());
+        if (cachedType == null) {
+            cachedType = new HashMap<String, Cache>();
+            cachedResource.put(getClass().getSimpleName(), cachedType);
+            m_cache = cache;
+            cachedType.put(cache.getResourceId(), m_cache);
+        }
+        else {
+            m_cache = cache;
+            cachedType.put(cache.getResourceId(), m_cache);
+        }
+    }
+
+    protected Cache<TResource> cacheInstance() {
+        return new Cache<TResource>((TResource) this);
     }
     /* ----------------------- */
 
