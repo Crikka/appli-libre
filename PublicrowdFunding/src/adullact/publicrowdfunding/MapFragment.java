@@ -36,7 +36,6 @@ public class MapFragment extends Fragment implements
 	private GoogleMap googleMap;
 	private final HashMap<Marker, Project> markers = new HashMap<Marker, Project>();
 
-	private View infoWindow;
 	
 	private ArrayList<Project> projets;
 
@@ -47,10 +46,7 @@ public class MapFragment extends Fragment implements
 			Bundle savedInstanceState) {
 
 		rootView = inflater.inflate(R.layout.activity_maps, container, false);
-
 		
-		infoWindow = getLayoutInflater(null).inflate(
-				R.layout.fiche_project, null);
 		projets = new ArrayList<Project>(); 
 
 		_this = this;

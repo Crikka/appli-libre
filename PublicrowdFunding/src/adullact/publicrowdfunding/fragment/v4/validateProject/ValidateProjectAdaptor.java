@@ -1,4 +1,4 @@
-package adullact.publicrowdfunding.controller.validateProject;
+package adullact.publicrowdfunding.fragment.v4.validateProject;
 
 import java.util.ArrayList;
 
@@ -13,9 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class ValidateProjectAdaptor extends ArrayAdapter<Project> {

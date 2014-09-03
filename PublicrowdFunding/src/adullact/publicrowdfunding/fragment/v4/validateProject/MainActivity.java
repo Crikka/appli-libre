@@ -1,9 +1,8 @@
-package adullact.publicrowdfunding.controller.validateProject;
+package adullact.publicrowdfunding.fragment.v4.validateProject;
 
 import java.util.ArrayList;
 
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.custom.ProjectAdaptor;
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
@@ -37,16 +36,12 @@ public class MainActivity extends Fragment {
 	
 	private FrameLayout filter;
 
-	private ArrayList<Project> p_project_displayed;
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
 		final View view = inflater.inflate(R.layout.fragment_liste_projet,
 				container, false);
-
-		p_project_displayed = new ArrayList<Project>();
 
 		listeProjets = (ListView) view.findViewById(R.id.liste);
 
@@ -82,7 +77,7 @@ public class MainActivity extends Fragment {
 					int position, long id) {
 
 				FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-				Fragment fragment = new adullact.publicrowdfunding.controller.validateProject.validatePopup();
+				Fragment fragment = new adullact.publicrowdfunding.fragment.v4.validateProject.validatePopup();
 				ft.setCustomAnimations(R.anim.popup_enter, R.anim.no_anim);
 				ft.add(R.id.front, fragment);
 				ft.commit();

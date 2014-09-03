@@ -4,10 +4,8 @@ import java.util.ArrayList;
 
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.custom.ProjectAdaptor;
-import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.cache.Cache;
-import adullact.publicrowdfunding.model.local.callback.WhatToDo;
-import adullact.publicrowdfunding.model.local.ressource.Account;
+import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
 import android.os.Bundle;
@@ -52,8 +50,6 @@ public class ListBookmarksFragment extends Fragment {
 				R.layout.adaptor_project, projets, getActivity());
 		listeProjets.setAdapter(adapter);
 
-		// refresh();
-
 		listeProjets.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -74,50 +70,13 @@ public class ListBookmarksFragment extends Fragment {
 
 		Bundle bundle = this.getArguments();
 		String idUser = bundle.getString("idUser");
-		if (idUser.equals("me")) {
-			try {
-				Account.getOwn().getUser(new WhatToDo<User>() {
-
-					@Override
-					public void hold(User resource) {
-						resource.getBookmarkedProjects(new WhatToDo<Project>() {
-
-							@Override
-							public void hold(Project resource) {
-								projets.add(resource);
-								adapter.notifyDataSetChanged();
-
-							}
-
-							@Override
-							public void eventually() {
-								// TODO Auto-generated method stub
-
-							}
-
-						});
-
-					}
-
-					@Override
-					public void eventually() {
-						// TODO Auto-generated method stub
-
-					}
-
-				});
-			} catch (NoAccountExistsInLocal e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		} else {
+		
 			Cache<User> cache = new User().getCache(idUser);
-			cache.toResource(new WhatToDo<User>() {
+			cache.toResource(new HoldToDo<User>() {
 
 				@Override
 				public void hold(User resource) {
-					resource.getBookmarkedProjects(new WhatToDo<Project>() {
+					resource.getBookmarkedProjects(new HoldToDo<Project>() {
 
 						@Override
 						public void hold(Project resource) {
@@ -125,23 +84,9 @@ public class ListBookmarksFragment extends Fragment {
 							adapter.notifyDataSetChanged();
 						}
 
-						@Override
-						public void eventually() {
-							// TODO Auto-generated method stub
-
-						}
-
 					});
 				}
-
-				@Override
-				public void eventually() {
-					// TODO Auto-generated method stub
-
-				}
 			});
-
-		}
 
 		return view;
 	}

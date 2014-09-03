@@ -1,9 +1,6 @@
-package adullact.publicrowdfunding.controller.validateProject;
+package adullact.publicrowdfunding.fragment.v4.validateProject;
 
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.fragment.v4.participate.PaypalActivity;
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -11,14 +8,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
 
 public class validatePopup extends Fragment {
 

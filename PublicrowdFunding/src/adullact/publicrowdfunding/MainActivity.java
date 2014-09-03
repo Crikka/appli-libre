@@ -176,7 +176,7 @@ public class MainActivity extends FragmentActivity {
 
 						FragmentTransaction ft = getSupportFragmentManager()
 								.beginTransaction();
-						Fragment fragment = new adullact.publicrowdfunding.controller.validateProject.MainActivity();
+						Fragment fragment = new adullact.publicrowdfunding.fragment.v4.validateProject.MainActivity();
 						Bundle bundle = new Bundle();
 						fragment.setArguments(bundle);
 						ft.addToBackStack(null);

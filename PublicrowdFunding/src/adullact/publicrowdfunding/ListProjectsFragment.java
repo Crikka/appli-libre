@@ -49,11 +49,8 @@ public class ListProjectsFragment extends Fragment {
 	private SyncServerToLocal sync;
 	
 	private ArrayList<Project> p_project_displayed;
-	
-	private LocationManager locationManager;
-	private LocationListener locationListener;
-	private String locationProvider;
 
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -63,20 +60,19 @@ public class ListProjectsFragment extends Fragment {
 		
 		p_project_displayed = new ArrayList<Project>();
 		
-		 fragment = new adullact.publicrowdfunding.fragment.v4.detailProject.ProjectPagerFragment();
+		fragment = new adullact.publicrowdfunding.fragment.v4.detailProject.ProjectPagerFragment();
 
 		listeProjets = (ListView) view.findViewById(R.id.liste);
 
 		loading =  (LinearLayout) view.findViewById(R.id.loading);
+		loading.setVisibility(View.VISIBLE);
 		
 		adapter = new ProjectAdaptor(this.getActivity().getBaseContext(),
 				R.layout.adaptor_project, p_project_displayed, getActivity());
 
-		TextView empty = (TextView) view.findViewById(R.id.empty);
-		listeProjets.setEmptyView(empty);
-
 		listeProjets.setAdapter(adapter);
 		swipeView = (SwipeRefreshLayout) view.findViewById(R.id.refresher);
+		swipeView.setVisibility(View.GONE);
 		swipeView.setEnabled(false);
 
 		swipeView.setColorScheme(R.color.blue, R.color.green, R.color.yellow,
@@ -127,7 +123,6 @@ public class ListProjectsFragment extends Fragment {
 			}
 		});
 		reload();
-		loading.setVisibility(View.GONE);
 		return view;
 		
 	}
@@ -137,6 +132,9 @@ public class ListProjectsFragment extends Fragment {
 		adapter.addAll(p_project_displayed);
 		adapter.notifyDataSetChanged();
 		swipeView.setRefreshing(false);
+		loading.setVisibility(View.GONE);
+		swipeView.setVisibility(View.VISIBLE);
+		
 	}
 	
 	@Override
