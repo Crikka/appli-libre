@@ -18,6 +18,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -47,9 +48,15 @@ public class MapFragment extends Fragment implements OnInfoWindowClickListener {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-
+		try{
 		rootView = inflater.inflate(R.layout.activity_maps, container, false);
 
+		}catch(Exception e){
+			TextView text = new TextView(getActivity());
+			text.setText("Impossible de charger Google Map");
+			return text;
+		}
+		
 		projets = new ArrayList<Project>();
 
 		_this = this;
@@ -99,10 +106,10 @@ public class MapFragment extends Fragment implements OnInfoWindowClickListener {
 		try {
 
 			FragmentTransaction ft = fm.beginTransaction();
-			ft.replace(R.id.mapView, fragment, "mapid").commit();
+			ft.replace(R.id.mapView, fragment, "mapAllFragment").commit();
 			fm.executePendingTransactions();
 
-			googleMap = ((SupportMapFragment) fm.findFragmentByTag("mapid"))
+			googleMap = ((SupportMapFragment) fm.findFragmentByTag("mapAllFragment"))
 					.getMap();
 
 			for (Project proj : projets) {

@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -39,14 +40,15 @@ public class MapFragment extends Fragment {
 
 		System.out.println("Load Google Map Fragment");
 
-		rootView = inflater.inflate(R.layout.activity_maps, container, false);
+		try {
+			rootView = inflater.inflate(R.layout.activity_maps, container,
+					false);
 
-		fragment = new SupportMapFragment();
-
-		fm = getFragmentManager();
-
-		FragmentTransaction ft = fm.beginTransaction();
-		ft.replace(R.id.mapView, fragment, "mapid").commit();
+		} catch (Exception e) {
+			TextView text = new TextView(getActivity());
+			text.setText("Impossible de charger Google Map");
+			return text;
+		}
 
 		Bundle bundle = this.getArguments();
 		if (bundle != null) {
@@ -55,32 +57,42 @@ public class MapFragment extends Fragment {
 			projet.toResource(new HoldToDo<Project>() {
 				@Override
 				public void hold(Project project) {
-					projetCurrent = project;
-					final Handler handler = new Handler();
-					handler.postDelayed(new Runnable() {
 
-						@Override
-						public void run() {
+					try {
+						fragment = new SupportMapFragment();
+						fm = getFragmentManager();
 
-							try {
-								Fragment fr = fm.findFragmentByTag("mapid");
+						FragmentTransaction ft = fm.beginTransaction();
+						ft.replace(R.id.mapView, fragment, "mapProjectDetail")
+								.commit();
+
+						projetCurrent = project;
+						final Handler handler = new Handler();
+						handler.postDelayed(new Runnable() {
+
+							@Override
+							public void run() {
+
+								Fragment fr = fm
+										.findFragmentByTag("mapProjectDetail");
 
 								googleMap = ((SupportMapFragment) fr).getMap();
 
-							} catch (Exception e) {
-								e.printStackTrace();
+								if (googleMap != null) {
+									displayInfo();
+									handler.removeCallbacksAndMessages(null);
+
+								} else {
+									handler.postDelayed(this, 500);
+								}
 							}
+						}, 500);
 
-							if (googleMap != null) {
-								displayInfo();
-								handler.removeCallbacksAndMessages(null);
-
-							} else {
-								handler.postDelayed(this, 500);
-							}
-						}
-					}, 500);
-
+					} catch (Exception e) {
+						TextView text = new TextView(getActivity());
+						text.setText("Impossible de charger Google Map");
+						rootView = text;
+					}
 				}
 			});
 		}
