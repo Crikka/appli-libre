@@ -5,6 +5,7 @@ import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
+import adullact.publicrowdfunding.model.local.utilities.Share;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -67,8 +68,8 @@ public class ProfilePagerFragment extends Fragment {
 
 			@Override
 			public void hold(User resource) {
-				m_pseudo.setText(resource.getPseudo());
-				m_ville.setText(resource.getCity());
+				m_pseudo.setText(Share.formatString(resource.getPseudo()));
+				m_ville.setText(Share.formatString(resource.getCity()));
 				if (resource.getGender().equals("0")) {
 					m_avatar.setImageResource(R.drawable.male_user_icon);
 				} else {

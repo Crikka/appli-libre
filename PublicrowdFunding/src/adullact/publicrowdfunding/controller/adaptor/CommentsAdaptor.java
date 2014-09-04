@@ -7,6 +7,7 @@ import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Commentary;
 import adullact.publicrowdfunding.model.local.ressource.User;
+import adullact.publicrowdfunding.model.local.utilities.Share;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -67,10 +68,10 @@ public class CommentsAdaptor extends ArrayAdapter<Commentary> {
 		Commentary coment = getItem(position);
 
 		commentaire = (TextView) row.findViewById(R.id.comment);
-		commentaire.setText(coment.getMessage());
+		commentaire.setText(Share.formatString(coment.getMessage()));
 
 		titre = (TextView) row.findViewById(R.id.titre);
-		titre.setText(coment.getTitle());
+		titre.setText(Share.formatString(coment.getTitle()));
 
 		utilisateurVille = (TextView) row.findViewById(R.id.utilisateur_ville);
 
@@ -91,8 +92,8 @@ public class CommentsAdaptor extends ArrayAdapter<Commentary> {
 
 			@Override
 			public void hold(User resource) {
-				utilisateurName.setText(resource.getPseudo());
-				utilisateurVille.setText(resource.getCity());
+				utilisateurName.setText(Share.formatString(resource.getPseudo()));
+				utilisateurVille.setText(Share.formatString(resource.getCity()));
 				if (resource.getGender().equals("0")) {
 					avatar.setImageResource(R.drawable.male_user_icon);
 				} else {
