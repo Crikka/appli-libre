@@ -4,6 +4,7 @@ import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.model.local.cache.Cache;
 import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.ressource.Project;
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -37,7 +38,7 @@ public class MapFragment extends Fragment {
 			Bundle savedInstanceState) {
 
 		System.out.println("Load Google Map Fragment");
-		
+
 		rootView = inflater.inflate(R.layout.activity_maps, container, false);
 
 		fragment = new SupportMapFragment();
@@ -61,28 +62,20 @@ public class MapFragment extends Fragment {
 						@Override
 						public void run() {
 
-							Fragment fr = fm.findFragmentByTag("mapid");
+							try {
+								Fragment fr = fm.findFragmentByTag("mapid");
 
-							if (fr == null) {
-                                if(getActivity() != null) {
-                                    getActivity().finish();
-                                }
-							}
-
-							if (fr instanceof SupportMapFragment) {
-								handler.removeCallbacksAndMessages(null);
 								googleMap = ((SupportMapFragment) fr).getMap();
-							} else {
-								handler.removeCallbacksAndMessages(null);
+
+							} catch (Exception e) {
+								e.printStackTrace();
 							}
 
 							if (googleMap != null) {
 								displayInfo();
 								handler.removeCallbacksAndMessages(null);
 
-							}
-
-							else {
+							} else {
 								handler.postDelayed(this, 500);
 							}
 						}

@@ -18,6 +18,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -240,8 +241,8 @@ public class addProjectFragment extends Fragment {
 	}
 
 	public void loadMaps() {
-		FragmentTransaction ft = getActivity().getSupportFragmentManager()
-				.beginTransaction();
+		FragmentManager fm = getActivity().getSupportFragmentManager();
+		FragmentTransaction ft = fm.beginTransaction();
 		Fragment fragment = new addLocationProjectFragment();
 		ft.replace(R.id.mapView, fragment);
 		ft.commit();

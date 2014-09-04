@@ -31,8 +31,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 /**
  * @author Ferrand and Nelaupe
  */
-public class MapFragment extends Fragment implements
-		OnInfoWindowClickListener {
+public class MapFragment extends Fragment implements OnInfoWindowClickListener {
 
 	private SupportMapFragment fragment;
 	private FragmentManager fm;
@@ -41,7 +40,6 @@ public class MapFragment extends Fragment implements
 	private GoogleMap googleMap;
 	private final HashMap<Marker, Project> markers = new HashMap<Marker, Project>();
 
-	
 	private ArrayList<Project> projets;
 
 	private MapFragment _this;
@@ -51,8 +49,8 @@ public class MapFragment extends Fragment implements
 			Bundle savedInstanceState) {
 
 		rootView = inflater.inflate(R.layout.activity_maps, container, false);
-		
-		projets = new ArrayList<Project>(); 
+
+		projets = new ArrayList<Project>();
 
 		_this = this;
 
@@ -72,7 +70,7 @@ public class MapFragment extends Fragment implements
 
 				projets = new ArrayList<Project>(sync
 						.restrictToValidatedProjects());
-				
+
 				initMaps();
 
 			}
@@ -84,7 +82,6 @@ public class MapFragment extends Fragment implements
 	@Override
 	public void onInfoWindowClick(Marker marker) {
 
-		
 		String id = markers.get(marker).getResourceId();
 		FragmentTransaction ft = getFragmentManager().beginTransaction();
 		Fragment fragment = new adullact.publicrowdfunding.controller.project.details.ProjectPagerFragment();
@@ -96,58 +93,45 @@ public class MapFragment extends Fragment implements
 		ft.commit();
 
 	}
-	
-	public void initMaps(){
 
-		FragmentTransaction ft = fm.beginTransaction();
-		ft.replace(R.id.mapView, fragment, "mapid").commit();
+	public void initMaps() {
 
-		final Handler handler = new Handler();
-		handler.postDelayed(new Runnable() {
+		try {
 
-			@Override
-			public void run() {
+			FragmentTransaction ft = fm.beginTransaction();
+			ft.replace(R.id.mapView, fragment, "mapid").commit();
+			fm.executePendingTransactions();
 
-				try{
-				googleMap = ((SupportMapFragment) fm.findFragmentByTag("mapid"))
-						.getMap();
+			googleMap = ((SupportMapFragment) fm.findFragmentByTag("mapid"))
+					.getMap();
 
-				if (googleMap != null) {
-					for (Project proj : projets) {
-						MarkerOptions marker = new MarkerOptions();
-						marker.position(proj.getPosition());
-						marker.title(proj.getName());
-						Marker m = googleMap.addMarker(marker);
-						
-						markers.put(m, proj);
-					}
+			for (Project proj : projets) {
+				MarkerOptions marker = new MarkerOptions();
+				marker.position(proj.getPosition());
+				marker.title(proj.getName());
+				Marker m = googleMap.addMarker(marker);
 
-					googleMap.setOnInfoWindowClickListener(_this);
-					googleMap
-							.setInfoWindowAdapter(new adullact.publicrowdfunding.controller.adaptor.MarkerWindowAdaptor(
-									 getLayoutInflater(null), markers));
-
-					handler.removeCallbacksAndMessages(null);
-
-					// googleMap.setOnMarkerClickListener(TabMapFragment.this);
-					googleMap.setMyLocationEnabled(true);
-					LatLng Montpellier = new LatLng(43.652400, 3.761380);
-					CameraUpdate center = CameraUpdateFactory
-							.newLatLng(Montpellier);
-					CameraUpdate zoom = CameraUpdateFactory.zoomTo(9);
-					googleMap.moveCamera(center);
-					googleMap.animateCamera(zoom);
-					mprogressDialog.dismiss();
-				}
-
-				else {
-					handler.postDelayed(this, 1000);
-				}
-				}catch(Exception e){
-					System.out.println("Impossible de lancer Google Map");
-				}
+				markers.put(m, proj);
 			}
-		}, 1000);
+
+			googleMap.setOnInfoWindowClickListener(_this);
+			googleMap
+					.setInfoWindowAdapter(new adullact.publicrowdfunding.controller.adaptor.MarkerWindowAdaptor(
+							getLayoutInflater(null), markers));
+
+			googleMap.setMyLocationEnabled(true);
+			mprogressDialog.dismiss();
+
+
+			LatLng Montpellier = new LatLng(43.652400, 3.761380);
+			CameraUpdate center = CameraUpdateFactory.newLatLng(Montpellier);
+			CameraUpdate zoom = CameraUpdateFactory.zoomTo(9);
+			googleMap.moveCamera(center);
+			googleMap.animateCamera(zoom);
+			
+		} catch (Exception e) {
+			System.out.println("Impossible de lancer Google Map");
+		}
 	}
 	
 
