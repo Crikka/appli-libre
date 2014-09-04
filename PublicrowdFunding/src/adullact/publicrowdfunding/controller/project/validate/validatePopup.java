@@ -42,7 +42,7 @@ public class validatePopup extends Fragment {
 		
 		_this = this;
 		
-
+		valider = (Button) view.findViewById(R.id.valider);
 		Bundle bundle = this.getArguments();
 		
 		final String idProject = bundle.getString("idProject");

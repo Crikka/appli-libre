@@ -39,7 +39,6 @@ public class MainActivity extends Fragment {
 	
 	private FrameLayout filter;
 
-	private ArrayList<Project> projects;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,8 +46,6 @@ public class MainActivity extends Fragment {
 
 		final View view = inflater.inflate(R.layout.fragment_liste_projet,
 				container, false);
-
-		projects = new ArrayList<Project>();
 		
 		listeProjets = (ListView) view.findViewById(R.id.liste);
 
@@ -85,8 +82,8 @@ public class MainActivity extends Fragment {
 
 				FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
 				Fragment fragment = new adullact.publicrowdfunding.controller.project.validate.validatePopup();
-				
-				String idProject = projects.get(position).getResourceId();
+			
+				String idProject = 	adapter.getItem(position).getResourceId();
         		Bundle bundle = new Bundle();
         		bundle.putString("idProject", idProject);
         		fragment.setArguments(bundle);
@@ -126,13 +123,11 @@ public class MainActivity extends Fragment {
 		sync.sync(new HoldAllToDo<Project>() {
 
 			@Override
-			public void holdAll(ArrayList<Project> projets) {
-				
+			public void holdAll(ArrayList<Project> projects) {
 
-				projects = projets;
 				adapter = new ValidateProjectAdaptor(getActivity().getBaseContext(),
 						R.layout.adaptor_project, sync.restrictToNotValidatedProjects());
-			
+
 				adapter.addAll(projects);
 				adapter.notifyDataSetChanged();
 				swipeView.setRefreshing(false);
