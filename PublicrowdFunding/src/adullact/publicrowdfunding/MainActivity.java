@@ -65,6 +65,8 @@ public class MainActivity extends FragmentActivity {
 	private SimpleLine m_separator_3;
 
 	private User me;
+	
+	private boolean Connected;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -270,7 +272,7 @@ public class MainActivity extends FragmentActivity {
 		geolocalisation();
 	}
 
-	public void setDrawerMenu(boolean connect) {
+	public void setDrawerMenu(boolean connect, boolean admin) {
 		if (connect) {
 			m_button_account.setVisibility(View.VISIBLE);
 			m_button_authentificate.setVisibility(View.GONE);
@@ -278,11 +280,15 @@ public class MainActivity extends FragmentActivity {
 			m_Button_preferences.setVisibility(View.VISIBLE);
 			m_button_add_projet.setVisibility(View.VISIBLE);
 			m_button_change_account.setVisibility(View.VISIBLE);
-			m_button_validate_projects.setVisibility(View.VISIBLE);
 
 			m_separator_1.setVisibility(View.VISIBLE);
 			m_separator_2.setVisibility(View.VISIBLE);
 			m_separator_3.setVisibility(View.VISIBLE);
+			if(admin){
+				m_button_validate_projects.setVisibility(View.VISIBLE);
+			}else{
+				m_button_validate_projects.setVisibility(View.GONE);
+			}
 		} else {
 			m_button_account.setVisibility(View.GONE);
 			m_button_authentificate.setVisibility(View.VISIBLE);
@@ -299,11 +305,11 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	public void isConnect() {
+		setDrawerMenu(false, false);
 		if (Account.isConnect()) {
 			try {
 				Account account = Account.getOwn();
-
-				setDrawerMenu(true);
+				setDrawerMenu(true, account.isAdmin());
 				account.getUser(new HoldToDo<User>() {
 
 					@Override
@@ -319,14 +325,15 @@ public class MainActivity extends FragmentActivity {
 							avatar.setImageResource(R.drawable.female_user_icon);
 						}
 
+
 					}
 
 				});
 			} catch (NoAccountExistsInLocal e1) {
-				setDrawerMenu(false);
+
 			}
 		} else {
-			setDrawerMenu(false);
+
 		}
 	}
 

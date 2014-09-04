@@ -127,7 +127,7 @@ public class MainActivity extends Fragment {
 
 				adapter = new ValidateProjectAdaptor(getActivity().getBaseContext(),
 						R.layout.adaptor_project, sync.restrictToNotValidatedProjects());
-
+				
 				adapter.addAll(projects);
 				adapter.notifyDataSetChanged();
 				swipeView.setRefreshing(false);
