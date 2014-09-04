@@ -98,7 +98,7 @@ public class ParticipatePopup extends Fragment {
 		                public void run() {
 		                	try {
 								getActivity().getWindow().getDecorView()
-								.findViewById(R.id.filter)
+								.findViewById(R.id.big_filter)
 								.setVisibility(View.GONE);
 								
 							} catch (Exception e) {

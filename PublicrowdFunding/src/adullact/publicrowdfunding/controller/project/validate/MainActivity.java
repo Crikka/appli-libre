@@ -50,8 +50,8 @@ public class MainActivity extends Fragment {
 		listeProjets = (ListView) view.findViewById(R.id.liste);
 
 		loading = (LinearLayout) view.findViewById(R.id.loading);
-
-		filter = (FrameLayout) view.findViewById(R.id.alpha_projets);
+		
+		filter = (FrameLayout) this.getActivity().getWindow().getDecorView().findViewById(R.id.big_filter);
 		filter.setVisibility(View.GONE);
 		
 		TextView empty = (TextView) view.findViewById(R.id.empty);
@@ -89,7 +89,7 @@ public class MainActivity extends Fragment {
         		fragment.setArguments(bundle);
         		
         		ft.setCustomAnimations(R.anim.popup_enter, R.anim.no_anim);
-				ft.add(R.id.front, fragment);
+				ft.add(R.id.big_font, fragment);
 				ft.commit();
         		
 				filter.setVisibility(View.VISIBLE);

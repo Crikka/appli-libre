@@ -23,6 +23,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,7 +46,7 @@ public class InfoProjectFragment extends Fragment {
 	private Button m_website;
 	private Button m_call;
 
-	private ImageView m_illustration;
+	//private ImageView m_illustration;
 	private ImageView m_avatar;
 
 	private Project projetToDisplay;
@@ -67,7 +68,7 @@ public class InfoProjectFragment extends Fragment {
 
 	private FrameLayout filter;
 	
-	private FrameLayout showLoaded;
+	private ScrollView showLoaded;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,11 +78,13 @@ public class InfoProjectFragment extends Fragment {
 		view = inflater.inflate(R.layout.fragment_detail_project, container,
 				false);
 		fm = this.getActivity().getSupportFragmentManager();
-		filter = (FrameLayout)  view.findViewById(R.id.filter);
+		
+		filter = (FrameLayout)  getActivity().getWindow().getDecorView().findViewById(R.id.big_filter);
 		filter.setVisibility(View.GONE);
 		layoutConnect = (FrameLayout) view.findViewById(R.id.connect);
 
-		showLoaded = (FrameLayout) view.findViewById(R.id.showLoaded);
+		
+		showLoaded = (ScrollView) view.findViewById(R.id.showLoaded);
 		showLoaded.setVisibility(View.GONE);
 		
 		loading = (LinearLayout) view.findViewById(R.id.loading);
@@ -117,7 +120,7 @@ public class InfoProjectFragment extends Fragment {
 		m_website = (Button) view.findViewById(R.id.website);
 		m_call = (Button) view.findViewById(R.id.phone);
 
-		m_illustration = (ImageView) view.findViewById(R.id.icon);
+		//m_illustration = (ImageView) view.findViewById(R.id.icon);
 
 		m_avatar = (ImageView) view.findViewById(R.id.avatar);
 
@@ -155,12 +158,13 @@ public class InfoProjectFragment extends Fragment {
 	}
 
 	public void displayInfo() {
+		/*
 		if (projetToDisplay.getIllustration() != 0) {
 			m_illustration.setImageResource(Utility.getDrawable(projetToDisplay
 					.getIllustration()));
 		} else {
 			m_illustration.setImageResource(R.drawable.ic_launcher);
-		}
+		}*/
 
 		if (projetToDisplay.getEmail() == null
 				|| projetToDisplay.getEmail().length() == 0) {
@@ -259,7 +263,7 @@ public class InfoProjectFragment extends Fragment {
 				bundle.putString("idProject", projetToDisplay.getResourceId());
 				fragment.setArguments(bundle);
 				ft.setCustomAnimations(R.anim.popup_enter, R.anim.no_anim);
-				ft.add(R.id.front, fragment);
+				ft.add(R.id.big_font, fragment);
 				ft.commit();
 
 				filter.setVisibility(View.VISIBLE);

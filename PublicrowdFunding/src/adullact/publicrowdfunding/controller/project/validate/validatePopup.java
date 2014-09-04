@@ -111,7 +111,7 @@ public class validatePopup extends Fragment {
 			public void run() {
 				try {
 					getActivity().getWindow().getDecorView()
-							.findViewById(R.id.alpha_projets)
+							.findViewById(R.id.big_filter)
 							.setVisibility(View.GONE);
 
 				} catch (Exception e) {

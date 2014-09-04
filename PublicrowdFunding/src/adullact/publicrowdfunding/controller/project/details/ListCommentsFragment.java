@@ -210,7 +210,7 @@ public class ListCommentsFragment extends Fragment {
 				bundle.putString("idProject", projetCurrent.getResourceId());
 				fragment.setArguments(bundle);
 				ft.setCustomAnimations(R.anim.popup_enter, R.anim.no_anim);
-				ft.add(R.id.front, fragment);
+				ft.add(R.id.big_font, fragment);
 				ft.commit();
 		
 				filter.setVisibility(View.VISIBLE);
