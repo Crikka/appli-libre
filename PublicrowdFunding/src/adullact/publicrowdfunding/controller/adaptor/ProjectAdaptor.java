@@ -3,6 +3,8 @@ package adullact.publicrowdfunding.controller.adaptor;
 import java.util.ArrayList;
 
 import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
+import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.utilities.Calcul;
 import adullact.publicrowdfunding.model.local.utilities.CanI;
@@ -123,8 +125,14 @@ public class ProjectAdaptor extends ArrayAdapter<Project> {
 			@Override
 			protected void no() {
 				// Il est dans les fav
-				v.findViewById(R.id.fav_layout).setVisibility(View.VISIBLE);
-				
+			
+				try {
+					Account.getOwn();
+					v.findViewById(R.id.fav_layout).setVisibility(View.VISIBLE);
+				} catch (NoAccountExistsInLocal e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			
 		}.bookmark(projet);
