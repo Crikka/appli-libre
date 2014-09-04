@@ -11,12 +11,15 @@ import adullact.publicrowdfunding.model.server.event.AuthenticationEvent;
 import adullact.publicrowdfunding.model.server.request.AuthenticationRequest;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnKeyListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -35,14 +38,18 @@ public class ConnexionFragment extends Fragment {
 	
 	private LinearLayout loading;
     private LinearLayout loadingPersonnelInfo;
+    
+	private Fragment _this;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		final View view = inflater.inflate(R.layout.activity_authetificate,
+		final View view = inflater.inflate(R.layout.popup_connect,
 				container, false);
 		
 		context = getActivity();
+		
+		_this = this;
 		
 		m_login = (EditText) view.findViewById(R.id.login_connexion);
 		m_password = (EditText) view.findViewById(R.id.password_connexion);
@@ -101,16 +108,18 @@ public class ConnexionFragment extends Fragment {
                                         public void hold(User resource) {
                                             Toast.makeText(context, "Bienvenue " + resource.getPseudo(), Toast.LENGTH_LONG).show();
                                             
-                                            
+                                            /*
                                     		FragmentTransaction ft = getFragmentManager().beginTransaction();
                                     		//ft.setCustomAnimations(R.anim.enter, R.anim.exit);
                                     		Fragment fragment = new ListProjectsFragment();
                                     		ft.replace(R.id.content_frame, fragment, "allProjectFragment");
                                     		fragment.setHasOptionsMenu(true);
+                                    		*/
                                     		MainActivity _this = (MainActivity) getActivity();
                                     		_this.isConnect();
                                     		
-                                    		ft.commit();
+                                    		//ft.commit();
+                                    		back();
                                             
                                             
                                         }
@@ -159,11 +168,23 @@ public class ConnexionFragment extends Fragment {
         		bundle.putString("login", login);
         		fragment.setArguments(bundle);
         		
-        		MainActivity _this = (MainActivity) getActivity();
-        		_this.isConnect();
         		
         		ft.commit();
 
+			}
+		});
+		
+		view.setFocusableInTouchMode(true);
+		view.requestFocus();
+		view.setOnKeyListener(new OnKeyListener() {
+			@Override
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+					back();
+					return true;
+				}
+				return false;
 			}
 		});
 		return view;
@@ -173,6 +194,30 @@ public class ConnexionFragment extends Fragment {
 	public void onPrepareOptionsMenu(Menu menu) {
 		menu.findItem(R.id.action_search).setVisible(false);
 		menu.findItem(R.id.action_sort).setVisible(false);
+	}
+	
+	public void back() {
+
+		FragmentTransaction ft = getActivity().getSupportFragmentManager()
+				.beginTransaction();
+		ft.setCustomAnimations(R.anim.no_anim, R.anim.popup_exit);
+		ft.remove(_this);
+		ft.commit();
+
+		// Multi Thread pour que l'animation s'éxécute
+
+		new Handler().postDelayed(new Runnable() {
+			public void run() {
+				try {
+					getActivity().getWindow().getDecorView()
+							.findViewById(R.id.big_filter)
+							.setVisibility(View.GONE);
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}, 500);
 	}
 
 }

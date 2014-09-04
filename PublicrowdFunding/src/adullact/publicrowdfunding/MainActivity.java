@@ -22,6 +22,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -66,7 +67,9 @@ public class MainActivity extends FragmentActivity {
 
 	private User me;
 	
-	private boolean Connected;
+	private Menu menu;
+	
+    private android.widget.FrameLayout filter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +79,8 @@ public class MainActivity extends FragmentActivity {
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (LinearLayout) findViewById(R.id.left);
 
+		filter = ( android.widget.FrameLayout) findViewById(R.id.big_filter);
+		
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setHomeButtonEnabled(true);
 
@@ -131,10 +136,12 @@ public class MainActivity extends FragmentActivity {
 				FragmentTransaction ft = getSupportFragmentManager()
 						.beginTransaction();
 				Fragment fragment = new ConnexionFragment();
-				ft.replace(R.id.content_frame, fragment);
+				ft.replace(R.id.big_font, fragment);
+				ft.setCustomAnimations(R.anim.popup_enter, R.anim.no_anim);
 				ft.commit();
 
 				mDrawerLayout.closeDrawer(mDrawerList);
+				filter.setVisibility(View.VISIBLE);
 			}
 		});
 
@@ -248,10 +255,12 @@ public class MainActivity extends FragmentActivity {
 				FragmentTransaction ft = getSupportFragmentManager()
 						.beginTransaction();
 				Fragment fragment = new ConnexionFragment();
-				ft.replace(R.id.content_frame, fragment);
+				ft.replace(R.id.big_font, fragment);
+				ft.setCustomAnimations(R.anim.popup_enter, R.anim.no_anim);
 				ft.commit();
-
+				
 				mDrawerLayout.closeDrawer(mDrawerList);
+				filter.setVisibility(View.VISIBLE);
 
 			}
 		});
