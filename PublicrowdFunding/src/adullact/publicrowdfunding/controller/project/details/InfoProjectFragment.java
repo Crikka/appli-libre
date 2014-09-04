@@ -138,8 +138,8 @@ public class InfoProjectFragment extends Fragment {
 					displayInfo();
 				}
 			});
-		} else {
-			getActivity().finish();
+		} else{
+			this.getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
 		}
 
 		return view;

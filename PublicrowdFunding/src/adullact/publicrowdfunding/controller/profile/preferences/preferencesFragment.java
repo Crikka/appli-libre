@@ -75,7 +75,7 @@ public class preferencesFragment extends PreferenceFragment {
 
 			});
 		} catch (NoAccountExistsInLocal e) {
-			getActivity().finish();
+			System.out.println("Il n'a rien à faire là !!");
 		}
 
 		ville.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
@@ -188,7 +188,7 @@ public class preferencesFragment extends PreferenceFragment {
 				
 			});
 		} catch (NoAccountExistsInLocal e) {
-			getActivity().finish();
+			this.getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
 		}
 
 	}
