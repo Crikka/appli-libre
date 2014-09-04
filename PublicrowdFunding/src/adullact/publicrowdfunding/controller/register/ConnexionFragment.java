@@ -108,17 +108,9 @@ public class ConnexionFragment extends Fragment {
                                         public void hold(User resource) {
                                             Toast.makeText(context, "Bienvenue " + resource.getPseudo(), Toast.LENGTH_LONG).show();
                                             
-                                            /*
-                                    		FragmentTransaction ft = getFragmentManager().beginTransaction();
-                                    		//ft.setCustomAnimations(R.anim.enter, R.anim.exit);
-                                    		Fragment fragment = new ListProjectsFragment();
-                                    		ft.replace(R.id.content_frame, fragment, "allProjectFragment");
-                                    		fragment.setHasOptionsMenu(true);
-                                    		*/
                                     		MainActivity _this = (MainActivity) getActivity();
                                     		_this.isConnect();
-                                    		
-                                    		//ft.commit();
+                                    	
                                     		back();
                                             
                                             
