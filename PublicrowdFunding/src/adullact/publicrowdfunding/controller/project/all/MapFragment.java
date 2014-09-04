@@ -141,5 +141,10 @@ public class MapFragment extends Fragment implements OnInfoWindowClickListener {
 		}
 	}
 	
+	public void onPause(){
+		super.onPause();
+		this.getActivity().getSupportFragmentManager().beginTransaction().detach(fragment).commit();
+	}
+	
 
 }

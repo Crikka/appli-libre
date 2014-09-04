@@ -112,5 +112,10 @@ public class MapFragment extends Fragment {
 		googleMap.moveCamera(center);
 		googleMap.animateCamera(zoom);
 	}
+	
+	public void onPause(){
+		super.onPause();
+		this.getActivity().getSupportFragmentManager().beginTransaction().detach(fragment).commit();
+	}
 
 }
