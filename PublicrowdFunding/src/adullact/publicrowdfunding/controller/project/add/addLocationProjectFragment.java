@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -28,37 +29,31 @@ public class addLocationProjectFragment extends Fragment implements
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
-		View view = inflater.inflate(R.layout.fragment_maps, container, false);
+		
+		View view = null;
+		try {
+		    view = inflater.inflate(R.layout.fragment_maps, container, false);
+			InitialiseMap();
 
-		InitialiseMap();
+		} catch (Exception e) {
+			e.printStackTrace();
+			TextView texte = new TextView(getActivity());
+			texte.setText("Impossible de charger Google Map");
+			view = texte;
+		}
 
-		/*
-		 * Intent data = getIntent(); data.getExtras(); Bundle extras3 =
-		 * data.getExtras(); if (extras3 != null) { LatLng position = new
-		 * LatLng(extras3.getDouble("latitude"),
-		 * extras3.getDouble("longitude")); marker = map.addMarker(new
-		 * MarkerOptions().position(position) .title("Votre projet")); } else {
-		 * marker = null; }
-		 */
 		marker = null;
 		return view;
 	}
 
 	private void InitialiseMap() {
-		// TODO Auto-generated method stub
-		if (map == null) {
-			map = ((SupportMapFragment) getActivity()
-					.getSupportFragmentManager()
-					.findFragmentById(R.id.map_frag)).getMap();
 
-			if (map != null) {
+		map = ((SupportMapFragment) getActivity().getSupportFragmentManager()
+				.findFragmentById(R.id.map_frag)).getMap();
 
-			}
+		map.setOnMapClickListener(this);
+		map.setMyLocationEnabled(true);
 
-			map.setOnMapClickListener(this);
-			map.setMyLocationEnabled(true);
-
-		}
 	}
 
 	@Override

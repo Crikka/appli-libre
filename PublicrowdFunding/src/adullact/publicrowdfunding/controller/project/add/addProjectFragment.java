@@ -182,7 +182,12 @@ public class addProjectFragment extends Fragment {
 		}
 
 		String StrDay = "" + day;
-		LatLng position = _map.getPosition();
+		LatLng position = new LatLng(0,0);
+		try{
+		position = _map.getPosition();
+		}catch(NullPointerException e){
+			e.printStackTrace();
+		}
 		new Project(titre, description, user.getResourceId(), somme,
 				Utility.stringToDateTime(Stryear + "-" + StrMonth + "-"
 						+ StrDay + " 00:00:00"),
@@ -241,13 +246,16 @@ public class addProjectFragment extends Fragment {
 	}
 
 	public void loadMaps() {
+		try{
 		FragmentManager fm = getActivity().getSupportFragmentManager();
 		FragmentTransaction ft = fm.beginTransaction();
 		Fragment fragment = new addLocationProjectFragment();
 		ft.replace(R.id.mapView, fragment);
 		ft.commit();
-
 		_map = (addLocationProjectFragment) fragment;
+		}catch(Exception e){
+			System.out.println("Erreur lancement de Google Map");
+		}
 
 	}
 
@@ -305,13 +313,9 @@ public class addProjectFragment extends Fragment {
 			}
 		}).start();
 
-		new Thread(new Runnable() {
 
-			@Override
-			public void run() {
-				loadMaps();
-			}
-		}).start();
+		loadMaps();
+		
 
 	}
 }
