@@ -30,19 +30,19 @@
 
         <RadioGroup
             android:layout_marginTop="10dp"
-            android:id="@+id/radioGroup1"
+            android:id="@+id/radioGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
 
             <RadioButton
-                android:id="@+id/radio0"
+                android:id="@+id/validation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:text="Valider le projet" />
 
             <RadioButton
-                android:id="@+id/radio1"
+                android:id="@+id/reject"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                  android:text="refuser le projet"  />

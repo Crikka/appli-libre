@@ -1,6 +1,9 @@
 package adullact.publicrowdfunding.controller.project.validate;
 
 import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.model.local.callback.HoldToDo;
+import adullact.publicrowdfunding.model.local.ressource.Project;
+import adullact.publicrowdfunding.model.server.event.UpdateEvent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -8,9 +11,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 
 /**
  * @author Ferrand and Nelaupe
@@ -20,27 +27,58 @@ public class validatePopup extends Fragment {
 	private validatePopup _this;
 	
 	private Button valider;
+	
+	private Project currentProject;
 
+
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
 		super.onCreateView(inflater, container, savedInstanceState);
-		View view = inflater.inflate(R.layout.popup_activer, container,
+		final View view = inflater.inflate(R.layout.popup_activer, container,
 				false);
 		
 		_this = this;
+		
 
-		/*
+		Bundle bundle = this.getArguments();
+		
+		final String idProject = bundle.getString("idProject");
+		
+		final RadioGroup selected = (RadioGroup) view.findViewById(R.id.radioGroup);
+
+		new Project().getCache(idProject).toResource(new HoldToDo<Project>(){
+
+			@Override
+			public void hold(Project resource) {
+				currentProject = resource;
+			}
+		});
+		
 		valider.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				
+				
+				switch(selected.getCheckedRadioButtonId()){
+				case R.id.validation:
+					
+					currentProject.setValidate(true);
+					update();
+					break;
+				case R.id.reject:
+					currentProject.setValidate(false);
+					update();
+					default:
+						return;
+				}
 			}
 
 		});
-*/
+
 		
 		view.setFocusableInTouchMode(true);
 		view.requestFocus();
@@ -81,6 +119,48 @@ public class validatePopup extends Fragment {
 				}
 			}
 		}, 500);
+	}
+	
+	public void update(){
+		currentProject.serverUpdate(new UpdateEvent<Project>(){
+
+			@Override
+			public void onUpdate(Project resource) {
+				back();
+				
+			}
+
+			@Override
+			public void errorResourceIdDoesNotExist() {
+				back();
+				
+			}
+
+			@Override
+			public void errorAdministratorRequired() {
+				back();
+				
+			}
+
+			@Override
+			public void errorAuthenticationRequired() {
+				back();
+				
+			}
+
+			@Override
+			public void errorNetwork() {
+				back();
+				
+			}
+
+			@Override
+			public void errorServer() {
+				back();
+				
+			}
+			
+		});
 	}
 
 }
