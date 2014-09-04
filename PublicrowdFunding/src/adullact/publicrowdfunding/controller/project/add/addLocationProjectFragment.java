@@ -33,7 +33,12 @@ public class addLocationProjectFragment extends Fragment implements
 		View view = null;
 		try {
 		    view = inflater.inflate(R.layout.fragment_maps, container, false);
-			InitialiseMap();
+
+			map = ((SupportMapFragment) getActivity().getSupportFragmentManager()
+					.findFragmentById(R.id.map_frag)).getMap();
+
+			map.setOnMapClickListener(this);
+			map.setMyLocationEnabled(true);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -44,16 +49,6 @@ public class addLocationProjectFragment extends Fragment implements
 
 		marker = null;
 		return view;
-	}
-
-	private void InitialiseMap() {
-
-		map = ((SupportMapFragment) getActivity().getSupportFragmentManager()
-				.findFragmentById(R.id.map_frag)).getMap();
-
-		map.setOnMapClickListener(this);
-		map.setMyLocationEnabled(true);
-
 	}
 
 	@Override
