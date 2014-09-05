@@ -103,7 +103,6 @@ public class MapFragment extends Fragment {
 				}
 			});
 		}
-		setMapFocus();
 		return rootView;
 	}
 
@@ -113,22 +112,14 @@ public class MapFragment extends Fragment {
 		marker.snippet(projetCurrent.getDescription());
 		googleMap.addMarker(marker);
 
-		setMapFocus();
+		LatLng projectLocation = projetCurrent.getPosition();
 
-	}
+		CameraPosition currentPlace = new CameraPosition.Builder()
+				.target(projectLocation).zoom(9f).build();
 
-	public void setMapFocus() {
-		if (googleMap != null) {
+		googleMap.moveCamera(CameraUpdateFactory
+				.newCameraPosition(currentPlace));
 
-			LatLng projectLocation = projetCurrent.getPosition();
-
-			CameraPosition currentPlace = new CameraPosition.Builder()
-					.target(projectLocation).zoom(9f).build();
-
-			googleMap.moveCamera(CameraUpdateFactory
-					.newCameraPosition(currentPlace));
-
-		}
 	}
 
 	public void onPause() {
@@ -137,11 +128,6 @@ public class MapFragment extends Fragment {
 				.detach(fragment).commit();
 		this.getActivity().getSupportFragmentManager().beginTransaction()
 				.detach(this).commit();
-	}
-
-	public void onResume() {
-		super.onResume();
-		setMapFocus();
 	}
 
 }

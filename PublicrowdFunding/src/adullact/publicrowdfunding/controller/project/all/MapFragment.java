@@ -48,15 +48,16 @@ public class MapFragment extends Fragment implements OnInfoWindowClickListener {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		try{
-		rootView = inflater.inflate(R.layout.activity_maps, container, false);
+		try {
+			rootView = inflater.inflate(R.layout.activity_maps, container,
+					false);
 
-		}catch(Exception e){
+		} catch (Exception e) {
 			TextView text = new TextView(getActivity());
 			text.setText("Impossible de charger Google Map");
 			return text;
 		}
-		
+
 		projets = new ArrayList<Project>();
 
 		_this = this;
@@ -109,8 +110,8 @@ public class MapFragment extends Fragment implements OnInfoWindowClickListener {
 			ft.replace(R.id.mapView, fragment, "mapAllFragment").commit();
 			fm.executePendingTransactions();
 
-			googleMap = ((SupportMapFragment) fm.findFragmentByTag("mapAllFragment"))
-					.getMap();
+			googleMap = ((SupportMapFragment) fm
+					.findFragmentByTag("mapAllFragment")).getMap();
 
 			for (Project proj : projets) {
 				MarkerOptions marker = new MarkerOptions();
@@ -133,11 +134,4 @@ public class MapFragment extends Fragment implements OnInfoWindowClickListener {
 			System.out.println("Impossible de lancer Google Map");
 		}
 	}
-	
-	public void onPause(){
-		super.onPause();
-		this.getActivity().getSupportFragmentManager().beginTransaction().detach(fragment).commit();
-	}
-	
-
 }
