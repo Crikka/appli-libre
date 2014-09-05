@@ -137,6 +137,7 @@ public class MapFragment extends Fragment {
 	public void onPause(){
 		super.onPause();
 		this.getActivity().getSupportFragmentManager().beginTransaction().detach(fragment).commit();
+		this.getActivity().getSupportFragmentManager().beginTransaction().detach(this).commit();
 	}
 	
 	public void onResume(){
