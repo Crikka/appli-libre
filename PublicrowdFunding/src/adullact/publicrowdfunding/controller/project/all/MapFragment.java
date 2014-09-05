@@ -129,13 +129,6 @@ public class MapFragment extends Fragment implements OnInfoWindowClickListener {
 			googleMap.setMyLocationEnabled(true);
 			mprogressDialog.dismiss();
 
-
-			LatLng Montpellier = new LatLng(43.652400, 3.761380);
-			CameraUpdate center = CameraUpdateFactory.newLatLng(Montpellier);
-			CameraUpdate zoom = CameraUpdateFactory.zoomTo(9);
-			googleMap.moveCamera(center);
-			googleMap.animateCamera(zoom);
-			
 		} catch (Exception e) {
 			System.out.println("Impossible de lancer Google Map");
 		}

@@ -20,6 +20,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.CameraPosition.Builder;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -35,7 +36,6 @@ public class MapFragment extends Fragment {
 
 	View rootView;
 	GoogleMap googleMap;
-	
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,7 +46,13 @@ public class MapFragment extends Fragment {
 		try {
 			rootView = inflater.inflate(R.layout.activity_maps, container,
 					false);
-			setMapFocus();
+
+			fragment = new SupportMapFragment();
+			fm = getFragmentManager();
+
+			FragmentTransaction ft = fm.beginTransaction();
+			ft.replace(R.id.mapView, fragment, "mapProjectDetail").commit();
+
 		} catch (Exception e) {
 			TextView text = new TextView(getActivity());
 			text.setText("Impossible de charger Google Map");
@@ -62,29 +68,22 @@ public class MapFragment extends Fragment {
 				public void hold(Project project) {
 
 					try {
-						fragment = new SupportMapFragment();
-						fm = getFragmentManager();
-
-						FragmentTransaction ft = fm.beginTransaction();
-						ft.replace(R.id.mapView, fragment, "mapProjectDetail")
-								.commit();
 
 						projetCurrent = project;
 						final Handler handler = new Handler();
-						handler.postDelayed(new Runnable() {
+						handler.post(new Runnable() {
 
 							@Override
 							public void run() {
 
-								System.out.println("rortation");
 								Fragment fr = fm
 										.findFragmentByTag("mapProjectDetail");
-								System.out.println("fr : "+fr);
-								
-								if(fr == null){
+
+								if (fr == null) {
 									handler.postDelayed(this, 500);
-								}else{
-								googleMap = ((SupportMapFragment) fr).getMap();
+								} else {
+									googleMap = ((SupportMapFragment) fr)
+											.getMap();
 								}
 								if (googleMap != null) {
 									displayInfo();
@@ -94,7 +93,7 @@ public class MapFragment extends Fragment {
 									handler.postDelayed(this, 1000);
 								}
 							}
-						}, 500);
+						});
 
 					} catch (Exception e) {
 						TextView text = new TextView(getActivity());
@@ -117,30 +116,30 @@ public class MapFragment extends Fragment {
 		setMapFocus();
 
 	}
-	
-	public void setMapFocus(){
-		if(googleMap != null){
-			CameraPosition camera = googleMap.getCameraPosition();
-			LatLng position = camera.target;
-			if(position != projetCurrent
-					.getPosition()){
-				CameraUpdate positionProject = CameraUpdateFactory.newLatLng(projetCurrent
-						.getPosition());
-				CameraUpdate zoom = CameraUpdateFactory.zoomTo(9);
-				googleMap.moveCamera(positionProject);
-				googleMap.animateCamera(zoom);
-				
-			}
+
+	public void setMapFocus() {
+		if (googleMap != null) {
+
+			LatLng projectLocation = projetCurrent.getPosition();
+
+			CameraPosition currentPlace = new CameraPosition.Builder()
+					.target(projectLocation).zoom(9f).build();
+
+			googleMap.moveCamera(CameraUpdateFactory
+					.newCameraPosition(currentPlace));
+
 		}
 	}
-	
-	public void onPause(){
+
+	public void onPause() {
 		super.onPause();
-		this.getActivity().getSupportFragmentManager().beginTransaction().detach(fragment).commit();
-		this.getActivity().getSupportFragmentManager().beginTransaction().detach(this).commit();
+		this.getActivity().getSupportFragmentManager().beginTransaction()
+				.detach(fragment).commit();
+		this.getActivity().getSupportFragmentManager().beginTransaction()
+				.detach(this).commit();
 	}
-	
-	public void onResume(){
+
+	public void onResume() {
 		super.onResume();
 		setMapFocus();
 	}
