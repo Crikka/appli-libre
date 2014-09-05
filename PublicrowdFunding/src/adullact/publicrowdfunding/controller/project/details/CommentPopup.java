@@ -118,7 +118,7 @@ public class CommentPopup extends Fragment {
 				if (keyCode == KeyEvent.KEYCODE_BACK) {
 
 					back();
-					return true;
+					return false;
 				}
 				return false;
 			}
@@ -142,7 +142,7 @@ public class CommentPopup extends Fragment {
 			public void run() {
 				try {
 					getActivity().getWindow().getDecorView()
-							.findViewById(R.id.alpha_comment)
+							.findViewById(R.id.big_filter)
 							.setVisibility(View.GONE);
 
 				} catch (Exception e) {

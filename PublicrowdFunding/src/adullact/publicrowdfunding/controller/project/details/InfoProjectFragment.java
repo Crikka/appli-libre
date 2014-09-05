@@ -262,6 +262,7 @@ public class InfoProjectFragment extends Fragment {
 				Bundle bundle = new Bundle();
 				bundle.putString("idProject", projetToDisplay.getResourceId());
 				fragment.setArguments(bundle);
+				ft.addToBackStack(null);
 				ft.setCustomAnimations(R.anim.popup_enter, R.anim.no_anim);
 				ft.add(R.id.big_font, fragment);
 				ft.commit();

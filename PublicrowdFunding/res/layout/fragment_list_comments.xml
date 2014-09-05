@@ -71,13 +71,4 @@
         </LinearLayout>
     </FrameLayout>
 
-    <FrameLayout
-        android:id="@+id/alpha_comment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:background="@drawable/filter" >
-    </FrameLayout>
-	    
-
 </FrameLayout>

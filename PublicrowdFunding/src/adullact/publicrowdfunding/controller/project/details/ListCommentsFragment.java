@@ -67,7 +67,8 @@ public class ListCommentsFragment extends Fragment {
 		final View view = inflater.inflate(R.layout.fragment_list_comments,
 				container, false);
 		
-		filter = (FrameLayout) view.findViewById(R.id.alpha_comment);
+		
+		filter = (FrameLayout) this.getActivity().getWindow().getDecorView().findViewById(R.id.big_filter);
 		filter.setVisibility(View.GONE);	
 		
 		fm = this.getActivity().getSupportFragmentManager();
@@ -209,6 +210,7 @@ public class ListCommentsFragment extends Fragment {
 				Bundle bundle = new Bundle();
 				bundle.putString("idProject", projetCurrent.getResourceId());
 				fragment.setArguments(bundle);
+				ft.addToBackStack(null);
 				ft.setCustomAnimations(R.anim.popup_enter, R.anim.no_anim);
 				ft.add(R.id.big_font, fragment);
 				ft.commit();
