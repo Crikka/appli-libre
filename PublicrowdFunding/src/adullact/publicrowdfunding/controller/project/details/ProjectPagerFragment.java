@@ -59,7 +59,7 @@ public class ProjectPagerFragment extends Fragment {
 
 		fm = context.getSupportFragmentManager();
 		fm.beginTransaction().disallowAddToBackStack().commit();
-
+		
 		PagerAdaptor adaptor = new PagerAdaptor(fm, idProject);
 
 		ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager);

@@ -42,19 +42,19 @@ public class PagerAdaptor extends FragmentStatePagerAdapter {
 			fragment = new ListCommentsFragment();
 			bundle.putString("idProject", idProject);
 			fragment.setArguments(bundle);
-			System.out.println(fragment.getId());
+			fragment.setRetainInstance(false);
 			return fragment;
 		case 1:
 			fragment = new InfoProjectFragment();
 			bundle.putString("idProject", idProject);
 			fragment.setArguments(bundle);
-			System.out.println(fragment.getId());
+			fragment.setRetainInstance(false);
 			return fragment;
 		case 2:
 			fragment = new MapFragment();
 			bundle.putString("idProject", idProject);
 			fragment.setArguments(bundle);
-			System.out.println(fragment.getId());
+			fragment.setRetainInstance(false);
 			return fragment;
 
 		default:
@@ -65,17 +65,6 @@ public class PagerAdaptor extends FragmentStatePagerAdapter {
 	@Override
 	public CharSequence getPageTitle(int position) {
 		return titles[position % PAGE_COUNT];
-	}
-
-	public static void findFragmentByPosition(int position) {
-		System.out.println(_this.getItem(position).getTag());
-		
-		/*
-		 * PagerAdaptor fragmentPagerAdapter = getFragmentPagerAdapter(); return
-		 * getActivity().getSupportFragmentManager().findFragmentByTag(
-		 * "android:switcher:" + getViewPager().getId() + ":" +
-		 * fragmentPagerAdapter.getItemId(position));
-		 */
 	}
 
 }

@@ -73,11 +73,16 @@ public class MapFragment extends Fragment {
 							@Override
 							public void run() {
 
+								System.out.println("rortation");
 								Fragment fr = fm
 										.findFragmentByTag("mapProjectDetail");
-
+								System.out.println("fr : "+fr);
+								
+								if(fr == null){
+									handler.postDelayed(this, 500);
+								}else{
 								googleMap = ((SupportMapFragment) fr).getMap();
-
+								}
 								if (googleMap != null) {
 									displayInfo();
 									handler.removeCallbacksAndMessages(null);
