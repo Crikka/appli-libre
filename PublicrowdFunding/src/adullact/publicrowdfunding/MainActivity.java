@@ -1,5 +1,7 @@
 package adullact.publicrowdfunding;
 
+import java.lang.reflect.Method;
+
 import adullact.publicrowdfunding.controller.profile.preferences.preferencesFragment;
 import adullact.publicrowdfunding.controller.project.all.ListProjectsFragment;
 import adullact.publicrowdfunding.controller.project.all.MapFragment;
@@ -66,59 +68,55 @@ public class MainActivity extends FragmentActivity {
 	private SimpleLine m_separator_3;
 
 	private User me;
-	
+
 	private Menu menu;
-	
-    private android.widget.FrameLayout filter;
+
+	private boolean isTablet;
+
+	private android.widget.FrameLayout filter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		isTablet = isTabletDevice(this.getBaseContext());
+
+		System.out.println("Is tablet : " + isTablet);
+
+		// isTablet = false;
+		if (!isTablet) {
+
+			managerDrawerMenu(savedInstanceState);
+		}
+
 		mDrawerList = (LinearLayout) findViewById(R.id.left);
 
-		filter = ( android.widget.FrameLayout) findViewById(R.id.big_filter);
-		
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setHomeButtonEnabled(true);
-
-		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-				R.drawable.ic_drawer, /* nav drawer image */
-				R.string.ask, /* "open drawer" */
-				R.string.ask /* "close drawer" */
-		) {
-			public void onDrawerClosed(View view) {
-				invalidateOptionsMenu();
-				mDrawerLayout.setClickable(true);
-			}
-
-			public void onDrawerOpened(View drawerView) {
-				invalidateOptionsMenu();
-			}
-		};
-		mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-		if (savedInstanceState == null) {
-			launchDefaultFragment();
-		}
+		filter = (android.widget.FrameLayout) findViewById(R.id.big_filter);
 
 		gererPanneauMenu();
 		isConnect();
 		geolocalisation();
+
+		if (savedInstanceState == null) {
+			launchDefaultFragment();
+		}
 	}
 
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
-		mDrawerToggle.syncState();
+		if (!isTablet) {
+			mDrawerToggle.syncState();
+		}
 	}
 
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
-		mDrawerToggle.onConfigurationChanged(newConfig);
+		if (!isTablet) {
+			mDrawerToggle.onConfigurationChanged(newConfig);
+		}
 	}
 
 	private void gererPanneauMenu() {
@@ -140,7 +138,7 @@ public class MainActivity extends FragmentActivity {
 				ft.setCustomAnimations(R.anim.popup_enter, R.anim.no_anim);
 				ft.commit();
 
-				mDrawerLayout.closeDrawer(mDrawerList);
+				closeDrawer();
 				filter.setVisibility(View.VISIBLE);
 			}
 		});
@@ -159,7 +157,7 @@ public class MainActivity extends FragmentActivity {
 				ft.replace(R.id.content_frame, fragment);
 				ft.commit();
 
-				mDrawerLayout.closeDrawer(mDrawerList);
+				closeDrawer();
 			}
 		});
 
@@ -179,8 +177,7 @@ public class MainActivity extends FragmentActivity {
 				ft.replace(R.id.content_frame, fragment);
 				ft.commit();
 
-				mDrawerLayout.closeDrawer(mDrawerList);
-
+				closeDrawer();
 			}
 		});
 
@@ -199,7 +196,7 @@ public class MainActivity extends FragmentActivity {
 						ft.replace(R.id.content_frame, fragment);
 						ft.commit();
 
-						mDrawerLayout.closeDrawer(mDrawerList);
+						closeDrawer();
 					}
 				});
 
@@ -218,7 +215,7 @@ public class MainActivity extends FragmentActivity {
 				ft.replace(R.id.content_frame, fragment);
 				ft.commit();
 
-				mDrawerLayout.closeDrawer(mDrawerList);
+				closeDrawer();
 			}
 		});
 
@@ -234,7 +231,7 @@ public class MainActivity extends FragmentActivity {
 				ft.addToBackStack(null);
 				ft.commit();
 
-				mDrawerLayout.closeDrawer(mDrawerList);
+				closeDrawer();
 			}
 		});
 
@@ -258,8 +255,8 @@ public class MainActivity extends FragmentActivity {
 				ft.replace(R.id.big_font, fragment);
 				ft.setCustomAnimations(R.anim.popup_enter, R.anim.no_anim);
 				ft.commit();
-				
-				mDrawerLayout.closeDrawer(mDrawerList);
+
+				closeDrawer();
 				filter.setVisibility(View.VISIBLE);
 
 			}
@@ -293,9 +290,9 @@ public class MainActivity extends FragmentActivity {
 			m_separator_1.setVisibility(View.VISIBLE);
 			m_separator_2.setVisibility(View.VISIBLE);
 			m_separator_3.setVisibility(View.VISIBLE);
-			if(admin){
+			if (admin) {
 				m_button_validate_projects.setVisibility(View.VISIBLE);
-			}else{
+			} else {
 				m_button_validate_projects.setVisibility(View.GONE);
 			}
 		} else {
@@ -333,7 +330,6 @@ public class MainActivity extends FragmentActivity {
 						} else {
 							avatar.setImageResource(R.drawable.female_user_icon);
 						}
-
 
 					}
 
@@ -380,7 +376,7 @@ public class MainActivity extends FragmentActivity {
 		ft.replace(R.id.content_frame, fragment, "allProjectFragment");
 		ft.commit();
 
-		mDrawerLayout.closeDrawer(mDrawerList);
+		closeDrawer();
 	}
 
 	public void geolocalisation() {
@@ -458,10 +454,50 @@ public class MainActivity extends FragmentActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-
-		if (MainActivity.mDrawerToggle.onOptionsItemSelected(item)) {
+		if (!isTablet && MainActivity.mDrawerToggle.onOptionsItemSelected(item)) {
 			return true;
 		}
 		return false;
 	}
+
+	private boolean isTabletDevice(Context context) {
+
+		if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+			return (context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_XLARGE;
+		}
+
+		return false;
+
+	}
+
+	public void managerDrawerMenu(Bundle savedInstanceState) {
+
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setHomeButtonEnabled(true);
+
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+				R.drawable.ic_drawer, /* nav drawer image */
+				R.string.ask, /* "open drawer" */
+				R.string.ask /* "close drawer" */
+		) {
+			public void onDrawerClosed(View view) {
+				invalidateOptionsMenu();
+				mDrawerLayout.setClickable(true);
+			}
+
+			public void onDrawerOpened(View drawerView) {
+				invalidateOptionsMenu();
+			}
+		};
+		mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+	}
+
+	public void closeDrawer() {
+		if (!isTablet) {
+			mDrawerLayout.closeDrawer(mDrawerList);
+		}
+	}
+
 }

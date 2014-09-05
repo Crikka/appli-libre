@@ -19,6 +19,8 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
@@ -33,6 +35,7 @@ public class MapFragment extends Fragment {
 
 	View rootView;
 	GoogleMap googleMap;
+	
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,7 +46,7 @@ public class MapFragment extends Fragment {
 		try {
 			rootView = inflater.inflate(R.layout.activity_maps, container,
 					false);
-
+			setMapFocus();
 		} catch (Exception e) {
 			TextView text = new TextView(getActivity());
 			text.setText("Impossible de charger Google Map");
@@ -88,7 +91,7 @@ public class MapFragment extends Fragment {
 									handler.removeCallbacksAndMessages(null);
 
 								} else {
-									handler.postDelayed(this, 500);
+									handler.postDelayed(this, 1000);
 								}
 							}
 						}, 500);
@@ -101,7 +104,7 @@ public class MapFragment extends Fragment {
 				}
 			});
 		}
-
+		setMapFocus();
 		return rootView;
 	}
 
@@ -111,16 +114,34 @@ public class MapFragment extends Fragment {
 		marker.snippet(projetCurrent.getDescription());
 		googleMap.addMarker(marker);
 
-		CameraUpdate center = CameraUpdateFactory.newLatLng(projetCurrent
-				.getPosition());
-		CameraUpdate zoom = CameraUpdateFactory.zoomTo(9);
-		googleMap.moveCamera(center);
-		googleMap.animateCamera(zoom);
+		setMapFocus();
+
+	}
+	
+	public void setMapFocus(){
+		if(googleMap != null){
+			CameraPosition camera = googleMap.getCameraPosition();
+			LatLng position = camera.target;
+			if(position != projetCurrent
+					.getPosition()){
+				CameraUpdate positionProject = CameraUpdateFactory.newLatLng(projetCurrent
+						.getPosition());
+				CameraUpdate zoom = CameraUpdateFactory.zoomTo(9);
+				googleMap.moveCamera(positionProject);
+				googleMap.animateCamera(zoom);
+				
+			}
+		}
 	}
 	
 	public void onPause(){
 		super.onPause();
 		this.getActivity().getSupportFragmentManager().beginTransaction().detach(fragment).commit();
+	}
+	
+	public void onResume(){
+		super.onResume();
+		setMapFocus();
 	}
 
 }
