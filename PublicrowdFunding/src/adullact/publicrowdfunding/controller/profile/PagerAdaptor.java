@@ -1,5 +1,7 @@
 package adullact.publicrowdfunding.controller.profile;
 
+import adullact.publicrowdfunding.R;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,12 +13,16 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 public class PagerAdaptor extends FragmentStatePagerAdapter {
 
 	private String idUser;
-
-    private String[] titles = { "Projets soumis", "Favoris", "Financés"};
 	
-	public PagerAdaptor(FragmentManager fm, String idUser) {
+	private Context context;
+
+	
+    private int[] titles = {R.string.project_submitted, R.string.bookmark, R.string.financed};
+	
+	public PagerAdaptor(Context context, FragmentManager fm, String idUser) {
 		super(fm);
 		this.idUser = idUser;
+		this.context = context;
 	}
 
 	final int PAGE_COUNT = 3;
@@ -58,7 +64,8 @@ public class PagerAdaptor extends FragmentStatePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return titles[position % PAGE_COUNT];
+    	String title = context.getResources().getString(titles[position % PAGE_COUNT]);
+        return title;
     }
 
 }

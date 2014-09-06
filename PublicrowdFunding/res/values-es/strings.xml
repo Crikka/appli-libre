@@ -67,7 +67,12 @@
     <string name="change_your_city"></string>
     <string name="change_your_name"></string>
     <string name="change_your_first_name"></string>
-   <string name="gender"></string>
-   <string name="your_email"></string>
-    
+    <string name="gender"></string>
+    <string name="your_email"></string>
+    <string name="project_submitted"></string>
+    <string name="bookmark"></string>
+    <string name="change_your_email"></string>
+    <string name="financed"></string>
+   <string name="register"></string>
+   
 </resources>

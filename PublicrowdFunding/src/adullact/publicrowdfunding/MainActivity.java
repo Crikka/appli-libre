@@ -15,6 +15,7 @@ import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
 import adullact.publicrowdfunding.model.local.utilities.Share;
 import adullact.publicrowdfunding.views.SimpleLine;
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.location.Location;
@@ -29,6 +30,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -76,6 +79,8 @@ public class MainActivity extends FragmentActivity {
 	private boolean isTablet;
 
 	private android.widget.FrameLayout filter;
+	
+	private Activity _this;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -84,9 +89,8 @@ public class MainActivity extends FragmentActivity {
 
 		isTablet = isTabletDevice(this.getBaseContext());
 
-		System.out.println("Is tablet : " + isTablet);
+		_this = this;
 
-		// isTablet = false;
 		if (!isTablet) {
 
 			managerDrawerMenu(savedInstanceState);
@@ -141,7 +145,11 @@ public class MainActivity extends FragmentActivity {
 				ft.commit();
 
 				closeDrawer();
+				
 				filter.setVisibility(View.VISIBLE);
+				Animation fadeInAnimation = AnimationUtils.loadAnimation(_this, R.anim.fade_enter);
+				filter.setAnimation(fadeInAnimation);
+				filter.animate();
 			}
 		});
 
@@ -260,6 +268,9 @@ public class MainActivity extends FragmentActivity {
 
 				closeDrawer();
 				filter.setVisibility(View.VISIBLE);
+				Animation fadeInAnimation = AnimationUtils.loadAnimation(_this, R.anim.fade_enter);
+				filter.setAnimation(fadeInAnimation);
+				filter.animate();
 
 			}
 		});

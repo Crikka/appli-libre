@@ -20,6 +20,8 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnKeyListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -150,17 +152,14 @@ public class ConnexionFragment extends Fragment {
 				
 				
 				FragmentTransaction ft = getFragmentManager().beginTransaction();
-        		//ft.setCustomAnimations(R.anim.enter, R.anim.exit);
         		Fragment fragment = new RegisterFragement();
 
-        		ft.replace(R.id.content_frame, fragment);
-        		
+        		ft.replace(R.id.big_font, fragment);
         		String login = m_login.getText().toString();
         		Bundle bundle = new Bundle();
         		bundle.putString("login", login);
         		fragment.setArguments(bundle);
-        		
-        		
+        		ft.addToBackStack(null);
         		ft.commit();
 
 			}

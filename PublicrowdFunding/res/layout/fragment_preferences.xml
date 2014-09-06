@@ -23,7 +23,7 @@
             android:title="@string/first_name" />
 
         <EditTextPreference
-            android:dialogTitle="Modifier votre email"
+            android:dialogTitle="@string/change_your_email"
             android:key="edittext_preference_email"
             android:summary="@string/your_email"
             android:title="@string/email" />

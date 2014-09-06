@@ -10,6 +10,8 @@ import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
 import adullact.publicrowdfunding.model.local.utilities.Share;
 import adullact.publicrowdfunding.model.local.utilities.Utility;
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -18,6 +20,8 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -69,6 +73,8 @@ public class InfoProjectFragment extends Fragment {
 	private FrameLayout filter;
 	
 	private ScrollView showLoaded;
+	
+	private Context _this;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,12 +83,16 @@ public class InfoProjectFragment extends Fragment {
 
 		view = inflater.inflate(R.layout.fragment_detail_project, container,
 				false);
+		
+		_this = this.getActivity().getBaseContext();
+		
 		fm = this.getActivity().getSupportFragmentManager();
 		
 		filter = (FrameLayout)  getActivity().getWindow().getDecorView().findViewById(R.id.big_filter);
 		filter.setVisibility(View.GONE);
 		layoutConnect = (FrameLayout) view.findViewById(R.id.connect);
 
+		
 		
 		showLoaded = (ScrollView) view.findViewById(R.id.showLoaded);
 		showLoaded.setVisibility(View.GONE);
@@ -269,7 +279,9 @@ public class InfoProjectFragment extends Fragment {
 				ft.commit();
 
 				filter.setVisibility(View.VISIBLE);
-
+				Animation fadeInAnimation = AnimationUtils.loadAnimation(_this, R.anim.fade_enter);
+				filter.setAnimation(fadeInAnimation);
+				filter.animate();
 			}
 		});
 		showLoaded.setVisibility(View.VISIBLE);

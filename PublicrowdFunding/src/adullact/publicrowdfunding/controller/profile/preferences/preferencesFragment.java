@@ -47,13 +47,8 @@ public class preferencesFragment extends PreferenceFragment {
 		 * Compte
 		 */
 
-		CheckBoxPreference isAdmin = (CheckBoxPreference) findPreference("checkbox_admin");
-
 		try {
 			Account account = Account.getOwn();
-			if (account.isAdmin()) {
-				isAdmin.setChecked(true);
-			}
 			account.getUser(new HoldToDo<User>() {
 
 				@Override

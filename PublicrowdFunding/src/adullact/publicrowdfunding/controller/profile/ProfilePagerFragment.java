@@ -7,6 +7,7 @@ import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
 import adullact.publicrowdfunding.model.local.utilities.Share;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -96,7 +97,8 @@ public class ProfilePagerFragment extends Fragment {
 		fm = _this.getSupportFragmentManager();
 		fm.beginTransaction().disallowAddToBackStack().commit();
 
-		PagerAdaptor adaptor = new PagerAdaptor(fm, idUser);
+		Context context = this.getActivity().getBaseContext();
+		PagerAdaptor adaptor = new PagerAdaptor(context, fm, idUser);
 		viewPager.setAdapter(adaptor);
 		viewPager.setCurrentItem(1);
 

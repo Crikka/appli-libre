@@ -38,7 +38,7 @@ public class RegisterFragement extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
-		final View view = inflater.inflate(R.layout.activity_register,
+		final View view = inflater.inflate(R.layout.popup_register,
 				container, false);
 		
 		context = getActivity();
@@ -159,7 +159,7 @@ public class RegisterFragement extends Fragment {
                 	FragmentTransaction ft = getFragmentManager().beginTransaction();
             		//ft.setCustomAnimations(R.anim.enter, R.anim.exit);
             		Fragment fragment = new ConnexionFragment();
-            		ft.replace(R.id.content_frame, fragment);
+            		ft.replace(R.id.big_font, fragment);
             		
             		ft.commit(); 
             		return true;

@@ -19,6 +19,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 
 /**
  * @author Ferrand and Nelaupe
@@ -90,23 +91,13 @@ public class ParticipatePopup extends Fragment {
 							.getSupportFragmentManager().beginTransaction();
 					ft.setCustomAnimations(R.anim.no_anim, R.anim.popup_exit);
 					ft.remove(_this);
-					ft.commit();
 
-					// Multi Thread pour que l'animation s'éxécute
-					
-					new Handler().postDelayed(new Runnable() {
-		                public void run() {
-		                	try {
-								getActivity().getWindow().getDecorView()
-								.findViewById(R.id.big_filter)
-								.setVisibility(View.GONE);
-								
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
-		                }
-		            }, 500);
-					
+					FrameLayout filter = (FrameLayout) getActivity().getWindow().getDecorView()
+							.findViewById(R.id.big_filter);			
+					Animation fadeInAnimation = AnimationUtils.loadAnimation(_this.getActivity(), R.anim.fade_exit);
+					filter.setAnimation(fadeInAnimation);
+					ft.commit();
+					filter.animate();
 					return true;
 				}
 				return false;

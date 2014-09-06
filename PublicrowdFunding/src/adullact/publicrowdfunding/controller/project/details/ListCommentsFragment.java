@@ -13,6 +13,7 @@ import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.Commentary;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -22,6 +23,8 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -57,6 +60,8 @@ public class ListCommentsFragment extends Fragment {
 	private FrameLayout loaded;
 	
 	private FrameLayout filter;
+	
+	private Context context;
 
 	
 	
@@ -67,7 +72,7 @@ public class ListCommentsFragment extends Fragment {
 		final View view = inflater.inflate(R.layout.fragment_list_comments,
 				container, false);
 		
-		
+		context = this.getActivity().getBaseContext();
 		filter = (FrameLayout) this.getActivity().getWindow().getDecorView().findViewById(R.id.big_filter);
 		filter.setVisibility(View.GONE);	
 		
@@ -216,6 +221,10 @@ public class ListCommentsFragment extends Fragment {
 				ft.commit();
 		
 				filter.setVisibility(View.VISIBLE);
+				Animation fadeInAnimation = AnimationUtils.loadAnimation(context, R.anim.fade_enter);
+				filter.setAnimation(fadeInAnimation);
+				filter.animate();
+				
 			}
 			
 		});

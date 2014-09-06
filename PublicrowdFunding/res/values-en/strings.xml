@@ -69,5 +69,10 @@
     <string name="change_your_first_name">Your first name</string>
     <string name="gender">Gender</string>
     <string name="your_email">Your Email</string>
+    <string name="project_submitted">Project Submitted</string>
+    <string name="bookmark">Bookmarks</string>
+    <string name="change_your_email">Change your Email</string>
+    <string name="financed">Financed</string>
+    <string name="register">Sign in</string>
 
 </resources>

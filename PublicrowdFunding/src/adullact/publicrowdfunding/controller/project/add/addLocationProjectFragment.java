@@ -32,14 +32,15 @@ public class addLocationProjectFragment extends Fragment implements
 		
 		View view = null;
 		try {
-		    view = inflater.inflate(R.layout.fragment_maps, container, false);
+			/*
+		    view = inflater.inflate(R.layout.activity_maps, container, false);
 
 			map = ((SupportMapFragment) getActivity().getSupportFragmentManager()
-					.findFragmentById(R.id.map_frag)).getMap();
+					.findFragmentById(R.id.)).getMap();
 
 			map.setOnMapClickListener(this);
 			map.setMyLocationEnabled(true);
-
+*/
 		} catch (Exception e) {
 			e.printStackTrace();
 			TextView texte = new TextView(getActivity());
