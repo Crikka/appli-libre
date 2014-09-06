@@ -1,43 +1,37 @@
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
 
-    <PreferenceCategory android:title="Utilisateur" >
+    <PreferenceCategory android:title="@string/user" >
 
         <EditTextPreference
-            android:dialogTitle="Modifier votre ville"
+            android:dialogTitle="@string/change_your_city"
             android:key="edittext_preference_ville"
-            android:summary="Votre ville (Affiché sur le profile)"
-            android:title="Ville" />
+            android:summary="@string/your_city"
+            android:title="@string/city" />
 
         <EditTextPreference
-            android:dialogTitle="Modifier votre Nom"
+            android:dialogTitle="@string/change_your_name"
             android:key="edittext_preference_nom"
-            android:summary="Votre Nom"
-            android:title="Nom" />
+            android:summary="@string/your_name"
+            android:title="@string/name" />
 
         <EditTextPreference
-            android:dialogTitle="Modifier votre Prenom"
+            android:dialogTitle="@string/change_your_first_name"
             android:key="edittext_preference_prenom"
-            android:summary="Votre prenom"
-            android:title="Prenom" />
+            android:summary="@string/your_first_name"
+            android:title="@string/first_name" />
 
         <EditTextPreference
             android:dialogTitle="Modifier votre email"
             android:key="edittext_preference_email"
-            android:summary="Votre email"
-            android:title="Email" />
+            android:summary="@string/your_email"
+            android:title="@string/email" />
 
         <SwitchPreference
             android:defaultValue="false"
             android:key="genre"
-            android:title="Genre" />
-    </PreferenceCategory>
-
-    <PreferenceCategory android:title="Compte" >
-
-        <CheckBoxPreference
-            android:key="checkbox_admin"
-            android:summary="Administrateur"
-            android:title="Passer administrateur" />
+            android:title="@string/gender" />
     </PreferenceCategory>
 
 </PreferenceScreen>

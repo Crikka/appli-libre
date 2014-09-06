@@ -52,5 +52,22 @@
     <string name="logout">Logout</string>
     <string name="authentication">Authentication</string>
     <string name="funding_progress">Funding progress</string>
+    <string name="sort_by">Sort by</string>
+    <string name="biggest_project">Biggest project</string>
+    <string name="smallest_project">Smallest project</string>
+    <string name="most_avanced">Most avanced</string>
+    <string name="closest">Closest</string>
+    <string name="user">User</string>
+    <string name="city">City</string>
+    <string name="name">Name</string>
+    <string name="first_name">First name</string>
+    <string name="your_city">Your city</string>
+    <string name="your_name">Your name</string>
+    <string name="your_first_name">Your first name</string>
+    <string name="change_your_city">Your first name</string>
+    <string name="change_your_name">Your first name</string>
+    <string name="change_your_first_name">Your first name</string>
+    <string name="gender">Gender</string>
+    <string name="your_email">Your Email</string>
 
 </resources>

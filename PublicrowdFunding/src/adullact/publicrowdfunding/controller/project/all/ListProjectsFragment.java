@@ -160,16 +160,21 @@ public class ListProjectsFragment extends Fragment {
 
 	}
 	
+	public String getByRessource(int ressource){
+		return this.getResources().getString(ressource);
+	}
+	
 	public void sort() {
 		ArrayAdapter<String> adapter = null;
+		
 		if (Share.position == null) {
-			String names[] = { "Le plus gros projet", "Le plus petit projet",
-					"Le plus avancé" };
+			String names[] = { getByRessource(R.string.biggest_project), getByRessource(R.string.smallest_project),
+					getByRessource(R.string.most_avanced) };
 			adapter = new ArrayAdapter<String>(getActivity(),
 					android.R.layout.simple_list_item_1, names);
 		} else {
-			String names[] = { "Le plus gros projet", "Le plus petit",
-					"Le plus avancé", "Le plus proche (Défaut)" };
+			String names[] = {getByRessource(R.string.biggest_project), getByRessource(R.string.smallest_project),
+					getByRessource(R.string.most_avanced), getByRessource(R.string.closest)};
 			adapter = new ArrayAdapter<String>(getActivity(),
 					android.R.layout.simple_list_item_1, names);
 		}
@@ -178,7 +183,7 @@ public class ListProjectsFragment extends Fragment {
 		LayoutInflater inflater = getActivity().getLayoutInflater();
 		View convertView = (View) inflater.inflate(R.layout.listeview, null);
 		alertDialog.setView(convertView);
-		alertDialog.setTitle("Trier par");
+		alertDialog.setTitle(getByRessource(R.string.sort_by));
 		ListView lv = (ListView) convertView.findViewById(R.id.liste);
 
 		lv.setAdapter(adapter);
