@@ -1,13 +1,10 @@
 package adullact.publicrowdfunding.model.local.cache;
 
-import android.util.Log;
-
-import com.vladium.utils.IObjectProfileNode;
-import com.vladium.utils.ObjectProfiler;
-
 import adullact.publicrowdfunding.model.local.ressource.Project;
-import adullact.publicrowdfunding.model.local.ressource.Resource;
 import adullact.publicrowdfunding.model.local.ressource.User;
+
+/*import com.vladium.utils.IObjectProfileNode;
+import com.vladium.utils.ObjectProfiler;*/
 
 /**
  * Created by Ferrand on 04/09/2014.
@@ -30,9 +27,9 @@ public class CacheCleaner {
     public void fill() {
         int nbUser = 0;
         int nbProject = 0;
-        IObjectProfileNode profile = ObjectProfiler.profile(Resource.cachedResource);
+        /*IObjectProfileNode profile = ObjectProfiler.profile(Resource.cachedResource);
 
-        Log.d("Triumvirat", "Initial size : " + profile.size() + " bytes");
+        Log.d("Triumvirat", "Initial size : " + profile.size() + " bytes");*/
 
         /* User */
         for(int i = 0; i < nbUser; i++) {
@@ -45,8 +42,8 @@ public class CacheCleaner {
 
             user.getCache();
         }
-        profile = ObjectProfiler.profile(Resource.cachedResource);
-        Log.d("Triumvirat", "Adding " + nbUser + " users : " + profile.size() + " bytes");
+        /*profile = ObjectProfiler.profile(Resource.cachedResource);
+        Log.d("Triumvirat", "Adding " + nbUser + " users : " + profile.size() + " bytes");*/
         /* ---- */
 
         /* Project */
@@ -56,14 +53,14 @@ public class CacheCleaner {
 
                 project.getCache();
         }
-        profile = ObjectProfiler.profile(Resource.cachedResource);
-        Log.d("Triumvirat", "Adding " + nbProject + " projects : " + profile.size() + " bytes");
+        /*profile = ObjectProfiler.profile(Resource.cachedResource);
+        Log.d("Triumvirat", "Adding " + nbProject + " projects : " + profile.size() + " bytes");*/
         /* ---- */
         /* ------ */
 
-        profile = ObjectProfiler.profile(Resource.cachedResource);
+        /*profile = ObjectProfiler.profile(Resource.cachedResource);
 
-        Log.d("Triumvirat", "Final size : " + profile.size() + " bytes");
+        Log.d("Triumvirat", "Final size : " + profile.size() + " bytes");*/
     }
 
 
