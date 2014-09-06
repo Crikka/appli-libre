@@ -11,7 +11,7 @@
                 <stroke
                     android:width="3dp"
                     android:color="#a0a0a0" />
-                <solid android:color="@color/background" />
+                <solid android:color="#ffffff" />
             </shape>
         </rotate>
     </item>

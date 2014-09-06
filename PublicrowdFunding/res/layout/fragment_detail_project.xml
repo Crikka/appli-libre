@@ -199,14 +199,6 @@
                         android:textColor="#ffffff"
                         android:textSize="20sp"
                         android:textStyle="bold" />
-
-                    <ImageView
-                        android:id="@+id/validate"
-                        android:layout_width="match_parent"
-                        android:layout_height="220dp"
-                        android:contentDescription="@string/description_image_project"
-                        android:src="@drawable/approved"
-                        android:visibility="gone" />
                 </FrameLayout>
             </FrameLayout>
 

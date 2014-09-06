@@ -25,6 +25,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -128,6 +129,16 @@ public class MapFragment extends Fragment implements OnInfoWindowClickListener {
 							getLayoutInflater(null), markers));
 
 			googleMap.setMyLocationEnabled(true);
+			
+			LatLng localisation = new LatLng(46.937199, 2.429674);
+
+			CameraPosition currentPlace = new CameraPosition.Builder()
+					.target(localisation).zoom(6f).build();
+
+			googleMap.moveCamera(CameraUpdateFactory
+					.newCameraPosition(currentPlace));
+
+			
 			mprogressDialog.dismiss();
 
 		} catch (Exception e) {

@@ -24,7 +24,6 @@ public class ValidateProjectAdaptor extends ArrayAdapter<Project> {
 	Context mContext;
 	int layoutResourceId;
 	ArrayList<Project> data;
-	ArrayList<String> idAproved;
 	
 	private Context context;
 
@@ -34,7 +33,6 @@ public class ValidateProjectAdaptor extends ArrayAdapter<Project> {
 		this.layoutResourceId = resource;
 		this.data = listItem;
 		this.context = context;
-		idAproved = new ArrayList<String>();
 	}
 
 	private static class UserHolder {
@@ -71,16 +69,6 @@ public class ValidateProjectAdaptor extends ArrayAdapter<Project> {
 			LayoutInflater inflater = (LayoutInflater) mContext
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			v = inflater.inflate(layoutResourceId, null);
-			
-			ImageView approved = (ImageView) v.findViewById(R.id.validate);
-			approved.setVisibility(View.VISIBLE);
-			
-			if(idAproved.contains(data.get(position).getResourceId())){
-				/*
-				ImageView approved = (ImageView) v.findViewById(R.id.validate);
-				approved.setVisibility(View.VISIBLE);
-				*/
-			}
 			
 			holder.titre_projet_liste = (TextView) v
 					.findViewById(R.id.titre_projet_liste);
