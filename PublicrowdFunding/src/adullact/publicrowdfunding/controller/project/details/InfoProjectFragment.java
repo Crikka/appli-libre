@@ -100,7 +100,7 @@ public class InfoProjectFragment extends Fragment {
 				.getMetrics(metrics);
 
 		android.view.ViewGroup.LayoutParams params = graph.getLayoutParams();
-		params.height = metrics.widthPixels + 100;
+		params.height = 500;
 		graph.setLayoutParams(params);
 
 		m_titre = (TextView) view.findViewById(R.id.titre_projet_detail);
@@ -252,6 +252,7 @@ public class InfoProjectFragment extends Fragment {
 			m_jour_restant.setText("" + projetToDisplay.getNumberOfDayToEnd()
 					+ " jour");
 		}
+		
 
 		m_payer.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {

@@ -58,11 +58,12 @@ public class GraphiqueView extends View {
 	 * Draw
 	 */
 	protected void onDraw(Canvas canvas) {
-
-		int largeur = canvas.getWidth() - 10;
-		int hauteur = largeur;
+	
+		int margin = 10;
+		
+		int largeur = canvas.getWidth() - margin;	
 		int offset = 100; // décalement vertical
-
+		int hauteur = canvas.getHeight() - offset - margin;
 		int nombreDeCarre = 10;
 		for (int i = 0; i < nombreDeCarre + 1; i++) {
 
@@ -71,12 +72,13 @@ public class GraphiqueView extends View {
 			}
 
 			// Horizontal
-			canvas.drawLine(0, i * (largeur / nombreDeCarre) + offset, largeur,
-					i * (largeur / nombreDeCarre) + offset, paint);
+			canvas.drawLine(0, i * (hauteur / nombreDeCarre) + offset, largeur,
+					i * (hauteur / nombreDeCarre) + offset, paint);
+					
 			// Vertical
 			paint.setColor(Color.rgb(210, 210, 210));
 			canvas.drawLine(i * (largeur / nombreDeCarre), offset, i
-					* (largeur / nombreDeCarre), largeur + offset, paint);
+					* (largeur / nombreDeCarre), hauteur + offset, paint);
 
 		}
 
@@ -168,9 +170,9 @@ public class GraphiqueView extends View {
 				newPourcentage = 100;
 			}
 
-			long yDepart = largeur - ((pourcentageAccomplie * hauteur) / 100)
+			long yDepart = hauteur - ((pourcentageAccomplie * hauteur) / 100)
 					+ offset;
-			long yArrive = largeur - ((newPourcentage * hauteur) / 100)
+			long yArrive = hauteur - ((newPourcentage * hauteur) / 100)
 					+ offset;
 
 			int xDepart = i * (largeur / nombreDeCarre);

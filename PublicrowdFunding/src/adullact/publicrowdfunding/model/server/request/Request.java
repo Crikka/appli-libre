@@ -25,7 +25,7 @@ extends ServerObject<TRequest, TEvent, TErrorHandler> {
         super(event, errorHandler);
 
         this.m_service = new RestAdapter.Builder()
-                .setLogLevel(RestAdapter.LogLevel.FULL)
+               // .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setRequestInterceptor(new SecurityRequestInterceptor())
                 .setErrorHandler(errorHandler())
                 .setEndpoint(SERVER_URL).build()
@@ -36,7 +36,7 @@ extends ServerObject<TRequest, TEvent, TErrorHandler> {
 
     protected void defineRequestInterceptor(RequestInterceptor requestInterceptor) {
         m_service = new RestAdapter.Builder()
-                .setLogLevel(RestAdapter.LogLevel.FULL)
+             //    .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setRequestInterceptor(requestInterceptor)
                 .setErrorHandler(errorHandler())
                 .setEndpoint(SERVER_URL).build()
