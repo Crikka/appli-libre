@@ -52,6 +52,7 @@ public class GraphiqueView extends View {
 		paint = new Paint();
 		graphData = new ArrayList<FundingInterval>();
 		path = new Path();
+		this.context = context;
 	}
 
 	public void setProject(Project projet) {

@@ -51,6 +51,6 @@
     <string name="change_account">Changer de compte</string>
     <string name="logout">Déconnexion</string>
     <string name="authentication">Authentification</string>
-     <string name="funding_progress">Progression du financement</string>
+    <string name="funding_progress">Progression du financement</string>
 
 </resources>
