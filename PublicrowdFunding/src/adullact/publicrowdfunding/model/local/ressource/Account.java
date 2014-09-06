@@ -1,5 +1,7 @@
 package adullact.publicrowdfunding.model.local.ressource;
 
+import android.content.SharedPreferences;
+
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Map;
@@ -9,7 +11,6 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
-import rx.Observable;
 import adullact.publicrowdfunding.PublicrowdFundingApplication;
 import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.cache.Cache;
@@ -20,8 +21,7 @@ import adullact.publicrowdfunding.model.server.entities.RowAffected;
 import adullact.publicrowdfunding.model.server.entities.ServerAccount;
 import adullact.publicrowdfunding.model.server.entities.Service;
 import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
-import android.content.Context;
-import android.content.SharedPreferences;
+import rx.Observable;
 
 /**
  * @author Ferrand and Nelaupe
@@ -30,7 +30,7 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
     /* ---- Singleton ---- */
     private static Account m_own = null;
     private void initialize() throws NoAccountExistsInLocal {
-        SharedPreferences sharedPreferences = PublicrowdFundingApplication.sharedPreferences();//m_context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = PublicrowdFundingApplication.sharedPreferences();
         if(!sharedPreferences.contains(KEY_USERNAME) || !sharedPreferences.contains(KEY_PASSWORD) || !sharedPreferences.contains(KEY_PSEUDO) || !sharedPreferences.contains(KEY_ADMIN)) {
                 m_own = null;
                 throw new NoAccountExistsInLocal();
@@ -50,7 +50,7 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
     public static Account getOwn() throws NoAccountExistsInLocal {
         if(m_own == null) {
             try {
-                m_own = new Account(PublicrowdFundingApplication.context());
+                m_own = new Account();
                 m_own.initialize();
             }
             catch(NoAccountExistsInLocal exception) {
@@ -68,9 +68,6 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
         }
 
         return m_own;
-    }
-    private Account(Context context) {
-        this.m_context = context;
     }
     /* ------------------- */
 
@@ -108,7 +105,6 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
         res.m_username = serverAccount.username;
         res.m_administrator = (serverAccount.administrator == 1);
         res.m_anonymous = false;
-        res.m_context = PublicrowdFundingApplication.context();
         res.m_user = new User().getCache(serverAccount.pseudo);
 
         return res;
@@ -119,7 +115,6 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
         this.m_username = serverAccount.username;
         this.m_administrator = (serverAccount.administrator == 1);
         this.m_anonymous = false;
-        this.m_context = PublicrowdFundingApplication.context();
         this.m_user = new User().getCache(serverAccount.pseudo);
 
         return this;
@@ -156,7 +151,6 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
     private String m_password;
     private boolean m_administrator;
     private boolean m_anonymous;
-    private Context m_context;
    /* ------------------ */
 
     /* --- References --- */
@@ -168,7 +162,6 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
         this.m_password = null;
         this.m_administrator = false;
         this.m_anonymous = true;
-        this.m_context = null;
     }
 
     public Account(String username, String password, String pseudo) {
@@ -177,7 +170,6 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
         this.m_user = new User().getCache(pseudo);
         this.m_administrator = false;
         this.m_anonymous = false;
-        this.m_context = null;
     }
 
     public void setOwn() {
