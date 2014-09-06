@@ -68,7 +68,7 @@
                 android:layout_gravity="center"
                 android:background="@drawable/buttonshapes"
                 android:gravity="center"
-                android:text="Commenter" />
+                android:text="@string/comment" />
         </LinearLayout>
     </FrameLayout>
 

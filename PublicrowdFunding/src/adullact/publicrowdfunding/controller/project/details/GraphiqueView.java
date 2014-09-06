@@ -1,10 +1,12 @@
 package adullact.publicrowdfunding.controller.project.details;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
+import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.utilities.FundingInterval;
 import android.content.Context;
@@ -25,6 +27,7 @@ public class GraphiqueView extends View {
 	private Project projet;
 	private ArrayList<FundingInterval> graphData;
 	private Path path;
+	private Context context;
 
 	/**
 	 * @param context
@@ -35,6 +38,7 @@ public class GraphiqueView extends View {
 		paint = new Paint();
 		path = new Path();
 		graphData = new ArrayList<FundingInterval>();
+		this.context = context;
 	}
 
 	/**
@@ -94,7 +98,8 @@ public class GraphiqueView extends View {
 		paint.setTextAlign(Align.CENTER);
 		paint.setTextSize(40);
 		paint.setColor(Color.rgb(128, 128, 128));
-		canvas.drawText("Progression du financement", xPos, yPos, paint);
+		String progress = context.getResources().getString(R.string.funding_progress).toUpperCase(Locale.getDefault());
+		canvas.drawText(progress, xPos, yPos, paint);
 
 		paint.reset();
 		// Ajout texte 100 %

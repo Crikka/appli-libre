@@ -369,7 +369,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/buttonshapes"
             android:gravity="center"
-            android:text="Contribuer" />
+            android:text="@string/contribute" />
     </FrameLayout>
 
 </FrameLayout>

@@ -59,7 +59,7 @@ public class MarkerWindowAdaptor extends FragmentActivity implements InfoWindowA
 
 		distance.setVisibility(View.GONE);
 		try {
-			distance.setText("Distance : "
+			distance.setText(R.string.distance
 					+ Calcul.diplayDistance(Share.position,
 							projet.getPosition()));
 			distance.setVisibility(View.VISIBLE);

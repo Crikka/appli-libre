@@ -40,8 +40,8 @@ public class preferencesFragment extends PreferenceFragment {
 		final EditTextPreference email = (EditTextPreference) findPreference("edittext_preference_email");
 
 		final SwitchPreference genre = (SwitchPreference) findPreference("genre");
-		genre.setSwitchTextOn("Femme");
-		genre.setSwitchTextOff("Homme");
+		genre.setSwitchTextOn(R.string.female);
+		genre.setSwitchTextOff(R.string.male);
 
 		/*
 		 * Compte
@@ -75,14 +75,13 @@ public class preferencesFragment extends PreferenceFragment {
 
 			});
 		} catch (NoAccountExistsInLocal e) {
-			System.out.println("Il n'a rien à faire là !!");
+			this.getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
 		}
 
 		ville.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 			public boolean onPreferenceChange(Preference preference,
 					Object newValue) {
 				String value = (String) newValue;
-				System.out.println("La ville a change : " + value);
 				user.setCity(value);
 				update();
 				return true;
@@ -100,7 +99,6 @@ public class preferencesFragment extends PreferenceFragment {
 					gender = "0";
 				}
 
-				System.out.println("Le genre a change : " + gender);
 				user.setGender(gender);
 				update();
 				return true;
@@ -111,7 +109,6 @@ public class preferencesFragment extends PreferenceFragment {
 			public boolean onPreferenceChange(Preference preference,
 					Object newValue) {
 				String value = (String) newValue;
-				System.out.println("L'émail à change : " + value);
 				//user.setEmail(value);
 				update();
 				return true;
@@ -137,7 +134,7 @@ public class preferencesFragment extends PreferenceFragment {
 						@Override
 						public void onUpdate(User resource) {
 							Toast.makeText(getActivity().getBaseContext(),
-									"Profile mis à jour", Toast.LENGTH_SHORT)
+									R.string.error, Toast.LENGTH_SHORT)
 									.show();
 
 						}
@@ -145,7 +142,7 @@ public class preferencesFragment extends PreferenceFragment {
 						@Override
 						public void errorResourceIdDoesNotExist() {
 							Toast.makeText(getActivity().getBaseContext(),
-									"Une erreur s'est produite", Toast.LENGTH_SHORT)
+									R.string.error, Toast.LENGTH_SHORT)
 									.show();
 
 						}
@@ -153,7 +150,7 @@ public class preferencesFragment extends PreferenceFragment {
 						@Override
 						public void errorAdministratorRequired() {
 							Toast.makeText(getActivity().getBaseContext(),
-									"Une erreur s'est produite", Toast.LENGTH_SHORT)
+									R.string.error, Toast.LENGTH_SHORT)
 									.show();
 
 						}
@@ -161,7 +158,7 @@ public class preferencesFragment extends PreferenceFragment {
 						@Override
 						public void errorAuthenticationRequired() {
 							Toast.makeText(getActivity().getBaseContext(),
-									"Une erreur s'est produite", Toast.LENGTH_SHORT)
+									R.string.error, Toast.LENGTH_SHORT)
 									.show();
 
 						}
@@ -169,7 +166,7 @@ public class preferencesFragment extends PreferenceFragment {
 						@Override
 						public void errorNetwork() {
 							Toast.makeText(getActivity().getBaseContext(),
-									"Une erreur s'est produite", Toast.LENGTH_SHORT)
+									R.string.error, Toast.LENGTH_SHORT)
 									.show();
 
 						}
@@ -177,7 +174,7 @@ public class preferencesFragment extends PreferenceFragment {
 						@Override
 						public void errorServer() {
 							Toast.makeText(getActivity().getBaseContext(),
-									"Une erreur s'est produite", Toast.LENGTH_SHORT)
+									R.string.error, Toast.LENGTH_SHORT)
 									.show();
 							
 						}

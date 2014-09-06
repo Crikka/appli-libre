@@ -64,7 +64,8 @@ public class MapFragment extends Fragment implements OnInfoWindowClickListener {
 		_this = this;
 
 		mprogressDialog = new ProgressDialog(getActivity());
-		mprogressDialog.setMessage("Chargement en cours...");
+		CharSequence message = this.getResources().getString(R.string.loading);
+		mprogressDialog.setMessage(message);
 		mprogressDialog.setTitle("Google Map");
 		mprogressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 		mprogressDialog.show();
@@ -142,7 +143,8 @@ public class MapFragment extends Fragment implements OnInfoWindowClickListener {
 			mprogressDialog.dismiss();
 
 		} catch (Exception e) {
-			System.out.println("Impossible de lancer Google Map");
+			this.getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
 		}
 	}
+
 }

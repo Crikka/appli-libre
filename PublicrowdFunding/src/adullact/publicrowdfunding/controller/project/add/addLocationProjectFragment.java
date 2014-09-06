@@ -43,7 +43,7 @@ public class addLocationProjectFragment extends Fragment implements
 		} catch (Exception e) {
 			e.printStackTrace();
 			TextView texte = new TextView(getActivity());
-			texte.setText("Impossible de charger Google Map");
+			texte.setText(R.string.error);
 			view = texte;
 		}
 

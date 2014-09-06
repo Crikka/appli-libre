@@ -10,6 +10,7 @@ import adullact.publicrowdfunding.model.local.ressource.User;
 import adullact.publicrowdfunding.model.local.utilities.CanI;
 import adullact.publicrowdfunding.model.server.event.CreateEvent;
 import adullact.publicrowdfunding.model.server.event.DeleteEvent;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -60,8 +61,8 @@ public class ProjectPagerFragment extends Fragment {
 
 		fm = context.getSupportFragmentManager();
 		fm.beginTransaction().disallowAddToBackStack().commit();
-		
-		PagerAdaptor adaptor = new PagerAdaptor(fm, idProject);
+		Context context = this.getActivity().getBaseContext();
+		PagerAdaptor adaptor = new PagerAdaptor(context, fm, idProject);
 
 		ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager);
 		viewPager.setAdapter(adaptor);
@@ -131,8 +132,7 @@ public class ProjectPagerFragment extends Fragment {
 
 									@Override
 									public void errorResourceIdDoesNotExist() {
-										Toast.makeText(context,
-												"Une erreur s'est produite",
+										Toast.makeText(context, R.string.error,
 												Toast.LENGTH_SHORT).show();
 
 									}
@@ -144,39 +144,37 @@ public class ProjectPagerFragment extends Fragment {
 												"Projet retiré de vos favoris",
 												Toast.LENGTH_SHORT).show();
 										changeColorStar();
-										new Account().getCache(account.getResourceId()).forceRetrieve();
+										new Account().getCache(
+												account.getResourceId())
+												.forceRetrieve();
 									}
 
 									@Override
 									public void errorAdministratorRequired() {
-										Toast.makeText(context,
-												"Une erreur s'est produite",
+										Toast.makeText(context, R.string.error,
 												Toast.LENGTH_SHORT).show();
 
 									}
 
 									@Override
 									public void errorAuthenticationRequired() {
-										Toast.makeText(context,
-												"Une erreur s'est produite",
+										Toast.makeText(context, R.string.error,
 												Toast.LENGTH_SHORT).show();
 
 									}
 
 									@Override
 									public void errorNetwork() {
-										Toast.makeText(context,
-												"Une erreur s'est produite",
+										Toast.makeText(context, R.string.error,
 												Toast.LENGTH_SHORT).show();
 
 									}
 
 									@Override
 									public void errorServer() {
-										Toast.makeText(context,
-												"Une erreur s'est produite",
+										Toast.makeText(context, R.string.error,
 												Toast.LENGTH_SHORT).show();
-										
+
 									}
 
 								});
@@ -187,8 +185,7 @@ public class ProjectPagerFragment extends Fragment {
 
 									@Override
 									public void errorResourceIdAlreadyUsed() {
-										Toast.makeText(context,
-												"Une erreur s'est produite",
+										Toast.makeText(context, R.string.error,
 												Toast.LENGTH_SHORT).show();
 
 									}
@@ -200,31 +197,30 @@ public class ProjectPagerFragment extends Fragment {
 												"Projet ajouté à vos favoris",
 												Toast.LENGTH_SHORT).show();
 										changeColorStar();
-										new Account().getCache(account.getResourceId()).forceRetrieve();
+										new Account().getCache(
+												account.getResourceId())
+												.forceRetrieve();
 									}
 
 									@Override
 									public void errorAuthenticationRequired() {
-										Toast.makeText(context,
-												"Une erreur s'est produite",
+										Toast.makeText(context, R.string.error,
 												Toast.LENGTH_SHORT).show();
 
 									}
 
 									@Override
 									public void errorNetwork() {
-										Toast.makeText(context,
-												"Une erreur s'est produite",
+										Toast.makeText(context, R.string.error,
 												Toast.LENGTH_SHORT).show();
 
 									}
 
 									@Override
 									public void errorServer() {
-										Toast.makeText(context,
-												"Une erreur s'est produite",
+										Toast.makeText(context, R.string.error,
 												Toast.LENGTH_SHORT).show();
-										
+
 									}
 
 								});
@@ -243,17 +239,16 @@ public class ProjectPagerFragment extends Fragment {
 
 	public void initBookmark() {
 
-		new Project().getCache(idProject)
-				.toResource(new HoldToDo<Project>() {
+		new Project().getCache(idProject).toResource(new HoldToDo<Project>() {
 
-					@Override
-					public void hold(Project resource) {
-						projectCurrent = resource;
-						function();
+			@Override
+			public void hold(Project resource) {
+				projectCurrent = resource;
+				function();
 
-					}
+			}
 
-				});
+		});
 
 	}
 
@@ -291,9 +286,9 @@ public class ProjectPagerFragment extends Fragment {
 			filter = new PorterDuffColorFilter(Color.TRANSPARENT,
 					PorterDuff.Mode.SRC_ATOP);
 		}
-		try{
-		star.getIcon().setColorFilter(filter);
-		}catch(Exception e){
+		try {
+			star.getIcon().setColorFilter(filter);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

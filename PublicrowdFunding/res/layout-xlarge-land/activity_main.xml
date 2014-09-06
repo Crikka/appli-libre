@@ -8,8 +8,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@color/background"
-        android:orientation="vertical">
-        
+        android:orientation="vertical" >
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -102,7 +102,7 @@
                     android:background="@null"
                     android:contentDescription="@string/description_image_button"
                     android:drawableLeft="@drawable/ic_menu_home"
-                    android:text="Tout les projets" />
+                    android:text="@string/all_projects" />
 
                 <Button
                     android:id="@+id/button_map_projet"
@@ -112,7 +112,7 @@
                     android:background="@null"
                     android:contentDescription="@string/description_image_button"
                     android:drawableLeft="@android:drawable/ic_menu_mapmode"
-                    android:text="Carte des projets" />
+                    android:text="@string/map_projects" />
 
                 <adullact.publicrowdfunding.views.SimpleLine
                     android:id="@+id/separator_1"
@@ -128,7 +128,7 @@
                     android:background="@null"
                     android:contentDescription="@string/description_image_button"
                     android:drawableLeft="@drawable/ic_menu_mark"
-                    android:text="Valider des projets" />
+                    android:text="@string/validate_projects" />
 
                 <Button
                     android:id="@+id/button_soumettre_projet"
@@ -138,7 +138,7 @@
                     android:background="@null"
                     android:contentDescription="@string/description_image_button"
                     android:drawableLeft="@android:drawable/ic_menu_add"
-                    android:text="Ajouter un projet" />
+                    android:text="@string/add_project" />
 
                 <adullact.publicrowdfunding.views.SimpleLine
                     android:id="@+id/separator_2"
@@ -154,7 +154,7 @@
                     android:background="@null"
                     android:contentDescription="@string/description_image_button"
                     android:drawableLeft="@android:drawable/ic_menu_preferences"
-                    android:text="Préférences" />
+                    android:text="@string/preferences" />
 
                 <adullact.publicrowdfunding.views.SimpleLine
                     android:id="@+id/separator_3"
@@ -170,7 +170,7 @@
                     android:background="@null"
                     android:contentDescription="@string/description_image_button"
                     android:drawableLeft="@android:drawable/ic_menu_directions"
-                    android:text="Changer de compte" />
+                    android:text="@string/change_account" />
 
                 <Button
                     android:id="@+id/button_deconnexion"
@@ -180,17 +180,16 @@
                     android:background="@null"
                     android:contentDescription="@string/description_image_button"
                     android:drawableLeft="@android:drawable/ic_menu_close_clear_cancel"
-                    android:text="Déconnexion" />
+                    android:text="@string/logout" />
             </LinearLayout>
-
         </ScrollView>
     </LinearLayout>
 
     <FrameLayout
-        android:layout_marginLeft="300dp"
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:layout_marginLeft="300dp" >
     </FrameLayout>
 
     <FrameLayout
@@ -207,6 +206,5 @@
         android:layout_height="match_parent"
         android:layout_gravity="center" >
     </FrameLayout>
-    
 
 </FrameLayout>

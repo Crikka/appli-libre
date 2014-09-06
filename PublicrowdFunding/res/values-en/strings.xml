@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ANGLAIS -->
+    <string name="app_name">PublicrowdFunding</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="creer_un_compte">Create an account</string>
+    <string name="connexion">Connection</string>
+    <string name="image_cadenas">Clef secure</string>
+    <string name="email">Email address</string>
+    <string name="go_inscription">Create my account</string>
+    <string name="project_name">Project name</string>
+    <string name="description_image_project">Project picture</string>
+    <string name="project_description">Project description</string>
+    <string name="project_end_date">End date</string>
+    <string name="add_project">Submit a project</string>
+    <string name="description_image_button">Image button</string>
+    <string name="valider">Validate</string>
+    <string name="aucune_financement">0e</string>
+    <string name="zero">0</string>
+    <string name="no_days"> 0 day</string>
+    <string name="participants">participants</string>
+    <string name="remain">Remaining</string>
+    <string name="funded">Harvested</string>
+    <string name="site_web">Website</string>
+    <string name="telephone">Phone number</string>
+    <string name="confirmation_mdp">Password confirmation</string>
+    <string name="loading">Loading in progress</string>
+    <string name="no_project">No project</string>
+    <string name="no_commentary">No comment</string>
+    <string name="login_or_register">Log In</string>
+    <string name="accomplish">Accomplish</string>
+    <string name="ask">Required</string>
+    <string name="contribute">Contribute to this project</string>
+    <string name="amount_contribute">Account in euro</string>
+    <string name="success">Successful connection</string>
+    <string name="retrievePersonnelInfo">Retrieve Personnel Info</string>
+    <string name="distance">Distance : </string>
+    <string name="error">An error occurred</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="comment">Comment</string>
+    <string name="comments">Comments</string>
+    <string name="project_details">Project info</string>
+    <string name="project_location">Project location</string>
+    <string name="all_projects">All projects</string>
+    <string name="map_projects">Projects Map</string>
+    <string name="validate_projects">Validate projects</string>
+    <string name="preferences">Preferences</string>
+    <string name="change_account">Change account</string>
+    <string name="logout">Logout</string>
+    <string name="authentication">Authentication</string>
+    <string name="funding_progress">Funding progress</string>
+
+</resources>

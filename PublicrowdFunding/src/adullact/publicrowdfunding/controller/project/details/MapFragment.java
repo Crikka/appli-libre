@@ -41,7 +41,6 @@ public class MapFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		System.out.println("Load Google Map Fragment");
 
 		try {
 			rootView = inflater.inflate(R.layout.activity_maps, container,

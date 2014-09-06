@@ -75,7 +75,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dip"
             android:gravity="center"
-            android:text="Authentifiaction"
+            android:text="@string/authentication"
             android:textSize="25sp" />
 
         <adullact.publicrowdfunding.views.SimpleLine
@@ -108,13 +108,6 @@
             android:textColor="#808080"
             android:textSize="20sp" >
         </EditText>
-
-        <CheckBox
-            android:id="@+id/conditions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="J&apos;accepte les conditions d&apos;utilisations" />
 
         <Button
             android:id="@+id/valider_connexion"

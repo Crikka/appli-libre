@@ -114,7 +114,8 @@ public class ProjectAdaptor extends ArrayAdapter<Project> {
 		
 		holder.distance.setVisibility(View.GONE);
 		try{
-		holder.distance.setText("Distance : "+Calcul.diplayDistance(Share.position, projet.getPosition()));
+		String distance = activity.getResources().getString(R.string.distance);
+		holder.distance.setText(distance + Calcul.diplayDistance(Share.position, projet.getPosition()));
 		holder.distance.setVisibility(View.VISIBLE);
 		}catch(NullPointerException e){
 			holder.distance.setVisibility(View.GONE);

@@ -60,13 +60,6 @@
             <requestFocus />
         </EditText>
 
-        <CheckBox
-            android:id="@+id/conditions"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="J&apos;accepte les conditions d&apos;utilisations" />
-
         <Button
             android:id="@+id/valider"
             android:layout_width="match_parent"

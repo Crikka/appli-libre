@@ -50,13 +50,6 @@
       
         </RadioGroup>
 
-        <CheckBox
-            android:id="@+id/conditions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="J&apos;accepte les conditions d&apos;utilisations et je comprend que cette action est définitive." />
-
         <Button
             android:id="@+id/valider"
             android:layout_width="match_parent"
