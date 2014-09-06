@@ -150,30 +150,6 @@
                 android:textSize="12sp" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/fav_layout"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="10dp"
-            android:visibility="gone" >
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/description_image_project"
-                android:src="@drawable/fullstar" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:ellipsize="marquee"
-                android:gravity="center"
-                android:paddingLeft="10dp"
-                android:singleLine="true"
-                android:text="Ce projet est dans vos favoris"
-                android:textSize="12sp" />
-        </LinearLayout>
     </LinearLayout>
 
     <FrameLayout

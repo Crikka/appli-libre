@@ -112,33 +112,6 @@ public class ProjectAdaptor extends ArrayAdapter<Project> {
 			holder.illustration.setImageResource(R.drawable.ic_launcher);
 		}
 		
-		
-		
-		new CanI(){
-
-			@Override
-			protected void yes() {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			protected void no() {
-				// Il est dans les fav
-			
-				try {
-					Account.getOwn();
-					v.findViewById(R.id.fav_layout).setVisibility(View.VISIBLE);
-				} catch (NoAccountExistsInLocal e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			
-		}.bookmark(projet);
-		
-		
-		
 		holder.distance.setVisibility(View.GONE);
 		try{
 		holder.distance.setText("Distance : "+Calcul.diplayDistance(Share.position, projet.getPosition()));
