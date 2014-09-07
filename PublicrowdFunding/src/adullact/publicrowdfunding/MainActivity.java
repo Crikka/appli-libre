@@ -520,6 +520,11 @@ public class MainActivity extends FragmentActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == 1) {
 			if (resultCode == RESULT_OK) {
+				Toast.makeText(
+						getBaseContext(),
+						"Patientez ...",
+						Toast.LENGTH_SHORT)
+						.show();
 				// Payement ok !
 				final String idProject = data.getStringExtra("idProject");
 				final String somme = data.getStringExtra("somme");

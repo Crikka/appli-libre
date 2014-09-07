@@ -24,31 +24,33 @@ import android.widget.TextView;
  * @author Ferrand and Nelaupe
  */
 public class ListFinancedProjectsFragment extends Fragment {
-
+	
 	private ListView listeProjets;
 
 	private ArrayList<Project> projets;
 
 	private ArrayAdapter<Project> adapter;
 
+	private View view;
+
+	private TextView empty;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
-
-		final View view = inflater.inflate(
-				R.layout.fragment_list_project_no_refresh, container, false);
+		view = inflater.inflate(R.layout.fragment_list_project_no_refresh,
+				container, false);
 
 		listeProjets = (ListView) view.findViewById(R.id.liste);
 
-		TextView empty = (TextView) view.findViewById(R.id.empty);
+		empty = (TextView) view.findViewById(R.id.empty);
 		listeProjets.setEmptyView(empty);
 
 		projets = new ArrayList<Project>();
 
 		adapter = new ProjectAdaptor(this.getActivity().getBaseContext(),
 				R.layout.adaptor_project, projets, getActivity());
-
 		listeProjets.setAdapter(adapter);
 
 		listeProjets.setOnItemClickListener(new OnItemClickListener() {
@@ -57,15 +59,13 @@ public class ListFinancedProjectsFragment extends Fragment {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 
-				FragmentTransaction ft = getFragmentManager()
-						.beginTransaction();
-				// ft.setCustomAnimations(R.anim.enter_2, R.anim.exit);
+				FragmentTransaction ft = getFragmentManager().beginTransaction();
+				//ft.setCustomAnimations(R.anim.enter_2, R.anim.exit);
 				Fragment fragment = new adullact.publicrowdfunding.controller.project.details.ProjectPagerFragment();
-				Bundle bundle = new Bundle();
-				bundle.putString("idProject", projets.get(position)
-						.getResourceId());
-				fragment.setArguments(bundle);
-				fragment.setHasOptionsMenu(true);
+        		Bundle bundle = new Bundle();
+        		bundle.putString("idProject", projets.get(position).getResourceId());
+        		fragment.setArguments(bundle);
+        		fragment.setHasOptionsMenu(true);
 				ft.replace(R.id.content_frame, fragment);
 				ft.commit();
 			}
@@ -73,26 +73,24 @@ public class ListFinancedProjectsFragment extends Fragment {
 
 		Bundle bundle = this.getArguments();
 		String idUser = bundle.getString("idUser");
+		
+			Cache<User> cache = new User().getCache(idUser);
+			cache.toResource(new HoldToDo<User>() {
 
-		Cache<User> cache = new User().getCache(idUser);
-		cache.toResource(new HoldToDo<User>() {
+				@Override
+				public void hold(User resource) {
+					resource.getFundedProjects(new HoldToDo<Project>() {
 
-			@Override
-			public void hold(User resource) {
-				resource.getFundedProjects(new HoldToDo<Project>() {
+						@Override
+						public void hold(Project resource) {
+							projets.add(resource);
+							adapter.notifyDataSetChanged();
+						}
 
-					@Override
-					public void hold(Project resource) {
-						projets.add(resource);
-						adapter.notifyDataSetChanged();
-					}
-
-				});
-			}
-
-		});
+					});
+				}
+			});
 
 		return view;
 	}
-
 }
