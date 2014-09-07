@@ -4,7 +4,10 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeFormatterBuilder;
 
+import java.util.ArrayList;
+
 import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.model.local.ressource.Project;
 
 /**
  * @author Ferrand and Nelaupe
@@ -26,7 +29,19 @@ public class Utility {
 		return date.toString(dateTimeFormatter);
 	}
 
-	public static int getDrawable(int numero) {
+    public static ArrayList<Project> restrictToUsefulProjects(ArrayList<Project> projects) {
+        ArrayList<Project> res = new ArrayList<Project>();
+
+        for(Project project : projects) {
+            if(project.isValidate() && project.isActive()) {
+                res.add(project);
+            }
+        }
+
+        return res;
+    }
+
+    public static int getDrawable(int numero) {
 		switch (numero) {
 		case 1:
 			return R.drawable.roi;
