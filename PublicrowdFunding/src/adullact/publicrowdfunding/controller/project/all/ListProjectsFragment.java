@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.controller.adaptor.ProjectAdaptor;
+import adullact.publicrowdfunding.controller.project.details.ProjectPagerFragment;
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.utilities.Share;
@@ -44,8 +45,6 @@ public class ListProjectsFragment extends Fragment {
 
 	private LinearLayout loading;
 	
-	private Fragment fragment;
-	
 	private SyncServerToLocal sync;
 	
 	private ArrayList<Project> p_project_displayed;
@@ -59,8 +58,6 @@ public class ListProjectsFragment extends Fragment {
 				container, false);
 		
 		p_project_displayed = new ArrayList<Project>();
-		
-		fragment = new adullact.publicrowdfunding.controller.project.details.ProjectPagerFragment();
 
 		listeProjets = (ListView) view.findViewById(R.id.liste);
 
@@ -81,9 +78,9 @@ public class ListProjectsFragment extends Fragment {
 				.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 					@Override
 					public void onRefresh() {
-						swipeView.setRefreshing(true);
-						reload();
-
+						//swipeView.setRefreshing(true);
+						//reload();
+						fragmentReload();
 					}
 
 				});
@@ -93,11 +90,12 @@ public class ListProjectsFragment extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				
 				FragmentTransaction ft = getFragmentManager().beginTransaction();
 				ft.setCustomAnimations(R.anim.fade_enter, R.anim.fade_exit);
 				Bundle bundle = new Bundle();
         		bundle.putString("idProject", p_project_displayed.get(position).getResourceId());
+        		
+        		Fragment fragment = new ProjectPagerFragment();
         		fragment.setArguments(bundle);
         		ft.addToBackStack(null);
         		fragment.setHasOptionsMenu(true);
@@ -225,7 +223,6 @@ public class ListProjectsFragment extends Fragment {
 		sync.sync(new HoldAllToDo<Project>() {
 			@Override
 			public void holdAll(ArrayList<Project> projects) {
-
 				ArrayList<Project> allSync = new ArrayList<Project>(sync
 						.restrictToValidatedProjects());
 				p_project_displayed = allSync;
@@ -290,6 +287,22 @@ public class ListProjectsFragment extends Fragment {
 			return super.onOptionsItemSelected(item);
 		}
 		return true;
+	}
+	
+	public void fragmentReload(){
+		
+		sync = SyncServerToLocal.getInstance();
+		sync.sync(new HoldAllToDo<Project>() {
+			@Override
+			public void holdAll(ArrayList<Project> projects) {
+				ArrayList<Project> allSync = new ArrayList<Project>(sync
+						.restrictToValidatedProjects());
+				p_project_displayed = allSync;
+
+				refresh();
+
+			}
+		});
 	}
 
 }

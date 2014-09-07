@@ -49,13 +49,15 @@ public class ParticipatePopup extends Fragment {
 		shake = AnimationUtils.loadAnimation(this.getActivity()
 				.getBaseContext(), R.anim.shake);
 
+		Bundle bundle = this.getArguments();
+		final String idProject = bundle.getString("idProject");
+
 		valider.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				if (!conditions.isChecked()) {
 					conditions.setTextColor(Color.parseColor("#ff0000"));
-					// conditions.invalidate();
 					return;
 				}
 
@@ -69,10 +71,13 @@ public class ParticipatePopup extends Fragment {
 				if (sommeToFund < 1) {
 					somme.startAnimation(shake);
 				}
-					
+
+				back();
+
 				Intent intent = new Intent(getActivity(), PaypalActivity.class);
 				intent.putExtra("participation", sommeToFund);
-				getActivity().startActivity(intent);
+				intent.putExtra("idProject", idProject);
+				getActivity().startActivityForResult(intent, 1);
 			}
 
 		});
@@ -84,17 +89,8 @@ public class ParticipatePopup extends Fragment {
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
 				if (keyCode == KeyEvent.KEYCODE_BACK) {
 
-					FragmentTransaction ft = getActivity()
-							.getSupportFragmentManager().beginTransaction();
-					ft.setCustomAnimations(R.anim.no_anim, R.anim.popup_exit);
-					ft.remove(_this);
+					back();
 
-					FrameLayout filter = (FrameLayout) getActivity().getWindow().getDecorView()
-							.findViewById(R.id.big_filter);			
-					Animation fadeInAnimation = AnimationUtils.loadAnimation(_this.getActivity(), R.anim.fade_exit);
-					filter.setAnimation(fadeInAnimation);
-					ft.commit();
-					filter.animate();
 					return true;
 				}
 				return false;
@@ -102,6 +98,21 @@ public class ParticipatePopup extends Fragment {
 		});
 		return view;
 
+	}
+
+	public void back() {
+		FragmentTransaction ft = getActivity().getSupportFragmentManager()
+				.beginTransaction();
+		ft.setCustomAnimations(R.anim.no_anim, R.anim.popup_exit);
+		ft.remove(_this);
+
+		FrameLayout filter = (FrameLayout) getActivity().getWindow()
+				.getDecorView().findViewById(R.id.big_filter);
+		Animation fadeInAnimation = AnimationUtils.loadAnimation(
+				_this.getActivity(), R.anim.fade_exit);
+		filter.setAnimation(fadeInAnimation);
+		ft.commit();
+		filter.animate();
 	}
 
 }

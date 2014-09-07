@@ -54,7 +54,7 @@ public class ProjectPagerFragment extends Fragment {
 
 		Bundle bundle = this.getArguments();
 		idProject = bundle.getString("idProject");
-
+		
 		context = (adullact.publicrowdfunding.MainActivity) getActivity();
 
 		fm = context.getSupportFragmentManager();

@@ -24,6 +24,8 @@ public class PaypalActivity extends Activity {
 
 	private int participation;
 
+	private String idProject;
+
 	private static final String TAG = "paymentExample";
 
 	private static final String CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_NO_NETWORK;
@@ -56,11 +58,12 @@ public class PaypalActivity extends Activity {
 			finish();
 		}
 
+		idProject = this.getIntent().getExtras().getString("idProject");
+
 		/* Paypal */
 
 		PayPalPayment thingToBuy = getSommeParticipations(PayPalPayment.PAYMENT_INTENT_SALE);
-		Intent intent = new Intent(PaypalActivity.this,
-				PaymentActivity.class);
+		Intent intent = new Intent(PaypalActivity.this, PaymentActivity.class);
 		intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
 		startActivityForResult(intent, REQUEST_CODE_PAYMENT);
 
@@ -80,7 +83,7 @@ public class PaypalActivity extends Activity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-	
+
 		if (requestCode == REQUEST_CODE_PAYMENT) {
 			if (resultCode == Activity.RESULT_OK) {
 				PaymentConfirmation confirm = data
@@ -104,9 +107,11 @@ public class PaypalActivity extends Activity {
 						 * /samples/mobile_backend
 						 */
 						
-						
+						String somme = ""+participation;
 						Intent returnIntent = new Intent();
-						setResult(RESULT_OK,returnIntent);
+						returnIntent.putExtra("idProject", idProject);
+						returnIntent.putExtra("somme", somme);
+						setResult(RESULT_OK, returnIntent);
 						finish();
 
 					} catch (JSONException e) {
@@ -116,12 +121,12 @@ public class PaypalActivity extends Activity {
 					}
 				}
 			} else if (resultCode == Activity.RESULT_CANCELED) {
-		
+
 				Intent returnIntent = new Intent();
 				setResult(RESULT_CANCELED, returnIntent);
 				finish();
 			} else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
-	
+
 				Intent returnIntent = new Intent();
 				setResult(RESULT_CANCELED, returnIntent);
 				finish();
@@ -145,19 +150,19 @@ public class PaypalActivity extends Activity {
 								Toast.LENGTH_LONG).show();
 
 					} catch (JSONException e) {
-					
+
 						Intent returnIntent = new Intent();
 						setResult(RESULT_CANCELED, returnIntent);
 						finish();
 					}
 				}
 			} else if (resultCode == Activity.RESULT_CANCELED) {
-				
+
 				Intent returnIntent = new Intent();
 				setResult(RESULT_CANCELED, returnIntent);
 				finish();
 			} else if (resultCode == PayPalFuturePaymentActivity.RESULT_EXTRAS_INVALID) {
-			
+
 				Intent returnIntent = new Intent();
 				setResult(RESULT_CANCELED, returnIntent);
 				finish();

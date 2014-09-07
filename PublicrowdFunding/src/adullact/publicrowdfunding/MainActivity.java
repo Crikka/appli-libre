@@ -3,15 +3,21 @@ package adullact.publicrowdfunding;
 import adullact.publicrowdfunding.controller.profile.preferences.preferencesFragment;
 import adullact.publicrowdfunding.controller.project.all.ListProjectsFragment;
 import adullact.publicrowdfunding.controller.project.all.MapFragment;
+import adullact.publicrowdfunding.controller.project.details.ProjectPagerFragment;
 import adullact.publicrowdfunding.controller.register.ConnexionFragment;
 import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
+import adullact.publicrowdfunding.model.local.ressource.Funding;
+import adullact.publicrowdfunding.model.local.ressource.Project;
+import adullact.publicrowdfunding.model.local.ressource.Resource;
 import adullact.publicrowdfunding.model.local.ressource.User;
 import adullact.publicrowdfunding.model.local.utilities.Share;
+import adullact.publicrowdfunding.model.server.event.CreateEvent;
 import adullact.publicrowdfunding.views.SimpleLine;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.location.Location;
 import android.location.LocationListener;
@@ -71,7 +77,7 @@ public class MainActivity extends FragmentActivity {
 	private boolean isTablet;
 
 	private android.widget.FrameLayout filter;
-	
+
 	private Activity _this;
 
 	@Override
@@ -137,9 +143,10 @@ public class MainActivity extends FragmentActivity {
 				ft.commit();
 
 				closeDrawer();
-				
+
 				filter.setVisibility(View.VISIBLE);
-				Animation fadeInAnimation = AnimationUtils.loadAnimation(_this, R.anim.fade_enter);
+				Animation fadeInAnimation = AnimationUtils.loadAnimation(_this,
+						R.anim.fade_enter);
 				filter.setAnimation(fadeInAnimation);
 				filter.animate();
 			}
@@ -260,7 +267,8 @@ public class MainActivity extends FragmentActivity {
 
 				closeDrawer();
 				filter.setVisibility(View.VISIBLE);
-				Animation fadeInAnimation = AnimationUtils.loadAnimation(_this, R.anim.fade_enter);
+				Animation fadeInAnimation = AnimationUtils.loadAnimation(_this,
+						R.anim.fade_enter);
 				filter.setAnimation(fadeInAnimation);
 				filter.animate();
 
@@ -502,6 +510,102 @@ public class MainActivity extends FragmentActivity {
 	public void closeDrawer() {
 		if (!isTablet) {
 			mDrawerLayout.closeDrawer(mDrawerList);
+		}
+	}
+
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+		if (requestCode == 1) {
+			if (resultCode == RESULT_OK) {
+				// Payement ok !
+				final String idProject = data.getStringExtra("idProject");
+				final String somme = data.getStringExtra("somme");
+
+				new Project().getCache(idProject).toResource(
+						new HoldToDo<Project>() {
+
+							@Override
+							public void hold(Project resource) {
+								try {
+									resource.finance(somme,
+											new CreateEvent<Funding>() {
+
+												@Override
+												public void errorResourceIdAlreadyUsed() {
+													// TODO Auto-generated
+													// method stub
+
+												}
+
+												@Override
+												public void onCreate(
+														Funding resource) {
+													// Tout est ok !
+
+													new Project()
+															.getCache(idProject)
+															.forceRetrieve()
+															.toResource(
+																	new HoldToDo<Project>() {
+
+																		@Override
+																		public void hold(
+																				Project resource) {
+																			Bundle bundle = new Bundle();
+																			bundle.putString(
+																					"idProject",
+																					idProject);
+
+																			FragmentTransaction ft = getSupportFragmentManager()
+																					.beginTransaction();
+																			Fragment fragment = new ProjectPagerFragment();
+																			fragment.setArguments(bundle);
+																			fragment.setHasOptionsMenu(true);
+																			ft.add(R.id.content_frame,
+																					fragment);
+																			ft.commitAllowingStateLoss();
+
+																		}
+
+																	});
+
+												}
+
+												@Override
+												public void errorAuthenticationRequired() {
+													// TODO Auto-generated
+													// method stub
+
+												}
+
+												@Override
+												public void errorNetwork() {
+													// TODO Auto-generated
+													// method stub
+
+												}
+
+												@Override
+												public void errorServer() {
+													// TODO Auto-generated
+													// method stub
+
+												}
+
+											});
+								} catch (NoAccountExistsInLocal e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+
+							}
+
+						});
+
+			}
+			if (resultCode == RESULT_CANCELED) {
+				// Echec du payement.
+			}
 		}
 	}
 
