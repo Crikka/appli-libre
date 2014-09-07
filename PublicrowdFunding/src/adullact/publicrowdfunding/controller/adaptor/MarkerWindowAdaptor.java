@@ -44,12 +44,14 @@ public class MarkerWindowAdaptor extends FragmentActivity implements InfoWindowA
 	public void displayInfo(Project projet) {
 		titre_projet_liste.setText(projet.getName());
 		description_projet_liste.setText(projet.getDescription());
-		temps_restant_projet_liste.setText(projet.getNumberOfDayToEnd()
-				+ " jours");
+		String days = this.getResources().getString(R.string.days, projet.getNumberOfDayToEnd());
+		temps_restant_projet_liste.setText(days);
 
+		String requested = this.getResources().getString(R.string.currency, projet.getRequestedFunding());
 		avancement_projet_liste.setProgress(projet.getPercentOfAchievement());
-		sommeDemander.setText(projet.getRequestedFunding() + "€");
-		sommeFunded.setText(projet.getCurrentFunding() + "€");
+		sommeDemander.setText(requested);
+		String currentFunded = this.getResources().getString(R.string.currency, projet.getCurrentFunding());
+		sommeFunded.setText(currentFunded);
 		if (projet.getIllustration() != 0) {
 			illustration.setImageResource(Utility.getDrawable(projet
 					.getIllustration()));

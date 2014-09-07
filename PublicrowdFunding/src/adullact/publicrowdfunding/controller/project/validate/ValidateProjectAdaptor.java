@@ -24,15 +24,12 @@ public class ValidateProjectAdaptor extends ArrayAdapter<Project> {
 	Context mContext;
 	int layoutResourceId;
 	ArrayList<Project> data;
-	
-	private Context context;
 
 	public ValidateProjectAdaptor(Context context, int resource, ArrayList<Project> listItem) {
 		super(context, resource, listItem);
 		this.mContext = context;
 		this.layoutResourceId = resource;
 		this.data = listItem;
-		this.context = context;
 	}
 
 	private static class UserHolder {

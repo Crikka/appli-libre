@@ -3,11 +3,8 @@ package adullact.publicrowdfunding.controller.adaptor;
 import java.util.ArrayList;
 
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
-import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.utilities.Calcul;
-import adullact.publicrowdfunding.model.local.utilities.CanI;
 import adullact.publicrowdfunding.model.local.utilities.Share;
 import adullact.publicrowdfunding.model.local.utilities.Utility;
 import adullact.publicrowdfunding.views.CustomProgressBar;
@@ -98,13 +95,15 @@ public class ProjectAdaptor extends ArrayAdapter<Project> {
 		Project projet = data.get(position);
 		holder.titre_projet_liste.setText(projet.getName());
 		holder.description_projet_liste.setText(projet.getDescription());
-		holder.temps_restant_projet_liste.setText(projet.getNumberOfDayToEnd()
-				+ " jours");
+		String days = mContext.getResources().getString(R.string.days, projet.getNumberOfDayToEnd());
+		holder.temps_restant_projet_liste.setText(days);
 
 		holder.avancement_projet_liste.setProgress(projet
 				.getPercentOfAchievement());
-		holder.sommeDemander.setText(projet.getRequestedFunding()+"€");
-		holder.sommeFunded.setText(projet.getCurrentFunding()+"€");
+		String requested = mContext.getResources().getString(R.string.currency,projet.getRequestedFunding());
+		holder.sommeDemander.setText(requested);
+		String funded = mContext.getResources().getString(R.string.currency,projet.getCurrentFunding());
+		holder.sommeFunded.setText(funded);
 		if (projet.getIllustration() != 0) {
 			holder.illustration.setImageResource(Utility.getDrawable(projet
 					.getIllustration()));

@@ -1,17 +1,12 @@
 package adullact.publicrowdfunding;
 
-import java.lang.reflect.Method;
-import java.util.List;
-
 import adullact.publicrowdfunding.controller.profile.preferences.preferencesFragment;
 import adullact.publicrowdfunding.controller.project.all.ListProjectsFragment;
 import adullact.publicrowdfunding.controller.project.all.MapFragment;
 import adullact.publicrowdfunding.controller.register.ConnexionFragment;
 import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.callback.HoldToDo;
-import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
-import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
 import adullact.publicrowdfunding.model.local.utilities.Share;
 import adullact.publicrowdfunding.views.SimpleLine;
@@ -27,7 +22,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -73,8 +67,6 @@ public class MainActivity extends FragmentActivity {
 	private SimpleLine m_separator_3;
 
 	private User me;
-
-	private Menu menu;
 
 	private boolean isTablet;
 
@@ -366,7 +358,7 @@ public class MainActivity extends FragmentActivity {
 			locationManager.requestLocationUpdates(locationProvider, 10000, 0,
 					locationListener);
 		} catch (Exception e) {
-			System.out.println("Erreur 2");
+			e.printStackTrace();
 		}
 	}
 
@@ -376,7 +368,7 @@ public class MainActivity extends FragmentActivity {
 		try {
 			locationManager.removeUpdates(locationListener);
 		} catch (Exception e) {
-			System.out.println("Erreur 1");
+			e.printStackTrace();
 		}
 	}
 
@@ -434,7 +426,7 @@ public class MainActivity extends FragmentActivity {
 					}
 
 				} catch (NullPointerException e) {
-					System.out.println("Initialisation");
+					e.printStackTrace();
 				}
 
 			}

@@ -80,7 +80,7 @@ public class PaypalActivity extends Activity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		System.out.println("Result : "+requestCode);
+	
 		if (requestCode == REQUEST_CODE_PAYMENT) {
 			if (resultCode == Activity.RESULT_OK) {
 				PaymentConfirmation confirm = data
@@ -104,26 +104,24 @@ public class PaypalActivity extends Activity {
 						 * /samples/mobile_backend
 						 */
 						
-						System.out.println("Tout est ok");
 						
 						Intent returnIntent = new Intent();
 						setResult(RESULT_OK,returnIntent);
 						finish();
 
 					} catch (JSONException e) {
-						System.out.println("JSON error 2");
 						Intent returnIntent = new Intent();
 						setResult(RESULT_CANCELED, returnIntent);
 						finish();
 					}
 				}
 			} else if (resultCode == Activity.RESULT_CANCELED) {
-				System.out.println("annulation");
+		
 				Intent returnIntent = new Intent();
 				setResult(RESULT_CANCELED, returnIntent);
 				finish();
 			} else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
-				System.out.println("Extra invalid 2");
+	
 				Intent returnIntent = new Intent();
 				setResult(RESULT_CANCELED, returnIntent);
 				finish();
@@ -147,19 +145,19 @@ public class PaypalActivity extends Activity {
 								Toast.LENGTH_LONG).show();
 
 					} catch (JSONException e) {
-						System.out.println("JSON Exception");
+					
 						Intent returnIntent = new Intent();
 						setResult(RESULT_CANCELED, returnIntent);
 						finish();
 					}
 				}
 			} else if (resultCode == Activity.RESULT_CANCELED) {
-				System.out.println("canceled");
+				
 				Intent returnIntent = new Intent();
 				setResult(RESULT_CANCELED, returnIntent);
 				finish();
 			} else if (resultCode == PayPalFuturePaymentActivity.RESULT_EXTRAS_INVALID) {
-				System.out.println("Extra invalid");
+			
 				Intent returnIntent = new Intent();
 				setResult(RESULT_CANCELED, returnIntent);
 				finish();

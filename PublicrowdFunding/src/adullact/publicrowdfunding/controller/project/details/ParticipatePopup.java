@@ -5,7 +5,6 @@ import adullact.publicrowdfunding.controller.project.participate.PaypalActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
@@ -29,8 +28,6 @@ public class ParticipatePopup extends Fragment {
 	private EditText somme;
 	private CheckBox conditions;
 	private Button valider;
-
-	private String idProject;
 
 	private Animation shake;
 

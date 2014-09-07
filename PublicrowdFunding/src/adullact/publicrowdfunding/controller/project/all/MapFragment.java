@@ -4,14 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.R.id;
-import adullact.publicrowdfunding.R.layout;
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -20,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
@@ -54,8 +50,8 @@ public class MapFragment extends Fragment implements OnInfoWindowClickListener {
 					false);
 
 		} catch (Exception e) {
-			TextView text = new TextView(getActivity());
-			text.setText("Impossible de charger Google Map");
+			TextView text = new TextView(getActivity());		
+			text.setText(this.getResources().getString(R.string.error));
 			return text;
 		}
 

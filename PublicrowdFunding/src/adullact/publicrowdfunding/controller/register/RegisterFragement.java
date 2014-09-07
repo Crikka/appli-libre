@@ -155,7 +155,6 @@ public class RegisterFragement extends Fragment {
 		    {
 		        if( keyCode == KeyEvent.KEYCODE_BACK )
 		        {
-		        	System.out.println("back");
                 	FragmentTransaction ft = getFragmentManager().beginTransaction();
             		//ft.setCustomAnimations(R.anim.enter, R.anim.exit);
             		Fragment fragment = new ConnexionFragment();

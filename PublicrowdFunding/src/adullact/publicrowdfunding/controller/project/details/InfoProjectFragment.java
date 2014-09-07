@@ -4,13 +4,10 @@ import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.cache.Cache;
 import adullact.publicrowdfunding.model.local.callback.HoldToDo;
-import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
 import adullact.publicrowdfunding.model.local.utilities.Share;
-import adullact.publicrowdfunding.model.local.utilities.Utility;
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -243,7 +240,7 @@ public class InfoProjectFragment extends Fragment {
 					ft.commit();
 
 				} catch (NullPointerException e) {
-					Toast.makeText(getActivity(), "Une erreur s'est produite",
+					Toast.makeText(getActivity(), R.string.error,
 							Toast.LENGTH_SHORT).show();
 				}
 			}
@@ -286,7 +283,6 @@ public class InfoProjectFragment extends Fragment {
 		});
 		showLoaded.setVisibility(View.VISIBLE);
 		loading.setVisibility(View.GONE);
-		//view.invalidate();
 	}
 
 }

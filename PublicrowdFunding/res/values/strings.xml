@@ -74,5 +74,7 @@
     <string name="change_your_email">Modifier votre Email</string>
     <string name="financed">Financé</string>
     <string name="register">S\'inscrire</string>
+    <string name="days">%s days</string>
+        <string name="currency">%s €</string>
 
 </resources>

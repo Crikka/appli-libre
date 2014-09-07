@@ -1,8 +1,5 @@
 package adullact.publicrowdfunding.model.local.utilities;
 
-import adullact.publicrowdfunding.R;
-import android.content.Context;
-
 import com.google.android.gms.maps.model.LatLng;
 
 /**

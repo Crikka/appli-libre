@@ -7,7 +7,6 @@ import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.controller.adaptor.CarouselAdaptor;
 import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.callback.HoldToDo;
-import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
@@ -69,7 +68,7 @@ public class addProjectFragment extends Fragment {
 	private HorizontalCarouselLayout mCarousel;
 	private CarouselAdaptor mAdapter;
 	private ArrayList<Integer> mData;
-	
+
 	private LinearLayout loading;
 
 	@Override
@@ -100,10 +99,9 @@ public class addProjectFragment extends Fragment {
 
 		mCarousel = (HorizontalCarouselLayout) view
 				.findViewById(R.id.carousel_layout);
-		
-		loading = (LinearLayout) view
-		.findViewById(R.id.loading);
-		
+
+		loading = (LinearLayout) view.findViewById(R.id.loading);
+
 		mCarousel.setOnCarouselViewChangedListener(new CarouselInterface() {
 
 			@Override
@@ -182,10 +180,10 @@ public class addProjectFragment extends Fragment {
 		}
 
 		String StrDay = "" + day;
-		LatLng position = new LatLng(0,0);
-		try{
-		position = _map.getPosition();
-		}catch(NullPointerException e){
+		LatLng position = new LatLng(0, 0);
+		try {
+			position = _map.getPosition();
+		} catch (NullPointerException e) {
 			e.printStackTrace();
 		}
 		new Project(titre, description, user.getResourceId(), somme,
@@ -198,37 +196,35 @@ public class addProjectFragment extends Fragment {
 				.serverCreate(new CreateEvent<Project>() {
 					@Override
 					public void errorResourceIdAlreadyUsed() {
-						System.out.println("id déja utilisé");
-						Toast.makeText(context, "Erreur interne du serveur",
+
+						Toast.makeText(context, R.string.error,
 								Toast.LENGTH_SHORT).show();
 					}
 
 					@Override
 					public void onCreate(Project resource) {
-						System.out.println("Le projet à bien était ajouté");
-						Toast.makeText(context,
-								"Le projet à bien était ajouté",
+
+						Toast.makeText(context, R.string.error,
 								Toast.LENGTH_SHORT).show();
-						System.out.println("Tout est ok");
 					}
 
 					@Override
 					public void errorAuthenticationRequired() {
 						Toast.makeText(context, "Vous devez vous authentifier",
 								Toast.LENGTH_SHORT).show();
-						System.out.println("Auth required");
+					
 					}
 
 					@Override
 					public void errorNetwork() {
-						Toast.makeText(context, "Probléme avec le réseau",
+						Toast.makeText(context, R.string.error,
 								Toast.LENGTH_SHORT).show();
-						System.out.println("network error");
+						
 					}
 
 					@Override
 					public void errorServer() {
-						Toast.makeText(context, "Erreur interne du serveur",
+						Toast.makeText(context,  R.string.error,
 								Toast.LENGTH_SHORT).show();
 
 					}
@@ -246,15 +242,15 @@ public class addProjectFragment extends Fragment {
 	}
 
 	public void loadMaps() {
-		try{
-		FragmentManager fm = getActivity().getSupportFragmentManager();
-		FragmentTransaction ft = fm.beginTransaction();
-		Fragment fragment = new addLocationProjectFragment();
-		ft.replace(R.id.mapView, fragment);
-		ft.commit();
-		_map = (addLocationProjectFragment) fragment;
-		}catch(Exception e){
-			System.out.println("Erreur lancement de Google Map");
+		try {
+			FragmentManager fm = getActivity().getSupportFragmentManager();
+			FragmentTransaction ft = fm.beginTransaction();
+			Fragment fragment = new addLocationProjectFragment();
+			ft.replace(R.id.mapView, fragment);
+			ft.commit();
+			_map = (addLocationProjectFragment) fragment;
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 	}
@@ -274,7 +270,7 @@ public class addProjectFragment extends Fragment {
 						public void hold(User resource) {
 
 							user = resource;
-							System.out.println(user.getResourceId());
+							
 
 							m_user_pseudo.setText(resource.getPseudo());
 							m_user_ville.setText(resource.getCity());
@@ -288,7 +284,7 @@ public class addProjectFragment extends Fragment {
 
 					});
 				} catch (NoAccountExistsInLocal e) {
-					System.out.println("L'utilisateur n'est pas connecté !");
+					e.printStackTrace();
 				}
 
 				m_illustration = 0;
@@ -313,9 +309,7 @@ public class addProjectFragment extends Fragment {
 			}
 		}).start();
 
-
 		loadMaps();
-		
 
 	}
 }

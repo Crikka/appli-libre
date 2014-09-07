@@ -1,7 +1,5 @@
 package adullact.publicrowdfunding.model.local.ressource;
 
-import android.content.SharedPreferences;
-
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Map;
@@ -11,6 +9,7 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
+import rx.Observable;
 import adullact.publicrowdfunding.PublicrowdFundingApplication;
 import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.cache.Cache;
@@ -21,7 +20,7 @@ import adullact.publicrowdfunding.model.server.entities.RowAffected;
 import adullact.publicrowdfunding.model.server.entities.ServerAccount;
 import adullact.publicrowdfunding.model.server.entities.Service;
 import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
-import rx.Observable;
+import android.content.SharedPreferences;
 
 /**
  * @author Ferrand and Nelaupe

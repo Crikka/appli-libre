@@ -13,8 +13,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 public class PagerAdaptor extends FragmentStatePagerAdapter {
 
 	private String idProject;
-
-	private static PagerAdaptor _this;
 	
 	private Context context;
 
@@ -25,7 +23,6 @@ public class PagerAdaptor extends FragmentStatePagerAdapter {
 	public PagerAdaptor(Context context, FragmentManager fm, String idProject) {
 		super(fm);
 		this.idProject = idProject;
-		_this = this;
 		this.context = context;
 	}
 

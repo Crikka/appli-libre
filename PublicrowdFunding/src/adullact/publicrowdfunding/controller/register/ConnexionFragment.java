@@ -2,7 +2,6 @@ package adullact.publicrowdfunding.controller.register;
 
 import adullact.publicrowdfunding.MainActivity;
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.controller.project.all.ListProjectsFragment;
 import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
@@ -18,10 +17,8 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnKeyListener;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -92,8 +89,7 @@ public class ConnexionFragment extends Fragment {
 							@Override
 							public void errorUsernamePasswordDoesNotMatch(
 									String username, String password) {
-								System.out
-										.println("Login ou mot de passe incorect");
+							
 								Toast.makeText(context,
 										"Login ou mot de passe incorect",
 										Toast.LENGTH_LONG).show();
@@ -126,7 +122,7 @@ public class ConnexionFragment extends Fragment {
 
 							@Override
 							public void errorNetwork() {
-								System.out.println("Erreur serveur");
+							
 								Toast.makeText(
 										context,
 										"Connexion impossible au serveur, veuillez vérifier vos paramètres resaux.",

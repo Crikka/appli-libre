@@ -9,7 +9,6 @@ import adullact.publicrowdfunding.model.server.event.CreateEvent;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
@@ -159,7 +158,7 @@ public class CommentPopup extends Fragment {
 						@Override
 						public void errorResourceIdAlreadyUsed() {
 							Toast.makeText(context,
-									"Une erreur s'est produite",
+									R.string.error,
 									Toast.LENGTH_SHORT).show();
 							back();
 						}
@@ -178,7 +177,7 @@ public class CommentPopup extends Fragment {
 						@Override
 						public void errorAuthenticationRequired() {
 							Toast.makeText(context,
-									"Une erreur s'est produite",
+									R.string.error,
 									Toast.LENGTH_SHORT).show();
 							back();
 
@@ -187,7 +186,7 @@ public class CommentPopup extends Fragment {
 						@Override
 						public void errorNetwork() {
 							Toast.makeText(context,
-									"Une erreur s'est produite",
+									R.string.error,
 									Toast.LENGTH_SHORT).show();
 							back();
 
@@ -197,7 +196,7 @@ public class CommentPopup extends Fragment {
 
 						@Override
 						public void errorServer() {Toast.makeText(context,
-								"Une erreur s'est produite",
+								R.string.error,
 								Toast.LENGTH_SHORT).show();
 						back();
 							
@@ -205,7 +204,7 @@ public class CommentPopup extends Fragment {
 
 					});
 		} catch (NoAccountExistsInLocal e) {
-			Toast.makeText(context, "Une erreur s'est produite",
+			Toast.makeText(context, R.string.error,
 					Toast.LENGTH_SHORT).show();
 			back();
 			e.printStackTrace();
