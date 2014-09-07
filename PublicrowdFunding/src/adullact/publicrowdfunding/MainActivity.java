@@ -1,5 +1,7 @@
 package adullact.publicrowdfunding;
 
+import java.util.List;
+
 import adullact.publicrowdfunding.controller.profile.preferences.preferencesFragment;
 import adullact.publicrowdfunding.controller.project.all.ListProjectsFragment;
 import adullact.publicrowdfunding.controller.project.all.MapFragment;
@@ -26,6 +28,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
@@ -36,6 +39,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -514,13 +518,14 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
 		if (requestCode == 1) {
 			if (resultCode == RESULT_OK) {
 				// Payement ok !
 				final String idProject = data.getStringExtra("idProject");
 				final String somme = data.getStringExtra("somme");
-
+				final FragmentManager fm = this.getSupportFragmentManager();
+				final List<Fragment> fragments = this
+						.getSupportFragmentManager().getFragments();
 				new Project().getCache(idProject).toResource(
 						new HoldToDo<Project>() {
 
@@ -542,32 +547,33 @@ public class MainActivity extends FragmentActivity {
 														Funding resource) {
 													// Tout est ok !
 
-													new Project()
-															.getCache(idProject)
-															.forceRetrieve()
-															.toResource(
-																	new HoldToDo<Project>() {
+													for (Fragment fragment : fragments) {
+														if (fragment instanceof ProjectPagerFragment) {
+															fm.beginTransaction()
+																	.detach(fragment)
+																	.commit();
+														}
+													}
+													Bundle bundle = new Bundle();
+													bundle.putString(
+															"idProject",
+															idProject);
 
-																		@Override
-																		public void hold(
-																				Project resource) {
-																			Bundle bundle = new Bundle();
-																			bundle.putString(
-																					"idProject",
-																					idProject);
+													FragmentTransaction ft = getSupportFragmentManager()
+															.beginTransaction();
+													Fragment fragment = new ProjectPagerFragment();
+													fragment.setArguments(bundle);
+													fragment.setHasOptionsMenu(true);
+													ft.replace(
+															R.id.content_frame,
+															fragment);
+													Toast.makeText(
+															getBaseContext(),
+															"Participation prise en compte !",
+															Toast.LENGTH_LONG)
+															.show();
 
-																			FragmentTransaction ft = getSupportFragmentManager()
-																					.beginTransaction();
-																			Fragment fragment = new ProjectPagerFragment();
-																			fragment.setArguments(bundle);
-																			fragment.setHasOptionsMenu(true);
-																			ft.replace(R.id.content_frame,
-																					fragment);
-																			ft.commitAllowingStateLoss();
-
-																		}
-
-																	});
+													ft.commitAllowingStateLoss();
 
 												}
 
@@ -608,5 +614,4 @@ public class MainActivity extends FragmentActivity {
 			}
 		}
 	}
-
 }
