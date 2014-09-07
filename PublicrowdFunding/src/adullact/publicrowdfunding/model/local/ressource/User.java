@@ -113,7 +113,7 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
         this.m_funding = new CacheSet<Funding>();
 
         for(final ServerFunding serverFunding : detailedServerUser.fundedProjects) {
-            //m_funding.add(new Funding().makeCopyFromServer(serverFunding).getCache(Integer.toString(serverFunding.id)));
+            m_funding.add(new Funding().makeCopyFromServer(serverFunding).getCache(Integer.toString(serverFunding.id)));
         }
         return this;
     }
