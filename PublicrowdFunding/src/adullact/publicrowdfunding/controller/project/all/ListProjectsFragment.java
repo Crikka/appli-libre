@@ -292,13 +292,14 @@ public class ListProjectsFragment extends Fragment {
 	public void fragmentReload(){
 		
 		sync = SyncServerToLocal.getInstance();
-		sync.sync(new HoldAllToDo<Project>() {
+		sync.forceSyncAll(new HoldAllToDo<Project>() {
 			@Override
 			public void holdAll(ArrayList<Project> projects) {
+				
 				ArrayList<Project> allSync = new ArrayList<Project>(sync
 						.restrictToValidatedProjects());
 				p_project_displayed = allSync;
-
+				
 				refresh();
 
 			}

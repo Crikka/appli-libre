@@ -561,7 +561,7 @@ public class MainActivity extends FragmentActivity {
 																			Fragment fragment = new ProjectPagerFragment();
 																			fragment.setArguments(bundle);
 																			fragment.setHasOptionsMenu(true);
-																			ft.add(R.id.content_frame,
+																			ft.replace(R.id.content_frame,
 																					fragment);
 																			ft.commitAllowingStateLoss();
 
