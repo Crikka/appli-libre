@@ -306,6 +306,10 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
         });
     }
 
+    public CacheSet<Funding> getFundedProjects() {
+        return m_funding;
+    }
+
     /* Setters */
     public void setPseudo(String pseudo) {
         m_pseudo = pseudo;

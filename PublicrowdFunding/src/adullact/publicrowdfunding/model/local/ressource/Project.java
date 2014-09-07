@@ -1,15 +1,16 @@
 package adullact.publicrowdfunding.model.local.ressource;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import com.google.android.gms.maps.model.LatLng;
 
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
 
-import rx.Observable;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.cache.Cache;
 import adullact.publicrowdfunding.model.local.cache.CacheSet;
@@ -27,8 +28,7 @@ import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
 import adullact.publicrowdfunding.model.server.event.CreateEvent;
 import adullact.publicrowdfunding.model.server.event.ListerEvent;
 import adullact.publicrowdfunding.model.server.request.ListerRequest;
-
-import com.google.android.gms.maps.model.LatLng;
+import rx.Observable;
 
 /**
  * @author Ferrand and Nelaupe
@@ -411,7 +411,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
      * @brief Add value to current funding.
      */
     public void finance(final String value, final CreateEvent<Funding> fundingCreateEvent) throws NoAccountExistsInLocal  {
-        Account account = Account.getOwn();
+        final Account account = Account.getOwn();
         final Project _this = this;
         account.getUser(new HoldToDo<User>() {
             @Override
@@ -424,10 +424,15 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
                     }
 
                     @Override
-                    public void onCreate(Funding resource) {
+                    public void onCreate(final Funding funding) {
                         m_currentFunding = m_currentFunding.add(new BigDecimal(value));
-                        fundingCreateEvent.onCreate(resource);
-
+                        account.getUser(new HoldToDo<User>() {
+                            @Override
+                            public void hold(User resource) {
+                                resource.getFundedProjects().add(funding);
+                                fundingCreateEvent.onCreate(funding);
+                            }
+                        });
                     }
 
                     @Override
