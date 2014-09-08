@@ -1,11 +1,5 @@
 package adullact.publicrowdfunding.controller.project.validate;
 
-import java.util.ArrayList;
-
-import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
-import adullact.publicrowdfunding.model.local.ressource.Project;
-import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -23,6 +17,13 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+
+import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
+import adullact.publicrowdfunding.model.local.ressource.Project;
+import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 
 /**
  * @author Ferrand and Nelaupe
@@ -124,11 +125,10 @@ public class MainActivity extends Fragment {
 
 			@Override
 			public void holdAll(ArrayList<Project> projects) {
-
-				adapter = new ValidateProjectAdaptor(getActivity().getBaseContext(),
+                adapter = new ValidateProjectAdaptor(getActivity().getBaseContext(),
 						R.layout.adaptor_project, sync.restrictToNotValidatedProjects());
-				adapter.clear();
-				adapter.addAll(projects);
+				/*adapter.clear();
+				adapter.addAll(notValidatedProject);*/
 				adapter.notifyDataSetChanged();
 				swipeView.setRefreshing(false);
 				
