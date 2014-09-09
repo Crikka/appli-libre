@@ -1,24 +1,27 @@
 package adullact.publicrowdfunding.model.local.utilities;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.TreeSet;
-import java.util.regex.Pattern;
+import android.content.SharedPreferences;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
-import rx.Scheduler;
-import rx.functions.Action0;
-import rx.schedulers.Schedulers;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.regex.Pattern;
+
 import adullact.publicrowdfunding.PublicrowdFundingApplication;
 import adullact.publicrowdfunding.model.local.callback.NothingToDo;
 import adullact.publicrowdfunding.model.local.callback.WhatToDo;
 import adullact.publicrowdfunding.model.local.database.ProjectsDatabase;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.server.event.ListerEvent;
-import android.content.SharedPreferences;
+import rx.Scheduler;
+import rx.functions.Action0;
+import rx.schedulers.Schedulers;
 
 /**
  * @author Ferrand and Nelaupe
@@ -27,18 +30,13 @@ public class SyncServerToLocal {
     /* --- Singleton --- */
     private static SyncServerToLocal m_instance = null;
     private SyncServerToLocal() {
-        this.m_projects = new TreeSet<Project>(new Comparator<Project>() {
-            @Override
-            public int compare(Project project1, Project project2) {
-                return project1.getResourceId().compareTo(project2.getResourceId());
-            }
-        });
+        this.m_projects = new TreeMap<String, Project>();
 
         ProjectsDatabase projectsDatabase = ProjectsDatabase.getInstance();
         ArrayList<Project> projects = projectsDatabase.get();
 
         for(Project project : projects) {
-            m_projects.add(project);
+            m_projects.put(project.getResourceId(), project);
             project.getCache(); // create a cache
         }
 
@@ -55,14 +53,14 @@ public class SyncServerToLocal {
     }
     /* ----------------- */
 
-    private TreeSet<Project> m_projects;
+    private TreeMap<String, Project> m_projects;
     private DateTime m_lastSync;
     private Searcher m_currentSearcher;
     private Comparator<Project> m_currentComparator;
     private static String KEY_LAST_SYNC = "lastSync";
 
-    public TreeSet<Project> getProjects() {
-        return m_projects;
+    public Collection<Project> getProjects() {
+        return m_projects.values();
     }
 
     public void forceSyncAll(final WhatToDo<Project> projectWhatToDo) {
@@ -92,23 +90,23 @@ public class SyncServerToLocal {
 
                 for(Project project : projects) {
                     if(project.isActive()) {
-                        if(m_projects.contains(project)) {
+                        if(m_projects.containsKey(project.getResourceId())) {
                             updatedProjects.add(project);
+                            m_projects.put(project.getResourceId(), project);
                             project.getCache().forceRetrieve().setResource(project);
                         }
                         else {
                             newProjects.add(project);
+                            m_projects.put(project.getResourceId(), project);
                             project.getCache(); // create a cache
                         }
                     }
                     else {
                         deletedProject.add(project);
+                        m_projects.remove(project.getResourceId());
                     }
                     projectWhatToDo.hold(project);
                 }
-
-                m_projects.addAll(newProjects);
-                m_projects.removeAll(deletedProject);
 
                 _this.syncLocalDatabase(newProjects, updatedProjects, deletedProject);
                 projectWhatToDo.eventually();
@@ -197,7 +195,8 @@ public class SyncServerToLocal {
     private ArrayList<Project> restrict(Filter filter) {
         ArrayList<Project> res = new ArrayList<Project>();
 
-        for(Project project : m_projects) {
+        for(Map.Entry<String, Project> entry : m_projects.entrySet()) {
+            Project project = entry.getValue();
             if(filter.filterTest(project)) {
                 res.add(project);
             }
@@ -211,11 +210,13 @@ public class SyncServerToLocal {
         m_currentSearcher = searcher;
         ArrayList<Project> res = new ArrayList<Project>();
 
-        for(Project project : m_projects) {
+        for(Map.Entry<String, Project> entry : m_projects.entrySet()) {
+            Project project = entry.getValue();
             if(searcher.searchTest(project, motif)) {
                 res.add(project);
             }
         }
+
 
         return res;
     }
@@ -260,7 +261,7 @@ public class SyncServerToLocal {
 
     private ArrayList<Project> sort(final Comparator<Project> sorter) {
         m_currentComparator = sorter;
-        ArrayList<Project> res = new ArrayList<Project>(m_projects);
+        ArrayList<Project> res = new ArrayList<Project>(getProjects());
 
         Collections.sort(res, sorter);
 
