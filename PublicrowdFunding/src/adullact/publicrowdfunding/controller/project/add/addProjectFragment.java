@@ -1,20 +1,14 @@
 package adullact.publicrowdfunding.controller.project.add;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.controller.project.all.ListProjectsFragment;
 import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
-import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
-import adullact.publicrowdfunding.model.local.utilities.Utility;
-import adullact.publicrowdfunding.model.server.event.CreateEvent;
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -26,14 +20,10 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.touchmenotapps.carousel.simple.HorizontalCarouselLayout;
-import com.touchmenotapps.carousel.simple.HorizontalCarouselLayout.CarouselInterface;
-import com.touchmenotapps.carousel.simple.HorizontalCarouselStyle;
 
 /**
  * @author Ferrand and Nelaupe

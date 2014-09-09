@@ -36,7 +36,6 @@ public class CommentPopup extends Fragment {
 	private EditText comment_title;
 	private EditText comment_message;
 
-	private CheckBox conditions;
 	private Button valider;
 
 	private Animation shake;
@@ -71,7 +70,6 @@ public class CommentPopup extends Fragment {
 
 		mark = (RatingBar) view.findViewById(R.id.mark);
 
-		conditions = (CheckBox) view.findViewById(R.id.conditions);
 		valider = (Button) view.findViewById(R.id.valider);
 
 		shake = AnimationUtils.loadAnimation(this.getActivity()
@@ -81,10 +79,6 @@ public class CommentPopup extends Fragment {
 
 			@Override
 			public void onClick(View v) {
-				if (!conditions.isChecked()) {
-					conditions.setTextColor(Color.parseColor("#ff0000"));
-					return;
-				}
 
 				if (comment_title.getText().length() < 1) {
 					comment_title.startAnimation(shake);

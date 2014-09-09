@@ -3,7 +3,6 @@ package adullact.publicrowdfunding;
 import java.util.List;
 
 import adullact.publicrowdfunding.controller.profile.preferences.preferencesFragment;
-import adullact.publicrowdfunding.controller.project.add.BreadCrumbView;
 import adullact.publicrowdfunding.controller.project.add.addProjectFragment;
 import adullact.publicrowdfunding.controller.project.all.ListProjectsFragment;
 import adullact.publicrowdfunding.controller.project.all.MapFragment;
@@ -14,7 +13,6 @@ import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.Funding;
 import adullact.publicrowdfunding.model.local.ressource.Project;
-import adullact.publicrowdfunding.model.local.ressource.Resource;
 import adullact.publicrowdfunding.model.local.ressource.User;
 import adullact.publicrowdfunding.model.local.utilities.Share;
 import adullact.publicrowdfunding.model.server.event.CreateEvent;
