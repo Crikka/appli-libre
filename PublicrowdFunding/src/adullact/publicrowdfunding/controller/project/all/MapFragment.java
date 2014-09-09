@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.controller.adaptor.MarkerWindowAdaptor;
 import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
@@ -122,7 +123,7 @@ public class MapFragment extends Fragment implements OnInfoWindowClickListener {
 
 			googleMap.setOnInfoWindowClickListener(_this);
 			googleMap
-					.setInfoWindowAdapter(new adullact.publicrowdfunding.controller.adaptor.MarkerWindowAdaptor(
+					.setInfoWindowAdapter(new MarkerWindowAdaptor(this.getActivity().getBaseContext(),
 							getLayoutInflater(null), markers));
 
 			googleMap.setMyLocationEnabled(true);
