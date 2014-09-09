@@ -1,15 +1,10 @@
 package adullact.publicrowdfunding.model.local.ressource;
 
-import java.security.SecureRandom;
+import android.content.SharedPreferences;
+
 import java.util.ArrayList;
 import java.util.Map;
 
-import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
-
-import rx.Observable;
 import adullact.publicrowdfunding.PublicrowdFundingApplication;
 import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.cache.Cache;
@@ -20,7 +15,7 @@ import adullact.publicrowdfunding.model.server.entities.RowAffected;
 import adullact.publicrowdfunding.model.server.entities.ServerAccount;
 import adullact.publicrowdfunding.model.server.entities.Service;
 import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
-import android.content.SharedPreferences;
+import rx.Observable;
 
 /**
  * @author Ferrand and Nelaupe
@@ -36,7 +31,7 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
         }
 
         m_username = sharedPreferences.getString(KEY_USERNAME, "");
-        m_password = decrypt("mystery", sharedPreferences.getString(KEY_PASSWORD, ""));
+        m_password = sharedPreferences.getString(KEY_PASSWORD, "");
         m_administrator = sharedPreferences.getBoolean(KEY_ADMIN, false);
 
         User user = new User();
@@ -237,97 +232,15 @@ public class Account extends Resource<Account, ServerAccount, ServerAccount> {
         });
         new Cache<Account>(own).declareUpToDate().useIt();
     }
-    
-    
-
-    
 
     private void save() {
         SharedPreferences.Editor editor = PublicrowdFundingApplication.sharedPreferences().edit();
 
         editor.putString(KEY_USERNAME, m_username);
-        editor.putString(KEY_PASSWORD, encrypt("mystery", m_password));
+        editor.putString(KEY_PASSWORD,  m_password);
         editor.putString(KEY_PSEUDO, m_user.getResourceId());
         editor.putBoolean(KEY_ADMIN, m_administrator);
 
         editor.apply();
     }
-
-
-    /* --------- Cryptography part ------------ */
-    private final static String HEX = "0123456789ABCDEF";
-    private static String encrypt(String seed, String password)  {
-        byte[] result;
-        try {
-            byte[] rawKey = getRawKey(seed.getBytes());
-            result = encrypt(rawKey, password.getBytes());
-        }
-        catch(Exception exception) {
-            return password;
-        }
-        return toHex(result);
-    }
-
-    private static String decrypt(String seed, String encrypted)  {
-        byte[] result;
-        try {
-            byte[] rawKey = getRawKey(seed.getBytes());
-            byte[] enc = toByte(encrypted);
-            result = decrypt(rawKey, enc);
-        }
-        catch(Exception exception) {
-            return encrypted;
-        }
-        return new String(result);
-    }
-
-    private static byte[] getRawKey(byte[] seed) throws Exception {
-        KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
-        SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
-        sr.setSeed(seed);
-        keyGenerator.init(128, sr); // 192 and 256 bits may not be available
-        SecretKey secretKey = keyGenerator.generateKey();
-        byte[] raw = secretKey.getEncoded();
-        return raw;
-    }
-
-
-    private static byte[] encrypt(byte[] raw, byte[] clear) throws Exception {
-        SecretKeySpec secretKeySpec = new SecretKeySpec(raw, "AES");
-        Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
-        byte[] encrypted = cipher.doFinal(clear);
-        return encrypted;
-    }
-
-    private static byte[] decrypt(byte[] raw, byte[] encrypted) throws Exception {
-        SecretKeySpec secretKeySpec = new SecretKeySpec(raw, "AES");
-        Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
-        byte[] decrypted = cipher.doFinal(encrypted);
-        return decrypted;
-    }
-
-    private static byte[] toByte(String hexString) {
-        int len = hexString.length()/2;
-        byte[] result = new byte[len];
-        for (int i = 0; i < len; i++)
-            result[i] = Integer.valueOf(hexString.substring(2*i, 2*i+2), 16).byteValue();
-        return result;
-    }
-
-    private static String toHex(byte[] buf) {
-        if (buf == null)
-            return "";
-        StringBuffer result = new StringBuffer(2*buf.length);
-        for (int i = 0; i < buf.length; i++) {
-            appendHex(result, buf[i]);
-        }
-        return result.toString();
-    }
-
-    private static void appendHex(StringBuffer sb, byte b) {
-        sb.append(HEX.charAt((b>>4)&0x0f)).append(HEX.charAt(b&0x0f));
-    }
-    /* ---------------------------------------- */
 }

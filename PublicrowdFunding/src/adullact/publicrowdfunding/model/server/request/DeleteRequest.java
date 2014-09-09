@@ -22,7 +22,7 @@ public class DeleteRequest<TResource extends Resource<TResource, TServerResource
     }
 
     @Override
-    public void execute() {
+    public void secureExecute() {
         m_resource.methodDELETE(service()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<SimpleServerResponse>() {
                     @Override

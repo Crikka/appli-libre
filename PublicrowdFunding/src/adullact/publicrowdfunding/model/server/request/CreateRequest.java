@@ -23,7 +23,7 @@ public class CreateRequest<TResource extends Resource<TResource, TServerResource
     }
 
     @Override
-    public void execute() {
+    public void secureExecute() {
         m_resource.methodPOST(service()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<RowAffected>() {
                     @Override

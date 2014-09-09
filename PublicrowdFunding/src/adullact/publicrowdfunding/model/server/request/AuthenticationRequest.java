@@ -24,7 +24,7 @@ public class AuthenticationRequest extends AuthenticatedRequest<AuthenticationRe
     }
 
     @Override
-    public void execute() {
+    public void secureExecute() {
        service().authenticate().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<SimpleServerResponse>() {
 

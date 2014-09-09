@@ -17,10 +17,7 @@ TErrorHandler extends ErrorHandler<TRequest, TEvent, TErrorHandler>>
 extends ServerObject<TRequest, TEvent, TErrorHandler> {
 	private boolean m_done;
     private Service m_service;
-	
-    
-    
- 
+
 	public Request(TEvent event, TErrorHandler errorHandler){
         super(event, errorHandler);
 
@@ -36,7 +33,7 @@ extends ServerObject<TRequest, TEvent, TErrorHandler> {
 
     protected void defineRequestInterceptor(RequestInterceptor requestInterceptor) {
         m_service = new RestAdapter.Builder()
-                 .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setRequestInterceptor(requestInterceptor)
                 .setErrorHandler(errorHandler())
                 .setEndpoint(SERVER_URL).build()
