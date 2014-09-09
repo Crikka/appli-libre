@@ -5,6 +5,7 @@
     android:background="@color/background"
     android:orientation="vertical" >
 
+   
     <LinearLayout
         android:id="@+id/loading"
         android:layout_width="match_parent"
@@ -25,7 +26,7 @@
             android:gravity="center"
             android:text="@string/loading" />
     </LinearLayout>
-
+   
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
@@ -52,7 +53,7 @@
 
                     <com.touchmenotapps.carousel.simple.HorizontalCarouselLayout
                         android:id="@+id/carousel_layout"
-                        android:layout_width="100dp"
+                        android:layout_width="150dp"
                         android:layout_height="50dp" />
 
                     <EditText
@@ -353,12 +354,6 @@
                     android:layout_height="wrap_content"
                     android:gravity="center" />
             </LinearLayout>
-
-            <FrameLayout
-                android:id="@+id/mapView"
-                android:layout_width="match_parent"
-                android:layout_height="300dp" >
-            </FrameLayout>
 
             <Button
                 android:id="@+id/button_valider"

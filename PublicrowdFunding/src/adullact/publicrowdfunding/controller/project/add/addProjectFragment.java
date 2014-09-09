@@ -17,8 +17,6 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,8 +55,6 @@ public class addProjectFragment extends Fragment {
 	private Context context;
 
 	private int m_illustration;
-
-	private addLocationProjectFragment _map;
 
 	private User user;
 
@@ -178,14 +174,10 @@ public class addProjectFragment extends Fragment {
 		} else {
 			StrMonth = "" + month;
 		}
-
+		
+		LatLng position = new LatLng(0,0);
+		
 		String StrDay = "" + day;
-		LatLng position = new LatLng(0, 0);
-		try {
-			position = _map.getPosition();
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-		}
 		new Project(titre, description, user.getResourceId(), somme,
 				Utility.stringToDateTime(Stryear + "-" + StrMonth + "-"
 						+ StrDay + " 00:00:00"),
@@ -237,20 +229,6 @@ public class addProjectFragment extends Fragment {
 		int currentapiVersion = android.os.Build.VERSION.SDK_INT;
 		if (currentapiVersion >= 11) {
 			m_dateFin.setCalendarViewShown(false);
-		}
-
-	}
-
-	public void loadMaps() {
-		try {
-			FragmentManager fm = getActivity().getSupportFragmentManager();
-			FragmentTransaction ft = fm.beginTransaction();
-			Fragment fragment = new addLocationProjectFragment();
-			ft.replace(R.id.mapView, fragment);
-			ft.commit();
-			_map = (addLocationProjectFragment) fragment;
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 
 	}
@@ -308,8 +286,6 @@ public class addProjectFragment extends Fragment {
 
 			}
 		}).start();
-
-		loadMaps();
 
 	}
 }

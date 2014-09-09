@@ -2,11 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/Share"
-        android:icon="@android:drawable/ic_menu_share"
-        android:showAsAction="ifRoom"
-        android:title="partager"/>
-    <item
         android:id="@+id/add_favorite"
         android:icon="@drawable/ic_menu_star"
         android:showAsAction="always"

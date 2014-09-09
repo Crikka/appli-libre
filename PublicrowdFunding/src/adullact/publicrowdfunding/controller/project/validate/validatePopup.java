@@ -5,7 +5,6 @@ import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.server.event.UpdateEvent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
@@ -13,8 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.RadioGroup;
 
 /**
@@ -70,6 +72,7 @@ public class validatePopup extends Fragment {
 				case R.id.reject:
 					currentProject.setValidate(false);
 					update();
+					break;
 					default:
 						return;
 				}
@@ -101,25 +104,18 @@ public class validatePopup extends Fragment {
 				.beginTransaction();
 		ft.setCustomAnimations(R.anim.no_anim, R.anim.popup_exit);
 		ft.remove(_this);
+
+		FrameLayout filter = (FrameLayout) getActivity().getWindow()
+				.getDecorView().findViewById(R.id.big_filter);
+		Animation fadeInAnimation = AnimationUtils.loadAnimation(
+				_this.getActivity(), R.anim.fade_exit);
+		filter.setAnimation(fadeInAnimation);
 		ft.commit();
-
-		// Multi Thread pour que l'animation s'éxécute
-
-		new Handler().postDelayed(new Runnable() {
-			public void run() {
-				try {
-					getActivity().getWindow().getDecorView()
-							.findViewById(R.id.big_filter)
-							.setVisibility(View.GONE);
-
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}, 500);
+		filter.animate();
 	}
 	
 	public void update(){
+		
 		currentProject.serverUpdate(new UpdateEvent<Project>(){
 
 			@Override
