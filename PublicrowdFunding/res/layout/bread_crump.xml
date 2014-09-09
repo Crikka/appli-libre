@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@color/bluebar"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:padding="10dp"
+    android:weightSum="7" >
+
+    <TextView
+        android:id="@+id/etape1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Detail"
+        android:textSize="15sp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:contentDescription="@string/description_image_project"
+        android:gravity="center"
+        android:src="@android:drawable/ic_menu_send" />
+
+    <TextView
+        android:id="@+id/etape2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Image"
+        android:textSize="15sp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:contentDescription="@string/description_image_project"
+        android:gravity="center"
+        android:src="@android:drawable/ic_menu_send" />
+
+    <TextView
+        android:id="@+id/etape3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Position"
+        android:textSize="15sp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:contentDescription="@string/description_image_project"
+        android:gravity="center"
+        android:src="@android:drawable/ic_menu_send" />
+
+    <TextView
+        android:id="@+id/etape4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Valider"
+        android:textSize="15sp" />
+
+</LinearLayout>

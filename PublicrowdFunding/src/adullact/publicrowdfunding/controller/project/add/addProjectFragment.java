@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.controller.adaptor.CarouselAdaptor;
+import adullact.publicrowdfunding.controller.project.all.ListProjectsFragment;
 import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
@@ -14,9 +14,11 @@ import adullact.publicrowdfunding.model.local.utilities.Utility;
 import adullact.publicrowdfunding.model.server.event.CreateEvent;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,18 +56,10 @@ public class addProjectFragment extends Fragment {
 
 	private Context context;
 
-	private int m_illustration;
-
 	private User user;
 
 	private ImageView avatar;
 
-	private HorizontalCarouselStyle mStyle;
-	private HorizontalCarouselLayout mCarousel;
-	private CarouselAdaptor mAdapter;
-	private ArrayList<Integer> mData;
-
-	private LinearLayout loading;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -75,7 +69,10 @@ public class addProjectFragment extends Fragment {
 				false);
 
 		context = this.getActivity().getApplicationContext();
-
+		
+		BreadCrumbView breadCrumb =  (BreadCrumbView) view.findViewById(R.id.breadcrumb);
+		breadCrumb.setPosition(1);
+		
 		m_titre = (EditText) view.findViewById(R.id.titre);
 		m_Description = (EditText) view.findViewById(R.id.description);
 		m_dateFin = (DatePicker) view.findViewById(R.id.date_de_fin);
@@ -93,22 +90,16 @@ public class addProjectFragment extends Fragment {
 
 		avatar = (ImageView) view.findViewById(R.id.avatar);
 
-		mCarousel = (HorizontalCarouselLayout) view
-				.findViewById(R.id.carousel_layout);
-
-		loading = (LinearLayout) view.findViewById(R.id.loading);
-
-		mCarousel.setOnCarouselViewChangedListener(new CarouselInterface() {
-
-			@Override
-			public void onItemChangedListener(View v, int position) {
-				m_illustration = position;
-			}
-		});
-
 		m_valider.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				
+				FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction()
+						.disallowAddToBackStack();
+				Fragment fragment = new addImageFragment();
+				fragment.setHasOptionsMenu(true);
+				ft.replace(R.id.content_frame, fragment);
+				ft.commit();
 
 				/*
 				 * Validation
@@ -174,10 +165,11 @@ public class addProjectFragment extends Fragment {
 		} else {
 			StrMonth = "" + month;
 		}
-		
-		LatLng position = new LatLng(0,0);
-		
+
+		LatLng position = new LatLng(0, 0);
+
 		String StrDay = "" + day;
+		/*
 		new Project(titre, description, user.getResourceId(), somme,
 				Utility.stringToDateTime(Stryear + "-" + StrMonth + "-"
 						+ StrDay + " 00:00:00"),
@@ -204,23 +196,24 @@ public class addProjectFragment extends Fragment {
 					public void errorAuthenticationRequired() {
 						Toast.makeText(context, "Vous devez vous authentifier",
 								Toast.LENGTH_SHORT).show();
-					
+
 					}
 
 					@Override
 					public void errorNetwork() {
 						Toast.makeText(context, R.string.error,
 								Toast.LENGTH_SHORT).show();
-						
+
 					}
 
 					@Override
 					public void errorServer() {
-						Toast.makeText(context,  R.string.error,
+						Toast.makeText(context, R.string.error,
 								Toast.LENGTH_SHORT).show();
 
 					}
 				});
+				*/
 
 	}
 
@@ -235,57 +228,32 @@ public class addProjectFragment extends Fragment {
 
 	public void loadContent() {
 
-		new Thread(new Runnable() {
+		try {
+			Account compte = Account.getOwn();
+			compte.getUser(new HoldToDo<User>() {
 
-			@Override
-			public void run() {
+				@Override
+				public void hold(User resource) {
 
-				try {
-					Account compte = Account.getOwn();
-					compte.getUser(new HoldToDo<User>() {
+					user = resource;
 
-						@Override
-						public void hold(User resource) {
+					m_user_pseudo.setText(resource.getPseudo());
+					m_user_ville.setText(resource.getCity());
+					if (resource.getGender().equals("0")) {
+						avatar.setImageResource(R.drawable.male_user_icon);
+					} else {
+						avatar.setImageResource(R.drawable.female_user_icon);
+					}
 
-							user = resource;
-							
-
-							m_user_pseudo.setText(resource.getPseudo());
-							m_user_ville.setText(resource.getCity());
-							if (resource.getGender().equals("0")) {
-								avatar.setImageResource(R.drawable.male_user_icon);
-							} else {
-								avatar.setImageResource(R.drawable.female_user_icon);
-							}
-
-						}
-
-					});
-				} catch (NoAccountExistsInLocal e) {
-					e.printStackTrace();
 				}
 
-				m_illustration = 0;
+			});
+		} catch (NoAccountExistsInLocal e) {
+			e.printStackTrace();
+		}
 
-				mData = new ArrayList<Integer>();
-				mData.add(R.drawable.ic_launcher);
-				mData.add(R.drawable.roi);
-				mData.add(R.drawable.basketball);
-				mData.add(R.drawable.plante);
-				mData.add(R.drawable.fete);
-
-				mAdapter = new CarouselAdaptor(context);
-				mAdapter.setData(mData);
-				mStyle = new HorizontalCarouselStyle(context,
-						HorizontalCarouselStyle.NO_STYLE);
-				mCarousel.setStyle(mStyle);
-				mCarousel.setAdapter(mAdapter);
-
-				supprimerCalendarView();
-				loading.setVisibility(View.GONE);
-
-			}
-		}).start();
+		supprimerCalendarView();
 
 	}
+
 }

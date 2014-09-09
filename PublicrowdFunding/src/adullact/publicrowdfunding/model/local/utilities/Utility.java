@@ -41,19 +41,14 @@ public class Utility {
         return res;
     }
 
+    public static int [] drawables = {  R.drawable.ic_launcher, R.drawable.roi,  R.drawable.basketball,  R.drawable.plante, R.drawable.fete};
+    
     public static int getDrawable(int numero) {
-		switch (numero) {
-		case 1:
-			return R.drawable.roi;
-		case 2:
-			return R.drawable.basketball;
-		case 3:
-			return R.drawable.plante;
-		case 4:
-			return R.drawable.fete;
-
-		default:
-			return R.drawable.ic_launcher;
-		}
+		return drawables[numero];
 	}
+    
+    public static int getDrawableSize(){
+    	return drawables.length;
+    }
+    
 }

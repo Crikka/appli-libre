@@ -3,6 +3,8 @@ package adullact.publicrowdfunding;
 import java.util.List;
 
 import adullact.publicrowdfunding.controller.profile.preferences.preferencesFragment;
+import adullact.publicrowdfunding.controller.project.add.BreadCrumbView;
+import adullact.publicrowdfunding.controller.project.add.addProjectFragment;
 import adullact.publicrowdfunding.controller.project.all.ListProjectsFragment;
 import adullact.publicrowdfunding.controller.project.all.MapFragment;
 import adullact.publicrowdfunding.controller.project.details.ProjectPagerFragment;
@@ -165,8 +167,9 @@ public class MainActivity extends FragmentActivity {
 						.beginTransaction();
 
 				// ft.setCustomAnimations(R.anim.enter, R.anim.exit);
-				Fragment fragment = new adullact.publicrowdfunding.controller.project.add.addProjectFragment();
+				Fragment fragment = new addProjectFragment();
 				ft.addToBackStack(null);
+				ft.replace(R.id.content_frame, fragment);
 				ft.replace(R.id.content_frame, fragment);
 				ft.commit();
 

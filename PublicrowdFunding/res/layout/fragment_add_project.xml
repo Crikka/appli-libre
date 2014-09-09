@@ -5,28 +5,11 @@
     android:background="@color/background"
     android:orientation="vertical" >
 
-   
-    <LinearLayout
-        android:id="@+id/loading"
+    <adullact.publicrowdfunding.controller.project.add.BreadCrumbView
+        android:id="@+id/breadcrumb"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical"
-        android:orientation="vertical" >
+        android:layout_height="wrap_content" />
 
-        <ProgressBar
-            android:id="@+id/progressBar1"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/loading" />
-    </LinearLayout>
-   
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
@@ -46,36 +29,17 @@
                 android:paddingRight="6dip"
                 android:paddingTop="6dip" >
 
-                <LinearLayout
+                <EditText
+                    android:id="@+id/titre"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
-
-                    <com.touchmenotapps.carousel.simple.HorizontalCarouselLayout
-                        android:id="@+id/carousel_layout"
-                        android:layout_width="150dp"
-                        android:layout_height="50dp" />
-
-                    <EditText
-                        android:id="@+id/titre"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dip"
-                        android:gravity="center"
-                        android:hint="@string/project_name"
-                        android:inputType="text"
-                        android:singleLine="true"
-                        android:textSize="30sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="20dp"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginTop="-25dp"
-                    android:background="@drawable/bubble"
-                    android:contentDescription="@string/description_image_project" />
+                    android:layout_marginTop="12dip"
+                    android:gravity="center"
+                    android:hint="@string/project_name"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <EditText
@@ -87,6 +51,7 @@
                 android:gravity="center_vertical"
                 android:hint="@string/project_description"
                 android:inputType="textMultiLine"
+                android:minHeight="100dp"
                 android:padding="3dip"
                 android:textSize="20sp" />
 
@@ -360,9 +325,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dip"
-                android:background="@drawable/buttonshapes"
                 android:drawableLeft="@android:drawable/ic_menu_mylocation"
-                android:text="Soumettre le projet" />
+                android:text="Etape suivante" />
         </LinearLayout>
     </ScrollView>
 
