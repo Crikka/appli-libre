@@ -8,6 +8,7 @@ import adullact.publicrowdfunding.model.local.utilities.Calcul;
 import adullact.publicrowdfunding.model.local.utilities.Share;
 import adullact.publicrowdfunding.model.local.utilities.Utility;
 import adullact.publicrowdfunding.views.CustomProgressBar;
+import android.content.Context;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,27 +31,29 @@ public class MarkerWindowAdaptor extends FragmentActivity implements InfoWindowA
 	private TextView sommeFunded;
 	private TextView sommeDemander;
 	private TextView distance;
+	private Context context;
 	
 	private final HashMap<Marker, Project> markers;
 	
 	private LayoutInflater inflater;
 	
-	public MarkerWindowAdaptor(LayoutInflater inflater,  HashMap<Marker, Project> markers) {
+	public MarkerWindowAdaptor(Context context, LayoutInflater inflater,  HashMap<Marker, Project> markers) {
         this.inflater=inflater;
         this.markers = markers;
+        this.context = context;
 
     }
 
 	public void displayInfo(Project projet) {
 		titre_projet_liste.setText(projet.getName());
 		description_projet_liste.setText(projet.getDescription());
-		String days = this.getResources().getString(R.string.days, projet.getNumberOfDayToEnd());
+		String days = context.getResources().getString(R.string.days, projet.getNumberOfDayToEnd());
 		temps_restant_projet_liste.setText(days);
 
-		String requested = this.getResources().getString(R.string.currency, projet.getRequestedFunding());
+		String requested = context.getResources().getString(R.string.currency, projet.getRequestedFunding());
 		avancement_projet_liste.setProgress(projet.getPercentOfAchievement());
 		sommeDemander.setText(requested);
-		String currentFunded = this.getResources().getString(R.string.currency, projet.getCurrentFunding());
+		String currentFunded = context.getResources().getString(R.string.currency, projet.getCurrentFunding());
 		sommeFunded.setText(currentFunded);
 		if (projet.getIllustration() != 0) {
 			illustration.setImageResource(Utility.getDrawable(projet
@@ -61,8 +64,9 @@ public class MarkerWindowAdaptor extends FragmentActivity implements InfoWindowA
 
 		distance.setVisibility(View.GONE);
 		try {
-			distance.setText(R.string.distance
-					+ Calcul.diplayDistance(Share.position,
+			String texte = context.getResources().getString(R.string.distance);
+			distance.setText(
+					texte + Calcul.diplayDistance(Share.position,
 							projet.getPosition()));
 			distance.setVisibility(View.VISIBLE);
 		} catch (NullPointerException e) {

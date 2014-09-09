@@ -151,7 +151,6 @@ public class InfoProjectFragment extends Fragment {
 		} else{
 			this.getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
 		}
-
 		return view;
 	}
 

@@ -37,7 +37,7 @@ public class addImageFragment extends Fragment {
 		context = this.getActivity().getApplicationContext();
 		
 		BreadCrumbView breadCrumb =  (BreadCrumbView) view.findViewById(R.id.breadcrumb);
-		breadCrumb.setPosition(1);
+		breadCrumb.setPosition(2);
 		
 		LinearLayout layout = (LinearLayout) view.findViewById(R.id.layout);
 		
