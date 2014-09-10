@@ -34,8 +34,10 @@ public class addLocationProjectFragment extends Fragment implements
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		rootView = inflater.inflate(R.layout.fragment_add_location, container,
-				false);
+		if (rootView == null) {
+			rootView = inflater.inflate(R.layout.fragment_add_location,
+					container, false);
+		}
 
 		BreadCrumbView breadCrumbView = (BreadCrumbView) rootView
 				.findViewById(R.id.breadcrumb);
@@ -70,8 +72,10 @@ public class addLocationProjectFragment extends Fragment implements
 						.getSupportFragmentManager().beginTransaction()
 						.disallowAddToBackStack();
 				Fragment fragment = new validationFragment();
-				args.putDouble("location_latitude", marker.getPosition().latitude);
-				args.putDouble("location_longitude", marker.getPosition().longitude);
+				args.putDouble("location_latitude",
+						marker.getPosition().latitude);
+				args.putDouble("location_longitude",
+						marker.getPosition().longitude);
 				fragment.setArguments(args);
 				fragment.setHasOptionsMenu(true);
 				ft.replace(R.id.content_frame, fragment);

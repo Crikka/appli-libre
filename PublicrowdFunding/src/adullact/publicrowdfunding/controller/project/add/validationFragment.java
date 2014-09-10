@@ -46,12 +46,14 @@ public class validationFragment extends Fragment {
 	private String m_userId;
 
 	private boolean m_isAdmin;
+	
+	private View view;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
-		View view = inflater.inflate(R.layout.fragment_add_validation,
+		view = inflater.inflate(R.layout.fragment_add_validation,
 				container, false);
 
 		BreadCrumbView breadCrumbView = (BreadCrumbView) view
@@ -134,12 +136,12 @@ public class validationFragment extends Fragment {
 
 			@Override
 			public void onCreate(Project resource) {
-
 				Drawable checked = context.getResources().getDrawable(
-						R.id.checkbox);
+						R.drawable.checkbox_ok);
 				checkbox.setImageDrawable(checked);
-
+				checkbox.invalidate();
 				message.setText("Projet soumis, en attente de validation");
+				message.invalidate();
 
 			}
 
