@@ -47,10 +47,7 @@ public class addProjectFragment extends Fragment {
 
 	private Context context;
 
-	private User user;
-
 	private ImageView avatar;
-
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,10 +57,11 @@ public class addProjectFragment extends Fragment {
 				false);
 
 		context = this.getActivity().getApplicationContext();
-		
-		BreadCrumbView breadCrumb =  (BreadCrumbView) view.findViewById(R.id.breadcrumb);
+
+		BreadCrumbView breadCrumb = (BreadCrumbView) view
+				.findViewById(R.id.breadcrumb);
 		breadCrumb.setPosition(1);
-		
+
 		m_titre = (EditText) view.findViewById(R.id.titre);
 		m_Description = (EditText) view.findViewById(R.id.description);
 		m_dateFin = (DatePicker) view.findViewById(R.id.date_de_fin);
@@ -84,7 +82,7 @@ public class addProjectFragment extends Fragment {
 		m_valider.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				
+
 				addProjectRequest();
 
 			}
@@ -97,7 +95,6 @@ public class addProjectFragment extends Fragment {
 
 	public void addProjectRequest() {
 
-		/*
 		String titre = null;
 		if (m_titre.length() == 0) {
 			Toast.makeText(context, "Merci de mettre un titre",
@@ -150,92 +147,39 @@ public class addProjectFragment extends Fragment {
 			StrMonth = "" + month;
 		}
 
-
 		String StrDay = "" + day;
-		
-		String endDate = Stryear + "-" + StrMonth + "-"
-				+ StrDay + " 00:00:00";
-		
-		
-		*/
-		FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction()
-				.disallowAddToBackStack();
+
+		String endDate = Stryear + "-" + StrMonth + "-" + StrDay + " 00:00:00";
+
+		FragmentTransaction ft = getActivity().getSupportFragmentManager()
+				.beginTransaction().disallowAddToBackStack();
 		Fragment fragment = new addImageFragment();
 		Bundle args = new Bundle();
-		/*
+
 		args.putString("title", titre);
 		args.putString("description", description);
 		args.putString("somme", somme);
 		args.putString("endDate", endDate);
-		*/
-		
-		if(m_email.length() > 0){
+
+		if (m_email.length() > 0) {
 			String email = m_email.getText().toString();
-					args.putString("email", email);
+			args.putString("email", email);
 		}
-		
-		if(m_phone.length() > 0){
+
+		if (m_phone.length() > 0) {
 			String phone = m_phone.getText().toString();
-					args.putString("phone", phone);
+			args.putString("phone", phone);
 		}
-		
-		if(m_website.length() > 0){
+
+		if (m_website.length() > 0) {
 			String website = m_website.getText().toString();
-					args.putString("website", website);
+			args.putString("website", website);
 		}
-		
+
 		fragment.setArguments(args);
 		fragment.setHasOptionsMenu(true);
 		ft.replace(R.id.content_frame, fragment);
 		ft.commit();
-		
-		
-		/*
-		 * Utility.stringToDateTime();
-		new Project(titre, description, user.getResourceId(), somme,
-				Utility.stringToDateTime(Stryear + "-" + StrMonth + "-"
-						+ StrDay + " 00:00:00"),
-				Utility.stringToDateTime(Stryear + "-" + StrMonth + "-"
-						+ StrDay + " 00:00:00"), position, m_illustration,
-				m_email.getText().toString(), m_website.getText().toString(),
-				m_phone.getText().toString(), false)
-				.serverCreate(new CreateEvent<Project>() {
-					@Override
-					public void errorResourceIdAlreadyUsed() {
-
-						Toast.makeText(context, R.string.error,
-								Toast.LENGTH_SHORT).show();
-					}
-
-					@Override
-					public void onCreate(Project resource) {
-
-						Toast.makeText(context, R.string.error,
-								Toast.LENGTH_SHORT).show();
-					}
-
-					@Override
-					public void errorAuthenticationRequired() {
-						Toast.makeText(context, "Vous devez vous authentifier",
-								Toast.LENGTH_SHORT).show();
-
-					}
-
-					@Override
-					public void errorNetwork() {
-						Toast.makeText(context, R.string.error,
-								Toast.LENGTH_SHORT).show();
-
-					}
-
-					@Override
-					public void errorServer() {
-						Toast.makeText(context, R.string.error,
-								Toast.LENGTH_SHORT).show();
-
-					}
-				});
-				*/
 
 	}
 
@@ -256,8 +200,6 @@ public class addProjectFragment extends Fragment {
 
 				@Override
 				public void hold(User resource) {
-
-					user = resource;
 
 					m_user_pseudo.setText(resource.getPseudo());
 					m_user_ville.setText(resource.getCity());

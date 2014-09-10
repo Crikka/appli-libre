@@ -10,12 +10,5 @@
         android:id="@+id/breadcrumb"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-    
-    <Button
-        android:id="@+id/button_valider"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dip"
-        android:text="Etape suivante" />
 
 </LinearLayout>

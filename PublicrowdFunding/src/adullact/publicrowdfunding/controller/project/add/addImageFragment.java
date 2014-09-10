@@ -63,10 +63,10 @@ public class addImageFragment extends Fragment {
 		FragmentTransaction ft = fm.beginTransaction()
 				.disallowAddToBackStack();
 		Fragment fragment = new addLocationProjectFragment();
-		Bundle args = new Bundle();
 		
-		Bundle bundle = this.getArguments();
-		bundle.putInt("illustration", id);
+		Bundle args = this.getArguments();
+		
+		args.putInt("illustration", id);
 		
 		fragment.setArguments(args);
 		fragment.setHasOptionsMenu(true);
