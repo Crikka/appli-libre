@@ -253,7 +253,7 @@ public class SyncServerToLocal {
         return sort(new Comparator<Project>() {
             @Override
             public int compare(Project lhs, Project rhs) {
-                return Calcul.distance(Share.position, rhs.getPosition()).compareTo(Calcul.distance(Share.position, lhs.getPosition()));
+                return Calcul.distance(Share.position, lhs.getPosition()).compareTo(Calcul.distance(Share.position, rhs.getPosition()));
             }
         });
 
