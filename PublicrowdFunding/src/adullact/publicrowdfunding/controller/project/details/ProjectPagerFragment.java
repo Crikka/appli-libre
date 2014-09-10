@@ -221,6 +221,12 @@ public class ProjectPagerFragment extends Fragment {
 
 									}
 
+									@Override
+									public void errorAdministratorRequired() {
+										// TODO Auto-generated method stub
+										
+									}
+
 								});
 					}
 
