@@ -2,8 +2,6 @@ package adullact.publicrowdfunding.controller.project.add;
 
 import org.joda.time.DateTime;
 
-import com.google.android.gms.maps.model.LatLng;
-
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.callback.HoldToDo;
@@ -16,16 +14,14 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.maps.model.LatLng;
 
 /**
  * @author Ferrand and Nelaupe
@@ -33,10 +29,9 @@ import android.widget.Toast;
 public class validationFragment extends Fragment {
 
 	private Context context;
-	
+
 	private ImageView checkbox;
 	private TextView message;
-	
 
 	private String m_titre;
 	private String m_description;
@@ -56,20 +51,23 @@ public class validationFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
-		View view = inflater.inflate(R.layout.fragment_add_validation, container,
-				false);
+		View view = inflater.inflate(R.layout.fragment_add_validation,
+				container, false);
 
-		
+		BreadCrumbView breadCrumbView = (BreadCrumbView) view
+				.findViewById(R.id.breadcrumb);
+		breadCrumbView.setPosition(4);
+
 		message = (TextView) view.findViewById(R.id.message);
 		checkbox = (ImageView) view.findViewById(R.id.checkbox);
-		
+
 		Bundle args = this.getArguments();
 
 		m_titre = args.getString("title");
 		m_description = args.getString("description");
 		m_somme = args.getString("somme");
 		String endDate = args.getString("endDate");
-		
+
 		m_endDateTime = Utility.stringToDateTime(endDate);
 
 		m_email = null;
@@ -129,18 +127,20 @@ public class validationFragment extends Fragment {
 				m_phone, m_isAdmin).serverCreate(new CreateEvent<Project>() {
 			@Override
 			public void errorResourceIdAlreadyUsed() {
-				
+
 				Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT)
 						.show();
 			}
 
 			@Override
 			public void onCreate(Project resource) {
-				Drawable checked = context.getResources().getDrawable(R.id.checkbox);
+
+				Drawable checked = context.getResources().getDrawable(
+						R.id.checkbox);
 				checkbox.setImageDrawable(checked);
-				
+
 				message.setText("Projet soumis, en attente de validation");
-				
+
 			}
 
 			@Override
