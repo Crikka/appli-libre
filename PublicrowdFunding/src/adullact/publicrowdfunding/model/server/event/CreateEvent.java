@@ -8,7 +8,7 @@ import adullact.publicrowdfunding.model.server.request.CreateRequest;
  * @author Ferrand and Nelaupe
  */
 public abstract class CreateEvent<TResource extends Resource<TResource, ?, ?>>
-        extends AuthenticatedEvent<CreateRequest<TResource,?,?>,CreateEvent<TResource>,CreateErrorHandler<TResource>> {
+        extends AdministratorEvent<CreateRequest<TResource,?,?>,CreateEvent<TResource>,CreateErrorHandler<TResource>> {
 
 	/* Callback functions */
     public abstract void errorResourceIdAlreadyUsed();

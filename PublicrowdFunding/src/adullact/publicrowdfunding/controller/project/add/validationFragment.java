@@ -122,7 +122,7 @@ public class validationFragment extends Fragment {
 
 	public void push() {
 
-		new Project(m_titre, m_description, m_userId, m_somme, m_endDateTime,
+		new Project(m_titre, m_description, m_userId, m_somme,
 				m_endDateTime, m_location, m_illustration, m_email, m_website,
 				m_phone, m_isAdmin).serverCreate(new CreateEvent<Project>() {
 			@Override
@@ -163,7 +163,13 @@ public class validationFragment extends Fragment {
 						.show();
 
 			}
-		});
+
+            @Override
+            public void errorAdministratorRequired() {
+                Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT)
+                        .show();
+            }
+        });
 	}
 
 }

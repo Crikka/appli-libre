@@ -9,7 +9,7 @@ import adullact.publicrowdfunding.model.server.request.CreateRequest;
  * @author Ferrand and Nelaupe
  */
 public class CreateErrorHandler<TResource extends Resource<TResource, ?, ?>>
-        extends AuthenticatedErrorHandler<CreateRequest<TResource,?,?>,CreateEvent<TResource>,CreateErrorHandler<TResource>> {
+        extends AdministratorErrorHandler<CreateRequest<TResource,?,?>,CreateEvent<TResource>,CreateErrorHandler<TResource>> {
     private boolean m_resourceIdAlreadyExist = false;
 
     @Override

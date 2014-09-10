@@ -225,6 +225,11 @@ public class User extends Resource<User, ServerUser, DetailedServerUser> {
             public void errorServer() {
                 bookmarkCreateEvent.errorServer();
             }
+
+            @Override
+            public void errorAdministratorRequired() {
+                bookmarkCreateEvent.errorAdministratorRequired();
+            }
         });
     }
 

@@ -13,7 +13,7 @@ import adullact.publicrowdfunding.model.server.event.CreateEvent;
  */
 public class CreateRequest<TResource extends Resource<TResource, TServerResource, TDetailedServerResource>, TServerResource, TDetailedServerResource extends TServerResource>
         extends
-        AuthenticatedRequest<CreateRequest<TResource,?,?>,CreateEvent<TResource>,CreateErrorHandler<TResource>> {
+        AdministratorRequest<CreateRequest<TResource,?,?>,CreateEvent<TResource>,CreateErrorHandler<TResource>> {
     private TResource m_resource;
 
     public CreateRequest(TResource resource, CreateEvent<TResource> event) {

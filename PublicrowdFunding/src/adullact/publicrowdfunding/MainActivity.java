@@ -1,22 +1,5 @@
 package adullact.publicrowdfunding;
 
-import java.util.List;
-
-import adullact.publicrowdfunding.controller.profile.preferences.preferencesFragment;
-import adullact.publicrowdfunding.controller.project.add.addProjectFragment;
-import adullact.publicrowdfunding.controller.project.all.ListProjectsFragment;
-import adullact.publicrowdfunding.controller.project.all.MapFragment;
-import adullact.publicrowdfunding.controller.project.details.ProjectPagerFragment;
-import adullact.publicrowdfunding.controller.register.ConnexionFragment;
-import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
-import adullact.publicrowdfunding.model.local.callback.HoldToDo;
-import adullact.publicrowdfunding.model.local.ressource.Account;
-import adullact.publicrowdfunding.model.local.ressource.Funding;
-import adullact.publicrowdfunding.model.local.ressource.Project;
-import adullact.publicrowdfunding.model.local.ressource.User;
-import adullact.publicrowdfunding.model.local.utilities.Share;
-import adullact.publicrowdfunding.model.server.event.CreateEvent;
-import adullact.publicrowdfunding.views.SimpleLine;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -42,6 +25,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
+
+import java.util.List;
+
+import adullact.publicrowdfunding.controller.profile.preferences.preferencesFragment;
+import adullact.publicrowdfunding.controller.project.add.addProjectFragment;
+import adullact.publicrowdfunding.controller.project.all.ListProjectsFragment;
+import adullact.publicrowdfunding.controller.project.all.MapFragment;
+import adullact.publicrowdfunding.controller.project.details.ProjectPagerFragment;
+import adullact.publicrowdfunding.controller.register.ConnexionFragment;
+import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
+import adullact.publicrowdfunding.model.local.callback.HoldToDo;
+import adullact.publicrowdfunding.model.local.ressource.Account;
+import adullact.publicrowdfunding.model.local.ressource.Funding;
+import adullact.publicrowdfunding.model.local.ressource.Project;
+import adullact.publicrowdfunding.model.local.ressource.User;
+import adullact.publicrowdfunding.model.local.utilities.Share;
+import adullact.publicrowdfunding.model.server.event.CreateEvent;
+import adullact.publicrowdfunding.views.SimpleLine;
 
 /**
  * @author Ferrand and Nelaupe
@@ -604,7 +605,12 @@ public class MainActivity extends FragmentActivity {
 
 												}
 
-											});
+                                                @Override
+                                                public void errorAdministratorRequired() {
+                                                    // TODO Auto-generated
+                                                    // method stub
+                                                }
+                                            });
 								} catch (NoAccountExistsInLocal e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
