@@ -1,11 +1,5 @@
 package adullact.publicrowdfunding.controller.profile;
 
-import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.model.local.callback.HoldToDo;
-import adullact.publicrowdfunding.model.local.ressource.Account;
-import adullact.publicrowdfunding.model.local.ressource.Project;
-import adullact.publicrowdfunding.model.local.ressource.User;
-import adullact.publicrowdfunding.model.local.utilities.Share;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
@@ -22,6 +16,13 @@ import android.view.animation.RotateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.model.local.callback.HoldToDo;
+import adullact.publicrowdfunding.model.local.ressource.Account;
+import adullact.publicrowdfunding.model.local.ressource.Project;
+import adullact.publicrowdfunding.model.local.ressource.User;
+import adullact.publicrowdfunding.model.local.utilities.Share;
 
 /**
  * @author Ferrand and Nelaupe

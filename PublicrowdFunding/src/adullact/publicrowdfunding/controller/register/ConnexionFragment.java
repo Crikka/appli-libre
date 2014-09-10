@@ -1,13 +1,5 @@
 package adullact.publicrowdfunding.controller.register;
 
-import adullact.publicrowdfunding.MainActivity;
-import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
-import adullact.publicrowdfunding.model.local.callback.HoldToDo;
-import adullact.publicrowdfunding.model.local.ressource.Account;
-import adullact.publicrowdfunding.model.local.ressource.User;
-import adullact.publicrowdfunding.model.server.event.AuthenticationEvent;
-import adullact.publicrowdfunding.model.server.request.AuthenticationRequest;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,6 +15,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import adullact.publicrowdfunding.MainActivity;
+import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
+import adullact.publicrowdfunding.model.local.callback.HoldToDo;
+import adullact.publicrowdfunding.model.local.ressource.Account;
+import adullact.publicrowdfunding.model.local.ressource.User;
+import adullact.publicrowdfunding.model.server.event.AuthenticationEvent;
+import adullact.publicrowdfunding.model.server.request.AuthenticationRequest;
 
 /**
  * @author Ferrand and Nelaupe

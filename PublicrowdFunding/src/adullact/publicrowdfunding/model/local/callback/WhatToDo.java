@@ -1,10 +1,10 @@
 package adullact.publicrowdfunding.model.local.callback;
 
+import adullact.publicrowdfunding.model.local.cache.Sync;
+import adullact.publicrowdfunding.model.local.ressource.Resource;
 import rx.Scheduler;
 import rx.functions.Action0;
 import rx.schedulers.Schedulers;
-import adullact.publicrowdfunding.model.local.cache.Sync;
-import adullact.publicrowdfunding.model.local.ressource.Resource;
 
 /**
  * @author Ferrand and Nelaupe

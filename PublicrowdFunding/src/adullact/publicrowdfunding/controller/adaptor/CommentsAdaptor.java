@@ -1,12 +1,5 @@
 package adullact.publicrowdfunding.controller.adaptor;
 
-import java.util.Vector;
-
-import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.model.local.callback.HoldToDo;
-import adullact.publicrowdfunding.model.local.ressource.Commentary;
-import adullact.publicrowdfunding.model.local.ressource.User;
-import adullact.publicrowdfunding.model.local.utilities.Share;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,6 +12,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
+import java.util.Vector;
+
+import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.model.local.callback.HoldToDo;
+import adullact.publicrowdfunding.model.local.ressource.Commentary;
+import adullact.publicrowdfunding.model.local.ressource.User;
+import adullact.publicrowdfunding.model.local.utilities.Share;
 
 /**
  * 

@@ -1,13 +1,5 @@
 package adullact.publicrowdfunding.controller.adaptor;
 
-import java.util.HashMap;
-
-import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.model.local.ressource.Project;
-import adullact.publicrowdfunding.model.local.utilities.Calcul;
-import adullact.publicrowdfunding.model.local.utilities.Share;
-import adullact.publicrowdfunding.model.local.utilities.Utility;
-import adullact.publicrowdfunding.views.CustomProgressBar;
 import android.content.Context;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
@@ -17,6 +9,15 @@ import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.model.Marker;
+
+import java.util.HashMap;
+
+import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.model.local.ressource.Project;
+import adullact.publicrowdfunding.model.local.utilities.Calcul;
+import adullact.publicrowdfunding.model.local.utilities.Share;
+import adullact.publicrowdfunding.model.local.utilities.Utility;
+import adullact.publicrowdfunding.views.CustomProgressBar;
 
 /**
  * @author Ferrand and Nelaupe

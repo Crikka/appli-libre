@@ -1,14 +1,5 @@
 package adullact.publicrowdfunding.controller.project.all;
 
-import java.util.ArrayList;
-
-import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.controller.adaptor.ProjectAdaptor;
-import adullact.publicrowdfunding.controller.project.details.ProjectPagerFragment;
-import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
-import adullact.publicrowdfunding.model.local.ressource.Project;
-import adullact.publicrowdfunding.model.local.utilities.Share;
-import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
@@ -31,6 +22,16 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.SearchView.OnCloseListener;
 import android.widget.SearchView.OnQueryTextListener;
+
+import java.util.ArrayList;
+
+import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.controller.adaptor.ProjectAdaptor;
+import adullact.publicrowdfunding.controller.project.details.ProjectPagerFragment;
+import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
+import adullact.publicrowdfunding.model.local.ressource.Project;
+import adullact.publicrowdfunding.model.local.utilities.Share;
+import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 
 /**
  * @author Ferrand and Nelaupe

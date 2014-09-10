@@ -1,15 +1,5 @@
 package adullact.publicrowdfunding.controller.project.details;
 
-import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
-import adullact.publicrowdfunding.model.local.callback.HoldToDo;
-import adullact.publicrowdfunding.model.local.ressource.Account;
-import adullact.publicrowdfunding.model.local.ressource.Bookmark;
-import adullact.publicrowdfunding.model.local.ressource.Project;
-import adullact.publicrowdfunding.model.local.ressource.User;
-import adullact.publicrowdfunding.model.local.utilities.CanI;
-import adullact.publicrowdfunding.model.server.event.CreateEvent;
-import adullact.publicrowdfunding.model.server.event.DeleteEvent;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -28,6 +18,17 @@ import android.view.View;
 import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
+import adullact.publicrowdfunding.model.local.callback.HoldToDo;
+import adullact.publicrowdfunding.model.local.ressource.Account;
+import adullact.publicrowdfunding.model.local.ressource.Bookmark;
+import adullact.publicrowdfunding.model.local.ressource.Project;
+import adullact.publicrowdfunding.model.local.ressource.User;
+import adullact.publicrowdfunding.model.local.utilities.CanI;
+import adullact.publicrowdfunding.model.server.event.CreateEvent;
+import adullact.publicrowdfunding.model.server.event.DeleteEvent;
 
 /**
  * @author Ferrand and Nelaupe

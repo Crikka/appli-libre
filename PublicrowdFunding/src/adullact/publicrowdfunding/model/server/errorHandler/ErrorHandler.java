@@ -5,10 +5,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import retrofit.RetrofitError;
 import adullact.publicrowdfunding.model.server.ServerObject;
 import adullact.publicrowdfunding.model.server.event.Event;
 import adullact.publicrowdfunding.model.server.request.Request;
+import retrofit.RetrofitError;
 
 /**
  * @author Ferrand and Nelaupe
