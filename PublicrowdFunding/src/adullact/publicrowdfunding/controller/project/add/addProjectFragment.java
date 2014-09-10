@@ -7,6 +7,7 @@ import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.User;
+import adullact.publicrowdfunding.model.local.utilities.Utility;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
@@ -84,16 +85,8 @@ public class addProjectFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				
-				FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction()
-						.disallowAddToBackStack();
-				Fragment fragment = new addImageFragment();
-				fragment.setHasOptionsMenu(true);
-				ft.replace(R.id.content_frame, fragment);
-				ft.commit();
+				addProjectRequest();
 
-				/*
-				 * Validation
-				 */
 			}
 		});
 
@@ -104,6 +97,7 @@ public class addProjectFragment extends Fragment {
 
 	public void addProjectRequest() {
 
+		/*
 		String titre = null;
 		if (m_titre.length() == 0) {
 			Toast.makeText(context, "Merci de mettre un titre",
@@ -156,10 +150,48 @@ public class addProjectFragment extends Fragment {
 			StrMonth = "" + month;
 		}
 
-		LatLng position = new LatLng(0, 0);
 
 		String StrDay = "" + day;
+		
+		String endDate = Stryear + "-" + StrMonth + "-"
+				+ StrDay + " 00:00:00";
+		
+		
+		*/
+		FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction()
+				.disallowAddToBackStack();
+		Fragment fragment = new addImageFragment();
+		Bundle args = new Bundle();
 		/*
+		args.putString("title", titre);
+		args.putString("description", description);
+		args.putString("somme", somme);
+		args.putString("endDate", endDate);
+		*/
+		
+		if(m_email.length() > 0){
+			String email = m_email.getText().toString();
+					args.putString("email", email);
+		}
+		
+		if(m_phone.length() > 0){
+			String phone = m_phone.getText().toString();
+					args.putString("phone", phone);
+		}
+		
+		if(m_website.length() > 0){
+			String website = m_website.getText().toString();
+					args.putString("website", website);
+		}
+		
+		fragment.setArguments(args);
+		fragment.setHasOptionsMenu(true);
+		ft.replace(R.id.content_frame, fragment);
+		ft.commit();
+		
+		
+		/*
+		 * Utility.stringToDateTime();
 		new Project(titre, description, user.getResourceId(), somme,
 				Utility.stringToDateTime(Stryear + "-" + StrMonth + "-"
 						+ StrDay + " 00:00:00"),

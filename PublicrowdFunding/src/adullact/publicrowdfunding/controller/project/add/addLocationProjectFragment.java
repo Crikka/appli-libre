@@ -1,16 +1,26 @@
 package adullact.publicrowdfunding.controller.project.add;
 
 import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.model.local.cache.Cache;
+import adullact.publicrowdfunding.model.local.callback.HoldToDo;
+import adullact.publicrowdfunding.model.local.ressource.Project;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -21,53 +31,54 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class addLocationProjectFragment extends Fragment implements
 		OnMapClickListener {
 
-	private GoogleMap map;
 	private Marker marker;
+
+	private SupportMapFragment fragment;
+	private FragmentManager fm;
+
+	View rootView;
+	GoogleMap googleMap;
+
+	private addLocationProjectFragment _this;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		super.onCreateView(inflater, container, savedInstanceState);
+
+		rootView = inflater.inflate(R.layout.fragment_add_location, container, false);
+
+		FragmentManager fm = getActivity().getSupportFragmentManager();
+
+		googleMap = ((SupportMapFragment) fm.findFragmentById(R.id.map)).getMap();
 		
-		View view = null;
-		try {
-			/*
-		    view = inflater.inflate(R.layout.activity_maps, container, false);
+		googleMap.setOnMapClickListener(this);
 
-			map = ((SupportMapFragment) getActivity().getSupportFragmentManager()
-					.findFragmentById(R.id.)).getMap();
-
-			map.setOnMapClickListener(this);
-			map.setMyLocationEnabled(true);
-*/
-		} catch (Exception e) {
-			e.printStackTrace();
-			TextView texte = new TextView(getActivity());
-			texte.setText(R.string.error);
-			view = texte;
-		}
-
-		marker = null;
-		return view;
+		return rootView;
 	}
+
+	/*
+	public void onPause() {
+		super.onPause();
+		this.getActivity().getSupportFragmentManager().beginTransaction()
+				.detach(fragment).commit();
+		this.getActivity().getSupportFragmentManager().beginTransaction()
+				.detach(this).commit();
+	}*/
 
 	@Override
 	public void onMapClick(LatLng arg0) {
 		Toast.makeText(getActivity().getApplicationContext(),
 				"Emplacement de votre projet ajouté", Toast.LENGTH_SHORT)
 				.show();
+
 		if (marker == null) {
-			marker = map.addMarker(new MarkerOptions().position(arg0).title(
-					"Votre projet"));
+			marker = googleMap.addMarker(new MarkerOptions().position(arg0)
+					.title("Votre projet"));
 		} else {
 			marker.remove();
-			marker = map.addMarker(new MarkerOptions().position(arg0).title(
-					"Votre projet"));
+			marker = googleMap.addMarker(new MarkerOptions().position(arg0)
+					.title("Votre projet"));
 		}
-	}
-
-	public LatLng getPosition() {
-		return marker.getPosition();
 	}
 
 }
