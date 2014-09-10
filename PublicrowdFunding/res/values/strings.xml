@@ -21,8 +21,8 @@
     <string name="zero">0</string>
     <string name="no_days"> 0 jour</string>
     <string name="participants">participants</string>
-    <string name="remain">restant</string>
-    <string name="funded">récoltés</string>
+    <string name="remain">Restant</string>
+    <string name="funded">Récoltés</string>
     <string name="site_web">Site internet</string>
     <string name="telephone">Numéro de téléphone</string>
     <string name="confirmation_mdp">Confirmation du mot de passe</string>
@@ -74,7 +74,7 @@
     <string name="change_your_email">Modifier votre Email</string>
     <string name="financed">Financé</string>
     <string name="register">S\'inscrire</string>
-    <string name="days">%s days</string>
+    <string name="days">%s jours</string>
         <string name="currency">%s €</string>
 
 </resources>
