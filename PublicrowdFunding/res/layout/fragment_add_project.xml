@@ -40,7 +40,7 @@
                     <LinearLayout
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="30dp"
                         android:background="@drawable/buttonshapes"
                         android:orientation="vertical"
                         android:paddingBottom="10dp"
@@ -63,49 +63,6 @@
                             android:minHeight="100dp"
                             android:padding="3dip"
                             android:textSize="20sp" />
-
-                        <adullact.publicrowdfunding.views.SimpleLine
-                            android:layout_width="wrap_content"
-                            android:layout_height="3dp"
-                            android:layout_marginTop="20dp" />
-
-                        <EditText
-                            android:id="@+id/edit_text_somme"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dip"
-                            android:ems="10"
-                            android:hint="Somme à récolter"
-                            android:inputType="number"
-                            android:padding="5dp"
-                            android:textSize="20sp" >
-                        </EditText>
-
-                        <adullact.publicrowdfunding.views.SimpleLine
-                            android:layout_width="wrap_content"
-                            android:layout_height="3dp"
-                            android:layout_marginTop="20dp" />
-
-                        <LinearLayout
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:padding="5dp" >
-
-                            <TextView
-                                android:id="@+id/textView4"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="@string/project_end_date"
-                                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                            <DatePicker
-                                android:id="@+id/date_de_fin"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center" />
-                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
 
@@ -114,11 +71,11 @@
                     android:layout_width="fill_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="30dp" >
+                    android:layout_marginTop="40dp" >
 
                     <ImageView
                         android:layout_width="fill_parent"
-                        android:layout_height="30dp"
+                        android:layout_height="40dp"
                         android:layout_marginRight="10dp"
                         android:contentDescription="@string/description_image_project"
                         android:src="@drawable/rectangle" />
@@ -126,182 +83,224 @@
                     <ImageView
                         android:layout_width="10dp"
                         android:layout_height="10dp"
-                        android:layout_marginTop="30dp"
+                        android:layout_marginTop="40dp"
                         android:contentDescription="@string/description_image_project"
                         android:src="@drawable/ribbon" />
 
                     <EditText
                         android:id="@+id/titre"
                         android:layout_width="fill_parent"
-                        android:layout_height="30dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
                         android:gravity="center"
                         android:hint="@string/project_name"
                         android:inputType="text"
                         android:singleLine="true"
                         android:textColor="#ffffff"
+                        android:textColorHint="#ffffff"
                         android:textSize="20sp"
                         android:textStyle="bold" />
                 </FrameLayout>
             </FrameLayout>
 
             <LinearLayout
-                android:id="@+id/ll"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/buttonshapes"
+                android:orientation="vertical" >
+
+                <EditText
+                    android:id="@+id/edit_text_somme"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Somme à récolter"
+                    android:inputType="number"
+                    android:textSize="20sp" >
+                </EditText>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/buttonshapes"
                 android:orientation="vertical"
                 android:padding="5dp" >
 
-                <LinearLayout
-                    android:id="@+id/llinear"
+                <TextView
+                    android:id="@+id/textView4"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="6dip"
-                    android:layout_marginTop="6dip"
-                    android:orientation="horizontal" >
+                    android:gravity="center"
+                    android:text="@string/project_end_date"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                    <ImageView
-                        android:id="@+id/avatar"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_marginRight="6dip"
-                        
-                        android:contentDescription="@string/description_image_project"
-                        android:height="152dp"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/male_user_icon" />
-
-                    <RelativeLayout
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/buttonshapes" >
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:padding="6dip" >
-
-                            <TextView
-                                android:id="@+id/utilisateur_soumission"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="XXX"
-                                android:textSize="20sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/ville"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:paddingBottom="5dip"
-                                android:text="XXX"
-                                android:textSize="15sp" />
-                        </LinearLayout>
-                    </RelativeLayout>
-                </LinearLayout>
-
-                <RelativeLayout
+                <DatePicker
+                    android:id="@+id/date_de_fin"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="3dip"
-                    android:background="@drawable/buttonshapes"
-                    android:orientation="vertical"
-                    android:padding="5dp" >
-
-                    <ImageView
-                        android:id="@+id/mailIcon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="6dip"
-                        android:contentDescription="@string/description_image_project"
-                        android:src="@android:drawable/ic_menu_send" />
-
-                    <EditText
-                        android:id="@+id/mail"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="6dip"
-                        android:layout_toRightOf="@+id/mailIcon"
-                        android:ems="10"
-                        android:gravity="left|center_vertical"
-                        android:hint="@string/email"
-                        android:inputType="textEmailAddress"
-                        android:textColor="#808080"
-                        android:textSize="20sp" >
-                    </EditText>
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="3dip"
-                    android:background="@drawable/buttonshapes"
-                    android:orientation="vertical"
-                    android:padding="5dp" >
-
-                    <ImageView
-                        android:id="@+id/websiteIcon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="6dip"
-                        android:contentDescription="@string/description_image_project"
-                        android:src="@drawable/ic_menu_attachment" />
-
-                    <EditText
-                        android:id="@+id/website"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="6dip"
-                        android:layout_toRightOf="@+id/websiteIcon"
-                        android:ems="10"
-                        android:gravity="left|center_vertical"
-                        android:hint="@string/site_web"
-                        android:inputType="textWebEditText"
-                        android:textColor="#808080"
-                        android:textSize="20sp" >
-                    </EditText>
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/buttonshapes"
-                    android:orientation="vertical"
-                    android:padding="5dp" >
-
-                    <ImageView
-                        android:id="@+id/phoneIcon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="6dip"
-                        android:contentDescription="@string/description_image_project"
-                        android:src="@android:drawable/ic_menu_call" />
-
-                    <EditText
-                        android:id="@+id/phone"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="6dip"
-                        android:layout_toRightOf="@+id/phoneIcon"
-                        android:ems="10"
-                        android:gravity="left|center_vertical"
-                        android:hint="@string/telephone"
-                        android:inputType="phone"
-                        android:textColor="#808080"
-                        android:textSize="20sp" >
-                    </EditText>
-                </RelativeLayout>
-
-                <Button
-                    android:id="@+id/button_valider"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dip"
-                    android:background="@drawable/buttonshapes"
-                    android:text="Etape suivante" />
+                    android:gravity="center" />
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llinear"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:id="@+id/avatar"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginRight="6dip"
+                    android:contentDescription="@string/description_image_project"
+                    android:height="152dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/male_user_icon" />
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/buttonshapes" >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:id="@+id/utilisateur_soumission"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="XXX"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/ville"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="XXX"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+                </RelativeLayout>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/buttonshapes"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/mailIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="6dip"
+                    android:contentDescription="@string/description_image_project"
+                    android:src="@android:drawable/ic_menu_send" />
+
+                <EditText
+                    android:id="@+id/mail"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/mailIcon"
+                    android:ems="10"
+                    android:gravity="left|center_vertical"
+                    android:hint="@string/email"
+                    android:inputType="textEmailAddress"
+                    android:textColor="#808080"
+                    android:textSize="20sp" >
+                </EditText>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/buttonshapes"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/websiteIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="6dip"
+                    android:contentDescription="@string/description_image_project"
+                    android:src="@drawable/ic_menu_attachment" />
+
+                <EditText
+                    android:id="@+id/website"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/websiteIcon"
+                    android:ems="10"
+                    android:gravity="left|center_vertical"
+                    android:hint="@string/site_web"
+                    android:inputType="textWebEditText"
+                    android:textColor="#808080"
+                    android:textSize="20sp" >
+                </EditText>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/buttonshapes"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/phoneIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="6dip"
+                    android:contentDescription="@string/description_image_project"
+                    android:src="@android:drawable/ic_menu_call" />
+
+                <EditText
+                    android:id="@+id/phone"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/phoneIcon"
+                    android:ems="10"
+                    android:gravity="left|center_vertical"
+                    android:hint="@string/telephone"
+                    android:inputType="phone"
+                    android:textColor="#808080"
+                    android:textSize="20sp" >
+                </EditText>
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/button_valider"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dip"
+                android:background="@drawable/buttonshapes"
+                android:text="Etape suivante" />
         </LinearLayout>
     </ScrollView>
 
