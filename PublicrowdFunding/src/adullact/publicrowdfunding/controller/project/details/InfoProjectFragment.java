@@ -19,7 +19,6 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.cache.Cache;
@@ -28,6 +27,7 @@ import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.Project;
 import adullact.publicrowdfunding.model.local.ressource.User;
 import adullact.publicrowdfunding.model.local.utilities.Share;
+import adullact.publicrowdfunding.model.local.utilities.Utility;
 
 /**
  * @author Ferrand and Nelaupe
@@ -48,7 +48,7 @@ public class InfoProjectFragment extends Fragment {
 	private Button m_website;
 	private Button m_call;
 
-	//private ImageView m_illustration;
+	private ImageView m_illustration;
 	private ImageView m_avatar;
 
 	private Project projetToDisplay;
@@ -128,7 +128,7 @@ public class InfoProjectFragment extends Fragment {
 		m_website = (Button) view.findViewById(R.id.website);
 		m_call = (Button) view.findViewById(R.id.phone);
 
-		//m_illustration = (ImageView) view.findViewById(R.id.icon);
+		m_illustration = (ImageView) view.findViewById(R.id.icon);
 
 		m_avatar = (ImageView) view.findViewById(R.id.avatar);
 
@@ -165,13 +165,13 @@ public class InfoProjectFragment extends Fragment {
 	}
 
 	public void displayInfo() {
-		/*
+	
 		if (projetToDisplay.getIllustration() != 0) {
 			m_illustration.setImageResource(Utility.getDrawable(projetToDisplay
 					.getIllustration()));
 		} else {
 			m_illustration.setImageResource(R.drawable.ic_launcher);
-		}*/
+		}
 
 		if (projetToDisplay.getEmail() == null
 				|| projetToDisplay.getEmail().length() == 0) {
