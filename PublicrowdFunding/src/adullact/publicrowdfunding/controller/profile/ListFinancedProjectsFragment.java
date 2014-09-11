@@ -1,13 +1,5 @@
 package adullact.publicrowdfunding.controller.profile;
 
-import java.util.ArrayList;
-
-import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.controller.adaptor.ProjectAdaptor;
-import adullact.publicrowdfunding.model.local.cache.Cache;
-import adullact.publicrowdfunding.model.local.callback.HoldToDo;
-import adullact.publicrowdfunding.model.local.ressource.Project;
-import adullact.publicrowdfunding.model.local.ressource.User;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -19,6 +11,15 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+
+import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.controller.adaptor.ProjectAdaptor;
+import adullact.publicrowdfunding.model.local.cache.Cache;
+import adullact.publicrowdfunding.model.local.callback.HoldToDo;
+import adullact.publicrowdfunding.model.local.ressource.Project;
+import adullact.publicrowdfunding.model.local.ressource.User;
 
 /**
  * @author Ferrand and Nelaupe

@@ -1,10 +1,10 @@
 package adullact.publicrowdfunding.model.local.utilities;
 
-import java.util.ArrayList;
-
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeFormatterBuilder;
+
+import java.util.ArrayList;
 
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.model.local.ressource.Project;

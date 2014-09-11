@@ -1,10 +1,5 @@
 package adullact.publicrowdfunding.controller.register;
 
-import adullact.publicrowdfunding.MainActivity;
-import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.controller.project.all.ListProjectsFragment;
-import adullact.publicrowdfunding.model.server.event.RegistrationEvent;
-import adullact.publicrowdfunding.model.server.request.RegistrationRequest;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,6 +14,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import adullact.publicrowdfunding.MainActivity;
+import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.controller.project.all.ListProjectsFragment;
+import adullact.publicrowdfunding.model.server.event.RegistrationEvent;
+import adullact.publicrowdfunding.model.server.request.RegistrationRequest;
 
 /**
  * @author Ferrand and Nelaupe
