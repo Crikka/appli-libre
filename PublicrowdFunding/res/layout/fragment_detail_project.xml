@@ -375,15 +375,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|bottom"
-        android:layout_marginBottom="0dp"
-        android:padding="10dip" >
+        android:layout_marginLeft="17dp"
+        android:layout_marginRight="12dp" >
 
         <Button
             android:id="@+id/payer"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/buttonshapes"
-            android:gravity="center"
             android:text="@string/contribute" />
     </FrameLayout>
 
