@@ -61,9 +61,11 @@ public class validationFragment extends Fragment {
 				.findViewById(R.id.breadcrumb);
 		breadCrumbView.setPosition(4);
 
+		context = this.getActivity().getBaseContext();
+		
 		message = (TextView) view.findViewById(R.id.message);
 		checkbox = (ImageView) view.findViewById(R.id.checkbox);
-
+		
 		Bundle args = this.getArguments();
 
 		m_titre = args.getString("title");
@@ -141,9 +143,13 @@ public class validationFragment extends Fragment {
 						R.drawable.checkbox_ok);
 				checkbox.setImageDrawable(checked);
 				checkbox.invalidate();
-				message.setText("Projet soumis, en attente de validation");
-				message.invalidate();
-
+				
+				if(m_isAdmin){
+					message.setText("Projet ajouté, le financement commence.");
+				}else{
+					message.setText("Projet soumis : en attente de validation.");
+				}
+				
 			}
 
 			@Override
