@@ -149,25 +149,7 @@ public class RegisterFragement extends Fragment {
 		
 		view.setFocusableInTouchMode(true);
 		view.requestFocus();
-		view.setOnKeyListener( new OnKeyListener()
-		{
-		    @Override
-		    public boolean onKey( View v, int keyCode, KeyEvent event )
-		    {
-		        if( keyCode == KeyEvent.KEYCODE_BACK )
-		        {
-                	FragmentTransaction ft = getFragmentManager().beginTransaction();
-            		//ft.setCustomAnimations(R.anim.enter, R.anim.exit);
-            		Fragment fragment = new ConnexionFragment();
-            		ft.replace(R.id.big_font, fragment);
-            		
-            		ft.commit(); 
-            		return true;
-		        }
-		        return false;
-		    }
-		} );
-		
+
 		return view;
 		
 	}

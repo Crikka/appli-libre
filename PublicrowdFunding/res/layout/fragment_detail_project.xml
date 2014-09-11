@@ -375,8 +375,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|bottom"
-        android:layout_marginLeft="17dp"
-        android:layout_marginRight="12dp" >
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="2dp"
+        android:padding="10dip" >
 
         <Button
             android:id="@+id/payer"
