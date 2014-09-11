@@ -8,7 +8,7 @@ Version encore non stable, toujours en développement
 
 ## Screenshot
 
-![Screenshot](https://github.com/Crikka/appli-libre/screen/mutliscreen.png)
+![Screenshot](https://github.com/Crikka/appli-libre/blob/master/screen/mutliscreen.png)
 
 ## Contributors
 
