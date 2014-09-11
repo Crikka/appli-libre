@@ -18,11 +18,14 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
+import org.joda.time.DateTime;
+
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
 import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.User;
+import adullact.publicrowdfunding.model.local.utilities.Utility;
 
 /**
  * @author Ferrand and Nelaupe
@@ -146,8 +149,19 @@ public class addProjectFragment extends Fragment {
 		}
 
 		String StrDay = "" + day;
-
 		String endDate = Stryear + "-" + StrMonth + "-" + StrDay + " 00:00:00";
+
+		try {
+			DateTime endDateTime = Utility.stringToDateTime(endDate);
+			DateTime now = DateTime.now();
+			if (endDateTime.isBefore(now)) {
+				throw new Exception();
+			}
+		} catch (Exception e) {
+			Toast.makeText(context, "Date de fin invalide", Toast.LENGTH_SHORT)
+					.show();
+			return;
+		}
 
 		FragmentTransaction ft = getActivity().getSupportFragmentManager()
 				.beginTransaction().disallowAddToBackStack();
