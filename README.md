@@ -6,6 +6,10 @@ Application android open source de crowdfunding
 
 Version encore non stable, toujours en développement
 
+## Screenshot
+
+![Screenshot](https://github.com/Crikka/appli-libre/screen/mutliscreen.png)
+
 ## Contributors
 
 * [Lucas Nelaupe](http://www.lucasnelaupe.fr/) - <https://github.com/lucas34>
