@@ -415,7 +415,7 @@ public class Project extends Resource<Project, ServerProject, DetailedServerProj
             return 0;
         }
         else {
-            return ((m_currentFunding.divide(m_requestedFunding)).multiply(BigDecimal.TEN).multiply(BigDecimal.TEN)).intValue();
+            return ((m_currentFunding.divide(m_requestedFunding, BigDecimal.ROUND_DOWN)).multiply(BigDecimal.TEN).multiply(BigDecimal.TEN)).intValue();
         }
     }
 
