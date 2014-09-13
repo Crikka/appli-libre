@@ -128,8 +128,6 @@ public class CommentPopup extends Fragment {
 		ft.setCustomAnimations(R.anim.no_anim, R.anim.popup_exit);
 		ft.remove(_this);
 
-
-		// Multi Thread pour que l'animation s'éxécute
 		FrameLayout filter = (FrameLayout) getActivity().getWindow().getDecorView()
 				.findViewById(R.id.big_filter);			
 		Animation fadeInAnimation = AnimationUtils.loadAnimation(_this.getActivity(), R.anim.fade_exit);

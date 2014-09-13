@@ -100,7 +100,8 @@ public class ProjectAdaptor extends ArrayAdapter<Project> {
 		holder.temps_restant_projet_liste.setText(days);
 
 		holder.avancement_projet_liste.setProgress(projet
-				.getPercentOfAchievement());
+					.getPercentOfAchievement());
+		
 		String requested = mContext.getResources().getString(R.string.currency,projet.getRequestedFunding());
 		holder.sommeDemander.setText(requested);
 		String funded = mContext.getResources().getString(R.string.currency,projet.getCurrentFunding());
