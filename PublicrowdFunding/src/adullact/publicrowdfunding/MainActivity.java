@@ -208,7 +208,7 @@ public class MainActivity extends FragmentActivity {
 						Bundle bundle = new Bundle();
 						fragment.setArguments(bundle);
 						ft.addToBackStack(null);
-						ft.replace(R.id.content_frame, fragment);
+						ft.replace(R.id.content_frame, fragment, "validateFragment");
 						ft.commit();
 
 						closeDrawer();

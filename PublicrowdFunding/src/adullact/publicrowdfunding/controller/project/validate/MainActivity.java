@@ -9,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -94,6 +96,9 @@ public class MainActivity extends Fragment {
 				ft.commit();
         		
 				filter.setVisibility(View.VISIBLE);
+				Animation fadeInAnimation = AnimationUtils.loadAnimation(getActivity().getBaseContext(), R.anim.fade_enter);
+				filter.setAnimation(fadeInAnimation);
+				filter.animate();
 		
 			}
 		});
@@ -127,8 +132,7 @@ public class MainActivity extends Fragment {
 			public void holdAll(ArrayList<Project> projects) {
                 adapter = new ValidateProjectAdaptor(getActivity().getBaseContext(),
 						R.layout.adaptor_project, sync.restrictToNotValidatedProjects());
-				/*adapter.clear();
-				adapter.addAll(notValidatedProject);*/
+
 				adapter.notifyDataSetChanged();
 				swipeView.setRefreshing(false);
 				

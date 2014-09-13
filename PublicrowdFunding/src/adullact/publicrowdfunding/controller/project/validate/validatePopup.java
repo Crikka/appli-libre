@@ -2,6 +2,7 @@ package adullact.publicrowdfunding.controller.project.validate;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -14,7 +15,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.RadioGroup;
-
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.ressource.Project;
@@ -121,6 +121,16 @@ public class validatePopup extends Fragment {
 
 			@Override
 			public void onUpdate(Project resource) {
+				
+				
+				
+				FragmentManager fm = getActivity().getSupportFragmentManager();
+
+				Fragment validate = fm.findFragmentByTag("validateFragment");
+				FragmentTransaction ft = fm.beginTransaction();
+			
+				ft.detach(validate).attach(validate).commit();
+				
 				back();
 				
 			}
