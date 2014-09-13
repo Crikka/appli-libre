@@ -118,6 +118,9 @@ public class RegisterFragement extends Fragment {
                     	loading.setVisibility(View.GONE);
                     	Toast.makeText(context, "Bienvenue "+m_login.getText().toString(), Toast.LENGTH_SHORT).show();
                     	
+                    	MainActivity _Main = (MainActivity) getActivity();
+                    	_Main.isConnect();
+                    	
                     	FragmentTransaction ft = getActivity().getSupportFragmentManager()
                 				.beginTransaction();
                 		ft.setCustomAnimations(R.anim.no_anim, R.anim.popup_exit);
