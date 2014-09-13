@@ -1,13 +1,5 @@
 package adullact.publicrowdfunding.controller.profile.preferences;
 
-import android.os.Bundle;
-import android.preference.EditTextPreference;
-import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
-import android.preference.SwitchPreference;
-import android.support.v4.preference.PreferenceFragment;
-import android.widget.Toast;
-
 import adullact.publicrowdfunding.MainActivity;
 import adullact.publicrowdfunding.R;
 import adullact.publicrowdfunding.model.exception.NoAccountExistsInLocal;
@@ -15,6 +7,13 @@ import adullact.publicrowdfunding.model.local.callback.HoldToDo;
 import adullact.publicrowdfunding.model.local.ressource.Account;
 import adullact.publicrowdfunding.model.local.ressource.User;
 import adullact.publicrowdfunding.model.server.event.UpdateEvent;
+import android.os.Bundle;
+import android.preference.EditTextPreference;
+import android.preference.Preference;
+import android.preference.Preference.OnPreferenceChangeListener;
+import android.preference.SwitchPreference;
+import android.support.v4.preference.PreferenceFragment;
+import android.widget.Toast;
 
 /**
  * @author Ferrand and Nelaupe

@@ -1,11 +1,11 @@
 package adullact.publicrowdfunding.model.server.request;
 
+import retrofit.RequestInterceptor;
+import retrofit.RestAdapter;
 import adullact.publicrowdfunding.model.server.ServerObject;
 import adullact.publicrowdfunding.model.server.entities.Service;
 import adullact.publicrowdfunding.model.server.errorHandler.ErrorHandler;
 import adullact.publicrowdfunding.model.server.event.Event;
-import retrofit.RequestInterceptor;
-import retrofit.RestAdapter;
 
 /**
  * @author Ferrand and Nelaupe

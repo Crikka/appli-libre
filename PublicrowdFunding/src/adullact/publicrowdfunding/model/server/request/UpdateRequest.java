@@ -1,12 +1,12 @@
 package adullact.publicrowdfunding.model.server.request;
 
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 import adullact.publicrowdfunding.model.local.ressource.Resource;
 import adullact.publicrowdfunding.model.server.entities.SimpleServerResponse;
 import adullact.publicrowdfunding.model.server.errorHandler.UpdateErrorHandler;
 import adullact.publicrowdfunding.model.server.event.UpdateEvent;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 
 /**
  * @author Ferrand and Nelaupe

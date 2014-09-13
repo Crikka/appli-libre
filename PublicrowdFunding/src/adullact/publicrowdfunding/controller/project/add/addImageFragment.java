@@ -1,5 +1,7 @@
 package adullact.publicrowdfunding.controller.project.add;
 
+import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.model.local.utilities.Utility;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,9 +13,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
-import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.model.local.utilities.Utility;
 
 /**
  * @author Ferrand and Nelaupe

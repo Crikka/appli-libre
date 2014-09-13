@@ -1,12 +1,11 @@
 package adullact.publicrowdfunding.controller.project.details;
 
+import adullact.publicrowdfunding.R;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-
-import adullact.publicrowdfunding.R;
 
 /**
  * @author Ferrand and Nelaupe

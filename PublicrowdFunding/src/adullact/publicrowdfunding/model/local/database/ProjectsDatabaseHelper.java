@@ -1,9 +1,8 @@
 package adullact.publicrowdfunding.model.local.database;
 
+import adullact.publicrowdfunding.PublicrowdFundingApplication;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import adullact.publicrowdfunding.PublicrowdFundingApplication;
 
 /**
  * @author Ferrand and Nelaupe

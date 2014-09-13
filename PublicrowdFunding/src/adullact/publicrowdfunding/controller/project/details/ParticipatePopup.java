@@ -1,5 +1,7 @@
 package adullact.publicrowdfunding.controller.project.details;
 
+import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.controller.project.participate.PaypalActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -17,9 +19,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-
-import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.controller.project.participate.PaypalActivity;
 
 /**
  * @author Ferrand and Nelaupe

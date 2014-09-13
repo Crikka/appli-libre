@@ -1,5 +1,9 @@
 package adullact.publicrowdfunding.controller.project.validate;
 
+import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.model.local.callback.HoldToDo;
+import adullact.publicrowdfunding.model.local.ressource.Project;
+import adullact.publicrowdfunding.model.server.event.UpdateEvent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,10 +19,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.RadioGroup;
-import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.model.local.callback.HoldToDo;
-import adullact.publicrowdfunding.model.local.ressource.Project;
-import adullact.publicrowdfunding.model.server.event.UpdateEvent;
 
 /**
  * @author Ferrand and Nelaupe

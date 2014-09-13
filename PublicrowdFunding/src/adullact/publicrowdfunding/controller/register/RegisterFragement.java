@@ -1,27 +1,24 @@
 package adullact.publicrowdfunding.controller.register;
 
+import adullact.publicrowdfunding.MainActivity;
+import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.model.server.event.RegistrationEvent;
+import adullact.publicrowdfunding.model.server.request.RegistrationRequest;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
-import android.view.View.OnKeyListener;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-import adullact.publicrowdfunding.MainActivity;
-import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.controller.project.all.ListProjectsFragment;
-import adullact.publicrowdfunding.model.server.event.RegistrationEvent;
-import adullact.publicrowdfunding.model.server.request.RegistrationRequest;
 
 /**
  * @author Ferrand and Nelaupe

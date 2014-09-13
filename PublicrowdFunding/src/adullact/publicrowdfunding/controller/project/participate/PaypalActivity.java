@@ -1,5 +1,9 @@
 package adullact.publicrowdfunding.controller.project.participate;
 
+import java.math.BigDecimal;
+
+import org.json.JSONException;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -15,10 +19,6 @@ import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;
 import com.paypal.android.sdk.payments.PaymentActivity;
 import com.paypal.android.sdk.payments.PaymentConfirmation;
-
-import org.json.JSONException;
-
-import java.math.BigDecimal;
 
 public class PaypalActivity extends Activity {
 

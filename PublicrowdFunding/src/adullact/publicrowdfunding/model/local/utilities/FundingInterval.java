@@ -1,9 +1,9 @@
 package adullact.publicrowdfunding.model.local.utilities;
 
-import org.joda.time.Interval;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
+
+import org.joda.time.Interval;
 
 import adullact.publicrowdfunding.model.local.ressource.Funding;
 

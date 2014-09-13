@@ -1,9 +1,9 @@
 package adullact.publicrowdfunding.model.server.errorHandler;
 
+import retrofit.RetrofitError;
 import adullact.publicrowdfunding.model.local.ressource.Resource;
 import adullact.publicrowdfunding.model.server.event.CreateEvent;
 import adullact.publicrowdfunding.model.server.request.CreateRequest;
-import retrofit.RetrofitError;
 
 /**
  * @author Ferrand and Nelaupe

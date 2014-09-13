@@ -1,12 +1,11 @@
 package adullact.publicrowdfunding.controller.project.add;
 
+import adullact.publicrowdfunding.R;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import adullact.publicrowdfunding.R;
 
 /**
  * @author Ferrand and Nelaupe

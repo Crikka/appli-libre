@@ -1,5 +1,14 @@
 package adullact.publicrowdfunding.controller.project.details;
 
+import java.util.ArrayList;
+import java.util.Locale;
+
+import org.joda.time.DateTime;
+import org.joda.time.Interval;
+
+import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.model.local.ressource.Project;
+import adullact.publicrowdfunding.model.local.utilities.FundingInterval;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -8,16 +17,6 @@ import android.graphics.Paint.Align;
 import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.View;
-
-import org.joda.time.DateTime;
-import org.joda.time.Interval;
-
-import java.util.ArrayList;
-import java.util.Locale;
-
-import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.model.local.ressource.Project;
-import adullact.publicrowdfunding.model.local.utilities.FundingInterval;
 
 /**
  * @author Ferrand and Nelaupe

@@ -3,13 +3,13 @@ package adullact.publicrowdfunding.model.server.request;
 import java.util.ArrayList;
 import java.util.Map;
 
-import adullact.publicrowdfunding.model.local.ressource.Resource;
-import adullact.publicrowdfunding.model.server.errorHandler.ListerErrorHandler;
-import adullact.publicrowdfunding.model.server.event.ListerEvent;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
+import adullact.publicrowdfunding.model.local.ressource.Resource;
+import adullact.publicrowdfunding.model.server.errorHandler.ListerErrorHandler;
+import adullact.publicrowdfunding.model.server.event.ListerEvent;
 
 /**
  * @author Ferrand and Nelaupe

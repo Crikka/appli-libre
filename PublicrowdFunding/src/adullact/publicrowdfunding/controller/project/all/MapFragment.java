@@ -1,5 +1,13 @@
 package adullact.publicrowdfunding.controller.project.all;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import adullact.publicrowdfunding.R;
+import adullact.publicrowdfunding.controller.adaptor.MarkerWindowAdaptor;
+import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
+import adullact.publicrowdfunding.model.local.ressource.Project;
+import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,15 +26,6 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import adullact.publicrowdfunding.R;
-import adullact.publicrowdfunding.controller.adaptor.MarkerWindowAdaptor;
-import adullact.publicrowdfunding.model.local.callback.HoldAllToDo;
-import adullact.publicrowdfunding.model.local.ressource.Project;
-import adullact.publicrowdfunding.model.local.utilities.SyncServerToLocal;
 
 /**
  * @author Ferrand and Nelaupe
