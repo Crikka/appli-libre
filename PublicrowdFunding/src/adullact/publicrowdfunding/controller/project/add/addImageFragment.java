@@ -39,10 +39,10 @@ public class addImageFragment extends Fragment {
 		int size = Utility.getDrawableSize();
 		for(int i = 0; i < size ; i++){
 			ImageView image = new ImageView(context);
+			
 			image.setImageDrawable(getResources().getDrawable(Utility.getDrawable(i)));
-			layout.addView(image,1);
-			layout.setId(i);
-			layout.setOnClickListener(new OnClickListener(){
+			image.setId(i);
+			image.setOnClickListener(new OnClickListener(){
 
 				@Override
 				public void onClick(View v) {
@@ -52,6 +52,8 @@ public class addImageFragment extends Fragment {
 				}
 				
 			});
+			
+			layout.addView(image,1);
 		}
 		
 		return view;

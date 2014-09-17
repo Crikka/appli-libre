@@ -6,11 +6,11 @@
     android:gravity="center"
     android:orientation="vertical" >
 
-
     <LinearLayout
         android:id="@+id/loading"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="320dip"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shadow"
         android:gravity="center_vertical"
         android:orientation="vertical" >
 
@@ -26,13 +26,13 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/loading" />
-
-        </LinearLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/loadingLoadingInfo"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shadow"
         android:gravity="center_vertical"
         android:orientation="vertical" >
 
@@ -47,22 +47,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:text="@string/success"
             android:textColor="#45C63B"
-            android:textSize="35sp"
-            android:text="@string/success" />
+            android:textSize="35sp" />
 
         <TextView
             android:id="@+id/textView1LoadingInfoSub"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:text="@string/retrievePersonnelInfo"
             android:textColor="#179CD5"
-            android:textSize="25sp"
-            android:text="@string/retrievePersonnelInfo" />
-        
+            android:textSize="25sp" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/connect_content"
         android:layout_width="320dip"
         android:layout_height="wrap_content"
         android:background="@drawable/shadow"
@@ -70,7 +70,6 @@
         android:padding="20dp" >
 
         <TextView
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dip"

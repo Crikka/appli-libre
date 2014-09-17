@@ -277,9 +277,6 @@ public class ListProjectsFragment extends Fragment {
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		switch (item.getItemId()) {
-		case R.id.action_search:
-			search(item);
-			break;
 		case R.id.action_sort:
 			sort();
 			break;

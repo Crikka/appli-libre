@@ -39,6 +39,7 @@ public class ConnexionFragment extends Fragment {
 	
 	private LinearLayout loading;
     private LinearLayout loadingPersonnelInfo;
+    private LinearLayout connect_content;
     
 	private Fragment _this;
 	
@@ -61,6 +62,9 @@ public class ConnexionFragment extends Fragment {
 		loading = (LinearLayout) view.findViewById(R.id.loading);
 		loading.setVisibility(View.GONE);
 
+		connect_content = (LinearLayout) view.findViewById(R.id.connect_content);
+		connect_content.setVisibility(View.VISIBLE);
+		
         loadingPersonnelInfo = (LinearLayout) view.findViewById(R.id.loadingLoadingInfo);
         loadingPersonnelInfo.setVisibility(View.GONE);
 
@@ -81,7 +85,7 @@ public class ConnexionFragment extends Fragment {
 					return;
 				}
 
-				
+				connect_content.setVisibility(View.GONE);
 				loading.setVisibility(View.VISIBLE);
 				String login = m_login.getText().toString();
 				String password = m_password.getText().toString();
@@ -91,7 +95,9 @@ public class ConnexionFragment extends Fragment {
 							@Override
 							public void errorUsernamePasswordDoesNotMatch(
 									String username, String password) {
-							
+								
+								connect_content.setVisibility(View.VISIBLE);
+								loading.setVisibility(View.GONE);
 								Toast.makeText(context,
 										"Login ou mot de passe incorect",
 										Toast.LENGTH_LONG).show();
@@ -134,6 +140,7 @@ public class ConnexionFragment extends Fragment {
 
 							@Override
 							public void errorServer() {
+								
 								Toast.makeText(getActivity().getBaseContext(),
 										"Une erreur s'est produite", Toast.LENGTH_SHORT)
 										.show();
@@ -181,7 +188,6 @@ public class ConnexionFragment extends Fragment {
 	
 	@Override
 	public void onPrepareOptionsMenu(Menu menu) {
-		menu.findItem(R.id.action_search).setVisible(false);
 		menu.findItem(R.id.action_sort).setVisible(false);
 	}
 	

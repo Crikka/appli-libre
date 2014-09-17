@@ -52,7 +52,7 @@
     <string name="logout">Déconnexion</string>
     <string name="authentication">Authentification</string>
     <string name="funding_progress">Progression du financement</string>
-    <string name="sort_by">Sort by</string>
+    <string name="sort_by">Trier par</string>
     <string name="biggest_project">Le plus gros</string>
     <string name="smallest_project">Le plus petit</string>
     <string name="most_avanced">Le plus avancé</string>

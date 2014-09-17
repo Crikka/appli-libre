@@ -66,7 +66,7 @@ public class MarkerWindowAdaptor extends FragmentActivity implements InfoWindowA
 		try {
 			String texte = context.getResources().getString(R.string.distance);
 			distance.setText(
-					texte + Calcul.diplayDistance(Share.position,
+					texte +" " + Calcul.diplayDistance(Share.position,
 							projet.getPosition()));
 			distance.setVisibility(View.VISIBLE);
 		} catch (NullPointerException e) {
