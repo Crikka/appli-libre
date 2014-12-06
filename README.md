@@ -12,8 +12,8 @@ Version encore non stable, toujours en développement
 
 ## Contributors
 
-* [Lucas Nelaupe](http://www.lucasnelaupe.fr/) - <https://github.com/lucas34>
-* Anthony - <https://github.com/crikka>
+* [Lucas Nelaupe](http://www.lucas-nelaupe.fr/) - <https://github.com/lucas34>
+* [Anthony Ferrand](http://www.anthony-ferrand.fr/) - <https://github.com/crikka>
 
 ## License
 
