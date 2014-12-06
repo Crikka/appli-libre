@@ -1,10 +1,11 @@
 # PublicrowdFunding
 
-Application android open source de crowdfunding 
+Application android open source de crowdfunding pour le concours "Crée ton appli libre" - Adullact 2014
 
-### Last Updated
+### Site web
 
-Version encore non stable, toujours en développement
+[Publicrowdfunding](https://publicrowdfundi.adullact.net/)
+
 
 ## Screenshot
 
